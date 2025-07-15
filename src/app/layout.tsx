@@ -3,6 +3,9 @@ import React from "react";
 /* Global Styles */
 import "@/app/globals.scss";
 
+/* Fonts */
+import { gontSerrat, timeLess } from "@/lib/fonts";
+
 /* Bootstrap */
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -14,7 +17,7 @@ import Footer from "@/layout/footer/footer"
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body>
+      <body className={`${gontSerrat.variable} ${timeLess.variable}`}>
         <header>
           <Header />
         </header>
