@@ -11,7 +11,7 @@
 
 .header-main-container {
     width: 100%;
-    height: 10vh;
+    height: 100px;
     @include flex-center-elements-XY;
     background-color: map-get($colores, primary-color);
     overflow: hidden;

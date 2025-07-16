@@ -1,0 +1,57 @@
+@use '../../_variables/variables' as *;
+
+.main-offer-container {
+    height: 600px;
+    position: relative;
+}
+
+.click-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    text-indent: -9999px;
+}
+
+.main-header-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.offer {
+    position: absolute;
+    top: 50%;
+    left: 15%;
+    transform: translateY(-50%);
+}
+
+.offer-title {
+    color: map-get($colores, font-dark-background-color);
+    font-family: var(--font-gontSerrat);
+    font-weight: 700;
+    font-size: 2.8rem;
+    margin-bottom: 1.2rem;
+}
+
+.price-container {
+    display: flex;
+    align-items: center;
+}
+
+.discount {
+    background-color: map-get($colores, discount-color);
+    padding: .5rem;
+    color: map-get($colores, font-dark-background-color);
+    font-family: var(--font-gontSerrat);
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+
+.current-price {
+    color: map-get($colores, color-price);
+    font-weight: 700;
+    font-size: 2.4rem;
+    letter-spacing: 2px;
+    margin-left: 1rem;
+}

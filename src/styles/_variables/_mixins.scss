@@ -3,3 +3,10 @@
     justify-content: center;
     align-items: center;
 }
+
+@mixin offers-title-typography {
+    font-family: var(--font-gontSerrat);
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}

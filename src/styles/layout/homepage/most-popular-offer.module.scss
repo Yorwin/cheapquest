@@ -1,0 +1,39 @@
+@use '../../_variables/variables' as *;
+@use '../../_variables/mixins' as *;
+
+.most-popular-offer-container {
+    background-color: map-get($colores, complementary-color);
+    height: 100vh;
+    padding: $homepage-offers-padding;
+}
+
+.title {
+    margin-bottom: 2rem;
+    color: map-get($colores, font-dark-background-color );
+    @include offers-title-typography;
+}
+
+.offers-container {
+    width: 100%;
+}
+
+.main-gamecard-offer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    background-color: black;
+    width: calc(50% - 50px);
+    height: 450px;
+}
+
+.gameimage-container {
+    width: 100%;
+    height: 65%;
+    position: relative;
+}
+
+.gameinfo-container {
+    height: 35%;
+    width: 100%;
+    background-color: map-get($colores, primary-color);
+}
