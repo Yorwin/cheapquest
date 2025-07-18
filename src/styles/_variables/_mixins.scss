@@ -1,3 +1,5 @@
+@use '../_variables/variables' as *;
+
 @mixin flex-center-elements-XY {
     display: flex;
     justify-content: center;
@@ -9,4 +11,30 @@
     font-size: 1.8rem;
     font-weight: 700;
     letter-spacing: 2px;
+}
+
+@mixin discount-style($padding-size, $font-weight, $font-size, $font-family) {
+    background-color: map-get($colores, discount-color);
+    padding: $padding-size;
+    color: map-get($colores, font-dark-background-color);
+    font-family: $font-family;
+    font-weight: $font-weight;
+    font-size: $font-size;
+}
+
+@mixin current-price-style($font-size, $font-weight , $letter-spacing, $margin-left, $font-family) {
+    color: map-get($colores, color-price);
+    font-weight: $font-weight;
+    font-family: $font-family;
+    font-size: $font-size;
+    letter-spacing: $letter-spacing;
+    margin-left: $margin-left;
+}
+
+@mixin cancelled-price ($font-size) {
+    color: map-get($colores, secondary-color);
+    font-size: $font-size;
+    text-decoration: line-through;
+    font-family: var(--font-gontSerrat);
+    letter-spacing: 3px;
 }

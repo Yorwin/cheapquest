@@ -3,13 +3,13 @@
 
 .most-popular-offer-container {
     background-color: map-get($colores, complementary-color);
-    height: 100vh;
+    height: 200vh;
     padding: $homepage-offers-padding;
 }
 
 .title {
-    margin-bottom: 2rem;
-    color: map-get($colores, font-dark-background-color );
+    margin-bottom: 1rem;
+    color: map-get($colores, font-dark-background-color);
     @include offers-title-typography;
 }
 
@@ -17,13 +17,29 @@
     width: 100%;
 }
 
+.first-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    height: 450px;
+}
+
 .main-gamecard-offer {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     background-color: black;
-    width: calc(50% - 50px);
-    height: 450px;
+    width: calc(50% - 25px);
+    height: 100%;
+}
+
+.pairs-container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap: .7rem;
+    height: 100%;
 }
 
 .gameimage-container {
@@ -33,7 +49,130 @@
 }
 
 .gameinfo-container {
+    display: flex;
+    flex-direction: column;
     height: 35%;
     width: 100%;
     background-color: map-get($colores, primary-color);
+}
+
+.platform {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35%;
+    width: 100%;
+    background-color: map-get($colores, platform-color)
+}
+
+.price-offerorigin-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1.5rem;
+    justify-content: space-between;
+    width: 100%;
+    height: 65%;
+}
+
+.offer-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.prices {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 1rem;
+    line-height: 2rem
+}
+
+.discount {
+    @include discount-style(.7rem, 500, 1.8rem, var(--font-gontSerrat));
+}
+
+.current-price {
+    @include current-price-style(2rem, 400, 3px, 0rem, var(--font-gontSerrat));
+}
+
+.last-price {
+    @include cancelled-price(1.4rem);
+}
+
+.icon-container {
+    position: relative;
+    width: 35px;
+    height: 35px;
+}
+
+.web-offer {
+    position: relative;
+    width: 65px;
+    height: 65px;
+}
+
+/* Secondary Cards */
+
+.secondary-gamecard-offer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    background-color: black;
+    width: calc(50% - 10px);
+    height: 100%;
+}
+
+.pair {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 0px;
+    width: 100%;
+    height: 100%;
+    gap: 1rem;
+}
+
+.secondary-prices {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: .5rem;
+    line-height: 1.2rem
+}
+
+.secondary-icon-container {
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+
+.secondary-discount {
+    display: flex;
+    align-items: center;
+    @include discount-style(.2rem, 500, 1.2rem, var(--font-gontSerrat));
+}
+
+.secondary-current-price {
+    @include current-price-style(1.2rem, 400, 3px, 0rem, var(--font-gontSerrat));
+}
+
+.secondary-last-price {
+    @include cancelled-price(.8rem);
+}
+
+.secondary-web-offer {
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+
+.secondary-price-offerorigin-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.8rem;
+    justify-content: space-between;
+    width: 100%;
+    height: 65%;
 }

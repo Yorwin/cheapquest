@@ -1,7 +1,8 @@
 @use '../../_variables/variables' as *;
+@use '../../_variables/mixins' as *;
 
 .main-offer-container {
-    height: 600px;
+    height: 540px;
     position: relative;
 }
 
@@ -40,18 +41,9 @@
 }
 
 .discount {
-    background-color: map-get($colores, discount-color);
-    padding: .5rem;
-    color: map-get($colores, font-dark-background-color);
-    font-family: var(--font-gontSerrat);
-    font-weight: 600;
-    font-size: 1.8rem;
+   @include discount-style(.5rem, 600, 1.8rem, var(--font-gontSerrat));
 }
 
 .current-price {
-    color: map-get($colores, color-price);
-    font-weight: 700;
-    font-size: 2.4rem;
-    letter-spacing: 2px;
-    margin-left: 1rem;
+    @include current-price-style(2.4rem, 700, 2px, 1rem, var(--font-gontSerrat));
 }
