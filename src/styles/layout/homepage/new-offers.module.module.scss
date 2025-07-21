@@ -1,0 +1,50 @@
+@use '../../_variables/variables' as *;
+@use '../../_variables/mixins' as *;
+
+.new-offers-main-container {
+    height: 100vh;
+    width: 100%;
+    background-color: map-get($colores, dark-background-color);
+    padding: $homepage-offers-padding;
+}
+
+.title {
+    margin-bottom: 1rem;
+    color: map-get($colores, font-dark-background-color);
+    @include offers-title-typography;
+}
+
+.vertical-card-container {
+    height: 450px;
+    background-color: black;
+}
+
+.info-container {
+    padding: 1rem;
+    background-color: map-get($colores, primary-color);
+}
+
+.game-title {
+    font-family: var(--font-timeless);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: map-get($colores, font-dark-background-color);
+    margin-bottom: 1.2rem;
+}
+
+.divisor-line-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.divisor-line {
+    width: 85%;
+    height: 5px;
+    background-color: map-get($colores, font-dark-background-color);
+}
+
+.current-price {
+    @include current-price-style(1.2rem, 400, 3px, 0rem, var(--font-gontSerrat));
+}

@@ -3,7 +3,6 @@
 
 .most-popular-offer-container {
     background-color: map-get($colores, complementary-color);
-    height: 200vh;
     padding: $homepage-offers-padding;
 }
 
@@ -29,7 +28,6 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    background-color: black;
     width: calc(50% - 25px);
     height: 100%;
 }
@@ -115,12 +113,8 @@
 /* Secondary Cards */
 
 .secondary-gamecard-offer {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    background-color: black;
     width: calc(50% - 10px);
-    height: 100%;
+    @extend .main-gamecard-offer;
 }
 
 .pair {
@@ -134,9 +128,7 @@
 }
 
 .secondary-prices {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    @extend .prices;
     margin-left: .5rem;
     line-height: 1.2rem
 }
@@ -168,11 +160,38 @@
 }
 
 .secondary-price-offerorigin-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     padding: 0.8rem;
-    justify-content: space-between;
-    width: 100%;
-    height: 65%;
+    @extend .price-offerorigin-container;
 }
+
+/* Rest of the list */
+
+.rest-of-the-offers-container {
+    background-color: black;
+    height: 260px;
+    width: 95%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0rem;
+}
+
+.button-container button {
+    border: none;
+    background-color: map-get($colores, primary-color);
+    color: map-get($colores, font-dark-background-color);
+    font-weight: 700;
+    font-family: var(--font-gontSerrat);
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+
+    &:hover {
+        text-decoration: $default-text-decoration;
+    }
+}
+
