@@ -31,9 +31,10 @@
     margin-left: $margin-left;
 }
 
-@mixin cancelled-price ($font-size) {
+@mixin cancelled-price ($font-size, $font-weight) {
     color: map-get($colores, secondary-color);
     font-size: $font-size;
+    font-weight: $font-weight;
     text-decoration: line-through;
     font-family: var(--font-gontSerrat);
     letter-spacing: 3px;

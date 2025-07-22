@@ -95,7 +95,7 @@
 }
 
 .last-price {
-    @include cancelled-price(1.4rem);
+    @include cancelled-price(1.4rem, 500);
 }
 
 .icon-container {
@@ -150,7 +150,7 @@
 }
 
 .secondary-last-price {
-    @include cancelled-price(.8rem);
+    @include cancelled-price(.8rem, 500);
 }
 
 .secondary-web-offer {

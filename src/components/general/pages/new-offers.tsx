@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "@/styles/layout/homepage/new-offers.module.module.scss"
+import styles from "@/styles/layout/homepage/vertical-offers.module.module.scss"
 import Image from "next/image";
 import Weboffer from "@/resources/pages/greenman-gaming.png"
 import image from "@/resources/offer-img/images.jpeg"
