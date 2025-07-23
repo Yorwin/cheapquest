@@ -1,10 +1,249 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/list-format-offers.module.scss"
 import Image from "next/image";
-import Weboffer from "@/resources/pages/greenman-gaming.png"
 import image from "@/resources/offer-img/images.jpeg"
+import Link from "next/link";
 
 const ListFormatOffers = () => {
+
+    const bestOffersByPercentage = [
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+    ];
+
+    const historicalLows = [
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+        {
+            offerImage: image,
+            gameTitle: "Example Game",
+            gameDescription: "Standard Edition",
+            oldPrice: "39,99",
+            currentPrice: "26,99",
+            discountPercentage: "37%",
+        },
+    ];
+
+    const bestOffersByPercentageContainer = bestOffersByPercentage.map((e, index) => {
+        return (
+            <section className={styles["game-info-container"]}>
+                <Link href={"#"} className={styles["enlace"]} />
+                <div className={styles["offer-number-container"]}>
+                    <span className={styles["offer-number"]}>
+                        {index + 1}
+                    </span>
+                </div>
+                <div className={styles["image-container"]}>
+                    <Image
+                        src={e.offerImage}
+                        alt="Plataforma de juego"
+                        fill
+                        style={{ objectFit: 'cover' }}
+                    />
+                </div>
+                <div className={styles["details"]}>
+                    <div className={styles["game-title-and-extra-info"]}>
+                        <h3>{e.gameTitle}</h3>
+                        <p>{e.gameDescription}</p>
+                    </div>
+                    <div className={styles["prices"]}>
+                        <div className={styles["prices-container"]}>
+                            <del className={styles["old-price"]}>{e.oldPrice}</del>
+                            <span className={styles["current-price"]}>{e.currentPrice}</span>
+                        </div>
+                        <div className={styles["discount-container"]}>
+                            <span>{e.discountPercentage}</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+    });
+
+    const historicalLowsContainer = historicalLows.map((e, index) => {
+        return (
+            <section className={styles["game-info-container"]}>
+                <Link href={"#"} className={styles["enlace"]} />
+                <div className={styles["offer-number-container"]}>
+                    <span className={styles["offer-number"]}>
+                        {index + 1}
+                    </span>
+                </div>
+                <div className={styles["image-container"]}>
+                    <Image
+                        src={e.offerImage}
+                        alt="Plataforma de juego"
+                        fill
+                        style={{ objectFit: 'cover' }}
+                    />
+                </div>
+                <div className={styles["details"]}>
+                    <div className={styles["game-title-and-extra-info"]}>
+                        <h3>{e.gameTitle}</h3>
+                        <p>{e.gameDescription}</p>
+                    </div>
+                    <div className={styles["prices"]}>
+                        <div className={styles["prices-container"]}>
+                            <del className={styles["old-price"]}>{e.oldPrice}</del>
+                            <span className={styles["current-price"]}>{e.currentPrice}</span>
+                        </div>
+                        <div className={styles["discount-container"]}>
+                            <span>{e.discountPercentage}</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+    });
+
     return <>
         <section className={styles["list-format-offers-container"]}>
             <div className="container-fluid">
@@ -12,629 +251,13 @@ const ListFormatOffers = () => {
                     <div className="col-md-6 col-sm-12">
                         <h1 className={styles["title"]}>MEJORES OFERTAS POR %</h1>
                         <article className={styles["list-offer-format-container"]}>
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        1
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        2
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        3
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        4
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        5
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        6
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        7
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        8
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        9
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        10
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
+                            {bestOffersByPercentageContainer}
                         </article>
                     </div>
                     <div className="col-md-6 col-sm-12">
                         <h1 className={styles["title"]}>BAJOS HISTORICOS</h1>
                         <article className={styles["list-offer-format-container"]}>
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        1
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        2
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        3
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        4
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        5
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        6
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        7
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        8
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        9
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={styles["game-info-container"]}>
-                                <div className={styles["offer-number-container"]}>
-                                    <span className={styles["offer-number"]}>
-                                        10
-                                    </span>
-                                </div>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={image}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["details"]}>
-                                    <div className={styles["game-title-and-extra-info"]}>
-                                        <h3>Example Game</h3>
-                                        <p>Standard Edition</p>
-                                    </div>
-                                    <div className={styles["prices"]}>
-                                        <div className={styles["prices-container"]}>
-                                            <del className={styles["old-price"]}>39,99€</del>
-                                            <span className={styles["current-price"]}>26,99€</span>
-                                        </div>
-                                        <div className={styles["discount-container"]}>
-                                            <span>37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
+                            {historicalLowsContainer}
                         </article>
                     </div>
                 </div>

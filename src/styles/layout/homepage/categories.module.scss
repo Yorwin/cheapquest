@@ -28,18 +28,58 @@
     }
 }
 
+.enlace-categoria {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
 .category-container::before {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url('../../../resources/categories/Action/background.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     filter: brightness(0.6);
-    transform: scale(1.05);
     /* Compensa el "borde blureado" */
     z-index: -1;
+}
+
+.category-container.action::before {
+    background-image: url('../../../resources/categories/Action/background.png');
+}
+
+.category-container.arcade::before {
+    background-image: url('../../../resources/categories/Arcade/background.png');
+}
+
+.category-container.adventure::before {
+    background-image: url('../../../resources/categories/Aventura/background.jpg');
+}
+
+.category-container.strategy::before {
+    background-image: url('../../../resources/categories/Estrategia/background.jpg');
+}
+
+.category-container.fps::before {
+    background-image: url('../../../resources/categories/FPS/background.jpg');
+}
+
+.category-container.fight::before {
+    background-image: url('../../../resources/categories/Lucha/background.jpg');
+}
+
+.category-container.rpg::before {
+    background-image: url('../../../resources/categories/RPG/background.webp');
+}
+
+.category-container.single-player::before {
+    background-image: url('../../../resources/categories/Un_solo_jugador/background.jpg');
+}
+
+.category-container.vr::before {
+    background-image: url('../../../resources/categories/VR/background.png');
 }
 
 .category-container h2 {
@@ -59,12 +99,12 @@
 
 .image-character {
     position: absolute;
-    width: 90%;
-    height: 90%;
-    bottom: -6px;
-    right: -30px;
+    object-fit: contain;
+    width: 95%;
+    height: 95%;
+    bottom: 0px;
+    right: -60px;
     transition: transform 1s;
     z-index: 1;
     transform-origin: bottom left;
-    /* ✅ este es el truco */
 }
