@@ -100,27 +100,42 @@ const Categories = () => {
         },
     ]
 
-    const categoryContainer = categoriesItems.map((e) => {
-        return (
-            <div className="col-md-4 col-sm-12 mb-5 d-flex justify-content-start">
-                <div className={`${styles["category-container"]} ${styles[e.className]}`}>
+    const justifyClasses = [
+        "justify-content-start",
+        "justify-content-center",
+        "justify-content-end",
+    ];
+
+    const groupedCategories = [];
+
+    for (let i = 0; i < categoriesItems.length; i += 3) {
+        groupedCategories.push(categoriesItems.slice(i, i + 3));
+    }
+
+    const categoryContainer = groupedCategories.map((group) => (
+        group.map((e: any, index: number) => (
+            <div key={index} className={`col-md-4 col-sm-12 d-flex ${justifyClasses[index]} p-0 mb-4`}>
+                <div
+                    className={`${styles["category-container"]} ${styles[e.className]}`}
+                >
                     <Link className={styles["enlace-categoria"]} href={e.enlace}></Link>
                     <h2>{e.titulo}</h2>
-                    <Image
-                        src={e.character}
-                        alt="Plataforma de juego"
-                        className={styles["image-character"]}
-                    />
+                    <div className={styles["image-character-container"]}>
+                        <Image
+                            src={e.character}
+                            alt="Plataforma de juego"
+                            className={styles["image-character"]}
+                        />
+                    </div>
                 </div>
             </div>
-        )
-    });
+        ))
+    ));
 
     return <>
         <div className={styles["categories-container"]}>
             <div className="container-fluid">
                 <div className="row">
-
                     {/* Titulo */}
                     <h1 className={styles["title"]}>CATEGORIAS</h1>
                     {categoryContainer}

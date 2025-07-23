@@ -95,9 +95,9 @@ const NewOffers = () => {
         },
     ]
 
-    const newOffersContainerFirstRow = newOffers.slice(0, 5).map((e) => {
+    const newOffersContainerFirstRow = newOffers.slice(0, 5).map((e, index) => {
         return (
-            <div className="col">
+            <div className="col" key={index}>
                 <div className={styles["vertical-card-container"]}>
                     <div className={styles["image-container"]}>
                         <Image
@@ -134,9 +134,9 @@ const NewOffers = () => {
         )
     });
 
-    const newOffersContainerSecondRow = newOffers.slice(5, 10).map((e) => {
+    const newOffersContainerSecondRow = newOffers.slice(5, 10).map((e, index) => {
         return (
-            <div className="col">
+            <div className="col" key={index}>
                 <div className={styles["vertical-card-container"]}>
                     <div className={styles["image-container"]}>
                         <Image

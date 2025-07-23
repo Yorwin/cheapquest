@@ -95,9 +95,9 @@ const AgedLikeWine = () => {
         },
     ]
 
-    const agedLikeWineFirstRow = agedLikeWine.slice(0, 5).map((e) => {
+    const agedLikeWineFirstRow = agedLikeWine.slice(0, 5).map((e, index) => {
         return (
-            <div className="col">
+            <div className="col" key={index}>
                 <div className={styles["vertical-card-container"]}>
                     <div className={styles["image-container"]}>
                         <Image
@@ -134,9 +134,9 @@ const AgedLikeWine = () => {
         )
     });
 
-    const agedLikeWineSecondRow = agedLikeWine.slice(5, 10).map((e) => {
+    const agedLikeWineSecondRow = agedLikeWine.slice(5, 10).map((e, index) => {
         return (
-            <div className="col">
+            <div className="col" key={index}>
                 <div className={styles["vertical-card-container"]}>
                     <div className={styles["image-container"]}>
                         <Image
