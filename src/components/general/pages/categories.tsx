@@ -6,31 +6,14 @@ import Link from "next/link";
 
 /* Categorias */
 
-/* Accion */
 import characterAction from "@/resources/categories/Action/png-image.png"
-
-/* Arcade */
 import characterArcade from "@/resources/categories/Arcade/png-image.png"
-
-/* Adventure */
 import characterAdventure from "@/resources/categories/Aventura/png-image.png"
-
-/* Strategy */
 import characterStrategy from "@/resources/categories/Estrategia/png-image.png"
-
-/* FPS */
 import characterFPS from "@/resources/categories/FPS/png-image.png"
-
-/* Fight */
 import characterFight from "@/resources/categories/Lucha/png-image.png"
-
-/* RPG */
 import characterRPG from "@/resources/categories/RPG/png-image.png"
-
-/* Single Player */
 import characterSinglePlayer from "@/resources/categories/Un_solo_jugador/png-character.png"
-
-/* VR */
 import characterVR from "@/resources/categories/VR/png-character.png"
 
 

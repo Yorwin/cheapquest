@@ -3,16 +3,167 @@ import styles from "@/styles/layout/homepage/most-popular-offer.module.scss"
 import gameImage from "@/resources/offer-img/image.jpg"
 import Monitor from "@/resources/platforms/pc.svg"
 import Weboffer from "@/resources/pages/greenman-gaming.png"
+import GameStandardContainer from "../game-standard-container";
 import Image from "next/image";
-
 
 const MostPopularOffer = () => {
 
-    const mainCard = (
-        <div className={styles["main-gamecard-offer"]}>
+    const listInfo = [
+        {
+            gameImage: gameImage,
+            discount: "-45%",
+            oldPrice: "65,99€",
+            currentPrice: "29,69€",
+            webOffer: Weboffer,
+            platform: Monitor,
+        },
+        {
+            gameImage: gameImage,
+            discount: "-45%",
+            oldPrice: "65,99€",
+            currentPrice: "29,69€",
+            webOffer: Weboffer,
+            platform: Monitor,
+        },
+        {
+            gameImage: gameImage,
+            discount: "-45%",
+            oldPrice: "65,99€",
+            currentPrice: "29,69€",
+            webOffer: Weboffer,
+            platform: Monitor,
+
+        },
+        {
+            gameImage: gameImage,
+            discount: "-45%",
+            oldPrice: "65,99€",
+            currentPrice: "29,69€",
+            webOffer: Weboffer,
+            platform: Monitor,
+        },
+        {
+            gameImage: gameImage,
+            discount: "-45%",
+            oldPrice: "65,99€",
+            currentPrice: "29,69€",
+            webOffer: Weboffer,
+            platform: Monitor,
+        },
+        {
+            gameImage: gameImage,
+            discount: "-45%",
+            oldPrice: "65,99€",
+            currentPrice: "29,69€",
+            webOffer: Weboffer,
+            platform: Monitor,
+        },
+        {
+            gameImage: gameImage,
+            discount: "-45%",
+            oldPrice: "65,99€",
+            currentPrice: "29,69€",
+            webOffer: Weboffer,
+            platform: Monitor,
+        },
+        {
+            gameImage: gameImage,
+            discount: "-45%",
+            oldPrice: "65,99€",
+            currentPrice: "29,69€",
+            webOffer: Weboffer,
+            platform: Monitor,
+        },
+        {
+            gameImage: gameImage,
+            discount: "-45%",
+            oldPrice: "65,99€",
+            currentPrice: "29,69€",
+            webOffer: Weboffer,
+            platform: Monitor,
+
+        },
+        {
+            gameImage: gameImage,
+            discount: "-45%",
+            oldPrice: "65,99€",
+            currentPrice: "29,69€",
+            webOffer: Weboffer,
+            platform: Monitor,
+        },
+        {
+            gameImage: gameImage,
+            discount: "-45%",
+            oldPrice: "65,99€",
+            currentPrice: "29,69€",
+            webOffer: Weboffer,
+            platform: Monitor,
+        },
+    ]
+
+    const mainOffer = listInfo.slice(0, 1);
+
+    const mainOfferContainer = mainOffer.map((e, index) => (
+        <>
+            <GameStandardContainer
+                index={index}
+                gameImage={gameImage}
+                platform={e.platform}
+                discount={e.discount}
+                oldPrice={e.oldPrice}
+                currentPrice={e.currentPrice}
+                webOffer={e.webOffer}
+                classes={
+                    {
+                        mainGameCard: "main-gamecard-offer",
+                        iconContainer: "icon-container",
+                        priceOfferOriginContainer: "price-offerorigin-container",
+                        offerContainer: "offer-container",
+                        discount: "discount",
+                        prices: "prices",
+                        lastPrice: "last-price",
+                        currentPrice: "current-price",
+                        webOffer: "web-offer",
+                    }
+                }
+            />
+        </>
+    ));
+
+    const firstCouple = listInfo.slice(1, 3);
+    const secondCouple = listInfo.slice(3, 5);
+
+    const secondaryOffersFirstContainer = firstCouple.map((e, index) => (
+
+        <GameStandardContainer
+            index={index}
+            gameImage={gameImage}
+            platform={e.platform}
+            discount={e.discount}
+            oldPrice={e.oldPrice}
+            currentPrice={e.currentPrice}
+            webOffer={e.webOffer}
+            classes={
+                {
+                    mainGameCard: "secondary-gamecard-offer",
+                    iconContainer: "secondary-icon-container",
+                    priceOfferOriginContainer: "secondary-price-offerorigin-container",
+                    offerContainer: "offer-container",
+                    discount: "secondary-discount",
+                    prices: "secondary-prices",
+                    lastPrice: "secondary-last-price",
+                    currentPrice: "secondary-current-price",
+                    webOffer: "secondary-web-offer",
+                }
+            }
+        />
+    ));
+
+    const secondaryOffersSecondContainer = secondCouple.map((e, index) => (
+        <article className={styles["secondary-gamecard-offer"]} key={index}>
             <div className={styles["gameimage-container"]}>
                 <Image
-                    src={gameImage}
+                    src={e.gameImage}
                     alt="Imágen de juego"
                     fill
                     style={{ objectFit: 'cover' }}
@@ -20,26 +171,26 @@ const MostPopularOffer = () => {
             </div>
             <div className={styles["gameinfo-container"]}>
                 <div className={styles["platform"]}>
-                    <div className={styles["icon-container"]}>
+                    <div className={styles["secondary-icon-container"]}>
                         <Image
-                            src={Monitor}
+                            src={e.platform}
                             alt="Plataforma de juego"
                             fill
                             style={{ objectFit: 'cover' }}
                         />
                     </div>
                 </div>
-                <div className={styles["price-offerorigin-container"]}>
+                <div className={styles["secondary-price-offerorigin-container"]}>
                     <div className={styles["offer-container"]}>
-                        <span className={styles["discount"]}>-45%</span>
-                        <div className={styles["prices"]}>
-                            <span className={styles["last-price"]}>65,99€</span>
-                            <span className={styles["current-price"]}>29,69€</span>
+                        <span className={styles["secondary-discount"]}>{e.discount}</span>
+                        <div className={styles["secondary-prices"]}>
+                            <span className={styles["secondary-last-price"]}>{e.oldPrice}</span>
+                            <span className={styles["secondary-current-price"]}>{e.currentPrice}</span>
                         </div>
                     </div>
-                    <div className={styles["web-offer"]}>
+                    <div className={styles["secondary-web-offer"]}>
                         <Image
-                            src={Weboffer}
+                            src={e.webOffer}
                             alt="Plataforma de juego"
                             fill
                             style={{ objectFit: 'cover' }}
@@ -47,20 +198,30 @@ const MostPopularOffer = () => {
                     </div>
                 </div>
             </div>
-        </div>
-    )
+        </article>
+    ));
 
-    const secondaryCards = (
-        <>
-            <div className={styles["pairs-container"]}>
-                <div className={styles["pair"]}>
+    const justifyClasses = [
+        "justify-content-start",
+        "justify-content-center",
+        "justify-content-end",
+    ];
 
-                    {/* First Item */}
+    const slicedROL = listInfo.slice(5);
 
-                    <article className={styles["secondary-gamecard-offer"]}>
+    const groupedCategories = [];
+
+    for (let i = 0; i < slicedROL.length; i += 3) {
+        groupedCategories.push(slicedROL.slice(i, i + 3));
+    }
+    const listInfoContainer = groupedCategories.map((group) => {
+        return group.map((e, index) => {
+            return (
+                <section className={`col-md-4 col-sm-12 p-0 mt-4 d-flex ${justifyClasses[index]}`} key={index}>
+                    <article className={styles["rest-of-the-offers-container"]}>
                         <div className={styles["gameimage-container"]}>
                             <Image
-                                src={gameImage}
+                                src={e.gameImage}
                                 alt="Imágen de juego"
                                 fill
                                 style={{ objectFit: 'cover' }}
@@ -70,7 +231,7 @@ const MostPopularOffer = () => {
                             <div className={styles["platform"]}>
                                 <div className={styles["secondary-icon-container"]}>
                                     <Image
-                                        src={Monitor}
+                                        src={e.platform}
                                         alt="Plataforma de juego"
                                         fill
                                         style={{ objectFit: 'cover' }}
@@ -79,15 +240,15 @@ const MostPopularOffer = () => {
                             </div>
                             <div className={styles["secondary-price-offerorigin-container"]}>
                                 <div className={styles["offer-container"]}>
-                                    <span className={styles["secondary-discount"]}>-45%</span>
+                                    <span className={styles["secondary-discount"]}>{e.discount}</span>
                                     <div className={styles["secondary-prices"]}>
-                                        <span className={styles["secondary-last-price"]}>65,99€</span>
-                                        <span className={styles["secondary-current-price"]}>29,69€</span>
+                                        <span className={styles["secondary-last-price"]}>{e.oldPrice}</span>
+                                        <span className={styles["secondary-current-price"]}>{e.currentPrice}</span>
                                     </div>
                                 </div>
                                 <div className={styles["secondary-web-offer"]}>
                                     <Image
-                                        src={Weboffer}
+                                        src={e.webOffer}
                                         alt="Plataforma de juego"
                                         fill
                                         style={{ objectFit: 'cover' }}
@@ -96,414 +257,32 @@ const MostPopularOffer = () => {
                             </div>
                         </div>
                     </article>
-
-                    {/* Second Item */}
-
-                    <article className={styles["secondary-gamecard-offer"]}>
-                        <div className={styles["gameimage-container"]}>
-                            <Image
-                                src={gameImage}
-                                alt="Imágen de juego"
-                                fill
-                                style={{ objectFit: 'cover' }}
-                            />
-                        </div>
-                        <div className={styles["gameinfo-container"]}>
-                            <div className={styles["platform"]}>
-                                <div className={styles["secondary-icon-container"]}>
-                                    <Image
-                                        src={Monitor}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                            </div>
-                            <div className={styles["secondary-price-offerorigin-container"]}>
-                                <div className={styles["offer-container"]}>
-                                    <span className={styles["secondary-discount"]}>-45%</span>
-                                    <div className={styles["secondary-prices"]}>
-                                        <span className={styles["secondary-last-price"]}>65,99€</span>
-                                        <span className={styles["secondary-current-price"]}>29,69€</span>
-                                    </div>
-                                </div>
-                                <div className={styles["secondary-web-offer"]}>
-                                    <Image
-                                        src={Weboffer}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-
-                <div className={styles["pair"]}>
-
-                    {/* First Item */}
-
-                    <article className={styles["secondary-gamecard-offer"]}>
-                        <div className={styles["gameimage-container"]}>
-                            <Image
-                                src={gameImage}
-                                alt="Imágen de juego"
-                                fill
-                                style={{ objectFit: 'cover' }}
-                            />
-                        </div>
-                        <div className={styles["gameinfo-container"]}>
-                            <div className={styles["platform"]}>
-                                <div className={styles["secondary-icon-container"]}>
-                                    <Image
-                                        src={Monitor}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                            </div>
-                            <div className={styles["secondary-price-offerorigin-container"]}>
-                                <div className={styles["offer-container"]}>
-                                    <span className={styles["secondary-discount"]}>-45%</span>
-                                    <div className={styles["secondary-prices"]}>
-                                        <span className={styles["secondary-last-price"]}>65,99€</span>
-                                        <span className={styles["secondary-current-price"]}>29,69€</span>
-                                    </div>
-                                </div>
-                                <div className={styles["secondary-web-offer"]}>
-                                    <Image
-                                        src={Weboffer}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    {/* Second Item */}
-
-                    <article className={styles["secondary-gamecard-offer"]}>
-                        <div className={styles["gameimage-container"]}>
-                            <Image
-                                src={gameImage}
-                                alt="Imágen de juego"
-                                fill
-                                style={{ objectFit: 'cover' }}
-                            />
-                        </div>
-                        <div className={styles["gameinfo-container"]}>
-                            <div className={styles["platform"]}>
-                                <div className={styles["secondary-icon-container"]}>
-                                    <Image
-                                        src={Monitor}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                            </div>
-                            <div className={styles["secondary-price-offerorigin-container"]}>
-                                <div className={styles["offer-container"]}>
-                                    <span className={styles["secondary-discount"]}>-45%</span>
-                                    <div className={styles["secondary-prices"]}>
-                                        <span className={styles["secondary-last-price"]}>65,99€</span>
-                                        <span className={styles["secondary-current-price"]}>29,69€</span>
-                                    </div>
-                                </div>
-                                <div className={styles["secondary-web-offer"]}>
-                                    <Image
-                                        src={Weboffer}
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </>
-    )
+                </section>
+            );
+        });
+    });
 
     return <>
         <section className={styles["most-popular-offer-container"]}>
             <h1 className={styles["title"]}>OFERTAS MÁS POPULARES</h1>
             <div className={styles["offers-container"]}>
                 <div className={styles["first-row"]}>
-                    {mainCard}
-                    {secondaryCards}
-                </div>
+                    {mainOfferContainer}
 
-                {/* 1er Elemento */}
+                    <div className={styles["pairs-container"]}>
+                        <div className={styles["pair"]}>
+                            {secondaryOffersFirstContainer}
+                        </div>
+                        <div className={styles["pair"]}>
+                            {secondaryOffersSecondContainer}
+                        </div>
+                    </div>
+
+                </div>
 
                 <section className="container-fluid mb-5">
                     <div className="row">
-                        <section className="col-md-4 col-sm-12 p-0 mt-4 d-flex justify-content-start">
-                            <article className={styles["rest-of-the-offers-container"]}>
-                                <div className={styles["gameimage-container"]}>
-                                    <Image
-                                        src={gameImage}
-                                        alt="Imágen de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["gameinfo-container"]}>
-                                    <div className={styles["platform"]}>
-                                        <div className={styles["secondary-icon-container"]}>
-                                            <Image
-                                                src={Monitor}
-                                                alt="Plataforma de juego"
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className={styles["secondary-price-offerorigin-container"]}>
-                                        <div className={styles["offer-container"]}>
-                                            <span className={styles["secondary-discount"]}>-45%</span>
-                                            <div className={styles["secondary-prices"]}>
-                                                <span className={styles["secondary-last-price"]}>65,99€</span>
-                                                <span className={styles["secondary-current-price"]}>29,69€</span>
-                                            </div>
-                                        </div>
-                                        <div className={styles["secondary-web-offer"]}>
-                                            <Image
-                                                src={Weboffer}
-                                                alt="Plataforma de juego"
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </section>
-
-                        {/* 2do Elemento */}
-
-                        <section className="col-md-4 col-sm-12 p-0 mt-4 d-flex justify-content-start">
-                            <article className={styles["rest-of-the-offers-container"]}>
-                                <div className={styles["gameimage-container"]}>
-                                    <Image
-                                        src={gameImage}
-                                        alt="Imágen de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["gameinfo-container"]}>
-                                    <div className={styles["platform"]}>
-                                        <div className={styles["secondary-icon-container"]}>
-                                            <Image
-                                                src={Monitor}
-                                                alt="Plataforma de juego"
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className={styles["secondary-price-offerorigin-container"]}>
-                                        <div className={styles["offer-container"]}>
-                                            <span className={styles["secondary-discount"]}>-45%</span>
-                                            <div className={styles["secondary-prices"]}>
-                                                <span className={styles["secondary-last-price"]}>65,99€</span>
-                                                <span className={styles["secondary-current-price"]}>29,69€</span>
-                                            </div>
-                                        </div>
-                                        <div className={styles["secondary-web-offer"]}>
-                                            <Image
-                                                src={Weboffer}
-                                                alt="Plataforma de juego"
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </section>
-
-                        {/* 3er Elemento */}
-
-                        <section className="col-md-4 col-sm-12 p-0 mt-4 d-flex justify-content-start">
-                            <article className={styles["rest-of-the-offers-container"]}>
-                                <div className={styles["gameimage-container"]}>
-                                    <Image
-                                        src={gameImage}
-                                        alt="Imágen de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["gameinfo-container"]}>
-                                    <div className={styles["platform"]}>
-                                        <div className={styles["secondary-icon-container"]}>
-                                            <Image
-                                                src={Monitor}
-                                                alt="Plataforma de juego"
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className={styles["secondary-price-offerorigin-container"]}>
-                                        <div className={styles["offer-container"]}>
-                                            <span className={styles["secondary-discount"]}>-45%</span>
-                                            <div className={styles["secondary-prices"]}>
-                                                <span className={styles["secondary-last-price"]}>65,99€</span>
-                                                <span className={styles["secondary-current-price"]}>29,69€</span>
-                                            </div>
-                                        </div>
-                                        <div className={styles["secondary-web-offer"]}>
-                                            <Image
-                                                src={Weboffer}
-                                                alt="Plataforma de juego"
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </section>
-
-                        {/* 4to Elemento */}
-
-                        <section className="col-md-4 col-sm-12 p-0 mt-4 d-flex justify-content-start">
-                            <article className={styles["rest-of-the-offers-container"]}>
-                                <div className={styles["gameimage-container"]}>
-                                    <Image
-                                        src={gameImage}
-                                        alt="Imágen de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["gameinfo-container"]}>
-                                    <div className={styles["platform"]}>
-                                        <div className={styles["secondary-icon-container"]}>
-                                            <Image
-                                                src={Monitor}
-                                                alt="Plataforma de juego"
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className={styles["secondary-price-offerorigin-container"]}>
-                                        <div className={styles["offer-container"]}>
-                                            <span className={styles["secondary-discount"]}>-45%</span>
-                                            <div className={styles["secondary-prices"]}>
-                                                <span className={styles["secondary-last-price"]}>65,99€</span>
-                                                <span className={styles["secondary-current-price"]}>29,69€</span>
-                                            </div>
-                                        </div>
-                                        <div className={styles["secondary-web-offer"]}>
-                                            <Image
-                                                src={Weboffer}
-                                                alt="Plataforma de juego"
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </section>
-
-                        {/* 5to Elemento */}
-
-                        <section className="col-md-4 col-sm-12 p-0 mt-4 d-flex justify-content-start">
-                            <article className={styles["rest-of-the-offers-container"]}>
-                                <div className={styles["gameimage-container"]}>
-                                    <Image
-                                        src={gameImage}
-                                        alt="Imágen de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["gameinfo-container"]}>
-                                    <div className={styles["platform"]}>
-                                        <div className={styles["secondary-icon-container"]}>
-                                            <Image
-                                                src={Monitor}
-                                                alt="Plataforma de juego"
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className={styles["secondary-price-offerorigin-container"]}>
-                                        <div className={styles["offer-container"]}>
-                                            <span className={styles["secondary-discount"]}>-45%</span>
-                                            <div className={styles["secondary-prices"]}>
-                                                <span className={styles["secondary-last-price"]}>65,99€</span>
-                                                <span className={styles["secondary-current-price"]}>29,69€</span>
-                                            </div>
-                                        </div>
-                                        <div className={styles["secondary-web-offer"]}>
-                                            <Image
-                                                src={Weboffer}
-                                                alt="Plataforma de juego"
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </section>
-
-                        {/* 6to Elemento */}
-
-                        <section className="col-md-4 col-sm-12 p-0 mt-4 d-flex justify-content-start">
-                            <article className={styles["rest-of-the-offers-container"]}>
-                                <div className={styles["gameimage-container"]}>
-                                    <Image
-                                        src={gameImage}
-                                        alt="Imágen de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["gameinfo-container"]}>
-                                    <div className={styles["platform"]}>
-                                        <div className={styles["secondary-icon-container"]}>
-                                            <Image
-                                                src={Monitor}
-                                                alt="Plataforma de juego"
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className={styles["secondary-price-offerorigin-container"]}>
-                                        <div className={styles["offer-container"]}>
-                                            <span className={styles["secondary-discount"]}>-45%</span>
-                                            <div className={styles["secondary-prices"]}>
-                                                <span className={styles["secondary-last-price"]}>65,99€</span>
-                                                <span className={styles["secondary-current-price"]}>29,69€</span>
-                                            </div>
-                                        </div>
-                                        <div className={styles["secondary-web-offer"]}>
-                                            <Image
-                                                src={Weboffer}
-                                                alt="Plataforma de juego"
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </section>
+                        {listInfoContainer}
                     </div>
                 </section>
 
