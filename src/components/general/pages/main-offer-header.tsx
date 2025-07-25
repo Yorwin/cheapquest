@@ -5,13 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 const MainOffer = () => {
-    
+
     const offerInfo = {
         gameName: "Blacks ops 6",
-        discount : "-35%",
-        currentPrice : "34,99€"
+        discount: "-35%",
+        currentPrice: "34,99€"
     }
-    
+
     return (
         <>
             <article className={styles["main-offer-container"]}>

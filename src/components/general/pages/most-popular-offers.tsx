@@ -104,30 +104,28 @@ const MostPopularOffer = () => {
     const mainOffer = listInfo.slice(0, 1);
 
     const mainOfferContainer = mainOffer.map((e, index) => (
-        <>
-            <GameStandardContainer
-                index={index}
-                gameImage={gameImage}
-                platform={e.platform}
-                discount={e.discount}
-                oldPrice={e.oldPrice}
-                currentPrice={e.currentPrice}
-                webOffer={e.webOffer}
-                classes={
-                    {
-                        mainGameCard: "main-gamecard-offer",
-                        iconContainer: "icon-container",
-                        priceOfferOriginContainer: "price-offerorigin-container",
-                        offerContainer: "offer-container",
-                        discount: "discount",
-                        prices: "prices",
-                        lastPrice: "last-price",
-                        currentPrice: "current-price",
-                        webOffer: "web-offer",
-                    }
+        <GameStandardContainer
+            key={index}
+            gameImage={gameImage}
+            platform={e.platform}
+            discount={e.discount}
+            oldPrice={e.oldPrice}
+            currentPrice={e.currentPrice}
+            webOffer={e.webOffer}
+            classes={
+                {
+                    mainGameCard: "main-gamecard-offer",
+                    iconContainer: "icon-container",
+                    priceOfferOriginContainer: "price-offerorigin-container",
+                    offerContainer: "offer-container",
+                    discount: "discount",
+                    prices: "prices",
+                    lastPrice: "last-price",
+                    currentPrice: "current-price",
+                    webOffer: "web-offer",
                 }
-            />
-        </>
+            }
+        />
     ));
 
     const firstCouple = listInfo.slice(1, 3);
@@ -136,7 +134,7 @@ const MostPopularOffer = () => {
     const secondaryOffersFirstContainer = firstCouple.map((e, index) => (
 
         <GameStandardContainer
-            index={index}
+            key={index}
             gameImage={gameImage}
             platform={e.platform}
             discount={e.discount}

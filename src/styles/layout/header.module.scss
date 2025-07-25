@@ -14,7 +14,6 @@
     height: 100px;
     @include flex-center-elements-XY;
     background-color: map-get($colores, primary-color);
-    overflow: hidden;
 }
 
 .headers-list {
@@ -27,7 +26,7 @@
     gap: 2rem;
 
     li {
-        
+
         @include flex-center-elements-XY;
         white-space: nowrap;
         text-align: center;
@@ -50,6 +49,32 @@
 
     &:hover {
         text-decoration: $default-text-decoration;
+    }
+}
+
+.button-container {
+    position: relative;
+}
+
+.options {
+    position: absolute;
+    bottom: -70px;
+    left: 50%;
+    transform: translateX(-50%); // Centra horizontalmente
+
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    background-color: map-get($colores, complementary-color);
+    border-radius: .4rem;
+    padding: .8rem;
+    z-index: 15;
+
+    a {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-right: .5rem;
     }
 }
 

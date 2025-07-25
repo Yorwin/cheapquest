@@ -3,6 +3,7 @@ import styles from "@/styles/layout/header.module.scss"
 import Image from "next/image";
 import Link from "next/link";
 import LogoImg from "@/resources/logo/logo.png"
+import OffersButton from "./component/button-offers"
 
 const Header = () => {
     return (
@@ -30,10 +31,10 @@ const Header = () => {
                     {/* Links */}
 
                     <li>
-                        <button className={styles["button"]}>
+                        <OffersButton>
                             Ofertas
                             <i className="bi bi-caret-down"></i>
-                        </button>
+                        </OffersButton>
                     </li>
                     <li className={styles["next-releases-item"]}>
                         <Link href="/next-releases">Proximos Lanzamientos</Link>

@@ -3,7 +3,6 @@ import Image, { StaticImageData } from "next/image";
 import styles from "@/styles/layout/homepage/most-popular-offer.module.scss"
 
 interface GameStandardContainer {
-    index: number,
     gameImage: StaticImageData,
     platform: StaticImageData,
     discount: string,
@@ -17,9 +16,9 @@ interface Classes {
     [name: string]: string,
 }
 
-const GameStandardContainer = ({ index, gameImage, platform, discount, oldPrice, currentPrice, webOffer, classes }: GameStandardContainer) => {
+const GameStandardContainer = ({ gameImage, platform, discount, oldPrice, currentPrice, webOffer, classes }: GameStandardContainer) => {
     return (
-        <article className={styles[classes.mainGameCard]} key={index}>
+        <article className={styles[classes.mainGameCard]}>
             <div className={styles["gameimage-container"]}>
                 <Image
                     src={gameImage}
