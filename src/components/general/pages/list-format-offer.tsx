@@ -210,7 +210,7 @@ const ListFormatOffers = () => {
 
     const historicalLowsContainer = historicalLows.map((e, index) => {
         return (
-            <section className={styles["game-info-container"]}>
+            <section className={styles["game-info-container"]} key={index}>
                 <Link href={"#"} className={styles["enlace"]} />
                 <div className={styles["offer-number-container"]}>
                     <span className={styles["offer-number"]}>
