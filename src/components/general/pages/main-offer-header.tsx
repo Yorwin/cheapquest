@@ -1,22 +1,38 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/main-offer-header.module.scss"
-import MainImg from "@/resources/main-offer/image.webp";
 import Image from "next/image";
 import Link from "next/link";
+import { getMostPopularGame } from "@/utils/getMostPopularGame";
+import { getMostPopularGameOffer } from "@/utils/getMostPopularGameOffer";
 
-const MainOffer = () => {
+const MainOffer = async () => {
+
+    const getGame = await getMostPopularGame();
+    const getOffer = await getMostPopularGameOffer(getGame.game);
+
+    const bestDeal = getOffer.deals.reduce((best: any, current: any) => {
+        return parseFloat(current.price) < parseFloat(best.price) ? current : best;
+    });
 
     const offerInfo = {
-        gameName: "Blacks ops 6",
-        discount: "-35%",
-        currentPrice: "34,99€"
+        gameName: getOffer.info.title,
+        gameImage: getGame.backgroundImage,
+        discount: Math.floor(parseFloat(bestDeal.savings)) + '%',
+        currentPrice: bestDeal.price + "€",
     }
 
     return (
         <>
             <article className={styles["main-offer-container"]}>
                 <Link href="/producto/black-ops-6" className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
-                <Image src={MainImg} className={styles["main-header-image"]} alt="Mejor oferta y más popular del momento" />
+                <Image
+                    src={offerInfo.gameImage}
+                    alt="Mejor oferta y más popular del momento"
+                    className={styles["main-header-image"]}
+                    width={1920}
+                    height={1080}
+                    style={{ width: "100%", height: "100%" }}
+                />
                 <section className={styles["offer"]}>
                     <h1 className={styles["offer-title"]}>{offerInfo.gameName}</h1>
                     <div className={styles["price-container"]}>

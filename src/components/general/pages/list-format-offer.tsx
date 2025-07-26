@@ -3,6 +3,7 @@ import styles from "@/styles/layout/homepage/list-format-offers.module.scss"
 import Image from "next/image";
 import image from "@/resources/offer-img/images.jpeg"
 import Link from "next/link";
+import ListFormatContainer from "../list-format-offer-container";
 
 const ListFormatOffers = () => {
 
@@ -174,73 +175,33 @@ const ListFormatOffers = () => {
 
     const bestOffersByPercentageContainer = bestOffersByPercentage.map((e, index) => {
         return (
-            <section className={styles["game-info-container"]} key={index}>
-                <Link href={"#"} className={styles["enlace"]} />
-                <div className={styles["offer-number-container"]}>
-                    <span className={styles["offer-number"]}>
-                        {index + 1}
-                    </span>
-                </div>
-                <div className={styles["image-container"]}>
-                    <Image
-                        src={e.offerImage}
-                        alt="Plataforma de juego"
-                        fill
-                        style={{ objectFit: 'cover' }}
-                    />
-                </div>
-                <div className={styles["details"]}>
-                    <div className={styles["game-title-and-extra-info"]}>
-                        <h3>{e.gameTitle}</h3>
-                        <p>{e.gameDescription}</p>
-                    </div>
-                    <div className={styles["prices"]}>
-                        <div className={styles["prices-container"]}>
-                            <del className={styles["old-price"]}>{e.oldPrice}</del>
-                            <span className={styles["current-price"]}>{e.currentPrice}</span>
-                        </div>
-                        <div className={styles["discount-container"]}>
-                            <span>{e.discountPercentage}</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <ListFormatContainer
+                key={index}
+                index={index}
+                link="#"
+                offerImage={e.offerImage}
+                gameTitle={e.gameTitle}
+                gameDescription={e.gameDescription}
+                oldPrice={e.oldPrice}
+                currentPrice={e.currentPrice}
+                discountPercentage={e.discountPercentage}
+            />
         );
     });
 
     const historicalLowsContainer = historicalLows.map((e, index) => {
         return (
-            <section className={styles["game-info-container"]} key={index}>
-                <Link href={"#"} className={styles["enlace"]} />
-                <div className={styles["offer-number-container"]}>
-                    <span className={styles["offer-number"]}>
-                        {index + 1}
-                    </span>
-                </div>
-                <div className={styles["image-container"]}>
-                    <Image
-                        src={e.offerImage}
-                        alt="Plataforma de juego"
-                        fill
-                        style={{ objectFit: 'cover' }}
-                    />
-                </div>
-                <div className={styles["details"]}>
-                    <div className={styles["game-title-and-extra-info"]}>
-                        <h3>{e.gameTitle}</h3>
-                        <p>{e.gameDescription}</p>
-                    </div>
-                    <div className={styles["prices"]}>
-                        <div className={styles["prices-container"]}>
-                            <del className={styles["old-price"]}>{e.oldPrice}</del>
-                            <span className={styles["current-price"]}>{e.currentPrice}</span>
-                        </div>
-                        <div className={styles["discount-container"]}>
-                            <span>{e.discountPercentage}</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <ListFormatContainer
+                key={index}
+                index={index}
+                link="#"
+                offerImage={e.offerImage}
+                gameTitle={e.gameTitle}
+                gameDescription={e.gameDescription}
+                oldPrice={e.oldPrice}
+                currentPrice={e.currentPrice}
+                discountPercentage={e.discountPercentage}
+            />
         );
     });
 
