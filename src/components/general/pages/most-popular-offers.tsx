@@ -1,112 +1,47 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/most-popular-offer.module.scss"
-import gameImage from "@/resources/offer-img/image.jpg"
 import Monitor from "@/resources/platforms/pc.svg"
-import Weboffer from "@/resources/pages/greenman-gaming.png"
 import GameStandardContainer from "../game-standard-container";
 import Image from "next/image";
+import { storeLogos } from "@/resources/stores_icons"
+import getMostPopularOffers from "@/utils/getMostPopularOffers";
+import searchForStore from "@/utils/seachForStore";
+import getGameInfo from "@/utils/getGamesInfo";
 
-const MostPopularOffer = () => {
+const MostPopularOffer = async () => {
 
-    const listInfo = [
-        {
-            gameImage: gameImage,
-            discount: "-45%",
-            oldPrice: "65,99€",
-            currentPrice: "29,69€",
-            webOffer: Weboffer,
-            platform: Monitor,
-        },
-        {
-            gameImage: gameImage,
-            discount: "-45%",
-            oldPrice: "65,99€",
-            currentPrice: "29,69€",
-            webOffer: Weboffer,
-            platform: Monitor,
-        },
-        {
-            gameImage: gameImage,
-            discount: "-45%",
-            oldPrice: "65,99€",
-            currentPrice: "29,69€",
-            webOffer: Weboffer,
-            platform: Monitor,
+    const Offers: any[] = await getMostPopularOffers();
+    const listOfStores = await searchForStore();
 
-        },
-        {
-            gameImage: gameImage,
-            discount: "-45%",
-            oldPrice: "65,99€",
-            currentPrice: "29,69€",
-            webOffer: Weboffer,
-            platform: Monitor,
-        },
-        {
-            gameImage: gameImage,
-            discount: "-45%",
-            oldPrice: "65,99€",
-            currentPrice: "29,69€",
-            webOffer: Weboffer,
-            platform: Monitor,
-        },
-        {
-            gameImage: gameImage,
-            discount: "-45%",
-            oldPrice: "65,99€",
-            currentPrice: "29,69€",
-            webOffer: Weboffer,
-            platform: Monitor,
-        },
-        {
-            gameImage: gameImage,
-            discount: "-45%",
-            oldPrice: "65,99€",
-            currentPrice: "29,69€",
-            webOffer: Weboffer,
-            platform: Monitor,
-        },
-        {
-            gameImage: gameImage,
-            discount: "-45%",
-            oldPrice: "65,99€",
-            currentPrice: "29,69€",
-            webOffer: Weboffer,
-            platform: Monitor,
-        },
-        {
-            gameImage: gameImage,
-            discount: "-45%",
-            oldPrice: "65,99€",
-            currentPrice: "29,69€",
-            webOffer: Weboffer,
-            platform: Monitor,
+    let maxIndex = 10;
 
-        },
-        {
+    const listInfo = [];
+
+    for (let i = 0; i <= maxIndex; i++) {
+
+        const store = listOfStores.find((e: any) => e.storeID === Offers[i].storeID);
+        const storeImage = storeLogos.find((e: any) => e.name === store.storeName);
+
+        const getGame = await getGameInfo(Offers[i].title);
+
+        const gameImage = getGame.results[0].background_image;
+
+        listInfo.push({
             gameImage: gameImage,
-            discount: "-45%",
-            oldPrice: "65,99€",
-            currentPrice: "29,69€",
-            webOffer: Weboffer,
+            discount: `${Math.floor(Offers[i].savings)}%`,
+            oldPrice: Offers[i].normalPrice,
+            currentPrice: Offers[i].salePrice,
+            webOffer: storeImage ? storeImage.image : store.images.icon,
             platform: Monitor,
-        },
-        {
-            gameImage: gameImage,
-            discount: "-45%",
-            oldPrice: "65,99€",
-            currentPrice: "29,69€",
-            webOffer: Weboffer,
-            platform: Monitor,
-        },
-    ]
+        })
+    }
 
     const mainOffer = listInfo.slice(0, 1);
 
     const mainOfferContainer = mainOffer.map((e, index) => (
         <GameStandardContainer
             key={index}
-            gameImage={gameImage}
+            gameImage={e.gameImage}
             platform={e.platform}
             discount={e.discount}
             oldPrice={e.oldPrice}
@@ -135,7 +70,7 @@ const MostPopularOffer = () => {
 
         <GameStandardContainer
             key={index}
-            gameImage={gameImage}
+            gameImage={e.gameImage}
             platform={e.platform}
             discount={e.discount}
             oldPrice={e.oldPrice}
@@ -259,6 +194,8 @@ const MostPopularOffer = () => {
             );
         });
     });
+
+
 
     return <>
         <section className={styles["most-popular-offer-container"]}>

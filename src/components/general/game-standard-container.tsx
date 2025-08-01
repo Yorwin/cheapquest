@@ -8,7 +8,7 @@ interface GameStandardContainer {
     discount: string,
     oldPrice: string,
     currentPrice: string,
-    webOffer: StaticImageData,
+    webOffer: StaticImageData | string ,
     classes: Classes,
 }
 
