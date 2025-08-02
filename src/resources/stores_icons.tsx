@@ -21,6 +21,14 @@ import Uplay from "@/resources/stores/uplay.png"
 import Desura from "@/resources/stores/desura.png"
 import indiegamesstand from "@/resources/stores/Indiegamestand.jpg"
 import Fanatical from "@/resources/stores/fanatical.png"
+import gamesRocket from "@/resources/stores/gamesrocket.png"
+import gamesRepublic from "@/resources/stores/gamesrepublic.png"
+import silaGames from "@/resources/stores/silagames.png"
+import imperialGames from "@/resources/stores/ImperialGames.png"
+import winGameStore from "@/resources/stores/wingamestore.png"
+import funStockDigital from "@/resources/stores/funstuckdigital.png"
+import gameBillet from "@/resources/stores/gamebillet.png"
+import voidu from "@/resources/stores/voidu.png"
 
 export const storeLogos = [
     { name: 'Steam', image: steam },
@@ -38,15 +46,15 @@ export const storeLogos = [
     { name: 'Uplay', image: Uplay },
     { name: 'IndieGameStand', image: indiegamesstand },
     { name: 'Fanatical', image: Fanatical },
-    { name: 'Gamesrocket', image: Fanatical },
-    { name: 'Games Republic', image: Fanatical },
-    { name: 'SilaGames', image: Fanatical },
-    { name: 'Playfield', image: Fanatical },
-    { name: 'ImperialGames', image: Fanatical },
-    { name: 'WinGameStore', image: Fanatical },
-    { name: 'FunStockDigital', image: Fanatical },
-    { name: 'GameBillet', image: Fanatical },
-    { name: 'Voidu', image: Fanatical },
+    { name: 'Gamesrocket', image: gamesRocket },
+    { name: 'Games Republic', image: gamesRepublic },
+    { name: 'SilaGames', image: silaGames },
+    { name: 'Playfield', image: null },
+    { name: 'ImperialGames', image: imperialGames },
+    { name: 'WinGameStore', image: winGameStore },
+    { name: 'FunStockDigital', image: funStockDigital },
+    { name: 'GameBillet', image: gameBillet },
+    { name: 'Voidu', image: voidu },
     { name: 'Epic Games Store', image: epicGames },
     { name: 'Razer Game Store', image: razer },
     { name: 'Gamesplanet', image: gamesPlanet },

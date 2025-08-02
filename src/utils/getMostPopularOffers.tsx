@@ -41,7 +41,7 @@ function getTop11Deals(deals: any) {
         .slice(0, 11); // Tomar los primeros 11
 }
 
-const getMostPopularOffers = async () => {
+export const getMostPopularOffers = async () => {
 
     const responseOffers = await fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=DealRating", {
         cache: "default"
@@ -52,8 +52,6 @@ const getMostPopularOffers = async () => {
     }
 
     const response = await responseOffers.json();
-
-    /* Working on the Info */
 
     const deduplicated: any = {};
 
@@ -70,9 +68,38 @@ const getMostPopularOffers = async () => {
 
     const sortedByRelease = resultArray.sort((a: any, b: any) => b.releaseDate - a.releaseDate);
     const getDeals = getTop11Deals(resultArray);
-    console.log(getDeals);
 
     return getDeals;
 };
 
-export default getMostPopularOffers;
+export const getNewDeals = async () => {
+
+    const response = await fetch("https://www.cheapshark.com/api/1.0/deals?maxAge=12&onSale=1&sortBy=DealRating", {
+        cache: "force-cache"
+    })
+
+    if(!response.ok) {
+        throw new Error("Error when trying to fetch new offers");
+    }
+
+    const data = await response.json();
+    const newDeals = data.slice(0, 10);
+
+    return newDeals;
+};
+
+export const searchOffers = async (e : any) => {
+    
+    const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?title=${e}`, {
+        cache: "force-cache"
+    });
+
+    if(!response.ok) {
+        throw new Error("Error when trying to search for a deal for this game");
+    }
+
+    const data = await response.json();
+
+    return data
+};
+

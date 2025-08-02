@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export function getThreeYearsDateRange() {
     const today = new Date();
 
@@ -58,4 +60,133 @@ export function calculatePopularityScore(game: any): number {
         releaseScore * 5;                        // 5%
 
     return Math.round(Math.min(score, 100));
+}
+
+export function getTitlePrefix(title: string, length = 20) {
+    return title
+        .toLowerCase()
+        .replace(/[^a-z0-9 ]/gi, '')  // elimina símbolos como ":" o "-"
+        .substring(0, length)
+        .trim();
+}
+
+export interface RawgGame {
+    id: number;
+    slug: string;
+    name: string;
+    released: string;
+    tba: boolean;
+    background_image: StaticImageData;
+    rating: number;
+    rating_top: number;
+    ratings: Rating[];
+    ratings_count: number;
+    reviews_text_count: number;
+    added: number;
+    added_by_status: AddedByStatus;
+    metacritic: number | null;
+    playtime: number;
+    suggestions_count: number;
+    updated: string;
+    user_game: null;
+    reviews_count: number;
+    saturated_color: string;
+    dominant_color: string;
+    platforms: PlatformWrapper[];
+    parent_platforms: PlatformWrapper[];
+    genres: Genre[];
+    tags: Tag[];
+    esrb_rating: ESRBRating | null;
+    short_screenshots: Screenshot[];
+    stores: StoreEntry[];
+    clip: null;
+    score: null;
+}
+
+export interface Rating {
+    id: number;
+    title: string;
+    count: number;
+    percent: number;
+}
+
+export interface AddedByStatus {
+    yet?: number;
+    owned?: number;
+    beaten?: number;
+    toplay?: number;
+    dropped?: number;
+    playing?: number;
+}
+
+export interface PlatformWrapper {
+    platform: {
+        id: number;
+        name: string;
+        slug: string;
+    };
+}
+
+export interface Genre {
+    id: number;
+    name: string;
+    slug: string;
+}
+
+export interface Tag {
+    id: number;
+    name: string;
+    slug: string;
+    language: string;
+    games_count: number;
+    image_background: string;
+}
+
+export interface ESRBRating {
+    id: number;
+    name: string;
+    slug: string;
+    name_en: string;
+    name_ru: string;
+}
+
+export interface Screenshot {
+    id: number;
+    image: string;
+}
+
+export interface StoreEntry {
+    id: number;
+    store: {
+        id: number;
+        name: string;
+        slug: string;
+    };
+}
+
+export function filterUniqueGames(games: RawgGame[]): RawgGame[] {
+    const gameMap: Record<string, RawgGame> = {};
+
+    for (const game of games) {
+        const prefix = getTitlePrefix(game.name);
+
+        if (!gameMap[prefix]) {
+            gameMap[prefix] = game;
+        } else {
+            const existing = gameMap[prefix];
+
+            if (game.added > existing.added) {
+                gameMap[prefix] = game;
+            } else if (game.added === existing.added) {
+                const updatedA = new Date(game.updated);
+                const updatedB = new Date(existing.updated);
+
+                if (updatedA > updatedB) {
+                    gameMap[prefix] = game;
+                }
+            }
+        }
+    }
+
+    return Object.values(gameMap);
 }

@@ -4,7 +4,7 @@ import Monitor from "@/resources/platforms/pc.svg"
 import GameStandardContainer from "../game-standard-container";
 import Image from "next/image";
 import { storeLogos } from "@/resources/stores_icons"
-import getMostPopularOffers from "@/utils/getMostPopularOffers";
+import { getMostPopularOffers } from "@/utils/getMostPopularOffers";
 import searchForStore from "@/utils/seachForStore";
 import getGameInfo from "@/utils/getGamesInfo";
 

@@ -1,5 +1,6 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 import styles from "@/styles/layout/homepage/most-popular-offer.module.scss"
 
 interface GameStandardContainer {
@@ -8,7 +9,7 @@ interface GameStandardContainer {
     discount: string,
     oldPrice: string,
     currentPrice: string,
-    webOffer: StaticImageData | string ,
+    webOffer: StaticImageData | string,
     classes: Classes,
 }
 
@@ -19,6 +20,7 @@ interface Classes {
 const GameStandardContainer = ({ gameImage, platform, discount, oldPrice, currentPrice, webOffer, classes }: GameStandardContainer) => {
     return (
         <article className={styles[classes.mainGameCard]}>
+            <Link href="/producto/black-ops-6" className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
             <div className={styles["gameimage-container"]}>
                 <Image
                     src={gameImage}
