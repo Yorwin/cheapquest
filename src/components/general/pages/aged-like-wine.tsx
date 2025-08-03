@@ -7,12 +7,34 @@ import { getAgedLikeWineGames } from "@/utils/getMostPopularGame";
 import searchForStore from "@/utils/seachForStore";
 import { filterUniqueGames } from "@/functions/functions";
 import { storeLogos } from "@/resources/stores_icons";
-import Weboffer from "@/resources/pages/greenman-gaming.png"
+import NoData from "@/resources/no-data-found/error-404.jpg"
+import { GameDealWithoutScore, StoreLogo } from "@/types/types";
+
+const inCaseOfError: GameDealWithoutScore[] = [{
+    dealID: "error-deal-placeholder-id",
+    dealRating: "0.0",
+    gameID: "000000",
+    internalName: "ERROR_GAME_NOT_FOUND",
+    isOnSale: "0",
+    lastChange: Date.now() / 1000,
+    metacriticLink: "/game/error-placeholder/",
+    metacriticScore: "0",
+    normalPrice: "0.00",
+    releaseDate: 0,
+    salePrice: "0.00",
+    savings: "0.000000",
+    steamAppID: "0",
+    steamRatingCount: "0",
+    steamRatingPercent: "0",
+    steamRatingText: "No Reviews",
+    storeID: "1",
+    thumb: "https://via.placeholder.com/120x45/666666/ffffff?text=No+Image",
+    title: "Game Not Found - Error Placeholder"
+}]
 
 const AgedLikeWine = async () => {
 
     const listOfStores = await searchForStore();
-    const search = await searchOffers("Resident Evil V");
     const AgedLikeWineGames = await getAgedLikeWineGames();
 
     const filteredAgedLikeWineGames = filterUniqueGames(AgedLikeWineGames).slice(0, 10);
@@ -27,22 +49,22 @@ const AgedLikeWine = async () => {
 
     for (let i = 0; i <= filteredAgedLikeWineGames.length; i++) {
 
-        const selectedElement = filteredAgedLikeWineGames[i] ? filteredAgedLikeWineGames[i].name : null;
-        const search = await searchOffers(selectedElement);
+        const selectedElement = filteredAgedLikeWineGames[i] ? filteredAgedLikeWineGames[i].name : "";
+        const search = filteredAgedLikeWineGames[i] ? await searchOffers(selectedElement) : inCaseOfError;
 
-        const bestDeal = search.reduce((best: any, current: any) => {
+        const bestDeal = search.reduce((best: GameDealWithoutScore, current: GameDealWithoutScore) => {
             const bestSavings = parseFloat(best.savings);
             const currentSavings = parseFloat(current.savings);
 
             return currentSavings > bestSavings ? current : best;
         });
 
-        const store = listOfStores.find((e: any) => e.storeID === bestDeal.storeID);
-        const storeImage = storeLogos.find((e: any) => e.name === store.storeName);
+        const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === bestDeal.storeID);
+        const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
 
         agedLikeWine.push({
-            offerImage: filteredAgedLikeWineGames[i] ? filteredAgedLikeWineGames[i].background_image : null,
-            gameTitle: filteredAgedLikeWineGames[i] ? filteredAgedLikeWineGames[i].name : null,
+            offerImage: filteredAgedLikeWineGames[i] ? filteredAgedLikeWineGames[i].background_image : NoData,
+            gameTitle: filteredAgedLikeWineGames[i] ? filteredAgedLikeWineGames[i].name : bestDeal.title,
             currentPrice: bestDeal.salePrice,
             discountPercentage: `${Number(bestDeal.savings).toFixed(0)}%`,
             platform: platforms.PC,

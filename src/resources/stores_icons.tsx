@@ -29,8 +29,9 @@ import winGameStore from "@/resources/stores/wingamestore.png"
 import funStockDigital from "@/resources/stores/funstuckdigital.png"
 import gameBillet from "@/resources/stores/gamebillet.png"
 import voidu from "@/resources/stores/voidu.png"
+import { StoreLogo } from "@/types/types"
 
-export const storeLogos = [
+export const storeLogos : StoreLogo[] = [
     { name: 'Steam', image: steam },
     { name: 'GamersGate', image: gamersGate },
     { name: 'GreenManGaming', image: greenManGaming },

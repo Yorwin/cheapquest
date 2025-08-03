@@ -1,4 +1,5 @@
 import { StaticImageData } from "next/image";
+import { RawgGame, GameDeal, GameDealWithoutScore } from "@/types/types";
 
 export function getThreeYearsDateRange() {
     const today = new Date();
@@ -17,7 +18,8 @@ export function getThreeYearsDateRange() {
     return `${rangeStart},${rangeEnd}`;
 }
 
-export function calculatePopularityScore(game: any): number {
+export function calculatePopularityScore(game: RawgGame): number {
+    
     const {
         added_by_status = {},
         released,
@@ -70,100 +72,6 @@ export function getTitlePrefix(title: string, length = 20) {
         .trim();
 }
 
-export interface RawgGame {
-    id: number;
-    slug: string;
-    name: string;
-    released: string;
-    tba: boolean;
-    background_image: StaticImageData;
-    rating: number;
-    rating_top: number;
-    ratings: Rating[];
-    ratings_count: number;
-    reviews_text_count: number;
-    added: number;
-    added_by_status: AddedByStatus;
-    metacritic: number | null;
-    playtime: number;
-    suggestions_count: number;
-    updated: string;
-    user_game: null;
-    reviews_count: number;
-    saturated_color: string;
-    dominant_color: string;
-    platforms: PlatformWrapper[];
-    parent_platforms: PlatformWrapper[];
-    genres: Genre[];
-    tags: Tag[];
-    esrb_rating: ESRBRating | null;
-    short_screenshots: Screenshot[];
-    stores: StoreEntry[];
-    clip: null;
-    score: null;
-}
-
-export interface Rating {
-    id: number;
-    title: string;
-    count: number;
-    percent: number;
-}
-
-export interface AddedByStatus {
-    yet?: number;
-    owned?: number;
-    beaten?: number;
-    toplay?: number;
-    dropped?: number;
-    playing?: number;
-}
-
-export interface PlatformWrapper {
-    platform: {
-        id: number;
-        name: string;
-        slug: string;
-    };
-}
-
-export interface Genre {
-    id: number;
-    name: string;
-    slug: string;
-}
-
-export interface Tag {
-    id: number;
-    name: string;
-    slug: string;
-    language: string;
-    games_count: number;
-    image_background: string;
-}
-
-export interface ESRBRating {
-    id: number;
-    name: string;
-    slug: string;
-    name_en: string;
-    name_ru: string;
-}
-
-export interface Screenshot {
-    id: number;
-    image: string;
-}
-
-export interface StoreEntry {
-    id: number;
-    store: {
-        id: number;
-        name: string;
-        slug: string;
-    };
-}
-
 export function filterUniqueGames(games: RawgGame[]): RawgGame[] {
     const gameMap: Record<string, RawgGame> = {};
 
@@ -189,4 +97,47 @@ export function filterUniqueGames(games: RawgGame[]): RawgGame[] {
     }
 
     return Object.values(gameMap);
+}
+
+export function getTop11Deals(deals: GameDealWithoutScore[]) {
+
+    const now = Date.now() / 1000; // Timestamp actual
+    const dealsWithScore = deals.map((deal: GameDealWithoutScore) => {
+
+        // Convertir a números
+        const savings: number = deal.savings ? parseFloat(deal.savings) : 0;
+        const reviews: number = deal.steamRatingCount ? parseInt(deal.steamRatingCount) : 0;
+        const rating: number = deal.steamRatingPercent ? parseInt(deal.steamRatingPercent) : 0;
+        const releaseDate: number = deal.releaseDate ? deal.releaseDate : 0;
+
+        // Calcular score simple (0-100)
+        let score = 0;
+
+        // Ahorro (0-40 puntos) - más ahorro = más puntos
+        score += (savings / 100) * 40;
+
+        // Popularidad (0-35 puntos) - más reviews y mejor rating = más puntos
+        if (reviews > 0 && rating > 0) {
+            const popularityBonus = Math.min(Math.log10(reviews), 5) / 5; // Max 5 puntos por reviews
+            score += (rating / 100) * 25 + popularityBonus * 10;
+        }
+
+        // Recencia (0-25 puntos) - juegos más nuevos = más puntos
+        if (releaseDate > 0) {
+            const yearsOld = (now - releaseDate) / (365 * 24 * 60 * 60);
+            if (yearsOld <= 2) score += 25;
+            else if (yearsOld <= 5) score += 15;
+            else if (yearsOld <= 10) score += 10;
+            else score += 5;
+        }
+
+        return {
+            ...deal,
+            finalScore: score
+        };
+    })
+
+    const result: GameDeal[] = dealsWithScore.sort((a: GameDeal, b: GameDeal) => b.finalScore - a.finalScore).slice(0, 11);
+
+    return result;
 }
