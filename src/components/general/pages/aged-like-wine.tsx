@@ -80,6 +80,7 @@ const AgedLikeWine = async () => {
                         <Image
                             src={e.offerImage ? e.offerImage : offerImage}
                             alt="Plataforma de juego"
+                            sizes="50vw"
                             fill
                             style={{ objectFit: 'cover' }}
                         />
@@ -99,6 +100,7 @@ const AgedLikeWine = async () => {
                             <div className={styles["web-offer"]}>
                                 <Image
                                     src={e.page}
+                                    sizes="50vw"
                                     alt="Plataforma de juego"
                                     fill
                                     style={{ objectFit: 'cover' }}
@@ -118,6 +120,7 @@ const AgedLikeWine = async () => {
                     <div className={styles["image-container"]}>
                         <Image
                             src={e.offerImage ? e.offerImage : offerImage}
+                            sizes="50vw"
                             alt="Plataforma de juego"
                             fill
                             style={{ objectFit: 'cover' }}
@@ -138,6 +141,7 @@ const AgedLikeWine = async () => {
                             <div className={styles["web-offer"]}>
                                 <Image
                                     src={e.page}
+                                    sizes="50vw"
                                     alt="Plataforma de juego"
                                     fill
                                     style={{ objectFit: 'cover' }}

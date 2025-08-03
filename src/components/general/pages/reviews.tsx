@@ -14,6 +14,7 @@ const Reviews = () => {
                                 <div className={styles["image-container"]}>
                                     <Image
                                         src={ProfileImg}
+                                        sizes="50vw"
                                         alt="Plataforma de juego"
                                         fill
                                         style={{ objectFit: 'cover' }}
@@ -44,6 +45,7 @@ const Reviews = () => {
                                 <div className={styles["image-container"]}>
                                     <Image
                                         src={ProfileImg}
+                                        sizes="50vw"
                                         alt="Plataforma de juego"
                                         fill
                                         style={{ objectFit: 'cover' }}
@@ -74,6 +76,7 @@ const Reviews = () => {
                                 <div className={styles["image-container"]}>
                                     <Image
                                         src={ProfileImg}
+                                        sizes="50vw"
                                         alt="Plataforma de juego"
                                         fill
                                         style={{ objectFit: 'cover' }}
@@ -104,6 +107,7 @@ const Reviews = () => {
                                 <div className={styles["image-container"]}>
                                     <Image
                                         src={ProfileImg}
+                                        sizes="50vw"
                                         alt="Plataforma de juego"
                                         fill
                                         style={{ objectFit: 'cover' }}

@@ -1,5 +1,6 @@
 @use '../../_variables/variables' as *;
 @use '../../_variables/mixins' as *;
+@use 'sass:map';
 
 .main-offer-container {
     height: 540px;
@@ -28,7 +29,7 @@
 }
 
 .offer-title {
-    color: map-get($colores, font-dark-background-color);
+    color: map.get($colores, font-dark-background-color);
     font-family: var(--font-gontSerrat);
     font-weight: 700;
     font-size: 2.8rem;

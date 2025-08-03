@@ -24,6 +24,7 @@ const GameStandardContainer = ({ gameImage, platform, discount, oldPrice, curren
             <div className={styles["gameimage-container"]}>
                 <Image
                     src={gameImage}
+                    sizes="50vw"
                     alt="Imágen de juego"
                     fill
                     style={{ objectFit: 'cover' }}
@@ -34,6 +35,7 @@ const GameStandardContainer = ({ gameImage, platform, discount, oldPrice, curren
                     <div className={styles[classes.iconContainer]}>
                         <Image
                             src={platform}
+                            sizes="50vw"
                             alt="Plataforma de juego"
                             fill
                             style={{ objectFit: 'cover' }}
@@ -51,6 +53,7 @@ const GameStandardContainer = ({ gameImage, platform, discount, oldPrice, curren
                     <div className={styles[classes.webOffer]}>
                         <Image
                             src={webOffer}
+                            sizes="50vw"
                             alt="Plataforma de juego"
                             fill
                             style={{ objectFit: 'cover' }}

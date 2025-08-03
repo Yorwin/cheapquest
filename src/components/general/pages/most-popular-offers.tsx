@@ -97,6 +97,7 @@ const MostPopularOffer = async () => {
             <div className={styles["gameimage-container"]}>
                 <Image
                     src={e.gameImage}
+                    sizes="50vw"
                     alt="Imágen de juego"
                     fill
                     style={{ objectFit: 'cover' }}
@@ -107,6 +108,7 @@ const MostPopularOffer = async () => {
                     <div className={styles["secondary-icon-container"]}>
                         <Image
                             src={e.platform}
+                            sizes="50vw"
                             alt="Plataforma de juego"
                             fill
                             style={{ objectFit: 'cover' }}
@@ -124,6 +126,7 @@ const MostPopularOffer = async () => {
                     <div className={styles["secondary-web-offer"]}>
                         <Image
                             src={e.webOffer}
+                            sizes="50vw"
                             alt="Plataforma de juego"
                             fill
                             style={{ objectFit: 'cover' }}
@@ -155,6 +158,7 @@ const MostPopularOffer = async () => {
                         <div className={styles["gameimage-container"]}>
                             <Image
                                 src={e.gameImage}
+                                sizes="50vw"
                                 alt="Imágen de juego"
                                 fill
                                 style={{ objectFit: 'cover' }}
@@ -165,6 +169,7 @@ const MostPopularOffer = async () => {
                                 <div className={styles["secondary-icon-container"]}>
                                     <Image
                                         src={e.platform}
+                                        sizes="50vw"
                                         alt="Plataforma de juego"
                                         fill
                                         style={{ objectFit: 'cover' }}
@@ -182,6 +187,7 @@ const MostPopularOffer = async () => {
                                 <div className={styles["secondary-web-offer"]}>
                                     <Image
                                         src={e.webOffer}
+                                        sizes="50vw"
                                         alt="Plataforma de juego"
                                         fill
                                         style={{ objectFit: 'cover' }}

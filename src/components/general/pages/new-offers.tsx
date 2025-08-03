@@ -47,6 +47,7 @@ const NewOffers = async () => {
                     <div className={styles["image-container"]}>
                         <Image
                             src={e.offerImage}
+                            sizes="50vw"
                             alt="Plataforma de juego"
                             fill
                             style={{ objectFit: 'cover' }}
@@ -67,6 +68,7 @@ const NewOffers = async () => {
                             <div className={styles["web-offer"]}>
                                 <Image
                                     src={e.page}
+                                    sizes="50vw"
                                     alt="Plataforma de juego"
                                     fill
                                     style={{ objectFit: 'cover' }}
@@ -86,6 +88,7 @@ const NewOffers = async () => {
                     <div className={styles["image-container"]}>
                         <Image
                             src={e.offerImage}
+                            sizes="50vw"
                             alt="Plataforma de juego"
                             fill
                             style={{ objectFit: 'cover' }}
@@ -106,6 +109,7 @@ const NewOffers = async () => {
                             <div className={styles["web-offer"]}>
                                 <Image
                                     src={e.page}
+                                    sizes="50vw"
                                     alt="Plataforma de juego"
                                     fill
                                     style={{ objectFit: 'cover' }}

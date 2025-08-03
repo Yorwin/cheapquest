@@ -1,14 +1,15 @@
 @use '../../_variables/variables' as *;
 @use '../../_variables/mixins' as *;
+@use 'sass:map';
 
 .most-popular-offer-container {
-    background-color: map-get($colores, complementary-color);
+    background-color: map.get($colores, complementary-color);
     padding: $homepage-offers-padding;
 }
 
 .title {
     margin-bottom: 1rem;
-    color: map-get($colores, font-dark-background-color);
+    color: map.get($colores, font-dark-background-color);
     @include offers-title-typography;
 }
 
@@ -59,7 +60,7 @@
     flex-direction: column;
     height: 35%;
     width: 100%;
-    background-color: map-get($colores, primary-color);
+    background-color: map.get($colores, primary-color);
 }
 
 .platform {
@@ -68,7 +69,7 @@
     align-items: center;
     height: 35%;
     width: 100%;
-    background-color: map-get($colores, platform-color)
+    background-color: map.get($colores, platform-color)
 }
 
 .price-offerorigin-container {
@@ -190,8 +191,8 @@
 
 .button-container button {
     border: none;
-    background-color: map-get($colores, primary-color);
-    color: map-get($colores, font-dark-background-color);
+    background-color: map.get($colores, primary-color);
+    color: map.get($colores, font-dark-background-color);
     font-weight: 700;
     font-family: var(--font-gontSerrat);
     font-size: 1.6rem;

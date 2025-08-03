@@ -1,9 +1,10 @@
 @use '../../_variables/variables' as *;
 @use '../../_variables/mixins' as *;
+@use 'sass:map';
 
 .reviews-container {
     width: 100%;
-    background-color: map-get($colores, complementary-color);
+    background-color: map.get($colores, complementary-color);
     padding: $homepage-offers-padding;
 }
 
@@ -14,7 +15,7 @@
     align-items: flex-start;
     height: 250px;
     width: 97%;
-    background-color: map-get($colores, dark-background-color);
+    background-color: map.get($colores, dark-background-color);
     border-radius: 20px;
     padding: 2rem 1.4rem;
 }
@@ -40,7 +41,7 @@
 .user-info h3 {
     font-family: var(--font-gontSerrat);
     font-size: 1.2rem;
-    color: map-get($colores, font-dark-background-color);
+    color: map.get($colores, font-dark-background-color);
     margin-bottom: 0rem;
 }
 
@@ -55,7 +56,7 @@
 }
 
 .description {
-    color: map-get($colores, font-dark-background-color);
+    color: map.get($colores, font-dark-background-color);
     font-family: var(--font-timeless);
     font-weight: 500;
 }
@@ -64,5 +65,5 @@
     font-family: var(--font-gontSerrat);
     font-size: 1.1rem;
     font-weight: 600;
-    color: map-get($colores, font-dark-background-color);
+    color: map.get($colores, font-dark-background-color);
 }

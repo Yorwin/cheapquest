@@ -1,4 +1,5 @@
 @use '../_variables/variables' as *;
+@use 'sass:map';
 
 @mixin flex-center-elements-XY {
     display: flex;
@@ -14,16 +15,16 @@
 }
 
 @mixin discount-style($padding-size, $font-weight, $font-size, $font-family) {
-    background-color: map-get($colores, discount-color);
+    background-color: map.get($colores, discount-color);
     padding: $padding-size;
-    color: map-get($colores, font-dark-background-color);
+    color: map.get($colores, font-dark-background-color);
     font-family: $font-family;
     font-weight: $font-weight;
     font-size: $font-size;
 }
 
 @mixin current-price-style($font-size, $font-weight , $letter-spacing, $margin-left, $font-family) {
-    color: map-get($colores, color-price);
+    color: map.get($colores, color-price);
     font-weight: $font-weight;
     font-family: $font-family;
     font-size: $font-size;
@@ -32,7 +33,7 @@
 }
 
 @mixin cancelled-price ($font-size, $font-weight) {
-    color: map-get($colores, secondary-color);
+    color: map.get($colores, secondary-color);
     font-size: $font-size;
     font-weight: $font-weight;
     text-decoration: line-through;

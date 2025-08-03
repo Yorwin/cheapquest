@@ -1,16 +1,17 @@
 @use '../../_variables/variables' as *;
 @use '../../_variables/mixins' as *;
+@use 'sass:map';
 
 .categories-container {
     width: 100%;
     padding: $homepage-offers-padding;
-    background-color: map-get($colores, dark-background-color);
+    background-color: map.get($colores, dark-background-color);
 }
 
 .title {
     margin-bottom: 2rem;
     padding-left: 0rem;
-    color: map-get($colores, font-dark-background-color);
+    color: map.get($colores, font-dark-background-color);
     @include offers-title-typography;
     z-index: 2;
 }
@@ -88,7 +89,7 @@
     transform: translateY(-50%);
     left: 2rem;
     /* Puedes ajustar el valor para ubicarlo horizontalmente */
-    color: map-get($colores, font-dark-background-color);
+    color: map.get($colores, font-dark-background-color);
     font-size: 2rem;
     font-family: var(--font-gontSerrat);
     font-weight: 700;

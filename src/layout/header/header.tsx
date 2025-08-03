@@ -17,14 +17,14 @@ const Header = () => {
 
                     <li className={styles["image-item"]}>
                         <div className={styles["image-container"]}>
-                            <Link href="/" >
-                                <Image
-                                    src={LogoImg}
-                                    alt="Logo"
-                                    fill
-                                    style={{ objectFit: 'cover' }}
-                                />
-                            </Link>
+                            <Link href="/" />
+                            <Image
+                                src={LogoImg}
+                                sizes="50vw"
+                                alt="Logo"
+                                fill
+                                style={{ objectFit: 'cover' }}
+                            />
                         </div>
                     </li>
 

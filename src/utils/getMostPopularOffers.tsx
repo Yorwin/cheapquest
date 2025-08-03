@@ -42,7 +42,7 @@ export const getNewDeals = async () => {
     }
 
     const data = await response.json();
-    const newDeals : GameDealWithoutScore = data.slice(0, 10);
+    const newDeals : GameDealWithoutScore[] = data.slice(0, 10);
 
     return newDeals;
 };

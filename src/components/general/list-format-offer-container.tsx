@@ -26,6 +26,7 @@ const ListFormatContainer = ({ index, offerImage, gameTitle, link, gameDescripti
             <div className={styles["image-container"]}>
                 <Image
                     src={offerImage}
+                    sizes="50vw"
                     alt="Plataforma de juego"
                     fill
                     style={{ objectFit: 'cover' }}
