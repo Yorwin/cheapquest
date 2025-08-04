@@ -1,5 +1,10 @@
 import { StaticImageData } from "next/image";
 
+export enum Currency {
+    Dollars = "USD",
+    Euros = "EUR",
+}
+
 export interface RawgGame {
     id: number;
     slug: string;

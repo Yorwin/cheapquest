@@ -9,6 +9,8 @@ import { filterUniqueGames } from "@/functions/functions";
 import { storeLogos } from "@/resources/stores_icons";
 import NoData from "@/resources/no-data-found/error-404.jpg"
 import { GameDealWithoutScore, StoreLogo } from "@/types/types";
+import currencyRateCalculator from "@/utils/convertCurrency";
+import { Currency } from "@/types/types";
 
 const inCaseOfError: GameDealWithoutScore[] = [{
     dealID: "error-deal-placeholder-id",
@@ -59,13 +61,16 @@ const AgedLikeWine = async () => {
             return currentSavings > bestSavings ? current : best;
         });
 
+        const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, bestDeal.salePrice);
+        const resultPrice = (convertSalePrice).toFixed(2);
+
         const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === bestDeal.storeID);
         const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
 
         agedLikeWine.push({
             offerImage: filteredAgedLikeWineGames[i] ? filteredAgedLikeWineGames[i].background_image : NoData,
             gameTitle: filteredAgedLikeWineGames[i] ? filteredAgedLikeWineGames[i].name : bestDeal.title,
-            currentPrice: bestDeal.salePrice,
+            currentPrice: `${resultPrice}€`,
             discountPercentage: `${Number(bestDeal.savings).toFixed(0)}%`,
             platform: platforms.PC,
             page: storeImage ? storeImage.image : store.images.icon,

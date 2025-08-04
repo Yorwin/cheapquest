@@ -19,7 +19,7 @@ export function getThreeYearsDateRange() {
 }
 
 export function calculatePopularityScore(game: RawgGame): number {
-    
+
     const {
         added_by_status = {},
         released,
@@ -140,4 +140,31 @@ export function getTop11Deals(deals: GameDealWithoutScore[]) {
     const result: GameDeal[] = dealsWithScore.sort((a: GameDeal, b: GameDeal) => b.finalScore - a.finalScore).slice(0, 11);
 
     return result;
+}
+
+export function removeDuplicatesByBestPrice(deals: GameDeal[]): GameDeal[] {
+    const gameMap = new Map<string, GameDeal>();
+
+    for (const deal of deals) {
+        // Usamos los primeros 15 caracteres del título como clave
+        const titlePrefix = deal.title.substring(0, 15).toLowerCase();
+        const existingDeal = gameMap.get(titlePrefix);
+
+        if (!existingDeal) {
+            // Si no existe, lo agregamos
+            gameMap.set(titlePrefix, deal);
+        } else {
+            // Si existe, comparamos precios y nos quedamos con el mejor
+            const currentPrice = parseFloat(deal.salePrice);
+            const existingPrice = parseFloat(existingDeal.salePrice);
+
+            if (currentPrice < existingPrice) {
+                // El precio actual es mejor (menor), reemplazamos
+                gameMap.set(titlePrefix, deal);
+            }
+            // Si el precio existente es mejor o igual, no hacemos nada
+        }
+    }
+
+    return Array.from(gameMap.values());
 }

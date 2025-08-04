@@ -29,8 +29,8 @@ const MostPopularOffer = async () => {
         listInfo.push({
             gameImage: gameImage,
             discount: `${Math.floor(Offers[i].savings)}%`,
-            oldPrice: Offers[i].normalPrice,
-            currentPrice: Offers[i].salePrice,
+            oldPrice: `${Offers[i].normalPrice}€`,
+            currentPrice: `${Offers[i].salePrice}€`,
             webOffer: storeImage ? storeImage.image : store.images.icon,
             platform: Monitor,
         })

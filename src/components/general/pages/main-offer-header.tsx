@@ -2,8 +2,10 @@ import React from "react";
 import styles from "@/styles/layout/homepage/main-offer-header.module.scss"
 import Image from "next/image";
 import Link from "next/link";
+import { Currency } from "@/types/types";
 import { getMostPopularGame } from "@/utils/getMostPopularGame";
 import { getMostPopularGameOffer } from "@/utils/getMostPopularGameOffer";
+import currencyRateCalculator from "@/utils/convertCurrency";
 
 const MainOffer = async () => {
 
@@ -14,11 +16,14 @@ const MainOffer = async () => {
         return parseFloat(current.price) < parseFloat(best.price) ? current : best;
     });
 
+    const convertPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, bestDeal.price);
+    const resultPrice = (convertPrice).toFixed(2);
+
     const offerInfo = {
         gameName: getOffer.info.title,
         gameImage: getGame.backgroundImage,
         discount: Math.floor(parseFloat(bestDeal.savings)) + '%',
-        currentPrice: bestDeal.price + "€",
+        currentPrice: resultPrice + "€",
     }
 
     return (

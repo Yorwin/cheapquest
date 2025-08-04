@@ -1,5 +1,5 @@
 import "server-only";
-import { getTop11Deals } from "@/functions/functions";
+import { getTop11Deals, removeDuplicatesByBestPrice } from "@/functions/functions";
 import { Top11Deals, GameDealWithoutScore } from "@/types/types";
 
 export const getMostPopularOffers = async () => {
@@ -34,7 +34,7 @@ export const getMostPopularOffers = async () => {
 export const getNewDeals = async () => {
 
     const response = await fetch("https://www.cheapshark.com/api/1.0/deals?maxAge=12&onSale=1&sortBy=DealRating", {
-        cache: "force-cache"
+        cache: "default"
     })
 
     if (!response.ok) {
@@ -42,7 +42,10 @@ export const getNewDeals = async () => {
     }
 
     const data = await response.json();
-    const newDeals : GameDealWithoutScore[] = data.slice(0, 10);
+    
+    const removeDuplicates = removeDuplicatesByBestPrice(data);
+
+    const newDeals: GameDealWithoutScore[] = removeDuplicates.slice(0, 10);
 
     return newDeals;
 };

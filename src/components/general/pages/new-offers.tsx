@@ -6,6 +6,8 @@ import { storeLogos } from "@/resources/stores_icons"
 import { getNewDeals } from "@/utils/getMostPopularOffers";
 import getGameInfo from "@/utils/getGamesInfo";
 import searchForStore from "@/utils/seachForStore";
+import currencyRateCalculator from "@/utils/convertCurrency";
+import { Currency } from "@/types/types";
 
 const NewOffers = async () => {
 
@@ -28,10 +30,13 @@ const NewOffers = async () => {
         const gameInfo = await getGameInfo(newDeals[i].title);
         const result = gameInfo.results[0];
 
+        const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(newDeals[i].salePrice));
+        const resultPrice = (convertSalePrice).toFixed(2);
+
         newOffers.push({
             offerImage: result.background_image,
             gameTitle: result.name,
-            currentPrice: newDeals[i].salePrice,
+            currentPrice: `${resultPrice}€`,
             discountPercentage: `${Number(newDeals[i].savings).toFixed(0)}%`,
             platform: platforms.PC,
             page: storeImage ? storeImage.image : store.images.icon,
