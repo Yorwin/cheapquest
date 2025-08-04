@@ -11,6 +11,7 @@ import NoData from "@/resources/no-data-found/error-404.jpg"
 import { GameDealWithoutScore, StoreLogo } from "@/types/types";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
+import getGameInfo from "@/utils/getGamesInfo";
 
 const inCaseOfError: GameDealWithoutScore[] = [{
     dealID: "error-deal-placeholder-id",
@@ -39,8 +40,6 @@ const AgedLikeWine = async () => {
     const listOfStores = await searchForStore();
     const AgedLikeWineGames = await getAgedLikeWineGames();
 
-    const filteredAgedLikeWineGames = filterUniqueGames(AgedLikeWineGames).slice(0, 10);
-
     const platforms = {
         PC: "bi bi-display",
         Xbox: "bi bi-xbox",
@@ -49,31 +48,29 @@ const AgedLikeWine = async () => {
 
     const agedLikeWine = [];
 
-    for (let i = 0; i <= filteredAgedLikeWineGames.length; i++) {
+    for (let i = 0; i <= AgedLikeWineGames.length; i++) {
 
-        const selectedElement = filteredAgedLikeWineGames[i] ? filteredAgedLikeWineGames[i].name : "";
-        const search = filteredAgedLikeWineGames[i] ? await searchOffers(selectedElement) : inCaseOfError;
+        const getInfo = await getGameInfo(AgedLikeWineGames[i] ? AgedLikeWineGames[i].title : "Resident Evil");
 
-        const bestDeal = search.reduce((best: GameDealWithoutScore, current: GameDealWithoutScore) => {
-            const bestSavings = parseFloat(best.savings);
-            const currentSavings = parseFloat(current.savings);
+        const gameTitle = getInfo.results[0].name;
+        const gameImage = getInfo.results[0].background_image;
+        const discount = AgedLikeWineGames[i] ? AgedLikeWineGames[i].savings : inCaseOfError[0].savings;
+        const price: number = AgedLikeWineGames[i] ? Number(AgedLikeWineGames[i].salePrice) : Number(inCaseOfError[0].salePrice);
 
-            return currentSavings > bestSavings ? current : best;
-        });
-
-        const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, bestDeal.salePrice);
+        const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, price);
         const resultPrice = (convertSalePrice).toFixed(2);
 
-        const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === bestDeal.storeID);
+        const store = AgedLikeWineGames[i] ? listOfStores.find((e: GameDealWithoutScore) => e.storeID === AgedLikeWineGames[i].storeID) : inCaseOfError[0].storeID;
         const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
+        const inCaseOfErrorImage = listOfStores[Number(inCaseOfError[0].storeID)];
 
         agedLikeWine.push({
-            offerImage: filteredAgedLikeWineGames[i] ? filteredAgedLikeWineGames[i].background_image : NoData,
-            gameTitle: filteredAgedLikeWineGames[i] ? filteredAgedLikeWineGames[i].name : bestDeal.title,
+            offerImage: gameImage,
+            gameTitle: gameTitle,
             currentPrice: `${resultPrice}€`,
-            discountPercentage: `${Number(bestDeal.savings).toFixed(0)}%`,
+            discountPercentage: `${Number(discount).toFixed(0)}%`,
             platform: platforms.PC,
-            page: storeImage ? storeImage.image : store.images.icon,
+            page: storeImage ? storeImage.image : inCaseOfErrorImage,
         })
     }
 

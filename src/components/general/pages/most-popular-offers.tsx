@@ -7,6 +7,8 @@ import { storeLogos } from "@/resources/stores_icons"
 import { getMostPopularOffers } from "@/utils/getMostPopularOffers";
 import searchForStore from "@/utils/seachForStore";
 import getGameInfo from "@/utils/getGamesInfo";
+import currencyRateCalculator from "@/utils/convertCurrency";
+import { Currency } from "@/types/types";
 
 const MostPopularOffer = async () => {
 
@@ -23,14 +25,20 @@ const MostPopularOffer = async () => {
         const storeImage = storeLogos.find((e: any) => e.name === store.storeName);
 
         const getGame = await getGameInfo(Offers[i].title);
+        
+        const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Offers[i].salePrice);
+        const resultSalePrice = (convertSalePrice).toFixed(2);
+
+        const convertRegularPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Offers[i].normalPrice);
+        const resultRegularPrice = (convertRegularPrice).toFixed(2);
 
         const gameImage = getGame.results[0].background_image;
 
         listInfo.push({
             gameImage: gameImage,
             discount: `${Math.floor(Offers[i].savings)}%`,
-            oldPrice: `${Offers[i].normalPrice}€`,
-            currentPrice: `${Offers[i].salePrice}€`,
+            oldPrice: `${resultRegularPrice}€`,
+            currentPrice: `${resultSalePrice}€`,
             webOffer: storeImage ? storeImage.image : store.images.icon,
             platform: Monitor,
         })
