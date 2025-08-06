@@ -1,17 +1,13 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/vertical-offers.module.module.scss"
-import Image from "next/image";
-import offerImage from "@/resources/offer-img/image.jpg"
-import { searchOffers } from "@/utils/getMostPopularOffers";
-import { getAgedLikeWineGames } from "@/utils/getMostPopularGame";
+import { getAgedLikeWineGames } from "@/utils/getOffers";
 import searchForStore from "@/utils/seachForStore";
-import { filterUniqueGames } from "@/functions/functions";
 import { storeLogos } from "@/resources/stores_icons";
-import NoData from "@/resources/no-data-found/error-404.jpg"
 import { GameDealWithoutScore, StoreLogo } from "@/types/types";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
 import getGameInfo from "@/utils/getGamesInfo";
+import VerticalGameCard from "../vertical-game-container";
 
 const inCaseOfError: GameDealWithoutScore[] = [{
     dealID: "error-deal-placeholder-id",
@@ -56,6 +52,10 @@ const AgedLikeWine = async () => {
         const gameImage = getInfo.results[0].background_image;
         const discount = AgedLikeWineGames[i] ? AgedLikeWineGames[i].savings : inCaseOfError[0].savings;
         const price: number = AgedLikeWineGames[i] ? Number(AgedLikeWineGames[i].salePrice) : Number(inCaseOfError[0].salePrice);
+        const regularPrice: number = AgedLikeWineGames[i] ? AgedLikeWineGames[i].normalPrice : Number(inCaseOfError[0].normalPrice);
+
+        const convertRegularPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, regularPrice);
+        const resultRegularPrice = (convertRegularPrice).toFixed(2);
 
         const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, price);
         const resultPrice = (convertSalePrice).toFixed(2);
@@ -67,6 +67,7 @@ const AgedLikeWine = async () => {
         agedLikeWine.push({
             offerImage: gameImage,
             gameTitle: gameTitle,
+            oldPrice: `${resultRegularPrice}€`,
             currentPrice: `${resultPrice}€`,
             discountPercentage: `${Number(discount).toFixed(0)}%`,
             platform: platforms.PC,
@@ -76,83 +77,31 @@ const AgedLikeWine = async () => {
 
     const agedLikeWineFirstRow = agedLikeWine.slice(0, 5).map((e, index) => {
         return (
-            <div className="col" key={index}>
-                <div className={styles["vertical-card-container"]}>
-                    <div className={styles["image-container"]}>
-                        <Image
-                            src={e.offerImage ? e.offerImage : offerImage}
-                            alt="Plataforma de juego"
-                            sizes="50vw"
-                            fill
-                            style={{ objectFit: 'cover' }}
-                        />
-                        <div className={styles["platform-discount-container"]}>
-                            <i className={e.platform}></i>
-                            <span className={styles["discount"]}>{e.discountPercentage}</span>
-                        </div>
-                    </div>
-                    <div className={styles["info-container"]}>
-                        <h3 className={styles["game-title"]}>{e.gameTitle}</h3>
-                        <div className={styles["divisor-line-container"]}>
-                            <div className={styles["divisor-line"]}></div>
-                        </div>
-                        <div className={styles["price-and-platform-container"]}>
-                            <span className={styles["current-price"]}>{e.currentPrice}</span>
-
-                            <div className={styles["web-offer"]}>
-                                <Image
-                                    src={e.page}
-                                    sizes="50vw"
-                                    alt="Plataforma de juego"
-                                    fill
-                                    style={{ objectFit: 'cover' }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <VerticalGameCard
+                key={index}
+                gameImage={e.offerImage}
+                oldPrice={e.oldPrice}
+                platform={e.platform}
+                discount={e.discountPercentage}
+                title={e.gameTitle}
+                currentPrice={e.currentPrice}
+                webOffer={e.page}
+            />
         )
     });
 
     const agedLikeWineSecondRow = agedLikeWine.slice(5, 10).map((e, index) => {
         return (
-            <div className="col" key={index}>
-                <div className={styles["vertical-card-container"]}>
-                    <div className={styles["image-container"]}>
-                        <Image
-                            src={e.offerImage ? e.offerImage : offerImage}
-                            sizes="50vw"
-                            alt="Plataforma de juego"
-                            fill
-                            style={{ objectFit: 'cover' }}
-                        />
-                        <div className={styles["platform-discount-container"]}>
-                            <i className={e.platform}></i>
-                            <span className={styles["discount"]}>{e.discountPercentage}</span>
-                        </div>
-                    </div>
-                    <div className={styles["info-container"]}>
-                        <h3 className={styles["game-title"]}>{e.gameTitle}</h3>
-                        <div className={styles["divisor-line-container"]}>
-                            <div className={styles["divisor-line"]}></div>
-                        </div>
-                        <div className={styles["price-and-platform-container"]}>
-                            <span className={styles["current-price"]}>{e.currentPrice}</span>
-
-                            <div className={styles["web-offer"]}>
-                                <Image
-                                    src={e.page}
-                                    sizes="50vw"
-                                    alt="Plataforma de juego"
-                                    fill
-                                    style={{ objectFit: 'cover' }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <VerticalGameCard
+                key={index}
+                gameImage={e.offerImage}
+                oldPrice={e.oldPrice}
+                platform={e.platform}
+                discount={e.discountPercentage}
+                title={e.gameTitle}
+                currentPrice={e.currentPrice}
+                webOffer={e.page}
+            />
         )
     });
 

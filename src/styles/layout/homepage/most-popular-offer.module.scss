@@ -67,7 +67,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 35%;
+    height: 40%;
     width: 100%;
     background-color: map.get($colores, platform-color)
 }
@@ -107,6 +107,25 @@
     @include cancelled-price(1.4rem, 500);
 }
 
+.main-game-title {
+    margin-left: 0.5rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: map.get($colores, font-dark-background-color);
+    margin-bottom: 0rem;
+}
+
+.secondary-game-title {
+    font-size: 1rem;
+    @extend .main-game-title;
+
+}
+
+.list-info-container-title {
+    font-size: 1rem;
+    @extend .main-game-title;
+}
+
 .icon-container {
     position: relative;
     width: 35px;
@@ -115,8 +134,8 @@
 
 .web-offer {
     position: relative;
-    width: 65px;
-    height: 65px;
+    width: 45px;
+    height: 45px;
 }
 
 /* Secondary Cards */
@@ -144,8 +163,8 @@
 
 .secondary-icon-container {
     position: relative;
-    width: 20px;
-    height: 20px;
+    width: 17px;
+    height: 17px;
 }
 
 .secondary-discount {
@@ -164,13 +183,30 @@
 
 .secondary-web-offer {
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
+}
+
+.web-offer img {
+    width: 100%;
+    height: 100%;
 }
 
 .secondary-price-offerorigin-container {
     padding: 0.8rem;
     @extend .price-offerorigin-container;
+}
+
+.web-offer {
+    position: relative;
+    width: 120px;
+    height: 80px;
+}
+
+.web-offer img {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
 }
 
 /* Rest of the list */

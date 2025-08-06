@@ -122,7 +122,7 @@ export interface GameDeal {
     title: string;
 }
 
-export type Top11Deals = (gameDeal : GameDealWithoutScore[]) => GameDeal[];
+export type Top11Deals = (gameDeal: GameDealWithoutScore[]) => GameDeal[];
 
 export interface GameDealWithoutScore {
     dealID: string;
@@ -147,6 +147,16 @@ export interface GameDealWithoutScore {
 }
 
 export interface StoreLogo {
-  name: string;
-  image: StaticImageData | null; // Puede ser una imagen importada o null
+    name: string;
+    image: StaticImageData | null; // Puede ser una imagen importada o null
+}
+
+export interface VerticalCardContainer {
+    gameImage: StaticImageData,
+    title: string,
+    platform: string,
+    discount: string,
+    oldPrice: string,
+    currentPrice: string,
+    webOffer: StaticImageData | string,
 }

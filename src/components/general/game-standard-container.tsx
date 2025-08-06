@@ -5,6 +5,7 @@ import styles from "@/styles/layout/homepage/most-popular-offer.module.scss"
 
 interface GameStandardContainer {
     gameImage: StaticImageData,
+    title: string,
     platform: StaticImageData,
     discount: string,
     oldPrice: string,
@@ -17,7 +18,7 @@ interface Classes {
     [name: string]: string,
 }
 
-const GameStandardContainer = ({ gameImage, platform, discount, oldPrice, currentPrice, webOffer, classes }: GameStandardContainer) => {
+const GameStandardContainer = ({ gameImage, title, platform, discount, oldPrice, currentPrice, webOffer, classes }: GameStandardContainer) => {
     return (
         <article className={styles[classes.mainGameCard]}>
             <Link href="/producto/black-ops-6" className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
@@ -41,6 +42,7 @@ const GameStandardContainer = ({ gameImage, platform, discount, oldPrice, curren
                             style={{ objectFit: 'cover' }}
                         />
                     </div>
+                    <h4 className={styles[classes.gameTitle]}>{title}</h4>
                 </div>
                 <div className={styles[classes.priceOfferOriginContainer]}>
                     <div className={styles["offer-container"]}>
@@ -56,7 +58,7 @@ const GameStandardContainer = ({ gameImage, platform, discount, oldPrice, curren
                             sizes="50vw"
                             alt="Plataforma de juego"
                             fill
-                            style={{ objectFit: 'cover' }}
+                            style={{ objectFit: 'contain' }}
                         />
                     </div>
                 </div>

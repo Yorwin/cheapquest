@@ -3,13 +3,13 @@ import styles from "@/styles/layout/homepage/main-offer-header.module.scss"
 import Image from "next/image";
 import Link from "next/link";
 import { Currency } from "@/types/types";
-import { getMostPopularGame } from "@/utils/getMostPopularGame";
-import { getMostPopularGameOffer } from "@/utils/getMostPopularGameOffer";
+import { getMostPopularGame } from "@/utils/getGamesInfo";
+import { getMostPopularGameOffer } from "@/utils/getOffers";
 import currencyRateCalculator from "@/utils/convertCurrency";
 
 const MainOffer = async () => {
 
-    const getGame = await getMostPopularGame();
+    const getGame = await getMostPopularGame(); 
     const getOffer = await getMostPopularGameOffer(getGame.game);
 
     const bestDeal = getOffer.deals.reduce((best: any, current: any) => {

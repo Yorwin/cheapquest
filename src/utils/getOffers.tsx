@@ -1,41 +1,107 @@
 import "server-only";
-import { getThreeYearsDateRange, calculatePopularityScore, removeDuplicatesByBestPrice } from "@/functions/functions"
-import { searchOffers } from "./getMostPopularOffers";
+import { getTop11Deals, removeDuplicatesByBestPrice } from "@/functions/functions";
+import { GameDealWithoutScore } from "@/types/types";
 
 const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
-export const getMostPopularGame = async () => {
+/* GET MAIN OFFER */
 
-    const wantedMetacritic = "80,100"
+export const getMostPopularGameOffer = async (e: string) => {
 
-    const res = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&metacritic=${wantedMetacritic}&ordering=-metacritic&dates=${getThreeYearsDateRange()}&page_size=40`, {
-        cache: 'default'
+    const responseGame = await fetch(`https://www.cheapshark.com/api/1.0/games?title=~${e}`, {
+        cache: "default"
     });
 
-    if (!res.ok) {
+    if (!responseGame.ok) {
         throw new Error("Failed to fetch data");
     }
 
-    const data = await res.json();
-    const gamesArray: any[] = [];
+    const data = await responseGame.json();
+    const selectedGame = data.slice(0, 1);
+    const selectedGameID = selectedGame[0].gameID;
 
-    data.results.forEach((e: any) => {
-        let gameInfo = {
-            game: e.slug,
-            id: e.id,
-            backgroundImage: e.background_image,
-            score: calculatePopularityScore(e)
-        }
-
-        gamesArray.push(gameInfo);
-    })
-
-    const bestGame = gamesArray.reduce((prev, current) => {
-        return current.score > prev.score ? current : prev;
+    const responseOffers = await fetch(`https://www.cheapshark.com/api/1.0/games?id=${selectedGameID}`, {
+        cache: 'no-store'
     });
 
-    return bestGame;
+    if (!responseOffers.ok) {
+        throw new Error("Failed to fetch data");
+    }
+
+    const offersData = await responseOffers.json();
+
+    return offersData;
 };
+
+/* GET MOST POPULAR OFFERS */
+
+export const getMostPopularOffers = async () => {
+
+    const responseOffers = await fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=DealRating", {
+        cache: "default"
+    });
+
+    if (!responseOffers.ok) {
+        throw new Error("Failed to fetch data");
+    }
+
+    const response = await responseOffers.json();
+
+    const deduplicated: Record<string, GameDealWithoutScore> = {};
+
+    response.forEach((e: GameDealWithoutScore) => {
+        const key = e.internalName;
+        const currentSavings = parseFloat(e.savings);
+
+        if (!deduplicated[key] || currentSavings > parseFloat(deduplicated[key].savings)) {
+            deduplicated[key] = e;
+        }
+    })
+
+    const resultArray: GameDealWithoutScore[] = Object.values(deduplicated);
+    const getDeals = getTop11Deals(resultArray);
+
+    return getDeals;
+};
+
+/* GET NEW DEALS */
+
+export const getNewDeals = async () => {
+
+    const response = await fetch("https://www.cheapshark.com/api/1.0/deals?maxAge=12&onSale=1&sortBy=DealRating", {
+        cache: "default"
+    })
+
+    if (!response.ok) {
+        throw new Error("Error when trying to fetch new offers");
+    }
+
+    const data = await response.json();
+    const removeDuplicates = removeDuplicatesByBestPrice(data);
+
+    const newDeals: GameDealWithoutScore[] = removeDuplicates.slice(0, 10);
+
+    return newDeals;
+};
+
+/* GET SPECIFIC OFFERS */
+
+export const searchOffers = async (e: string) => {
+
+    const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?title=${e}`, {
+        cache: "force-cache"
+    });
+
+    if (!response.ok) {
+        throw new Error("Error when trying to search for a deal for this game");
+    }
+
+    const data = await response.json();
+
+    return data
+};
+
+/* GET AGED LIKE WINE GAMES */
 
 export const getAgedLikeWineGames = async () => {
     const today = new Date();
@@ -48,7 +114,6 @@ export const getAgedLikeWineGames = async () => {
     const maxPages = 5; // Límite de seguridad para evitar bucles infinitos
 
     while (agedLikeWineGames.length < targetCount && page <= maxPages) {
-        console.log(`Buscando en página ${page}... Actualmente tenemos ${agedLikeWineGames.length} juegos`);
 
         const response = await fetch(
             `https://api.rawg.io/api/games?key=${API_KEY}&dates=1900-01-01,${fiveYearsAgo}&ordering=-rating&page_size=60&platforms=1&metacritic=80,100&page=${page}`,
@@ -64,7 +129,6 @@ export const getAgedLikeWineGames = async () => {
 
         // Si no hay más resultados, salir del bucle
         if (!result || result.length === 0) {
-            console.log(`No hay más resultados en la página ${page}`);
             break;
         }
 
@@ -106,8 +170,6 @@ export const getAgedLikeWineGames = async () => {
 
         // Eliminar duplicados después de cada iteración
         agedLikeWineGames = removeDuplicatesByBestPrice(agedLikeWineGames);
-        
-        console.log(`Página ${page} procesada. Total de juegos únicos: ${agedLikeWineGames.length}`);
 
         // Incrementar página para la siguiente iteración
         page++;
@@ -121,6 +183,7 @@ export const getAgedLikeWineGames = async () => {
     // Limitar a exactamente 10 si tenemos más
     const finalResult = agedLikeWineGames.slice(0, targetCount);
 
-    console.log(`Función completada con ${finalResult.length} juegos únicos`);
     return finalResult;
 };
+
+

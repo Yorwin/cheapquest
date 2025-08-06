@@ -4,7 +4,7 @@ import Monitor from "@/resources/platforms/pc.svg"
 import GameStandardContainer from "../game-standard-container";
 import Image from "next/image";
 import { storeLogos } from "@/resources/stores_icons"
-import { getMostPopularOffers } from "@/utils/getMostPopularOffers";
+import { getMostPopularOffers } from "@/utils/getOffers";
 import searchForStore from "@/utils/seachForStore";
 import getGameInfo from "@/utils/getGamesInfo";
 import currencyRateCalculator from "@/utils/convertCurrency";
@@ -25,7 +25,7 @@ const MostPopularOffer = async () => {
         const storeImage = storeLogos.find((e: any) => e.name === store.storeName);
 
         const getGame = await getGameInfo(Offers[i].title);
-        
+
         const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Offers[i].salePrice);
         const resultSalePrice = (convertSalePrice).toFixed(2);
 
@@ -35,6 +35,7 @@ const MostPopularOffer = async () => {
         const gameImage = getGame.results[0].background_image;
 
         listInfo.push({
+            title: Offers[i].title,
             gameImage: gameImage,
             discount: `${Math.floor(Offers[i].savings)}%`,
             oldPrice: `${resultRegularPrice}€`,
@@ -49,6 +50,7 @@ const MostPopularOffer = async () => {
     const mainOfferContainer = mainOffer.map((e, index) => (
         <GameStandardContainer
             key={index}
+            title={e.title}
             gameImage={e.gameImage}
             platform={e.platform}
             discount={e.discount}
@@ -66,6 +68,7 @@ const MostPopularOffer = async () => {
                     lastPrice: "last-price",
                     currentPrice: "current-price",
                     webOffer: "web-offer",
+                    gameTitle: "main-game-title",
                 }
             }
         />
@@ -75,9 +78,9 @@ const MostPopularOffer = async () => {
     const secondCouple = listInfo.slice(3, 5);
 
     const secondaryOffersFirstContainer = firstCouple.map((e, index) => (
-
         <GameStandardContainer
             key={index}
+            title={e.title}
             gameImage={e.gameImage}
             platform={e.platform}
             discount={e.discount}
@@ -95,54 +98,37 @@ const MostPopularOffer = async () => {
                     lastPrice: "secondary-last-price",
                     currentPrice: "secondary-current-price",
                     webOffer: "secondary-web-offer",
+                    gameTitle: "secondary-game-title",
                 }
             }
         />
     ));
 
     const secondaryOffersSecondContainer = secondCouple.map((e, index) => (
-        <article className={styles["secondary-gamecard-offer"]} key={index}>
-            <div className={styles["gameimage-container"]}>
-                <Image
-                    src={e.gameImage}
-                    sizes="50vw"
-                    alt="Imágen de juego"
-                    fill
-                    style={{ objectFit: 'cover' }}
-                />
-            </div>
-            <div className={styles["gameinfo-container"]}>
-                <div className={styles["platform"]}>
-                    <div className={styles["secondary-icon-container"]}>
-                        <Image
-                            src={e.platform}
-                            sizes="50vw"
-                            alt="Plataforma de juego"
-                            fill
-                            style={{ objectFit: 'cover' }}
-                        />
-                    </div>
-                </div>
-                <div className={styles["secondary-price-offerorigin-container"]}>
-                    <div className={styles["offer-container"]}>
-                        <span className={styles["secondary-discount"]}>{e.discount}</span>
-                        <div className={styles["secondary-prices"]}>
-                            <span className={styles["secondary-last-price"]}>{e.oldPrice}</span>
-                            <span className={styles["secondary-current-price"]}>{e.currentPrice}</span>
-                        </div>
-                    </div>
-                    <div className={styles["secondary-web-offer"]}>
-                        <Image
-                            src={e.webOffer}
-                            sizes="50vw"
-                            alt="Plataforma de juego"
-                            fill
-                            style={{ objectFit: 'cover' }}
-                        />
-                    </div>
-                </div>
-            </div>
-        </article>
+        <GameStandardContainer
+            key={index}
+            title={e.title}
+            gameImage={e.gameImage}
+            platform={e.platform}
+            discount={e.discount}
+            oldPrice={e.oldPrice}
+            currentPrice={e.currentPrice}
+            webOffer={e.webOffer}
+            classes={
+                {
+                    mainGameCard: "secondary-gamecard-offer",
+                    iconContainer: "secondary-icon-container",
+                    priceOfferOriginContainer: "secondary-price-offerorigin-container",
+                    offerContainer: "offer-container",
+                    discount: "secondary-discount",
+                    prices: "secondary-prices",
+                    lastPrice: "secondary-last-price",
+                    currentPrice: "secondary-current-price",
+                    webOffer: "secondary-web-offer",
+                    gameTitle: "secondary-game-title",
+                }
+            }
+        />
     ));
 
     const justifyClasses = [
@@ -183,6 +169,7 @@ const MostPopularOffer = async () => {
                                         style={{ objectFit: 'cover' }}
                                     />
                                 </div>
+                                <h4 className={styles["list-info-container-title"]}>{e.title}</h4>
                             </div>
                             <div className={styles["secondary-price-offerorigin-container"]}>
                                 <div className={styles["offer-container"]}>
@@ -198,7 +185,7 @@ const MostPopularOffer = async () => {
                                         sizes="50vw"
                                         alt="Plataforma de juego"
                                         fill
-                                        style={{ objectFit: 'cover' }}
+                                        style={{ objectFit: 'contain' }}
                                     />
                                 </div>
                             </div>

@@ -71,8 +71,18 @@
     margin-bottom: 20px;
 }
 
+.prices-container {
+    display: flex;
+    gap: 0.3rem;
+    align-items: baseline;
+}
+
 .current-price {
     @include current-price-style(1.5rem, 400, 3px, 0rem, var(--font-gontSerrat));
+}
+
+.regular-price {
+    @include cancelled-price(1rem, 500);
 }
 
 .price-and-platform-container {
@@ -85,10 +95,20 @@
     position: relative;
     width: 45px;
     height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.web-offer img {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
 }
 
 .image-container {
     position: relative;
+    object-fit: contain;
     height: 70%;
     width: 100%;
 }
@@ -116,3 +136,4 @@
         color: map.get($colores , font-dark-background-color);
     }
 }
+
