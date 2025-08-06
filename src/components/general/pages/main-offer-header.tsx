@@ -25,7 +25,7 @@ const MainOffer = async () => {
         discount: Math.floor(parseFloat(bestDeal.savings)) + '%',
         currentPrice: resultPrice + "€",
     }
-
+    
     return (
         <>
             <article className={styles["main-offer-container"]}>

@@ -20,39 +20,42 @@ export const getMostPopularGame = async () => {
     }
 
     const data = await res.json();
-    const gamesArray: any[] = [];
+    const gamesWithDeals: any[] = [];
 
-    data.results.forEach((e: any) => {
-        let gameInfo = {
+    for (const e of data.results) {
+        const gameInfo = {
             game: e.slug,
             name: e.name,
             id: e.id,
             backgroundImage: e.background_image,
-            score: calculatePopularityScore(e)
-        }
-
-        gamesArray.push(gameInfo);
-    });
-
-    gamesArray.forEach(async (e: any) => {
+            score: calculatePopularityScore(e),
+        };
 
         const search = await searchOffers(e.name);
 
         const bestDeal = search.length > 0
-            ? search.reduce((max : any, deal : any) =>
+            ? search.reduce((max: any, deal: any) =>
                 parseFloat(deal.savings) > parseFloat(max.savings) ? deal : max
             )
             : null;
 
-        console.log(bestDeal);
+        gamesWithDeals.push({
+            ...gameInfo,
+            deal: bestDeal
+        });
+    }
+
+    const gamesWithValidDeals = gamesWithDeals.filter(g => g.deal);
+
+    const bestGameDeal = gamesWithValidDeals.reduce((max, game) => {
+        const current = parseFloat(game.deal.savings || "0");
+        const maxSavings = parseFloat(max.deal.savings || "0");
+        return current > maxSavings ? game : max;
     });
 
+    console.log(bestGameDeal);
 
-    const bestGame = gamesArray.reduce((prev, current) => {
-        return current.score > prev.score ? current : prev;
-    });
-
-    return bestGame;
+    return bestGameDeal;
 };
 
 

@@ -140,7 +140,7 @@ export const getAgedLikeWineGames = async () => {
 
             const filterBestOffers = lookForEachGameOffer.filter((e: any) => {
                 const valor = Math.trunc(Number(e.savings));
-                return valor > 70;
+                return valor > 75;
             });
 
             if (filterBestOffers.length > 0) {
