@@ -1,5 +1,6 @@
 import "server-only";
 import { getThreeYearsDateRange, calculatePopularityScore } from "@/functions/functions";
+import { searchOffers } from "./getOffers";
 
 /* GET MAIN GAME */
 
@@ -14,8 +15,6 @@ export const getMostPopularGame = async () => {
         cache: 'default'
     });
 
-    console.log('Requesting URL:', url);
-
     if (!res.ok) {
         throw new Error("Failed to fetch data");
     }
@@ -26,6 +25,7 @@ export const getMostPopularGame = async () => {
     data.results.forEach((e: any) => {
         let gameInfo = {
             game: e.slug,
+            name: e.name,
             id: e.id,
             backgroundImage: e.background_image,
             score: calculatePopularityScore(e)
@@ -33,6 +33,20 @@ export const getMostPopularGame = async () => {
 
         gamesArray.push(gameInfo);
     });
+
+    gamesArray.forEach(async (e: any) => {
+
+        const search = await searchOffers(e.name);
+
+        const bestDeal = search.length > 0
+            ? search.reduce((max : any, deal : any) =>
+                parseFloat(deal.savings) > parseFloat(max.savings) ? deal : max
+            )
+            : null;
+
+        console.log(bestDeal);
+    });
+
 
     const bestGame = gamesArray.reduce((prev, current) => {
         return current.score > prev.score ? current : prev;
