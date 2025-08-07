@@ -9,7 +9,7 @@ import currencyRateCalculator from "@/utils/convertCurrency";
 
 const MainOffer = async () => {
 
-    const getGame = await getMostPopularGame(); 
+    const getGame = await getMostPopularGame();
     const getOffer = await getMostPopularGameOffer(getGame.game);
 
     const bestDeal = getOffer.deals.reduce((best: any, current: any) => {
@@ -25,7 +25,7 @@ const MainOffer = async () => {
         discount: Math.floor(parseFloat(bestDeal.savings)) + '%',
         currentPrice: resultPrice + "€",
     }
-    
+
     return (
         <>
             <article className={styles["main-offer-container"]}>
@@ -38,6 +38,7 @@ const MainOffer = async () => {
                     height={1080}
                     style={{ width: "100%", height: "100%" }}
                 />
+                <div className={styles["overlay"]}></div>
                 <section className={styles["offer"]}>
                     <h1 className={styles["offer-title"]}>{offerInfo.gameName}</h1>
                     <div className={styles["price-container"]}>

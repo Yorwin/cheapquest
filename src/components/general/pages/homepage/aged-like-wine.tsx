@@ -7,7 +7,7 @@ import { GameDealWithoutScore, StoreLogo } from "@/types/types";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
 import getGameInfo from "@/utils/getGamesInfo";
-import VerticalGameCard from "../vertical-game-container";
+import VerticalGameCard from "../../vertical-game-container";
 
 const inCaseOfError: GameDealWithoutScore[] = [{
     dealID: "error-deal-placeholder-id",

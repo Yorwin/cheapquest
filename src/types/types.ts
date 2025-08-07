@@ -160,3 +160,14 @@ export interface VerticalCardContainer {
     currentPrice: string,
     webOffer: StaticImageData | string,
 }
+
+export interface bestOfferType {
+    backgroundImage: string,
+    deal: GameDeal,
+    game: string,
+    id: number,
+    name: string;
+    score: number;
+}
+
+export type bestOfferCalculator = (max: bestOfferType, min: bestOfferType) => bestOfferType;

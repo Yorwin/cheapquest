@@ -1,6 +1,7 @@
 import "server-only";
 import { getThreeYearsDateRange, calculatePopularityScore } from "@/functions/functions";
 import { searchOffers } from "./getOffers";
+import { bestOfferType, bestOfferCalculator, GameDeal, GameDealWithoutScore } from "@/types/types";
 
 /* GET MAIN GAME */
 
@@ -12,7 +13,7 @@ export const getMostPopularGame = async () => {
 
     const url = `https://api.rawg.io/api/games?key=${API_KEY}&metacritic=${wantedMetacritic}&ordering=-metacritic&dates=${getThreeYearsDateRange()}&page_size=40`
     const res = await fetch(`${url}`, {
-        cache: 'default'
+        cache: 'force-cache'
     });
 
     if (!res.ok) {
@@ -20,7 +21,7 @@ export const getMostPopularGame = async () => {
     }
 
     const data = await res.json();
-    const gamesWithDeals: any[] = [];
+    const gamesWithDeals: bestOfferType[] = [];
 
     for (const e of data.results) {
         const gameInfo = {
@@ -34,7 +35,7 @@ export const getMostPopularGame = async () => {
         const search = await searchOffers(e.name);
 
         const bestDeal = search.length > 0
-            ? search.reduce((max: any, deal: any) =>
+            ? search.reduce((max: GameDealWithoutScore, deal: GameDealWithoutScore) =>
                 parseFloat(deal.savings) > parseFloat(max.savings) ? deal : max
             )
             : null;
@@ -45,15 +46,14 @@ export const getMostPopularGame = async () => {
         });
     }
 
-    const gamesWithValidDeals = gamesWithDeals.filter(g => g.deal);
+    const gamesWithValidDeals : bestOfferType[] = gamesWithDeals.filter(g => g.deal);
 
-    const bestGameDeal = gamesWithValidDeals.reduce((max, game) => {
+    const bestGameDeal = gamesWithValidDeals.reduce((max: bestOfferType, game: bestOfferType) => {
+
         const current = parseFloat(game.deal.savings || "0");
         const maxSavings = parseFloat(max.deal.savings || "0");
         return current > maxSavings ? game : max;
     });
-
-    console.log(bestGameDeal);
 
     return bestGameDeal;
 };

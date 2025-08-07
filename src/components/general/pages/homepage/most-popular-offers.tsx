@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/most-popular-offer.module.scss"
 import Monitor from "@/resources/platforms/pc.svg"
-import GameStandardContainer from "../game-standard-container";
+import GameStandardContainer from "../../game-standard-container";
 import Image from "next/image";
 import { storeLogos } from "@/resources/stores_icons"
 import { getMostPopularOffers } from "@/utils/getOffers";

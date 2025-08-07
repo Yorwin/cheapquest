@@ -6,7 +6,7 @@ import getGameInfo from "@/utils/getGamesInfo";
 import searchForStore from "@/utils/seachForStore";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
-import VerticalGameCard from "../vertical-game-container";
+import VerticalGameCard from "../../vertical-game-container";
 
 const NewOffers = async () => {
 

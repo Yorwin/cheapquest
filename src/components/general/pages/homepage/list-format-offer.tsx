@@ -3,7 +3,7 @@ import styles from "@/styles/layout/homepage/list-format-offers.module.scss"
 import Image from "next/image";
 import image from "@/resources/offer-img/images.jpeg"
 import Link from "next/link";
-import ListFormatContainer from "../list-format-offer-container";
+import ListFormatContainer from "../../list-format-offer-container";
 
 const ListFormatOffers = () => {
 
