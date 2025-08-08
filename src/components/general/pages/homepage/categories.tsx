@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/categories.module.scss"
 import Image, { StaticImageData } from "next/image";
-import Profile from "@/resources/categories/Action/png-image.png"
 import Link from "next/link";
 
 /* Categorias */
@@ -15,7 +14,6 @@ import characterFight from "@/resources/categories/Lucha/png-image.png"
 import characterRPG from "@/resources/categories/RPG/png-image.png"
 import characterSinglePlayer from "@/resources/categories/Un_solo_jugador/png-character.png"
 import characterVR from "@/resources/categories/VR/png-character.png"
-
 
 interface Categories {
     titulo: string,

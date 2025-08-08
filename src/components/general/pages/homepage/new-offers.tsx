@@ -2,7 +2,7 @@ import React from "react";
 import styles from "@/styles/layout/homepage/vertical-offers.module.module.scss"
 import { storeLogos } from "@/resources/stores_icons"
 import { getNewDeals } from "@/utils/getOffers";
-import getGameInfo from "@/utils/getGamesInfo";
+import { getGameInfo } from "@/utils/getGamesInfo";
 import searchForStore from "@/utils/seachForStore";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";

@@ -1,177 +1,58 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/list-format-offers.module.scss"
-import Image from "next/image";
-import image from "@/resources/offer-img/images.jpeg"
-import Link from "next/link";
+import Image from "@/resources/offer-img/image.jpg"
 import ListFormatContainer from "../../list-format-offer-container";
+import { offersByPercentage, historicLows } from "@/utils/getOffers";
 
-const ListFormatOffers = () => {
+const ListFormatOffers = async () => {
 
-    const bestOffersByPercentage = [
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-    ];
+    const offers = await offersByPercentage();
 
-    const historicalLows = [
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-        {
-            offerImage: image,
-            gameTitle: "Example Game",
-            gameDescription: "Standard Edition",
-            oldPrice: "39,99",
-            currentPrice: "26,99",
-            discountPercentage: "37%",
-        },
-    ];
+    const bestOffersByPercentage = offers.map(offer => {
+        if (offer) {
+            return {
+                offerImage: offer.background_image,
+                gameTitle: offer.title,
+                gameDescription: "Example Game",
+                oldPrice: `${offer.normalPrice}€`,
+                currentPrice: `${offer.salePrice}€`,
+                discountPercentage: `${Number(offer.savings).toFixed(0)}%`
+            };
+        } else {
+            return {
+                offerImage: Image,
+                gameTitle: "Example Game",
+                gameDescription: "Example Game",
+                oldPrice: `10,99€`,
+                currentPrice: `10,99€`,
+                discountPercentage: `45%`
+            };
+        }
+    })
+
+    const historical = await historicLows();
+
+    const historicalLows = historical.map((e) => {
+        if (e) {
+            return {
+                offerImage: e.background_image,
+                gameTitle: e.title,
+                gameDescription: "Example Game",
+                oldPrice: `${e.bestDeal.retailPrice}€`,
+                currentPrice: `${e.bestDeal.price}€`,
+                discountPercentage: `${Number(e.bestDeal.savings).toFixed(0)}%`
+            }
+        } else {
+            return {
+                offerImage: Image,
+                gameTitle: "Example Game",
+                gameDescription: "Example Game",
+                oldPrice: `10,99€`,
+                currentPrice: `10,99€`,
+                discountPercentage: `45%`
+            }
+        }
+    });
 
     const bestOffersByPercentageContainer = bestOffersByPercentage.map((e, index) => {
         return (
@@ -181,7 +62,6 @@ const ListFormatOffers = () => {
                 link="#"
                 offerImage={e.offerImage}
                 gameTitle={e.gameTitle}
-                gameDescription={e.gameDescription}
                 oldPrice={e.oldPrice}
                 currentPrice={e.currentPrice}
                 discountPercentage={e.discountPercentage}
@@ -197,7 +77,6 @@ const ListFormatOffers = () => {
                 link="#"
                 offerImage={e.offerImage}
                 gameTitle={e.gameTitle}
-                gameDescription={e.gameDescription}
                 oldPrice={e.oldPrice}
                 currentPrice={e.currentPrice}
                 discountPercentage={e.discountPercentage}

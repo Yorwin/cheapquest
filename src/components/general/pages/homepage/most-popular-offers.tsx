@@ -6,7 +6,7 @@ import Image from "next/image";
 import { storeLogos } from "@/resources/stores_icons"
 import { getMostPopularOffers } from "@/utils/getOffers";
 import searchForStore from "@/utils/seachForStore";
-import getGameInfo from "@/utils/getGamesInfo";
+import { getGameInfo } from "@/utils/getGamesInfo";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
 

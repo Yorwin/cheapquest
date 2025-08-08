@@ -8,13 +8,12 @@ interface Props {
     offerImage: StaticImageData,
     gameTitle: string,
     link : string,
-    gameDescription: string,
     oldPrice: string,
     currentPrice: string,
     discountPercentage: string
 }
 
-const ListFormatContainer = ({ index, offerImage, gameTitle, link, gameDescription, oldPrice, currentPrice, discountPercentage }: Props) => {
+const ListFormatContainer = ({ index, offerImage, gameTitle, link, oldPrice, currentPrice, discountPercentage }: Props) => {
     return <>
         <section className={styles["game-info-container"]}>
             <Link href={link} className={styles["enlace"]} />
@@ -35,7 +34,6 @@ const ListFormatContainer = ({ index, offerImage, gameTitle, link, gameDescripti
             <div className={styles["details"]}>
                 <div className={styles["game-title-and-extra-info"]}>
                     <h3>{gameTitle}</h3>
-                    <p>{gameDescription}</p>
                 </div>
                 <div className={styles["prices"]}>
                     <div className={styles["prices-container"]}>

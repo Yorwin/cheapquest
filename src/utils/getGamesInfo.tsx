@@ -1,7 +1,7 @@
 import "server-only";
 import { getThreeYearsDateRange, calculatePopularityScore } from "@/functions/functions";
 import { searchOffers } from "./getOffers";
-import { bestOfferType, bestOfferCalculator, GameDeal, GameDealWithoutScore } from "@/types/types";
+import { bestOfferType, GameDealWithoutScore } from "@/types/types";
 
 /* GET MAIN GAME */
 
@@ -61,7 +61,7 @@ export const getMostPopularGame = async () => {
 
 /* GET SPECIFIC GAME */
 
-const getGameInfo = async (e: string) => {
+export const getGameInfo = async (e: string) => {
 
     const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
@@ -77,5 +77,3 @@ const getGameInfo = async (e: string) => {
 
     return data;
 };
-
-export default getGameInfo;

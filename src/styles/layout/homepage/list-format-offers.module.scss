@@ -73,6 +73,7 @@
     align-items: flex-start;
     justify-content: center;
     color: map.get($colores, font-dark-background-color);
+    z-index: 2;
 
     h3 {
         font-size: 1.1rem;

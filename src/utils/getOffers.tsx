@@ -1,6 +1,7 @@
 import "server-only";
 import { getTop11Deals, removeDuplicatesByBestPrice } from "@/functions/functions";
 import { GameDeal, GameDealWithoutScore } from "@/types/types";
+import { getGameInfo } from "./getGamesInfo";
 
 const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
@@ -108,7 +109,7 @@ export const getAgedLikeWineGames = async () => {
     const fiveYearsAgo = new Date(today.getFullYear() - 5, today.getMonth(), today.getDate())
         .toISOString().split('T')[0]; // Formato YYYY-MM-DD
 
-    let agedLikeWineGames: any = [];    
+    let agedLikeWineGames: any = [];
     let page = 1;
     const targetCount = 10; // Número mínimo de juegos que queremos
     const maxPages = 5; // Límite de seguridad para evitar bucles infinitos
@@ -149,7 +150,7 @@ export const getAgedLikeWineGames = async () => {
         }
 
         // Obtener la mejor oferta de cada juego
-        const bestOffers : GameDealWithoutScore[] = [];
+        const bestOffers: GameDealWithoutScore[] = [];
 
         for (let i = 0; i < listOfOffers.length; i++) {
             const gameBestOffer = listOfOffers[i].reduce((prev: GameDealWithoutScore, curr: GameDealWithoutScore) => {
@@ -187,4 +188,148 @@ export const getAgedLikeWineGames = async () => {
     return finalResult;
 };
 
+/* GET BEST OFFER BY PERCENTAGE */
+
+export const offersByPercentage = async () => {
+    const request = await fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=Savings", {
+        cache: "force-cache"
+    })
+
+    if (!request.ok) {
+        throw new Error("Error when trying to fetch offers by percentage")
+    }
+
+    const res = await request.json();
+    const filteredOffers = res.filter((offer: any) => !offer.title.includes("Bundle"));
+
+    const bestOffers = filteredOffers.slice(0, 10);
+
+    const completeDataPromises = bestOffers.map((offer: GameDeal) => {
+        const title = offer.title;
+
+        return getGameInfo(title)
+            .then((gameInfo) => {
+                const firstResult = gameInfo.results[0] ?? null;
+
+                return {
+                    ...offer,
+                    background_image: firstResult.background_image,
+                };
+            });
+    });
+
+    return Promise.all(completeDataPromises);;
+};
+
+export const historicLows = async () => {
+    const historicalLows = [];
+    let pageNumber = 0;
+    const targetElements = 10; // Número mínimo de elementos que queremos
+
+    while (historicalLows.length < targetElements) {
+        const request = await fetch(
+            `https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&AAA=1&pageNumber=${pageNumber}`,
+            { cache: "force-cache" }
+        );
+
+        if (!request.ok) {
+            throw new Error("Error when trying to get Historic Lows");
+        }
+
+        const res = await request.json();
+
+        // Si no hay más resultados, salir del loop
+        if (!res || res.length === 0) {
+            break;
+        }
+
+        const gamesPrices = [];
+
+        for (let i = 0; i < res.length; i++) {
+            const gameID = res[i].gameID;
+            const gameInfo = await fetch(
+                `https://www.cheapshark.com/api/1.0/games?id=${gameID}`,
+                { cache: "force-cache" }
+            );
+
+            if (!gameInfo.ok) {
+                throw new Error("Error when trying to get Historic Lows");
+            }
+
+            const gameInfoResponse = await gameInfo.json();
+            gamesPrices.push(gameInfoResponse);
+        }
+
+        const filteredGames = gamesPrices.filter((game: any) => {
+            // Si falta cheapestPriceEver o deals, lo descartamos
+            if (!game.cheapestPriceEver || !Array.isArray(game.deals) || game.deals.length === 0) {
+                return false;
+            }
+
+            const lowest = Number(game.cheapestPriceEver.price);
+            const currentLowestDeal = Math.min(
+                ...game.deals.map((d: any) => Number(d.price))
+            );
+
+            return currentLowestDeal === lowest;
+        });
+
+        const completeDataPromises = filteredGames.map((game: any) => {
+            const title = game.info.title;
+
+            // Encontrar el mejor deal (precio más bajo)
+            const bestDeal = game.deals.reduce((cheapest: any, current: any) => {
+                const cheapestPrice = Number(cheapest.price);
+                const currentPrice = Number(current.price);
+                return currentPrice < cheapestPrice ? current : cheapest;
+            });
+
+            return getGameInfo(title)
+                .then((gameInfo) => {
+                    const firstResult = gameInfo.results[0] ?? null;
+
+                    return {
+                        // Información básica del juego
+                        title: game.info.title,
+                        steamAppID: game.info.steamAppID,
+                        thumb: game.info.thumb,
+
+                        // Precio histórico más bajo
+                        cheapestPriceEver: {
+                            price: game.cheapestPriceEver.price,
+                            date: game.cheapestPriceEver.date
+                        },
+
+                        // Mejor deal actual
+                        bestDeal: {
+                            storeID: bestDeal.storeID,
+                            dealID: bestDeal.dealID,
+                            price: bestDeal.price,
+                            retailPrice: bestDeal.retailPrice,
+                            savings: bestDeal.savings
+                        },
+
+                        // Background image de la API externa
+                        background_image: firstResult?.background_image || game.info.thumb, // Fallback al thumb si no hay background_image
+                    };
+                })
+                .catch((error) => {
+                    console.error(`Error getting game info for ${title}:`, error);
+                });
+        });
+
+        const resolvedGames = await Promise.all(completeDataPromises);
+        historicalLows.push(...resolvedGames);
+
+        pageNumber++;
+
+        if (pageNumber > 50) { // Ajusta este número según sea necesario
+            console.log("Maximum page limit reached");
+            break;
+        }
+    }
+
+    // Retornar solo los primeros 10 elementos si hay más
+    return historicalLows.slice(0, targetElements);
+};
 

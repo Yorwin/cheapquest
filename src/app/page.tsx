@@ -4,7 +4,7 @@ import MostPopularOffer from "@/components/general/pages/homepage/most-popular-o
 import NewOffers from "@/components/general/pages/homepage/new-offers";
 import AgedLikeWine from "@/components/general/pages/homepage/aged-like-wine";
 import ListFormatOffers from "@/components/general/pages/homepage/list-format-offer"
-import Reviews from "@/components/general/pages/reviews"
+import Reviews from "@/components/general/pages/homepage/reviews"
 import Categories from "@/components/general/pages/homepage/categories";
 
 const HomePage = () => {
