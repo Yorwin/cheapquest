@@ -109,7 +109,7 @@ export const getAgedLikeWineGames = async () => {
     const fiveYearsAgo = new Date(today.getFullYear() - 5, today.getMonth(), today.getDate())
         .toISOString().split('T')[0]; // Formato YYYY-MM-DD
 
-    let agedLikeWineGames: any = [];
+    let agedLikeWineGames: GameDealWithoutScore[] = [];
     let page = 1;
     const targetCount = 10; // Número mínimo de juegos que queremos
     const maxPages = 5; // Límite de seguridad para evitar bucles infinitos
@@ -200,11 +200,12 @@ export const offersByPercentage = async () => {
     }
 
     const res = await request.json();
-    const filteredOffers = res.filter((offer: any) => !offer.title.includes("Bundle"));
+
+    const filteredOffers = res.filter((offer: GameDeal) => !offer.title.includes("Bundle"));
 
     const bestOffers = filteredOffers.slice(0, 10);
 
-    const completeDataPromises = bestOffers.map((offer: GameDeal) => {
+    const completeDataPromises = bestOffers.map(async (offer: GameDeal) => {
         const title = offer.title;
 
         return getGameInfo(title)
@@ -220,6 +221,8 @@ export const offersByPercentage = async () => {
 
     return Promise.all(completeDataPromises);;
 };
+
+/* GET HISTORIC LOWS */
 
 export const historicLows = async () => {
     const historicalLows = [];
