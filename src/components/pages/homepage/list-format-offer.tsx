@@ -83,7 +83,7 @@ const ListFormatOffers = async () => {
             />
         );
     });
-
+    
     return <>
         <section className={styles["list-format-offers-container"]}>
             <div className="container-fluid">

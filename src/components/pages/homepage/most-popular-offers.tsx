@@ -8,14 +8,15 @@ import { getMostPopularOffers } from "@/utils/getOffers";
 import searchForStore from "@/utils/seachForStore";
 import { getGameInfo } from "@/utils/getGamesInfo";
 import currencyRateCalculator from "@/utils/convertCurrency";
-import { Currency } from "@/types/types";
+import { Currency, GameDeal } from "@/types/types";
+import ErrorBoundary from "@/app/ErrorBoundaryComponent/ErrorBoundary";
+import ErrorFallBack from "@/components/error-loading-offers-fallback-container"
 
 const MostPopularOffer = async () => {
 
-    const Offers: any[] = await getMostPopularOffers();
+    const Offers: GameDeal[] = await getMostPopularOffers();
     const listOfStores = await searchForStore();
-
-    let maxIndex = 10;
+    let maxIndex: number = 10;
 
     const listInfo = [];
 
@@ -26,10 +27,10 @@ const MostPopularOffer = async () => {
 
         const getGame = await getGameInfo(Offers[i].title);
 
-        const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Offers[i].salePrice);
+        const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(Offers[i].salePrice));
         const resultSalePrice = (convertSalePrice).toFixed(2);
 
-        const convertRegularPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Offers[i].normalPrice);
+        const convertRegularPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(Offers[i].normalPrice));
         const resultRegularPrice = (convertRegularPrice).toFixed(2);
 
         const gameImage = getGame.results[0].background_image;
@@ -37,7 +38,7 @@ const MostPopularOffer = async () => {
         listInfo.push({
             title: Offers[i].title,
             gameImage: gameImage,
-            discount: `${Math.floor(Offers[i].savings)}%`,
+            discount: `${Math.floor(Number(Offers[i].savings))}%`,
             oldPrice: `${resultRegularPrice}€`,
             currentPrice: `${resultSalePrice}€`,
             webOffer: storeImage ? storeImage.image : store.images.icon,
@@ -201,35 +202,35 @@ const MostPopularOffer = async () => {
     return <>
         <section className={styles["most-popular-offer-container"]}>
             <h1 className={styles["title"]}>OFERTAS MÁS POPULARES</h1>
-            <div className={styles["offers-container"]}>
-                <div className={styles["first-row"]}>
-                    {mainOfferContainer}
+                <div className={styles["offers-container"]}>
+                    <div className={styles["first-row"]}>
+                        {mainOfferContainer}
 
-                    <div className={styles["pairs-container"]}>
-                        <div className={styles["pair"]}>
-                            {secondaryOffersFirstContainer}
+                        <div className={styles["pairs-container"]}>
+                            <div className={styles["pair"]}>
+                                {secondaryOffersFirstContainer}
+                            </div>
+                            <div className={styles["pair"]}>
+                                {secondaryOffersSecondContainer}
+                            </div>
                         </div>
-                        <div className={styles["pair"]}>
-                            {secondaryOffersSecondContainer}
-                        </div>
+
                     </div>
 
-                </div>
+                    <section className="container-fluid mb-5">
+                        <div className="row">
+                            {listInfoContainer}
+                        </div>
+                    </section>
 
-                <section className="container-fluid mb-5">
-                    <div className="row">
-                        {listInfoContainer}
+                    {/* Ver más ofertas Botón */}
+
+                    <div className={styles["button-container"]}>
+                        <button>
+                            Ver más ofertas
+                        </button>
                     </div>
-                </section>
-
-                {/* Ver más ofertas Botón */}
-
-                <div className={styles["button-container"]}>
-                    <button>
-                        Ver más ofertas
-                    </button>
                 </div>
-            </div>
         </section>
     </>
 };

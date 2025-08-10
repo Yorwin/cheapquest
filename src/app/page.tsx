@@ -1,11 +1,11 @@
 import React from "react";
-import MainOffer from "@/components/general/pages/homepage/main-offer-header";
-import MostPopularOffer from "@/components/general/pages/homepage/most-popular-offers";
-import NewOffers from "@/components/general/pages/homepage/new-offers";
-import AgedLikeWine from "@/components/general/pages/homepage/aged-like-wine";
-import ListFormatOffers from "@/components/general/pages/homepage/list-format-offer"
-import Reviews from "@/components/general/pages/homepage/reviews"
-import Categories from "@/components/general/pages/homepage/categories";
+import MainOffer from "@/components/pages/homepage/main-offer-header";
+import MostPopularOffer from "@/components/pages/homepage/most-popular-offers";
+import NewOffers from "@/components/pages/homepage/new-offers";
+import AgedLikeWine from "@/components/pages/homepage/aged-like-wine";
+import ListFormatOffers from "@/components/pages/homepage/list-format-offer"
+import Reviews from "@/components/pages/homepage/reviews"
+import Categories from "@/components/pages/homepage/categories";
 
 const HomePage = () => {
   return (

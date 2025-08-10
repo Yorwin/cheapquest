@@ -22,7 +22,7 @@ export const getMostPopularGameOffer = async (e: string) => {
     const selectedGameID = selectedGame[0].gameID;
 
     const responseOffers = await fetch(`https://www.cheapshark.com/api/1.0/games?id=${selectedGameID}`, {
-        cache: 'no-store'
+        cache: 'force-cache'
     });
 
     if (!responseOffers.ok) {

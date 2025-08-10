@@ -148,7 +148,7 @@ export interface GameDealWithoutScore {
 
 export interface StoreLogo {
     name: string;
-    image: StaticImageData | null; // Puede ser una imagen importada o null
+    image: StaticImageData | null; 
 }
 
 export interface VerticalCardContainer {

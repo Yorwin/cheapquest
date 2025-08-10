@@ -1,0 +1,28 @@
+@use '../_variables/variables' as *;
+@use '../_variables/mixins' as *;
+@use 'sass:map';
+
+.content-container {
+    width: 100%;
+    @include flex-center-elements-XY;
+    gap: 2rem;
+}
+
+.text-info {
+    width: 40%;
+
+    h2 {
+        color: map.get($colores, font-dark-background-color);
+        margin-bottom: 1.5rem;
+    }
+
+    p {
+        line-height: 0.6rem;
+        color: map.get($colores, font-dark-background-color);
+    }
+}
+
+.error-image {
+    width: 200px;
+    height: 200px;
+}
