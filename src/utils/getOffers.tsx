@@ -1,6 +1,6 @@
 import "server-only";
 import { getTop11Deals, removeDuplicatesByBestPrice } from "@/functions/functions";
-import { GameDeal, GameDealWithoutScore } from "@/types/types";
+import { GameDeal, GameDealWithoutScore, gameOfferInfo, dealsInfoOffer } from "@/types/types";
 import { getGameInfo } from "./getGamesInfo";
 
 const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
@@ -109,10 +109,10 @@ export const getAgedLikeWineGames = async () => {
     const fiveYearsAgo = new Date(today.getFullYear() - 5, today.getMonth(), today.getDate())
         .toISOString().split('T')[0]; // Formato YYYY-MM-DD
 
-    let agedLikeWineGames: GameDealWithoutScore[] = [];
-    let page = 1;
-    const targetCount = 10; // Número mínimo de juegos que queremos
-    const maxPages = 5; // Límite de seguridad para evitar bucles infinitos
+    let agedLikeWineGames: any[] = [];
+    let page: number = 1;
+    const targetCount: number = 10; // Número mínimo de juegos que queremos
+    const maxPages: number = 5; // Límite de seguridad para evitar bucles infinitos
 
     while (agedLikeWineGames.length < targetCount && page <= maxPages) {
 
@@ -150,7 +150,7 @@ export const getAgedLikeWineGames = async () => {
         }
 
         // Obtener la mejor oferta de cada juego
-        const bestOffers: GameDealWithoutScore[] = [];
+        const bestOffers = [];
 
         for (let i = 0; i < listOfOffers.length; i++) {
             const gameBestOffer = listOfOffers[i].reduce((prev: GameDealWithoutScore, curr: GameDealWithoutScore) => {
@@ -263,7 +263,7 @@ export const historicLows = async () => {
             gamesPrices.push(gameInfoResponse);
         }
 
-        const filteredGames = gamesPrices.filter((game: any) => {
+        const filteredGames = gamesPrices.filter((game: gameOfferInfo) => {
             // Si falta cheapestPriceEver o deals, lo descartamos
             if (!game.cheapestPriceEver || !Array.isArray(game.deals) || game.deals.length === 0) {
                 return false;
@@ -271,17 +271,17 @@ export const historicLows = async () => {
 
             const lowest = Number(game.cheapestPriceEver.price);
             const currentLowestDeal = Math.min(
-                ...game.deals.map((d: any) => Number(d.price))
+                ...game.deals.map((d: dealsInfoOffer) => Number(d.price))
             );
 
             return currentLowestDeal === lowest;
         });
 
-        const completeDataPromises = filteredGames.map((game: any) => {
+        const completeDataPromises = filteredGames.map(async (game: gameOfferInfo) => {
             const title = game.info.title;
 
             // Encontrar el mejor deal (precio más bajo)
-            const bestDeal = game.deals.reduce((cheapest: any, current: any) => {
+            const bestDeal = game.deals.reduce((cheapest: dealsInfoOffer, current: dealsInfoOffer) => {
                 const cheapestPrice = Number(cheapest.price);
                 const currentPrice = Number(current.price);
                 return currentPrice < cheapestPrice ? current : cheapest;

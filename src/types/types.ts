@@ -171,3 +171,28 @@ export interface bestOfferType {
 }
 
 export type bestOfferCalculator = (max: bestOfferType, min: bestOfferType) => bestOfferType;
+
+export interface cheapestPriceInfoOffer {
+    price: string,
+    date: number,
+}
+
+export interface dealsInfoOffer {
+    dealID: string,
+    price: string,
+    retailPrice: string,
+    savings: string,
+    storeID: string,
+}
+
+export interface infoInfoOffer {
+    steamAppID: string,
+    thumb: string,
+    title: string,
+}
+
+export interface gameOfferInfo {
+    cheapestPriceEver: cheapestPriceInfoOffer,
+    deals: dealsInfoOffer[],
+    info: infoInfoOffer
+}
