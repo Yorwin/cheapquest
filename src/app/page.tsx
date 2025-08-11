@@ -1,4 +1,5 @@
 import React from "react";
+import './globals.scss'
 import MainOffer from "@/components/pages/homepage/main-offer-header";
 import MostPopularOffer from "@/components/pages/homepage/most-popular-offers";
 import NewOffers from "@/components/pages/homepage/new-offers";

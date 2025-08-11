@@ -7,90 +7,97 @@ import searchForStore from "@/utils/seachForStore";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
 import VerticalGameCard from "../../vertical-game-container";
+import ErrorGameStandard from "@/components/error-loading-offers-fallback-container";
 
 const NewOffers = async () => {
+    try {
+        const newDeals = await getNewDeals();
+        const listOfStores = await searchForStore();
 
-    const newDeals = await getNewDeals();
-    const listOfStores = await searchForStore();
+        const platforms = {
+            PC: "bi bi-display",
+            Xbox: "bi bi-xbox",
+            PlayStation: "bi bi-playstation",
+        }
 
-    const platforms = {
-        PC: "bi bi-display",
-        Xbox: "bi bi-xbox",
-        PlayStation: "bi bi-playstation",
-    }
+        const newOffers = [];
 
-    const newOffers = [];
+        for (let i = 0; i < newDeals.length; i++) {
 
-    for (let i = 0; i < newDeals.length; i++) {
+            const store = listOfStores.find((e: any) => e.storeID === newDeals[i].storeID);
+            const storeImage = storeLogos.find((e: any) => e.name === store.storeName);
 
-        const store = listOfStores.find((e: any) => e.storeID === newDeals[i].storeID);
-        const storeImage = storeLogos.find((e: any) => e.name === store.storeName);
+            const gameInfo = await getGameInfo(newDeals[i].title);
+            const result = gameInfo.results[0];
 
-        const gameInfo = await getGameInfo(newDeals[i].title);
-        const result = gameInfo.results[0];
+            const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(newDeals[i].salePrice));
+            const resultPrice = (convertSalePrice).toFixed(2);
 
-        const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(newDeals[i].salePrice));
-        const resultPrice = (convertSalePrice).toFixed(2);
+            const convertRegularPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(newDeals[i].normalPrice));
+            const resultRegularPrice = (convertRegularPrice).toFixed(2);
 
-        const convertRegularPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(newDeals[i].normalPrice));
-        const resultRegularPrice = (convertRegularPrice).toFixed(2);
+            newOffers.push({
+                offerImage: result.background_image,
+                gameTitle: result.name,
+                oldPrice: `${resultRegularPrice}€`,
+                currentPrice: `${resultPrice}€`,
+                discountPercentage: `${Number(newDeals[i].savings).toFixed(0)}%`,
+                platform: platforms.PC,
+                page: storeImage ? storeImage.image : store.images.icon,
+            })
 
-        newOffers.push({
-            offerImage: result.background_image,
-            gameTitle: result.name,
-            oldPrice: `${resultRegularPrice}€`,
-            currentPrice: `${resultPrice}€`,
-            discountPercentage: `${Number(newDeals[i].savings).toFixed(0)}%`,
-            platform: platforms.PC,
-            page: storeImage ? storeImage.image : store.images.icon,
-        })
+        }
 
-    }
+        const newOffersContainerFirstRow = newOffers.slice(0, 5).map((e, index) => {
+            return (
+                <VerticalGameCard
+                    key={index}
+                    gameImage={e.offerImage}
+                    oldPrice={e.oldPrice}
+                    platform={e.platform}
+                    discount={e.discountPercentage}
+                    title={e.gameTitle}
+                    currentPrice={e.currentPrice}
+                    webOffer={e.page}
+                />
+            )
+        });
 
-    const newOffersContainerFirstRow = newOffers.slice(0, 5).map((e, index) => {
-        return (
-            <VerticalGameCard
-                key={index}
-                gameImage={e.offerImage}
-                oldPrice={e.oldPrice}
-                platform={e.platform}
-                discount={e.discountPercentage}
-                title={e.gameTitle}
-                currentPrice={e.currentPrice}
-                webOffer={e.page}
-            />
-        )
-    });
+        const newOffersContainerSecondRow = newOffers.slice(5, 10).map((e, index) => {
+            return (
+                <VerticalGameCard
+                    key={index}
+                    gameImage={e.offerImage}
+                    oldPrice={e.oldPrice}
+                    platform={e.platform}
+                    discount={e.discountPercentage}
+                    title={e.gameTitle}
+                    currentPrice={e.currentPrice}
+                    webOffer={e.page}
+                />
+            )
+        });
 
-    const newOffersContainerSecondRow = newOffers.slice(5, 10).map((e, index) => {
-        return (
-            <VerticalGameCard
-                key={index}
-                gameImage={e.offerImage}
-                oldPrice={e.oldPrice}
-                platform={e.platform}
-                discount={e.discountPercentage}
-                title={e.gameTitle}
-                currentPrice={e.currentPrice}
-                webOffer={e.page}
-            />
-        )
-    });
+        return <>
+            <section className={styles["new-offers-main-container"]}>
+                <h1 className={styles["title"]}>NUEVAS OFERTAS</h1>
+                <div className={styles["container-fluid"]}>
+                    <div className="row row-cols-5 g-3 mb-4">
+                        {newOffersContainerFirstRow}
+                    </div>
 
-    return <>
-        <section className={styles["new-offers-main-container"]}>
-            <h1 className={styles["title"]}>NUEVAS OFERTAS</h1>
-            <div className={styles["container-fluid"]}>
-                <div className="row row-cols-5 g-3 mb-4">
-                    {newOffersContainerFirstRow}
+                    <div className="row row-cols-5 g-3 mb-4">
+                        {newOffersContainerSecondRow}
+                    </div>
                 </div>
-
-                <div className="row row-cols-5 g-3 mb-4">
-                    {newOffersContainerSecondRow}
-                </div>
-            </div>
+            </section>
+        </>
+    } catch (error) {
+        console.error(`Se ha producido un error al intentar cargar los juegos y las ofertas ${error}`);
+        return <section className={styles["new-offers-main-container"]}>
+            <ErrorGameStandard />
         </section>
-    </>
+    }
 };
 
 export default NewOffers;

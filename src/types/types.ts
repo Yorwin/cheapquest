@@ -158,7 +158,7 @@ export interface VerticalCardContainer {
     discount: string,
     oldPrice: string,
     currentPrice: string,
-    webOffer: StaticImageData | string,
+    webOffer: StaticImageData,
 }
 
 export interface bestOfferType {

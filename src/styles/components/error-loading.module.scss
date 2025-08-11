@@ -17,8 +17,8 @@
     }
 
     p {
-        line-height: 0.6rem;
-        color: map.get($colores, font-dark-background-color);
+        line-height: 1.3rem;
+        @include error-text-style;
     }
 }
 

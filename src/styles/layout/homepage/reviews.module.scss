@@ -67,3 +67,26 @@
     font-weight: 600;
     color: map.get($colores, font-dark-background-color);
 }
+
+/* Error al intentar cargar reseñas */
+
+.error-load-reviews {
+    width: 150px;
+    height: 150px;
+}
+
+.error-container {
+    width: 100%;
+    @include flex-center-elements-XY;
+    gap: 2rem;
+    text-align: center;
+
+    p {
+        @include error-text-style;
+    }
+}
+
+.container-text {
+    width: 40%;
+}
+

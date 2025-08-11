@@ -2,10 +2,11 @@ import React from "react";
 import styles from "@/styles/layout/homepage/reviews.module.scss"
 import Image from "next/image";
 import ProfileImg from "@/resources/profile/profile.png"
+import ErrorReviewsLoad from "@/resources/error-image/error-review.png"
 
 const Reviews = () => {
-    return <>
-        <section className={styles["reviews-container"]}>
+    try {
+        return <section className={styles["reviews-container"]}>
             <article className="container-fluid">
                 <div className="row">
                     <div className="col-md-3 col-sm-6">
@@ -135,7 +136,21 @@ const Reviews = () => {
                 </div>
             </article>
         </section>
-    </>
+    } catch (error) {
+        console.error(`Se ha producido un error al intentar cargar las reviews ${error}`)
+        return <section className={styles["reviews-container"]}>
+            <div className={styles["error-container"]}>
+                <div className={styles["container-text"]}>
+                    <p>¡Ups! Parece que las reseñas se han ido a tomar un café. Recarga la página o vuelve en un momento.</p>
+                </div>
+                <Image
+                    className={styles["error-load-reviews"]}
+                    src={ErrorReviewsLoad}
+                    alt="Error al cargar reseñas"
+                />
+            </div>
+        </section>
+    }
 }
 
 export default Reviews;

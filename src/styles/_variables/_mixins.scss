@@ -40,3 +40,10 @@
     font-family: var(--font-gontSerrat);
     letter-spacing: 3px;
 }
+
+@mixin error-text-style {
+    font-family: var(--font-timeless);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: map.get($colores, font-dark-background-color)
+}
