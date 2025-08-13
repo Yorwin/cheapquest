@@ -1,25 +1,26 @@
 import React from "react";
 import './globals.scss'
 import MainOffer from "@/components/pages/homepage/main-offer-header";
-import MostPopularOffer from "@/components/pages/homepage/most-popular-offers";
+import MostPopularOffer from "@/components/pages/homepage/most-popular-offer/most-popular-offers";
 import NewOffers from "@/components/pages/homepage/new-offers";
 import AgedLikeWine from "@/components/pages/homepage/aged-like-wine";
 import ListFormatOffers from "@/components/pages/homepage/list-format-offer"
 import Reviews from "@/components/pages/homepage/reviews"
 import Categories from "@/components/pages/homepage/categories";
+import { Suspense } from "react";
 
-const HomePage = () => {
-  return (
-    <>
-      <MainOffer />
+const HomePage = async () => {
+  return <>
+    <MainOffer />
+    <Suspense fallback={<h1>Cargando...</h1>}>
       <MostPopularOffer />
-      <NewOffers />
-      <AgedLikeWine />
-      <ListFormatOffers />
-      <Reviews />
-      <Categories />
-    </>
-  )
+    </Suspense>
+    <NewOffers />
+    <AgedLikeWine />
+    <ListFormatOffers />
+    <Reviews />
+    <Categories />
+  </>
 }
 
 export default HomePage;

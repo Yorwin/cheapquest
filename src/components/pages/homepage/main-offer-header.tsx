@@ -8,7 +8,6 @@ import { getMostPopularGameOffer } from "@/utils/getOffers";
 import currencyRateCalculator from "@/utils/convertCurrency";
 
 const MainOffer = async () => {
-
     const getGame = await getMostPopularGame();
     const getOffer = await getMostPopularGameOffer(getGame.game);
 

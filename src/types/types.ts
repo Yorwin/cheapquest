@@ -196,3 +196,20 @@ export interface gameOfferInfo {
     deals: dealsInfoOffer[],
     info: infoInfoOffer
 }
+
+export interface GameStandardContainerType {
+    gameImage: StaticImageData,
+    title: string,
+    platform: StaticImageData,
+    discount: string,
+    oldPrice: string,
+    currentPrice: string,
+    webOffer: StaticImageData | string,
+    classes?: Classes,
+}
+
+export interface Classes {
+    [name: string]: string,
+}
+
+
