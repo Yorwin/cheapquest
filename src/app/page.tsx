@@ -12,9 +12,7 @@ import { Suspense } from "react";
 const HomePage = async () => {
   return <>
     <MainOffer />
-    <Suspense fallback={<h1>Cargando...</h1>}>
-      <MostPopularOffer />
-    </Suspense>
+    <MostPopularOffer />
     <NewOffers />
     <AgedLikeWine />
     <ListFormatOffers />

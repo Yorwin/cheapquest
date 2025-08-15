@@ -1,5 +1,5 @@
 import React from "react";
-import GameStandardContainer from "@/components/game-standard-container";
+import GameStandardWrapper from "@/components/game-card-wrapper";
 import { GameStandardContainerType, Classes } from "@/types/types";
 
 type SecondaryOffersProps = {
@@ -10,9 +10,8 @@ type SecondaryOffersProps = {
 };
 
 const SecondaryOffers = ({ data }: SecondaryOffersProps) => {
-
     return data.games.map((e, index) => (
-        <GameStandardContainer
+        <GameStandardWrapper
             key={index}
             title={e.title}
             gameImage={e.gameImage}

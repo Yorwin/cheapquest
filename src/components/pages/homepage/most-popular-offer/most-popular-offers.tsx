@@ -8,11 +8,12 @@ import { getGameInfo } from "@/utils/getGamesInfo";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency, GameDeal } from "@/types/types";
 import ErrorGameStandard from "@/components/error-loading-offers-fallback-container";
+import { Suspense } from "react";
 
 /* Offers */
 import MainOffer from "./components/mainOffer";
 import SecondaryOffers from "./components/secondaryOffers";
-import RestOfOffers from "./components/listOfOffers";
+import RestOfOffers from "./components/listOfOffers/listOfOffers";
 
 const mainClasses = {
     mainGameCard: "main-gamecard-offer",
@@ -104,12 +105,12 @@ const MostPopularOffer = async () => {
                         />
                         <div className={styles["pairs-container"]}>
                             <div className={styles["pair"]}>
-                                <SecondaryOffers
-                                    data={{
-                                        games: firstCouple,
-                                        classes: secondaryClasses
-                                    }}
-                                />
+                                    <SecondaryOffers
+                                        data={{
+                                            games: firstCouple,
+                                            classes: secondaryClasses
+                                        }}
+                                    />
                             </div>
                             <div className={styles["pair"]}>
                                 <SecondaryOffers

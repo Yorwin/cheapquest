@@ -208,8 +208,31 @@ export interface GameStandardContainerType {
     classes?: Classes,
 }
 
+export interface GameStandardWrapperType {
+    gameImage: StaticImageData,
+    title: string,
+    platform: StaticImageData,
+    discount: string,
+    oldPrice: string,
+    currentPrice: string,
+    webOffer: StaticImageData | string,
+    classes?: Classes,
+}
+
 export interface Classes {
     [name: string]: string,
+}
+
+export interface GameStandardControllerType {
+    gameImage: StaticImageData,
+    title: string,
+    platform: StaticImageData,
+    discount: string,
+    oldPrice: string,
+    currentPrice: string,
+    webOffer: StaticImageData | string,
+    classes?: Classes,
+    children? : React.ReactNode;
 }
 
 

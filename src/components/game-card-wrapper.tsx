@@ -1,0 +1,50 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import GameStandardContainer from "./game-card-server";
+import { GameStandardContainerType } from "@/types/types";
+import Image from "next/image";
+
+const defaultClasses = {
+    mainGameCard: "default-main-game-card",
+    iconContainer: "default-icon-container",
+    priceOfferOriginContainer: "default-price-offerorigin-container",
+    offerContainer: "default-offer-container",
+    discount: "default-discount",
+    prices: "default-prices",
+    lastPrice: "default-last-price",
+    currentPrice: "default-current-price",
+    webOffer: "default-web-offer",
+    gameTitle: "default-game-title",
+};
+
+const GameStandardWrapper = ({ gameImage, title, platform, discount, oldPrice, currentPrice, webOffer, classes = defaultClasses }: GameStandardContainerType) => {
+    const [imageIsLoaded, setIsImageLoaded] = useState(false);
+
+    useEffect(() => {
+        const img = new window.Image();
+        img.src = `${gameImage}`;
+        img.onload = () => setIsImageLoaded(true);
+    }, [gameImage]);
+
+    if (!imageIsLoaded) {
+        return <div>Cargando imagen...</div>;
+    }
+
+    return (
+        <GameStandardContainer
+            title={title}
+            gameImage={gameImage}
+            platform={platform}
+            discount={discount}
+            oldPrice={oldPrice}
+            currentPrice={currentPrice}
+            webOffer={webOffer}
+            classes={classes}
+        >
+            <Image src={gameImage} alt={title} fill style={{ objectFit: "cover" }} />
+        </GameStandardContainer>
+    )
+};
+
+export default GameStandardWrapper;

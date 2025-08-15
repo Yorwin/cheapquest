@@ -1,8 +1,7 @@
 import React from "react";
-import Image from "next/image";
-import Link from "next/link";
 import styles from "@/styles/layout/homepage/most-popular-offer.module.scss"
-import { GameStandardContainerType } from "@/types/types";
+import Image from "next/image";
+import { GameStandardControllerType } from "@/types/types";
 
 const defaultClasses = {
     mainGameCard: "default-main-game-card",
@@ -17,21 +16,23 @@ const defaultClasses = {
     gameTitle: "default-game-title",
 };
 
-const GameStandardContainer = ({ gameImage, title, platform, discount, oldPrice, currentPrice, webOffer, classes = defaultClasses }: GameStandardContainerType) => {
-    return <article className={styles[classes.mainGameCard]}>
-        <Link href="/producto/black-ops-6" className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
+const OfferContainer = ({ gameImage, title, platform, discount, oldPrice, currentPrice, webOffer, children }: GameStandardControllerType) => {
+    return <article className={styles["rest-of-the-offers-container"]}>
         <div className={styles["gameimage-container"]}>
-            <Image
+            
+            {children}
+
+            {/* <Image
                 src={gameImage}
                 sizes="50vw"
                 alt="Imágen de juego"
                 fill
                 style={{ objectFit: 'cover' }}
-            />
+            />*/}
         </div>
         <div className={styles["gameinfo-container"]}>
             <div className={styles["platform"]}>
-                <div className={styles[classes.iconContainer]}>
+                <div className={styles["secondary-icon-container"]}>
                     <Image
                         src={platform}
                         sizes="50vw"
@@ -40,17 +41,17 @@ const GameStandardContainer = ({ gameImage, title, platform, discount, oldPrice,
                         style={{ objectFit: 'cover' }}
                     />
                 </div>
-                <h4 className={styles[classes.gameTitle]}>{title}</h4>
+                <h4 className={styles["list-info-container-title"]}>{title}</h4>
             </div>
-            <div className={styles[classes.priceOfferOriginContainer]}>
+            <div className={styles["secondary-price-offerorigin-container"]}>
                 <div className={styles["offer-container"]}>
-                    <span className={styles[classes.discount]}>{discount}</span>
-                    <div className={styles[classes.prices]}>
-                        <span className={styles[classes.lastPrice]}>{oldPrice}</span>
-                        <span className={styles[classes.currentPrice]}>{currentPrice}</span>
+                    <span className={styles["secondary-discount"]}>{discount}</span>
+                    <div className={styles["secondary-prices"]}>
+                        <span className={styles["secondary-last-price"]}>{oldPrice}</span>
+                        <span className={styles["secondary-current-price"]}>{currentPrice}</span>
                     </div>
                 </div>
-                <div className={styles[classes.webOffer]}>
+                <div className={styles["secondary-web-offer"]}>
                     <Image
                         src={webOffer}
                         sizes="50vw"
@@ -64,4 +65,4 @@ const GameStandardContainer = ({ gameImage, title, platform, discount, oldPrice,
     </article>
 };
 
-export default GameStandardContainer;
+export default OfferContainer;

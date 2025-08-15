@@ -1,10 +1,11 @@
 import React from "react";
-import Game from "@/components/game-standard-container";
+import Game from "@/components/game-card-server";
+import GameWrapper from "@/components/game-card-wrapper"
 import { GameStandardContainerType } from "@/types/types";
 
 const MainOffer = ({ title, gameImage, platform, discount, oldPrice, currentPrice, webOffer, classes }: GameStandardContainerType) => {
     return <>
-        <Game
+        <GameWrapper
             title={title}
             gameImage={gameImage}
             platform={platform}
