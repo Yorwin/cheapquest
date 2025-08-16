@@ -8,7 +8,6 @@ import { getGameInfo } from "@/utils/getGamesInfo";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency, GameDeal } from "@/types/types";
 import ErrorGameStandard from "@/components/error-loading-offers-fallback-container";
-import { Suspense } from "react";
 
 /* Offers */
 import MainOffer from "./components/mainOffer";

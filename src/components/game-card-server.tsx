@@ -17,7 +17,7 @@ const defaultClasses = {
     gameTitle: "default-game-title",
 };
 
-const GameStandardContainer = ({ gameImage, title, platform, discount, oldPrice, currentPrice, webOffer, classes = defaultClasses, children }: GameStandardControllerType) => {
+const GameStandardContainer = ({ title, platform, discount, oldPrice, currentPrice, webOffer, classes = defaultClasses, children }: GameStandardControllerType) => {
     return <article className={styles[classes.mainGameCard]}>
         <Link href="/producto/black-ops-6" className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
         <div className={styles["gameimage-container"]}>

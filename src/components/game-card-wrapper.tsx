@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import GameStandardContainer from "./game-card-server";
 import { GameStandardContainerType } from "@/types/types";
 import Image from "next/image";
+import GameCardLoading from "./game-card-loading";
 
 const defaultClasses = {
     mainGameCard: "default-main-game-card",
@@ -28,7 +29,7 @@ const GameStandardWrapper = ({ gameImage, title, platform, discount, oldPrice, c
     }, [gameImage]);
 
     if (!imageIsLoaded) {
-        return <div>Cargando imagen...</div>;
+        return <GameCardLoading classList={classes}/>;
     }
 
     return (
