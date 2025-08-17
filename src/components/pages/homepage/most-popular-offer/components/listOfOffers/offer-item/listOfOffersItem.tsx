@@ -16,19 +16,10 @@ const defaultClasses = {
     gameTitle: "default-game-title",
 };
 
-const OfferContainer = ({ gameImage, title, platform, discount, oldPrice, currentPrice, webOffer, children }: GameStandardControllerType) => {
+const OfferContainer = ({ title, platform, discount, oldPrice, currentPrice, webOffer, children }: GameStandardControllerType) => {
     return <article className={styles["rest-of-the-offers-container"]}>
         <div className={styles["gameimage-container"]}>
-            
             {children}
-
-            {/* <Image
-                src={gameImage}
-                sizes="50vw"
-                alt="Imágen de juego"
-                fill
-                style={{ objectFit: 'cover' }}
-            />*/}
         </div>
         <div className={styles["gameinfo-container"]}>
             <div className={styles["platform"]}>

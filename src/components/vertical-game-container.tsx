@@ -2,21 +2,15 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/layout/homepage/vertical-offers.module.module.scss"
-import { VerticalCardContainer } from "@/types/types";
+import { VerticalCardContainerType } from "@/types/types";
 
-const VerticalGameCard = ({ gameImage, platform, oldPrice, discount, title, currentPrice, webOffer }: VerticalCardContainer) => {
+const VerticalGameCard = ({ platform, oldPrice, discount, title, currentPrice, webOffer, children }: VerticalCardContainerType) => {
     return (
         <div className="col">
             <div className={styles["vertical-card-container"]}>
                 <Link href="/producto/black-ops-6" className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
                 <div className={styles["image-container"]}>
-                    <Image
-                        src={gameImage}
-                        sizes="50vw"
-                        alt="Plataforma de juego"
-                        fill
-                        style={{ objectFit: 'cover' }}
-                    />
+                    {children}
                     <div className={styles["platform-discount-container"]}>
                         <i className={platform}></i>
                         <span className={styles["discount"]}>{discount}</span>

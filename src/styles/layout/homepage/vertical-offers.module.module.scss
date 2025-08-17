@@ -34,10 +34,12 @@
 }
 
 .info-container {
-    padding: 1rem;
-    padding-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     background-color: map.get($colores, primary-color);
     height: 30%;
+    padding: 0rem 1rem;
     max-width: 100%;
 }
 
@@ -51,7 +53,6 @@
     text-overflow: ellipsis;
     font-size: 1.1rem;
     color: map.get($colores, font-dark-background-color);
-    margin-bottom: 1.5rem;
 }
 
 .divisor-line-container {
@@ -67,14 +68,11 @@
     background-color: map.get($colores, font-dark-background-color);
 }
 
-.divisor-line-container {
-    margin-bottom: 20px;
-}
-
 .prices-container {
     display: flex;
-    gap: 0.3rem;
+    flex-direction: column-reverse;
     align-items: baseline;
+    gap: 0rem;
 }
 
 .current-price {

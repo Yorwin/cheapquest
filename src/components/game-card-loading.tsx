@@ -7,9 +7,6 @@ interface GameCardLoadingProps {
 }
 
 const GameCardLoading = ({ classList }: GameCardLoadingProps) => {
-
-    console.log(classList);
-
     return (
         <div className={`${styles[classList.mainGameCard]} ${styles["skeleton-card"]}`}>
             {/* Imagen / Icono */}

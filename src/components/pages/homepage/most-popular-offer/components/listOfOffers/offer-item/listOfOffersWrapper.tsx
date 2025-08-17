@@ -3,11 +3,24 @@
 import React, { useState, useEffect } from "react";
 import OffersItem from "./listOfOffersItem"
 import { GameStandardContainerType } from "@/types/types";
+import Loading from "@/components/game-card-loading";
 import Image from "next/image";
 
 const ListOfOffersWrapper = ({ gameImage, title, platform, discount, oldPrice, currentPrice, webOffer }: GameStandardContainerType) => {
 
     const [imageIsLoaded, setIsImageLoaded] = useState(false);
+
+    const classes = {
+        mainGameCard: "rest-of-the-offers-container",
+        iconContainer: "gameimage-container",
+        gameTitle: "list-info-container-title",
+        priceOfferOriginContainer: "secondary-price-offerorigin-container",
+        discount: "secondary-discount",
+        prices: "secondary-prices",
+        lastPrice: "secondary-last-price",
+        currentPrice: "secondary-current-price",
+        webOffer: "secondary-web-offer",
+    };
 
     useEffect(() => {
         const img = new window.Image();
@@ -16,7 +29,7 @@ const ListOfOffersWrapper = ({ gameImage, title, platform, discount, oldPrice, c
     }, [gameImage]);
 
     if (!imageIsLoaded) {
-        return <div>Cargando imagen...</div>;
+        return <Loading classList={classes}></Loading>;
     }
 
     return (

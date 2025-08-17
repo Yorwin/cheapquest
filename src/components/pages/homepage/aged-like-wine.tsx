@@ -8,6 +8,7 @@ import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
 import { getGameInfo } from "@/utils/getGamesInfo";
 import VerticalGameCard from "../../vertical-game-container";
+import VerticalGameCardWrapper from "@/components/vertical-game-container-wrapper";
 import ErrorGameStandard, { inCaseOfError } from "@/components/error-loading-offers-fallback-container";
 
 const AgedLikeWine = async () => {
@@ -59,7 +60,7 @@ const AgedLikeWine = async () => {
 
         const agedLikeWineFirstRow = agedLikeWine.slice(0, 5).map((e, index) => {
             return (
-                <VerticalGameCard
+                <VerticalGameCardWrapper
                     key={index}
                     gameImage={e.offerImage}
                     oldPrice={e.oldPrice}
@@ -74,7 +75,7 @@ const AgedLikeWine = async () => {
 
         const agedLikeWineSecondRow = agedLikeWine.slice(5, 10).map((e, index) => {
             return (
-                <VerticalGameCard
+                <VerticalGameCardWrapper
                     key={index}
                     gameImage={e.offerImage}
                     oldPrice={e.oldPrice}

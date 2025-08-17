@@ -148,10 +148,10 @@ export interface GameDealWithoutScore {
 
 export interface StoreLogo {
     name: string;
-    image: StaticImageData | null; 
+    image: StaticImageData | null;
 }
 
-export interface VerticalCardContainer {
+export interface VerticalCardWrapperType {
     gameImage: StaticImageData,
     title: string,
     platform: string,
@@ -159,6 +159,16 @@ export interface VerticalCardContainer {
     oldPrice: string,
     currentPrice: string,
     webOffer: StaticImageData,
+}
+
+export interface VerticalCardContainerType {
+    title: string,
+    platform: string,
+    discount: string,
+    oldPrice: string,
+    currentPrice: string,
+    webOffer: StaticImageData,
+    children: React.ReactNode,
 }
 
 export interface bestOfferType {
@@ -232,7 +242,7 @@ export interface GameStandardControllerType {
     currentPrice: string,
     webOffer: StaticImageData | string,
     classes?: Classes,
-    children? : React.ReactNode;
+    children?: React.ReactNode;
 }
 
 

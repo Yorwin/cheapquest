@@ -1,6 +1,5 @@
 import React from "react";
 import { GameStandardContainerType } from "@/types/types";
-import OffersItem from "@/components/pages/homepage/most-popular-offer/components/listOfOffers/offer-item/listOfOffersItem"
 import ListOfOffersWrapper from "./offer-item/listOfOffersWrapper";
 
 interface RestOfOffersProps {

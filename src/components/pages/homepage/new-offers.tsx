@@ -6,7 +6,7 @@ import { getGameInfo } from "@/utils/getGamesInfo";
 import searchForStore from "@/utils/seachForStore";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
-import VerticalGameCard from "../../vertical-game-container";
+import VerticalGameCardWrapper from "@/components/vertical-game-container-wrapper";
 import ErrorGameStandard from "@/components/error-loading-offers-fallback-container";
 
 const NewOffers = async () => {
@@ -50,7 +50,7 @@ const NewOffers = async () => {
 
         const newOffersContainerFirstRow = newOffers.slice(0, 5).map((e, index) => {
             return (
-                <VerticalGameCard
+                <VerticalGameCardWrapper
                     key={index}
                     gameImage={e.offerImage}
                     oldPrice={e.oldPrice}
@@ -65,7 +65,7 @@ const NewOffers = async () => {
 
         const newOffersContainerSecondRow = newOffers.slice(5, 10).map((e, index) => {
             return (
-                <VerticalGameCard
+                <VerticalGameCardWrapper
                     key={index}
                     gameImage={e.offerImage}
                     oldPrice={e.oldPrice}

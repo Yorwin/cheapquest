@@ -1,11 +1,8 @@
-.main-gamecard-offer {
+.vertical-card-container {
     position: relative;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    width: calc(50% - 25px);
-    height: 100%;
+    height: 550px;
     background-color: black;
+    overflow: hidden;
 }
 
 @keyframes shimmer {
@@ -21,17 +18,23 @@
 .skeleton-card {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     border-radius: 16px;
     overflow: hidden;
     background: #f2f2f2;
 }
 
+.image-container {
+    height: 70%;
+}
+
 .skeleton-content {
     display: flex;
-    max-height: 40%;
+    max-height: 35%;
     flex-direction: column;
+    justify-content: space-around;
     gap: 12px;
-    padding: 12px;
+    padding: 20px;
 }
 
 .skeleton-box {
@@ -47,14 +50,18 @@
 // Tamaños base
 .skeleton-title {
     height: 20px;
-    width: 100%;
+    width: 60%;
 }
 
-.price-offerorigin-container {
+.skeleton-divisor-line {
+    width: 100%;
+    height: 10px;
+}
+
+.price-and-platform-container {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 1rem;
     justify-content: space-between;
     width: 100%;
     height: 100%;
@@ -67,7 +74,7 @@
     gap: 8px;
 }
 
-.prices {
+.prices-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -76,7 +83,9 @@
 
 .skeleton-prices {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    height: 100%;
 }
 
 .skeleton-discount {
@@ -95,56 +104,7 @@
 }
 
 .skeleton-offer {
-    height: 70px;
-    width: 70px;
-    border-radius: 50%;
-}
-
-/* Secondary */
-
-.secondary-gamecard-offer {
-    width: calc(50% - 10px);
-    @extend .main-gamecard-offer;
-}
-
-.secondary-price-offerorigin-container {
-    height: 70%;
-    padding: .5rem;
-    @extend .price-offerorigin-container;
-}
-
-.secondary-prices {
-    @extend .prices;
-    margin-left: .5rem;
-    line-height: 1.2rem
-}
-
-.secondary-price-offerorigin-container .skeleton-discount {
-    height: 100%;
+    height: 50px;
     width: 50px;
-}
-
-.secondary-web-offer {
-    position: relative;
-    width: 35px;
-    height: 35px;
-}
-
-/* Rest Of The List */
-
-.rest-of-the-offers-container {
-    height: 260px;
-    width: 95%;
-}
-
-.icon-container {
-    height: 70%;
-}
-
-.gameimage-container {
-    height: 80%;
-}
-
-.secondary-icon-container {
-    height: 80%;
+    border-radius: 50%;
 }
