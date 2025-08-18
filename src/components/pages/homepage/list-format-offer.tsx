@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/list-format-offers.module.scss"
 import Image from "@/resources/offer-img/image.jpg"
-import ListFormatContainer from "../../list-format-offer-container";
+import ListFormatOffersWrapper from "@/components/list-format-offer-wrapper";
 import { offersByPercentage, historicLows } from "@/utils/getOffers";
 import ErrorGameStandard from "@/components/error-loading-offers-fallback-container";
 
@@ -57,7 +57,7 @@ const ListFormatOffers = async () => {
 
         const bestOffersByPercentageContainer = bestOffersByPercentage.map((e, index) => {
             return (
-                <ListFormatContainer
+                <ListFormatOffersWrapper
                     key={index}
                     index={index}
                     link="#"
@@ -72,7 +72,7 @@ const ListFormatOffers = async () => {
 
         const historicalLowsContainer = historicalLows.map((e, index) => {
             return (
-                <ListFormatContainer
+                <ListFormatOffersWrapper
                     key={index}
                     index={index}
                     link="#"

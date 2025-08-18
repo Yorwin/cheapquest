@@ -1,19 +1,9 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/list-format-offers.module.scss"
-import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
+import { listFormatOfferProps } from "@/types/types";
 
-interface Props {
-    index: number,
-    offerImage: StaticImageData,
-    gameTitle: string,
-    link : string,
-    oldPrice: string,
-    currentPrice: string,
-    discountPercentage: string
-}
-
-const ListFormatContainer = ({ index, offerImage, gameTitle, link, oldPrice, currentPrice, discountPercentage }: Props) => {
+const ListFormatContainer = ({ index, gameTitle, link, oldPrice, currentPrice, discountPercentage, children }: listFormatOfferProps) => {
     return <>
         <section className={styles["game-info-container"]}>
             <Link href={link} className={styles["enlace"]} />
@@ -23,13 +13,7 @@ const ListFormatContainer = ({ index, offerImage, gameTitle, link, oldPrice, cur
                 </span>
             </div>
             <div className={styles["image-container"]}>
-                <Image
-                    src={offerImage}
-                    sizes="50vw"
-                    alt="Plataforma de juego"
-                    fill
-                    style={{ objectFit: 'cover' }}
-                />
+                {children}
             </div>
             <div className={styles["details"]}>
                 <div className={styles["game-title-and-extra-info"]}>
