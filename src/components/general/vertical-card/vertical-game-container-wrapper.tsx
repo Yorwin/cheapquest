@@ -2,8 +2,8 @@
 
 import { VerticalCardWrapperType } from "@/types/types";
 import React, { useEffect, useState } from "react";
-import Loading from "@/components/vertical-game-card-loading"
-import VerticalGameCard from "@/components/vertical-game-container";
+import Loading from "@/components/general/vertical-card/vertical-game-card-loading"
+import VerticalGameCard from "@/components/general/vertical-card/vertical-game-container";
 import Image from "next/image";
 
 const VerticalCardClasses = {

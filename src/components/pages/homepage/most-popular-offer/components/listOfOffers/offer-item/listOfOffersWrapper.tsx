@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import OffersItem from "./listOfOffersItem"
 import { GameStandardContainerType } from "@/types/types";
-import Loading from "@/components/game-card-loading";
+import Loading from "@/components/general/game-card/game-card-loading";
 import Image from "next/image";
 
 const ListOfOffersWrapper = ({ gameImage, title, platform, discount, oldPrice, currentPrice, webOffer }: GameStandardContainerType) => {

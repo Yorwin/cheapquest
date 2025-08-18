@@ -7,9 +7,8 @@ import { GameDealWithoutScore, StoreLogo } from "@/types/types";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
 import { getGameInfo } from "@/utils/getGamesInfo";
-import VerticalGameCard from "../../vertical-game-container";
-import VerticalGameCardWrapper from "@/components/vertical-game-container-wrapper";
-import ErrorGameStandard, { inCaseOfError } from "@/components/error-loading-offers-fallback-container";
+import VerticalGameCardWrapper from "@/components/general/vertical-card/vertical-game-container-wrapper";
+import ErrorGameStandard, { inCaseOfError } from "@/components/general/error-loading-offers-fallback-container";
 
 const AgedLikeWine = async () => {
     try {

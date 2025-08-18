@@ -7,7 +7,6 @@ import AgedLikeWine from "@/components/pages/homepage/aged-like-wine";
 import ListFormatOffers from "@/components/pages/homepage/list-format-offer"
 import Reviews from "@/components/pages/homepage/reviews"
 import Categories from "@/components/pages/homepage/categories";
-import { Suspense } from "react";
 
 const HomePage = async () => {
   return <>

@@ -109,6 +109,11 @@
     object-fit: contain;
     height: 70%;
     width: 100%;
+
+    background-image: url("../../../resources/loading-img/loading-offer.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .platform-discount-container {
@@ -134,4 +139,3 @@
         color: map.get($colores , font-dark-background-color);
     }
 }
-

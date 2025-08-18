@@ -1,5 +1,5 @@
 import React from "react";
-import GameStandardWrapper from "@/components/game-card-wrapper";
+import GameStandardWrapper from "@/components/general/game-card/game-card-wrapper";
 import { GameStandardContainerType, Classes } from "@/types/types";
 
 type SecondaryOffersProps = {

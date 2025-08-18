@@ -58,6 +58,11 @@
     position: relative;
     height: 100%;
     width: 180px;
+
+    background-image: url("../../../resources/loading-img/loading-list-offer.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .details {

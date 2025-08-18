@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import ListFormatContainer from "./list-format-offer-container";
 import { listFormatOfferProps } from "@/types/types";
-import Loading from "@/components/list-format-offer-loading"
+import Loading from "@/components/general/list-card/list-format-offer-loading"
 
 const ListFormatOffersWrapper = ({ index, gameTitle, offerImage, link, oldPrice, currentPrice, discountPercentage }: listFormatOfferProps) => {
 

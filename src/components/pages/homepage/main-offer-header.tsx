@@ -35,7 +35,9 @@ const MainOffer = async () => {
                     className={styles["main-header-image"]}
                     width={1920}
                     height={1080}
-                    style={{ width: "100%", height: "100%" }}
+                    sizes="100vw"
+                    priority
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
                 <div className={styles["overlay"]}></div>
                 <section className={styles["offer"]}>

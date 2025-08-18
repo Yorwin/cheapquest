@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/list-format-offers.module.scss"
 import Image from "@/resources/offer-img/image.jpg"
-import ListFormatOffersWrapper from "@/components/list-format-offer-wrapper";
+import ListFormatOffersWrapper from "@/components/general/list-card/list-format-offer-wrapper";
 import { offersByPercentage, historicLows } from "@/utils/getOffers";
-import ErrorGameStandard from "@/components/error-loading-offers-fallback-container";
+import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
 
 const ListFormatOffers = async () => {
     try {

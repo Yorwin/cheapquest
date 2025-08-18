@@ -6,8 +6,8 @@ import { getGameInfo } from "@/utils/getGamesInfo";
 import searchForStore from "@/utils/seachForStore";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
-import VerticalGameCardWrapper from "@/components/vertical-game-container-wrapper";
-import ErrorGameStandard from "@/components/error-loading-offers-fallback-container";
+import VerticalGameCardWrapper from "@/components/general/vertical-card/vertical-game-container-wrapper";
+import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
 
 const NewOffers = async () => {
     try {
