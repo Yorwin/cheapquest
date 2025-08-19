@@ -23,7 +23,8 @@
     border-radius: 5px;
     z-index: 0;
     cursor: pointer;
-    
+    @include offer-shadow;
+
     &:hover .image-character {
         transform: scale(1.06);
     }

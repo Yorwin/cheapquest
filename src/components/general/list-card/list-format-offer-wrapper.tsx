@@ -33,7 +33,7 @@ const ListFormatOffersWrapper = ({ index, gameTitle, offerImage, link, oldPrice,
         >
             <Image
                 src={offerImage}
-                sizes="50vw"
+                sizes="10vw"
                 alt="Plataforma de juego"
                 fill
                 style={{ objectFit: 'cover' }}

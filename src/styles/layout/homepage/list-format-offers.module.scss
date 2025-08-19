@@ -27,6 +27,12 @@
     margin-bottom: 15px;
     background-color: map.get($colores, primary-color);
     border-radius: 0rem 1rem 1rem 0rem;
+    @include list-format-shadow;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.03);
+    }
 }
 
 .enlace {
@@ -59,7 +65,7 @@
     height: 100%;
     width: 180px;
 
-    background-image: url("../../../resources/loading-img/loading-list-offer.png");
+    background-image: url("../../../resources/loading-img/loading-list-offer.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -78,7 +84,6 @@
     align-items: flex-start;
     justify-content: center;
     color: map.get($colores, font-dark-background-color);
-    z-index: 2;
 
     h3 {
         font-size: 1.1rem;

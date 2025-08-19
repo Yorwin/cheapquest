@@ -2,8 +2,8 @@ import React from "react";
 import styles from "@/styles/layout/header.module.scss"
 import Image from "next/image";
 import Link from "next/link";
-import LogoImg from "@/resources/logo/logo.png"
-import OffersButton from "./component/button-offers"
+import LogoImg from "@/resources/logo/logo.webp";
+import OffersButton from "./component/button-offers";
 
 const Header = () => {
     return (
@@ -17,14 +17,13 @@ const Header = () => {
 
                     <li className={styles["image-item"]}>
                         <div className={styles["image-container"]}>
-                            <Link href="/" />
+                            <Link href="/" className={styles["click-overlay"]} />
                             <Image
                                 src={LogoImg}
                                 sizes="50vw"
                                 alt="Logo"
                                 fill
-                                style={{ objectFit: 'cover' }}
-                            />
+                                style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                         </div>
                     </li>
 

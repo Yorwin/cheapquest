@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/most-popular-offer.module.scss"
 import Image from "next/image";
+import Link from "next/link";
 import { GameStandardControllerType } from "@/types/types";
 
 const defaultClasses = {
@@ -18,6 +19,7 @@ const defaultClasses = {
 
 const OfferContainer = ({ title, platform, discount, oldPrice, currentPrice, webOffer, children }: GameStandardControllerType) => {
     return <article className={styles["rest-of-the-offers-container"]}>
+        <Link href="/game-page/blackops-6" className={styles["click-overlay"]}></Link>
         <div className={styles["gameimage-container"]}>
             {children}
         </div>

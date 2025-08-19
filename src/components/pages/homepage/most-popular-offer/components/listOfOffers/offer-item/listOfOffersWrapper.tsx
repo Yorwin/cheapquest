@@ -42,7 +42,12 @@ const ListOfOffersWrapper = ({ gameImage, title, platform, discount, oldPrice, c
             currentPrice={currentPrice}
             webOffer={webOffer}
         >
-            <Image src={gameImage} alt={title} fill style={{ objectFit: "cover" }} />
+            <Image
+                src={gameImage}
+                alt={title}
+                sizes="30vw"
+                fill
+                style={{ objectFit: "cover" }} />
         </OffersItem>
     )
 };

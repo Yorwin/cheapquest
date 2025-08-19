@@ -53,6 +53,21 @@
     }
 }
 
+.image-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.click-overlay {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
 .button-container {
     position: relative;
 }

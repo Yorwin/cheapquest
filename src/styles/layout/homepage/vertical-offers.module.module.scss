@@ -24,6 +24,12 @@
     height: 550px;
     background-color: black;
     overflow: hidden;
+    @include offer-shadow;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.03);
+    }
 }
 
 .click-overlay {
@@ -110,7 +116,7 @@
     height: 70%;
     width: 100%;
 
-    background-image: url("../../../resources/loading-img/loading-offer.png");
+    background-image: url("../../../resources/loading-img/loading-offer.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

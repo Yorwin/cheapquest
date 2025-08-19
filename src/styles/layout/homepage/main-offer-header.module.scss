@@ -47,6 +47,7 @@
     font-size: 2.8rem;
     text-transform: uppercase;
     margin-bottom: 1.2rem;
+    text-shadow: $title-shadow;
 }
 
 .price-container {
@@ -56,8 +57,12 @@
 
 .discount {
     @include discount-style(.5rem, 600, 1.8rem, var(--font-gontSerrat));
+    box-shadow: 17px 0px 72px -11px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: 17px 0px 72px -11px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 17px 0px 72px -11px rgba(0, 0, 0, 1);
 }
 
 .current-price {
     @include current-price-style(2.4rem, 700, 2px, 1rem, var(--font-gontSerrat));
+    text-shadow: $title-shadow;
 }

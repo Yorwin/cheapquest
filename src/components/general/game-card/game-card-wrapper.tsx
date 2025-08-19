@@ -29,7 +29,7 @@ const GameStandardWrapper = ({ gameImage, title, platform, discount, oldPrice, c
     }, [gameImage]);
 
     if (!imageIsLoaded) {
-        return <GameCardLoading classList={classes}/>;
+        return <GameCardLoading classList={classes} />;
     }
 
     return (
@@ -43,7 +43,12 @@ const GameStandardWrapper = ({ gameImage, title, platform, discount, oldPrice, c
             webOffer={webOffer}
             classes={classes}
         >
-            <Image src={gameImage} alt={title} fill style={{ objectFit: "cover" }} />
+            <Image
+                src={gameImage}
+                alt={title}
+                fill
+                sizes="30vw"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         </GameStandardContainer>
     )
 };

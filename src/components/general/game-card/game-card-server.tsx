@@ -47,7 +47,7 @@ const GameStandardContainer = ({ title, platform, discount, oldPrice, currentPri
                 <div className={styles[classes.webOffer]}>
                     <Image
                         src={webOffer}
-                        sizes="50vw"
+                        sizes="25vw"
                         alt="Plataforma de juego"
                         fill
                         style={{ objectFit: 'contain' }}

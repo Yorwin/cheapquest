@@ -7,11 +7,24 @@
     align-items: center;
 }
 
+@mixin offer-shadow {
+    box-shadow: -1px 1px 69px -32px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: -1px 1px 69px -32px rgba(0, 0, 0, 1);
+    -moz-box-shadow: -1px 1px 69px -32px rgba(0, 0, 0, 1);
+}
+
+@mixin list-format-shadow {
+    box-shadow: 9px 18px 88px -8px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: 9px 18px 88px -8px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 9px 18px 88px -8px rgba(0, 0, 0, 1);
+}
+
 @mixin offers-title-typography {
     font-family: var(--font-gontSerrat);
     font-size: 1.8rem;
     font-weight: 700;
     letter-spacing: 2px;
+    white-space: nowrap;
 }
 
 @mixin discount-style($padding-size, $font-weight, $font-size, $font-family) {
@@ -46,4 +59,16 @@
     font-size: 1.2rem;
     font-weight: 600;
     color: map.get($colores, font-dark-background-color)
+}
+
+@mixin button-shadow-homepage {
+    box-shadow: -1px 31px 98px -21px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: -1px 31px 98px -21px rgba(0, 0, 0, 1);
+    -moz-box-shadow: -1px 31px 98px -21px rgba(0, 0, 0, 1);
+}
+
+@mixin review-box-shadow {
+    box-shadow: 0px 0px 50px -15px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: 0px 0px 50px -15px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 0px 0px 50px -15px rgba(0, 0, 0, 1);
 }
