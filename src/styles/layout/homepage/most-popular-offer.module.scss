@@ -124,17 +124,13 @@
     font-weight: 500;
     color: map.get($colores, font-dark-background-color);
     margin-bottom: 0rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include resume-game-title;
 }
 
 .secondary-game-title {
     font-size: 1rem;
     @extend .main-game-title;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include resume-game-title;
 }
 
 .list-info-container-title {
@@ -270,5 +266,21 @@
 
     &:hover {
         text-decoration: $default-text-decoration;
+    }
+}
+
+/* Responsive Styles */
+
+@media screen and (max-width: 1200px) {
+    .most-popular-offer-container {
+        background-color: map.get($colores, complementary-color);
+        padding: $homepage-xl-offers-padding;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .most-popular-offer-container {
+        background-color: map.get($colores, complementary-color);
+        padding: $homepage-lg-offers-padding;
     }
 }

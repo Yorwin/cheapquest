@@ -47,23 +47,23 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    width: 50px;
+    width: 10%;
     background-color: #000;
     flex-shrink: 0;
 }
 
 .offer-number {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-weight: 400;
     font-family: var(--font-gontSerrat);
-    padding: 1rem;
+    padding: 0.5rem;
     color: map.get($colores, font-dark-background-color);
 }
 
 .image-container {
     position: relative;
     height: 100%;
-    width: 180px;
+    width: 25%;
 
     background-image: url("../../../resources/loading-img/loading-list-offer.webp");
     background-size: cover;
@@ -74,8 +74,8 @@
 .details {
     display: flex;
     justify-content: space-between;
-    padding: 0rem .7rem;
-    width: 100%;
+    padding: 0rem .4rem;
+    width: 65%;
 }
 
 .game-title-and-extra-info {
@@ -84,12 +84,16 @@
     align-items: flex-start;
     justify-content: center;
     color: map.get($colores, font-dark-background-color);
+    width: 50%;
 
     h3 {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        width: 100%;
+        font-size: 1rem;
         font-weight: 600;
         font-family: var(--font-gontSerrat);
         margin-bottom: 0rem;
+        @include resume-game-title;
     }
 
     p {
@@ -102,6 +106,8 @@
 .prices {
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
+    width: 50%;
 }
 
 .prices-container {
@@ -113,7 +119,7 @@
 }
 
 .old-price {
-    @include cancelled-price(1.1rem, 600);
+    @include cancelled-price(.8rem, 600);
 }
 
 .current-price {
@@ -126,7 +132,7 @@
     align-items: center;
 
     span {
-        @include discount-style(.4rem .3rem, 700, 1.4rem, var(--font-gontSerrat));
+        @include discount-style(.4rem .3rem, 700, 1.2rem, var(--font-gontSerrat));
         border-radius: 1rem;
     }
 }

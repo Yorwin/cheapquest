@@ -51,12 +51,9 @@
 
 .game-title {
     width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     font-family: var(--font-timeless);
     font-weight: 600;
-    text-overflow: ellipsis;
+    @include resume-game-title;
     font-size: 1.1rem;
     color: map.get($colores, font-dark-background-color);
 }
