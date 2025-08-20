@@ -4,6 +4,7 @@ import ListOfOffersWrapper from "./offer-item/listOfOffersWrapper";
 
 interface RestOfOffersProps {
     groupedCategories: GameStandardContainerType[][];
+    resolution: number;
 }
 
 const justifyClasses = [
@@ -12,11 +13,19 @@ const justifyClasses = [
     "justify-content-end",
 ];
 
-const RestOfOffers = ({ groupedCategories }: RestOfOffersProps) => {
+const justifyClassesResponsive = [
+    "justify-content-start",
+    "justify-content-end",
+];
+
+const RestOfOffers = ({ groupedCategories, resolution }: RestOfOffersProps) => {
     return groupedCategories.map((group: any) => {
         return group.map((e: any, index: number) => {
-            return (
-                <section className={`col-md-4 col-sm-12 p-0 mt-4 d-flex ${justifyClasses[index]}`} key={index}>
+
+            const justifyClass = resolution < 768 ? justifyClassesResponsive[index]: justifyClasses[index];
+
+            return <>
+                <section className={`col-md-4 col-sm-6 p-0 mt-4 d-flex ${justifyClass}`} key={index}>
                     <ListOfOffersWrapper
                         key={index}
                         title={e.title}
@@ -29,7 +38,8 @@ const RestOfOffers = ({ groupedCategories }: RestOfOffersProps) => {
                         classes={e.classes}
                     />
                 </section>
-            );
+            </>
+
         });
     });
 };

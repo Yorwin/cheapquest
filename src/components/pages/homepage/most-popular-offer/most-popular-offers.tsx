@@ -8,6 +8,7 @@ import { getGameInfo } from "@/utils/getGamesInfo";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency, GameDeal } from "@/types/types";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
+import ContentDistributionManager from "./content-distribution-manager";
 
 /* Offers */
 import MainOffer from "./components/mainOffer";
@@ -87,8 +88,12 @@ const MostPopularOffer = async () => {
             groupedGames.push(slicedROL.slice(i, i + 3));
         }
 
+        const Prueba = <ContentDistributionManager gameInfo={listInfo} />
+
         return <>
-            <section className={styles["most-popular-offer-container"]}>
+
+            {Prueba}
+            {/* <section className={styles["most-popular-offer-container"]}>
                 <h1 className={styles["title"]}>OFERTAS MÁS POPULARES</h1>
                 <div className={styles["offers-container"]}>
                     <div className={styles["first-row"]}>
@@ -128,15 +133,15 @@ const MostPopularOffer = async () => {
                         </div>
                     </section>
 
-                    {/* Ver más ofertas Botón */}
+                    Ver más ofertas Botón 
 
-                    <div className={styles["button-container"]}>
-                        <button>
-                            Ver más ofertas
-                        </button>
-                    </div>
-                </div>
-            </section>
+            <div className={styles["button-container"]}>
+                <button>
+                    Ver más ofertas
+                </button>
+            </div>
+        </div >
+            </section > */}
         </>
     } catch (error) {
         console.error(`Se ha producido un error al intentar cargar los juegos y las ofertas ${error}`)

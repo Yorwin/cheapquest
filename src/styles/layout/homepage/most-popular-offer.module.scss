@@ -284,3 +284,9 @@
         padding: $homepage-lg-offers-padding;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .main-gamecard-offer {
+        width: 100%;
+    }
+}
