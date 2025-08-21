@@ -20,6 +20,7 @@
 .first-row {
     display: flex;
     justify-content: space-between;
+    flex-direction: row;
     gap: 1rem;
     width: 100%;
     height: 450px;
@@ -87,7 +88,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 1.5rem;
+    padding: 1rem;
     justify-content: space-between;
     width: 100%;
     height: 65%;
@@ -119,6 +120,7 @@
 }
 
 .main-game-title {
+    max-width: 70%;
     margin-left: 0.5rem;
     font-size: 1.4rem;
     font-weight: 500;
@@ -149,8 +151,29 @@
 
 .web-offer {
     position: relative;
-    width: 45px;
-    height: 45px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 120px;
+    height: 80px;
+}
+
+.web-offer img {
+    width: 60%;
+    height: 100%;
+}
+
+.secondary-web-offer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 70px;
+    height: 100%;
+}
+
+.secondary-web-offer img {
+    width: 85%;
+    height: 100%;
 }
 
 /* Secondary Cards */
@@ -203,26 +226,9 @@
     height: 35px;
 }
 
-.web-offer img {
-    width: 100%;
-    height: 100%;
-}
-
 .secondary-price-offerorigin-container {
     padding: 0.8rem;
     @extend .price-offerorigin-container;
-}
-
-.web-offer {
-    position: relative;
-    width: 120px;
-    height: 80px;
-}
-
-.web-offer img {
-    height: 100%;
-    width: auto;
-    max-width: 100%;
 }
 
 /* Rest of the list */
@@ -276,6 +282,31 @@
         background-color: map.get($colores, complementary-color);
         padding: $homepage-xl-offers-padding;
     }
+
+    /* Game title */
+    .main-game-title {
+        max-width: 60%;
+    }
+
+    /* */
+
+    .price-offerorigin-container {
+        padding: 1.5rem;
+        height: 65%;
+    }
+
+    /* Discount */
+    .discount {
+        display: flex;
+        align-items: center;
+        @include discount-style(.1rem, 500, 1.4rem, var(--font-gontSerrat));
+    }
+
+    .secondary-discount {
+        display: flex;
+        align-items: center;
+        @include discount-style(.2rem, 500, 1rem, var(--font-gontSerrat));
+    }
 }
 
 @media screen and (max-width: 992px) {
@@ -283,6 +314,11 @@
         background-color: map.get($colores, complementary-color);
         padding: $homepage-lg-offers-padding;
     }
+
+    .main-gamecard-offer {
+        width: calc(50% - 10px);
+    }
+
 }
 
 @media screen and (max-width: 768px) {

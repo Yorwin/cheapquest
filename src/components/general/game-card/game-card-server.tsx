@@ -49,7 +49,6 @@ const GameStandardContainer = ({ title, platform, discount, oldPrice, currentPri
                         src={webOffer}
                         sizes="25vw"
                         alt="Plataforma de juego"
-                        fill
                         style={{ objectFit: 'contain' }}
                     />
                 </div>
