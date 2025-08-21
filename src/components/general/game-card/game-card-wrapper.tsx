@@ -31,7 +31,7 @@ const GameStandardWrapper = ({ gameImage, title, platform, discount, oldPrice, c
     if (!imageIsLoaded) {
         return <GameCardLoading classList={classes} />;
     }
-
+    
     return (
         <GameStandardContainer
             title={title}

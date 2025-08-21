@@ -37,20 +37,22 @@ const GameStandardContainer = ({ title, platform, discount, oldPrice, currentPri
                 <h4 className={styles[classes.gameTitle]}>{title}</h4>
             </div>
             <div className={styles[classes.priceOfferOriginContainer]}>
-                <div className={styles["offer-container"]}>
-                    <span className={styles[classes.discount]}>{discount}</span>
-                    <div className={styles[classes.prices]}>
-                        <span className={styles[classes.lastPrice]}>{oldPrice}</span>
-                        <span className={styles[classes.currentPrice]}>{currentPrice}</span>
+                <div className={styles["content-container"]}>
+                    <div className={styles["offer-container"]}>
+                        <span className={styles[classes.discount]}>{discount}</span>
+                        <div className={styles[classes.prices]}>
+                            <span className={styles[classes.lastPrice]}>{oldPrice}</span>
+                            <span className={styles[classes.currentPrice]}>{currentPrice}</span>
+                        </div>
                     </div>
-                </div>
-                <div className={styles[classes.webOffer]}>
-                    <Image
-                        src={webOffer}
-                        sizes="25vw"
-                        alt="Plataforma de juego"
-                        style={{ objectFit: 'contain' }}
-                    />
+                    <div className={styles[classes.webOffer]}>
+                        <Image
+                            src={webOffer}
+                            sizes="25vw"
+                            alt="Plataforma de juego"
+                            style={{ objectFit: 'contain' }}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

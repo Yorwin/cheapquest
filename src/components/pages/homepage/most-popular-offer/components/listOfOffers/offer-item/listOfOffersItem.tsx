@@ -37,21 +37,23 @@ const OfferContainer = ({ title, platform, discount, oldPrice, currentPrice, web
                 <h4 className={styles["list-info-container-title"]}>{title}</h4>
             </div>
             <div className={styles["secondary-price-offerorigin-container"]}>
-                <div className={styles["offer-container"]}>
-                    <span className={styles["secondary-discount"]}>{discount}</span>
-                    <div className={styles["secondary-prices"]}>
-                        <span className={styles["secondary-last-price"]}>{oldPrice}</span>
-                        <span className={styles["secondary-current-price"]}>{currentPrice}</span>
+                <div className={styles["content-container"]}>
+                    <div className={styles["offer-container"]}>
+                        <span className={styles["secondary-discount"]}>{discount}</span>
+                        <div className={styles["secondary-prices"]}>
+                            <span className={styles["secondary-last-price"]}>{oldPrice}</span>
+                            <span className={styles["secondary-current-price"]}>{currentPrice}</span>
+                        </div>
                     </div>
-                </div>
-                <div className={styles["secondary-web-offer"]}>
-                    <Image
-                        src={webOffer}
-                        sizes="50vw"
-                        alt="Plataforma de juego"
-                        fill
-                        style={{ objectFit: 'contain' }}
-                    />
+                    <div className={styles["secondary-web-offer"]}>
+                        <Image
+                            src={webOffer}
+                            sizes="50vw"
+                            alt="Plataforma de juego"
+                            fill
+                            style={{ objectFit: 'contain' }}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
