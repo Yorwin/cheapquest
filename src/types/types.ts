@@ -256,4 +256,24 @@ export interface listFormatOfferProps {
     children?: React.ReactNode,
 }
 
+export interface responsiveDesktopDesignProps {
+    gameInfo: GameStandardContainerType[],
+    mainClasses: Classes,
+    secondaryClasses: Classes,
+    width: number,
+}
+
+export interface responsiveTabletDesignProps {
+    gameInfo: GameStandardContainerType[],
+    mainClasses: Classes,
+    width: number,
+}
+
+export interface responsiveMobileDesignProps {
+    gameInfo: GameStandardContainerType[],
+    mainClasses: Classes,
+    width: number
+}
+
+
 

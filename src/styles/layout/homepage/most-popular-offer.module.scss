@@ -8,7 +8,7 @@
 }
 
 .title {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     color: map.get($colores, font-dark-background-color);
     @include offers-title-typography;
 }
@@ -73,6 +73,7 @@
     height: 35%;
     width: 100%;
     background-color: map.get($colores, primary-color);
+    overflow: hidden;
 }
 
 .platform {
@@ -169,10 +170,11 @@
 }
 
 .secondary-web-offer {
+    position: relative;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 70px;
+    width: 35px;
     height: 100%;
 }
 
@@ -221,12 +223,6 @@
 
 .secondary-last-price {
     @include cancelled-price(.8rem, 500);
-}
-
-.secondary-web-offer {
-    position: relative;
-    width: 35px;
-    height: 35px;
 }
 
 .secondary-price-offerorigin-container {
@@ -288,11 +284,6 @@
 
     /* Main Card */
 
-    /* Main Game title */
-    .main-game-title {
-        max-width: 60%;
-    }
-
     /* Prices */
     .prices {
         line-height: 1.6rem
@@ -334,7 +325,6 @@
     .secondary-discount {
         @include discount-style(.2rem, 500, 1rem, var(--font-gontSerrat));
     }
-
 }
 
 @media screen and (max-width: 992px) {
@@ -346,11 +336,65 @@
     .main-gamecard-offer {
         width: calc(50% - 10px);
     }
-
 }
 
 @media screen and (max-width: 768px) {
     .main-gamecard-offer {
         width: 100%;
+    }
+
+    .button-container button {
+        font-weight: 700;
+        font-size: 1.3rem;
+        padding: 0.7rem 2rem;
+    }
+}
+
+@media screen and (max-width: 568px) {
+
+    /* Most Popular Offer */
+
+    .most-popular-offer-container {
+        padding: $homepage-sm-offers-padding;
+    }
+
+    /* Secondary Card */
+
+    /* Prices */
+    .secondary-prices {
+        line-height: .9rem;
+    }
+
+    /* Current Price */
+    .secondary-current-price {
+        @include current-price-style(.9rem, 500, 3px, 0rem, var(--font-gontSerrat));
+    }
+
+    /* Last Price */
+    .secondary-last-price {
+        @include cancelled-price(.5rem, 600);
+    }
+
+    /* Discount */
+    .secondary-discount {
+        @include discount-style(.2rem, 600, .9rem, var(--font-gontSerrat));
+    }
+
+    /* Web Offer */
+    .secondary-web-offer {
+        width: 25px;
+        height: 100%;
+    }
+
+    .rest-of-the-offers-container {
+        width: 95%;
+    }
+
+    /* Button */
+
+    .button-container button {
+        font-weight: 700;
+        font-size: 1.1rem;
+        padding: 0.5rem 1.7rem;
     }
 }
