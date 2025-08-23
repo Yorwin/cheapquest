@@ -10,7 +10,7 @@
 .title {
     margin-bottom: 2rem;
     color: map.get($colores, font-dark-background-color);
-    @include offers-title-typography;
+    @include offers-title-typography(1.8rem);
 }
 
 .offers-container {
@@ -284,6 +284,14 @@
 
     /* Main Card */
 
+    /* Title */
+
+    .title {
+        margin-bottom: 2rem;
+        color: map.get($colores, font-dark-background-color);
+        @include offers-title-typography(1.6rem);
+    }
+
     /* Prices */
     .prices {
         line-height: 1.6rem
@@ -343,6 +351,11 @@
         width: 100%;
     }
 
+    .title {
+        margin-bottom: 1.4rem;
+        @include offers-title-typography(1.5rem);
+    }
+
     .button-container button {
         font-weight: 700;
         font-size: 1.3rem;
@@ -356,6 +369,13 @@
 
     .most-popular-offer-container {
         padding: $homepage-sm-offers-padding;
+    }
+
+    /* Title */
+
+    .title {
+        margin-bottom: 1.2rem;
+        @include offers-title-typography(1.2rem);
     }
 
     /* Secondary Card */

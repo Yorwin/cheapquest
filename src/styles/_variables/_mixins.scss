@@ -19,9 +19,9 @@
     -moz-box-shadow: 9px 18px 88px -8px rgba(0, 0, 0, 1);
 }
 
-@mixin offers-title-typography {
+@mixin offers-title-typography($font-size) {
     font-family: var(--font-gontSerrat);
-    font-size: 1.8rem;
+    font-size: $font-size;
     font-weight: 700;
     letter-spacing: 2px;
     white-space: nowrap;

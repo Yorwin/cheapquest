@@ -16,7 +16,7 @@
 .title {
     margin-bottom: 1rem;
     color: map.get($colores, font-dark-background-color);
-    @include offers-title-typography;
+    @include offers-title-typography(1.8rem);
 }
 
 .vertical-card-container {
@@ -75,15 +75,15 @@
     display: flex;
     flex-direction: column-reverse;
     align-items: baseline;
-    gap: 0rem;
+    gap: -1rem;
 }
 
 .current-price {
-    @include current-price-style(1.5rem, 400, 3px, 0rem, var(--font-gontSerrat));
+    @include current-price-style(1.3rem, 400, 3px, 0rem, var(--font-gontSerrat));
 }
 
 .regular-price {
-    @include cancelled-price(1rem, 500);
+    @include cancelled-price(.8rem, 500);
 }
 
 .price-and-platform-container {
@@ -103,7 +103,7 @@
 
 .web-offer img {
     height: 100%;
-    width: auto;
+    width: 100%;
     max-width: 100%;
 }
 
@@ -129,7 +129,7 @@
     bottom: 10px;
 
     i {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         background-color: map.get($colores, primary-color);
         padding: .3rem .8rem;
         border-radius: 4rem;
@@ -137,8 +137,82 @@
     }
 
     span {
-        @include discount-style(0.2rem 1rem, 600, 1.3rem, var(--font-gontSerrat));
+        @include discount-style(0.2rem 1rem, 600, 1.2rem, var(--font-gontSerrat));
         border-radius: 1rem;
         color: map.get($colores , font-dark-background-color);
     }
+}
+
+@media screen and (max-width: 1200px) {
+
+    /* Main Container */
+    .new-offers-main-container {
+        padding: $homepage-xl-offers-padding;
+    }
+
+    /* Discount and Platform */
+
+    .platform-discount-container {
+        position: absolute;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .2rem .5rem;
+        width: 100%;
+        bottom: 10px;
+
+        i {
+            font-size: 1.2rem;
+            padding: .2rem .5rem;
+            border-radius: 4rem;
+        }
+
+        span {
+            @include discount-style(0.2rem 1rem, 600, 1rem, var(--font-gontSerrat));
+            border-radius: 1rem;
+        }
+    }
+
+    /* Info Container */
+    .game-title {
+        font-size: .9rem;
+    }
+
+    .prices-container {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: baseline;
+        gap: -1rem;
+    }
+
+    .current-price {
+        @include current-price-style(1rem, 600, 3px, 0rem, var(--font-gontSerrat));
+    }
+
+    .regular-price {
+        @include cancelled-price(0.6rem, 500);
+    }
+
+    .web-offer {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+
+    .new-offers-main-container {
+        padding: $homepage-lg-offers-padding;
+    }
+
+
+}
+
+@media screen and (max-width: 768px) {}
+
+@media screen and (max-width: 568px) {
+    .new-offers-main-container {
+        padding: $homepage-sm-offers-padding;
+    }
+
 }

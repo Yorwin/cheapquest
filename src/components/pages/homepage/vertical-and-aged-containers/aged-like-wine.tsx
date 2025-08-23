@@ -9,6 +9,7 @@ import { Currency } from "@/types/types";
 import { getGameInfo } from "@/utils/getGamesInfo";
 import VerticalGameCardWrapper from "@/components/general/vertical-card/vertical-game-container-wrapper";
 import ErrorGameStandard, { inCaseOfError } from "@/components/general/error-loading-offers-fallback-container";
+import ContentDistributionManager from "./content-distribution-manager";
 
 const AgedLikeWine = async () => {
     try {
@@ -47,13 +48,13 @@ const AgedLikeWine = async () => {
             const inCaseOfErrorImage = listOfStores[Number(inCaseOfError[0].storeID)];
 
             agedLikeWine.push({
-                offerImage: gameImage,
-                gameTitle: gameTitle,
+                gameImage: gameImage,
+                title: gameTitle,
                 oldPrice: `${resultRegularPrice}€`,
                 currentPrice: `${resultPrice}€`,
-                discountPercentage: `${Number(discount).toFixed(0)}%`,
+                discount: `${Number(discount).toFixed(0)}%`,
                 platform: platforms.PC,
-                page: storeImage ? storeImage.image : inCaseOfErrorImage,
+                webOffer: storeImage ? storeImage.image : inCaseOfErrorImage,
             })
         }
 
@@ -61,13 +62,13 @@ const AgedLikeWine = async () => {
             return (
                 <VerticalGameCardWrapper
                     key={index}
-                    gameImage={e.offerImage}
+                    gameImage={e.gameImage}
                     oldPrice={e.oldPrice}
                     platform={e.platform}
-                    discount={e.discountPercentage}
-                    title={e.gameTitle}
+                    discount={e.discount}
+                    title={e.title}
                     currentPrice={e.currentPrice}
-                    webOffer={e.page}
+                    webOffer={e.webOffer}
                 />
             )
         });
@@ -76,13 +77,13 @@ const AgedLikeWine = async () => {
             return (
                 <VerticalGameCardWrapper
                     key={index}
-                    gameImage={e.offerImage}
+                    gameImage={e.gameImage}
                     oldPrice={e.oldPrice}
                     platform={e.platform}
-                    discount={e.discountPercentage}
-                    title={e.gameTitle}
+                    discount={e.discount}
+                    title={e.title}
                     currentPrice={e.currentPrice}
-                    webOffer={e.page}
+                    webOffer={e.webOffer}
                 />
             )
         });
@@ -91,12 +92,7 @@ const AgedLikeWine = async () => {
             <section className={styles["aged-like-wine-offers-main-container"]}>
                 <h1 className={styles["title"]}>ENVEJECIDOS COMO EL VINO...</h1>
                 <div className={styles["container-fluid"]}>
-                    <div className="row row-cols-5 g-3 mb-4">
-                        {agedLikeWineFirstRow}
-                    </div>
-                    <div className="row row-cols-5 g-3 mb-4">
-                        {agedLikeWineSecondRow}
-                    </div>
+                    <ContentDistributionManager gameInfo={agedLikeWine} />
                 </div>
             </section>
         </>

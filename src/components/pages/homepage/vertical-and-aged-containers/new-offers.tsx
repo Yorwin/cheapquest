@@ -8,6 +8,7 @@ import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
 import VerticalGameCardWrapper from "@/components/general/vertical-card/vertical-game-container-wrapper";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
+import ContentDistributionManager from "./content-distribution-manager";
 
 const NewOffers = async () => {
     try {
@@ -37,13 +38,13 @@ const NewOffers = async () => {
             const resultRegularPrice = (convertRegularPrice).toFixed(2);
 
             newOffers.push({
-                offerImage: result.background_image,
-                gameTitle: result.name,
+                gameImage: result.background_image,
+                title: result.name,
                 oldPrice: `${resultRegularPrice}€`,
                 currentPrice: `${resultPrice}€`,
-                discountPercentage: `${Number(newDeals[i].savings).toFixed(0)}%`,
+                discount: `${Number(newDeals[i].savings).toFixed(0)}%`,
                 platform: platforms.PC,
-                page: storeImage ? storeImage.image : store.images.icon,
+                webOffer: storeImage ? storeImage.image : store.images.icon,
             })
 
         }
@@ -52,13 +53,13 @@ const NewOffers = async () => {
             return (
                 <VerticalGameCardWrapper
                     key={index}
-                    gameImage={e.offerImage}
+                    gameImage={e.gameImage}
                     oldPrice={e.oldPrice}
                     platform={e.platform}
-                    discount={e.discountPercentage}
-                    title={e.gameTitle}
+                    discount={e.discount}
+                    title={e.title}
                     currentPrice={e.currentPrice}
-                    webOffer={e.page}
+                    webOffer={e.webOffer}
                 />
             )
         });
@@ -67,13 +68,13 @@ const NewOffers = async () => {
             return (
                 <VerticalGameCardWrapper
                     key={index}
-                    gameImage={e.offerImage}
+                    gameImage={e.gameImage}
                     oldPrice={e.oldPrice}
                     platform={e.platform}
-                    discount={e.discountPercentage}
-                    title={e.gameTitle}
+                    discount={e.discount}
+                    title={e.title}
                     currentPrice={e.currentPrice}
-                    webOffer={e.page}
+                    webOffer={e.webOffer}
                 />
             )
         });
@@ -82,6 +83,10 @@ const NewOffers = async () => {
             <section className={styles["new-offers-main-container"]}>
                 <h1 className={styles["title"]}>NUEVAS OFERTAS</h1>
                 <div className={styles["container-fluid"]}>
+
+                    <ContentDistributionManager gameInfo={newOffers} />
+
+                    {/* 
                     <div className="row row-cols-5 g-3 mb-4">
                         {newOffersContainerFirstRow}
                     </div>
@@ -89,6 +94,8 @@ const NewOffers = async () => {
                     <div className="row row-cols-5 g-3 mb-4">
                         {newOffersContainerSecondRow}
                     </div>
+                    */}
+
                 </div>
             </section>
         </>

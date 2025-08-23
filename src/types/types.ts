@@ -154,11 +154,11 @@ export interface StoreLogo {
 export interface VerticalCardWrapperType {
     gameImage: StaticImageData,
     title: string,
-    platform: string,
+    platform: StaticImageData | string,
     discount: string,
     oldPrice: string,
     currentPrice: string,
-    webOffer: StaticImageData,
+    webOffer: StaticImageData | string,
 }
 
 export interface VerticalCardContainerType {
@@ -210,7 +210,7 @@ export interface gameOfferInfo {
 export interface GameStandardContainerType {
     gameImage: StaticImageData,
     title: string,
-    platform: StaticImageData,
+    platform: StaticImageData | string,
     discount: string,
     oldPrice: string,
     currentPrice: string,
@@ -273,6 +273,10 @@ export interface responsiveMobileDesignProps {
     gameInfo: GameStandardContainerType[],
     mainClasses: Classes,
     width: number
+}
+
+export interface verticalContainerProps {
+    offersData: GameStandardContainerType[];
 }
 
 
