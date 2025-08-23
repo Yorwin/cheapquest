@@ -1,8 +1,9 @@
 "use client"
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useWindowWidth from "@/functions/hooks/useWindowWidth";
 import { GameStandardContainerType } from "@/types/types";
+import SkeletonLoader from "@/components/general/skelettonLoader";
 
 /* Responsive Elements */
 
@@ -20,6 +21,10 @@ const ContentDistributionManager = ({ gameInfo }: gameInfo) => {
 
     const width = useWindowWidth();
 
+    if (width === 0) {
+        return <SkeletonLoader />;
+    }
+
     const isDesktop = width > 992;
     const isTablet = width <= 992 && width > 768;
     const isMobile = width <= 768;
@@ -33,7 +38,6 @@ const ContentDistributionManager = ({ gameInfo }: gameInfo) => {
                 secondaryClasses={secondaryClasses}
                 width={width}
             />
-
         }
 
         {
