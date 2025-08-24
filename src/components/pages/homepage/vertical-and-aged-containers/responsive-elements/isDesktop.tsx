@@ -6,31 +6,35 @@ const IsDesktop = ({ offersData }: verticalContainerProps) => {
 
     const verticalCardFirstRow = offersData.slice(0, 5).map((e, index) => {
         return (
-            <VerticalGameCardWrapper
-                key={index}
-                gameImage={e.gameImage}
-                oldPrice={e.oldPrice}
-                platform={e.platform}
-                discount={e.discount}
-                title={e.title}
-                currentPrice={e.currentPrice}
-                webOffer={e.webOffer}
-            />
+            <div className="col">
+                <VerticalGameCardWrapper
+                    key={index}
+                    gameImage={e.gameImage}
+                    oldPrice={e.oldPrice}
+                    platform={e.platform}
+                    discount={e.discount}
+                    title={e.title}
+                    currentPrice={e.currentPrice}
+                    webOffer={e.webOffer}
+                />
+            </div>
         )
     });
 
     const verticalCardSecondRow = offersData.slice(5, 10).map((e, index) => {
         return (
-            <VerticalGameCardWrapper
-                key={index}
-                gameImage={e.gameImage}
-                oldPrice={e.oldPrice}
-                platform={e.platform}
-                discount={e.discount}
-                title={e.title}
-                currentPrice={e.currentPrice}
-                webOffer={e.webOffer}
-            />
+            <div className="col">
+                <VerticalGameCardWrapper
+                    key={index}
+                    gameImage={e.gameImage}
+                    oldPrice={e.oldPrice}
+                    platform={e.platform}
+                    discount={e.discount}
+                    title={e.title}
+                    currentPrice={e.currentPrice}
+                    webOffer={e.webOffer}
+                />
+            </div>
         )
     });
 
