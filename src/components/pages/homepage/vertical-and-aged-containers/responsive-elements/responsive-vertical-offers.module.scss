@@ -1,0 +1,78 @@
+@use '../../../../../styles/_variables/variables' as *;
+@use '../../../../../styles/_variables/mixins' as *;
+@use 'sass:map';
+
+.offers-carousel-main-container {
+    position: relative;
+    width: 100%;
+}
+
+.nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(#fff, 0.8);
+    backdrop-filter: blur(4px);
+    border: none;
+    border-radius: 50%;
+    padding: 0.75rem;
+    cursor: pointer;
+    @include shadow(1);
+    @include transition(0.2s);
+
+    &:hover {
+        background-color: #fff;
+    }
+
+    &-left {
+        left: -1rem;
+    }
+
+    &-right {
+        right: -1rem;
+    }
+
+    i {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.cards-container {
+    overflow: hidden;
+    border-radius: 0.75rem;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.cards-slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.card-wrapper {
+    flex-shrink: 0;
+    width: 33.333%; 
+    padding: 0 0.75rem;
+    @include transition();
+}
+
+.dots-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.dot {
+    height: 0.75rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}

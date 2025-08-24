@@ -91,9 +91,7 @@ const AgedLikeWine = async () => {
         return <>
             <section className={styles["aged-like-wine-offers-main-container"]}>
                 <h1 className={styles["title"]}>ENVEJECIDOS COMO EL VINO...</h1>
-                <div className={styles["container-fluid"]}>
                     <ContentDistributionManager gameInfo={agedLikeWine} />
-                </div>
             </section>
         </>
 

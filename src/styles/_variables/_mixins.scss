@@ -78,3 +78,17 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+@mixin transition($duration: 0.3s) {
+    transition: all $duration ease-in-out;
+}
+
+@mixin shadow($level: 1) {
+    @if $level ==1 {
+        box-shadow: 0 10px 15px -3px rgba(#000, 0.1);
+    }
+
+    @else if $level ==2 {
+        box-shadow: 0 25px 50px -12px rgba(#000, 0.25);
+    }
+}

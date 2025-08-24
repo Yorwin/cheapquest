@@ -6,7 +6,7 @@ const IsDesktop = ({ offersData }: verticalContainerProps) => {
 
     const verticalCardFirstRow = offersData.slice(0, 5).map((e, index) => {
         return (
-            <div className="col">
+            <div className="col" key={index}>
                 <VerticalGameCardWrapper
                     key={index}
                     gameImage={e.gameImage}
@@ -23,9 +23,8 @@ const IsDesktop = ({ offersData }: verticalContainerProps) => {
 
     const verticalCardSecondRow = offersData.slice(5, 10).map((e, index) => {
         return (
-            <div className="col">
+            <div className="col" key={index}>
                 <VerticalGameCardWrapper
-                    key={index}
                     gameImage={e.gameImage}
                     oldPrice={e.oldPrice}
                     platform={e.platform}
@@ -38,14 +37,16 @@ const IsDesktop = ({ offersData }: verticalContainerProps) => {
         )
     });
 
-    return <>
-        <div className="row row-cols-5 g-3 mb-4">
-            {verticalCardFirstRow}
+    return (
+        <div className="container-fluid">
+            <div className="row row-cols-5 g-3 mb-4">
+                {verticalCardFirstRow}
+            </div>
+            <div className="row row-cols-5 g-3 mb-4">
+                {verticalCardSecondRow}
+            </div>
         </div>
-        <div className="row row-cols-5 g-3 mb-4">
-            {verticalCardSecondRow}
-        </div>
-    </>
+    )
 };
 
 export default IsDesktop;

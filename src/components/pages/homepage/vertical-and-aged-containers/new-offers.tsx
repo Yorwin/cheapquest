@@ -82,21 +82,7 @@ const NewOffers = async () => {
         return <>
             <section className={styles["new-offers-main-container"]}>
                 <h1 className={styles["title"]}>NUEVAS OFERTAS</h1>
-                <div className={styles["container-fluid"]}>
-
-                    <ContentDistributionManager gameInfo={newOffers} />
-
-                    {/* 
-                    <div className="row row-cols-5 g-3 mb-4">
-                        {newOffersContainerFirstRow}
-                    </div>
-
-                    <div className="row row-cols-5 g-3 mb-4">
-                        {newOffersContainerSecondRow}
-                    </div>
-                    */}
-
-                </div>
+                <ContentDistributionManager gameInfo={newOffers} />
             </section>
         </>
     } catch (error) {
