@@ -56,6 +56,8 @@
     @include resume-game-title;
     font-size: 1.1rem;
     color: map.get($colores, font-dark-background-color);
+    z-index: 2;
+
 }
 
 .divisor-line-container {
@@ -150,6 +152,11 @@
         padding: $homepage-xl-offers-padding;
     }
 
+    /* Title */
+    .title {
+        @include offers-title-typography(1.6rem);
+    }
+
     /* Discount and Platform */
 
     .platform-discount-container {
@@ -210,11 +217,139 @@
     }
 }
 
-@media screen and (max-width: 768px) {}
+@media screen and (max-width: 768px) {
+    .new-offers-main-container {
+        padding: $homepage-sm-offers-padding;
+    }
+
+    .title {
+        @include offers-title-typography(1.5rem);
+    }
+}
 
 @media screen and (max-width: 568px) {
     .new-offers-main-container {
         padding: $homepage-sm-offers-padding;
     }
 
+    /* Title */
+
+    .title {
+        @include offers-title-typography(1.2rem);
+    }
+
+    /* Prices Container */
+
+    .price-and-platform-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Discount and Platform */
+
+    .platform-discount-container {
+        position: absolute;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: .5rem;
+        flex-direction: column;
+        padding: .2rem .5rem;
+        width: 100%;
+        bottom: 10px;
+
+        i {
+            font-size: 1rem;
+            padding: .2rem .5rem;
+            border-radius: 4rem;
+        }
+
+        span {
+            @include discount-style(0.2rem 1rem, 600, .9rem, var(--font-gontSerrat));
+            border-radius: 1rem;
+        }
+    }
+
+    /* Info Container */
+    .game-title {
+        font-size: .8rem;
+    }
+
+    .prices-container {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: baseline;
+        gap: -1rem;
+    }
+
+    .current-price {
+        @include current-price-style(.8rem, 600, 3px, 0rem, var(--font-gontSerrat));
+    }
+
+    .regular-price {
+        @include cancelled-price(0.6rem, 600);
+    }
+
+    .web-offer {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .info-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        background-color: map.get($colores, primary-color);
+        height: 30%;
+        padding: 0rem 1rem;
+        max-width: 100%;
+    }
+
+    .title {
+        @include offers-title-typography(1rem);
+    }
+
+    .game-title {
+        font-size: .8rem;
+    }
+
+    /* Info Container */
+
+    .price-and-platform-container {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .prices-container {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: -1rem;
+    }
+
+    .current-price {
+        @include current-price-style(1.1rem, 600, 3px, 0rem, var(--font-gontSerrat));
+    }
+
+    .regular-price {
+        @include cancelled-price(0.7rem, 600);
+    }
+
+    .web-offer {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .title {
+        @include offers-title-typography(1rem);
+    }
+
+    .price-and-platform-container {
+        justify-content: center;
+        align-items: center;
+    }
 }

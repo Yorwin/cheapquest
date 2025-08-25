@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { verticalContainerProps } from "@/types/types";
 import VerticalGameCardWrapper from "@/components/general/vertical-card/vertical-game-container-wrapper";
-import styles from "./responsive-vertical-offers.module.scss";
+import styles from "@/styles/components/carousel-vertical-offers.module.scss";
 
 const IsTablet = ({ offersData }: verticalContainerProps) => {
     const [currentIndex, setCurrentIndex] = useState(0);

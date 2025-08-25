@@ -16,7 +16,7 @@ const VerticalGameCard = ({ platform, oldPrice, discount, title, currentPrice, w
                 </div>
             </div>
             <div className={styles["info-container"]}>
-                <h3 className={styles["game-title"]}>{title}</h3>
+                <h3 className={styles["game-title"]} title={title}>{title}</h3>
                 <div className={styles["divisor-line-container"]}>
                     <div className={styles["divisor-line"]}></div>
                 </div>

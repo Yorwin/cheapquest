@@ -34,7 +34,7 @@ const GameStandardContainer = ({ title, platform, discount, oldPrice, currentPri
                         style={{ objectFit: 'cover' }}
                     />
                 </div>
-                <h4 className={styles[classes.gameTitle]}>{title}</h4>
+                <h3 className={styles[classes.gameTitle]} title={title}>{title}</h3>
             </div>
             <div className={styles[classes.priceOfferOriginContainer]}>
                 <div className={styles["content-container"]}>

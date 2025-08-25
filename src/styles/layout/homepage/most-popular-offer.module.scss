@@ -132,11 +132,13 @@
     font-weight: 500;
     color: map.get($colores, font-dark-background-color);
     margin-bottom: 0rem;
+    z-index: 2;
     @include resume-game-title;
 }
 
 .secondary-game-title {
     font-size: 1rem;
+    z-index: 2;
     @extend .main-game-title;
     @include resume-game-title;
 }
@@ -147,6 +149,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    z-index: 2;
 }
 
 .icon-container {
@@ -416,5 +419,11 @@
         font-weight: 700;
         font-size: 1.1rem;
         padding: 0.5rem 1.7rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .title {
+        @include offers-title-typography(1rem);
     }
 }

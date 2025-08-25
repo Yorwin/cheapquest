@@ -1,0 +1,180 @@
+@use '../_variables/variables' as *;
+@use '../_variables/mixins' as *;
+@use 'sass:map';
+
+.offers-carousel-main-container {
+    position: relative;
+    width: 100%;
+}
+
+.nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(#fff, 0.8);
+    backdrop-filter: blur(4px);
+    border: none;
+    border-radius: 50%;
+    padding: 0.75rem;
+    cursor: pointer;
+    @include shadow(1);
+    @include transition(0.2s);
+
+    &:hover {
+        background-color: #fff;
+    }
+
+    &-left {
+        left: -1rem;
+    }
+
+    &-right {
+        right: -1rem;
+    }
+
+    i {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: #416397;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.cards-container {
+    overflow: hidden;
+    border-radius: 0.75rem;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.cards-slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.card-wrapper {
+    flex-shrink: 0;
+    width: 33.333%;
+    padding: 0 0.75rem;
+    @include transition();
+}
+
+.dots-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.dot {
+    height: 0.75rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+    /* Buttons */
+
+    .nav-button {
+        padding: 0.50rem;
+
+        &:hover {
+            background-color: #fff;
+        }
+
+        &-left {
+            left: -0.5rem;
+        }
+
+        &-right {
+            right: -0.5rem;
+        }
+
+        i {
+            width: 1.3rem;
+            height: 1.3rem;
+        }
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .new-offers-main-container {
+        padding: $homepage-sm-offers-padding;
+    }
+
+    /* Buttons */
+
+    .nav-button {
+        padding: 0.50rem;
+
+        &:hover {
+            background-color: #fff;
+        }
+
+        &-left {
+            left: -0.4rem;
+        }
+
+        &-right {
+            right: -0.4rem;
+        }
+
+        i {
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+    }
+
+    /* Discount and Platform */
+
+    .platform-discount-container {
+        position: absolute;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .2rem .5rem;
+        width: 100%;
+        bottom: 10px;
+
+        i {
+            font-size: 1rem;
+            padding: .2rem .5rem;
+            border-radius: 4rem;
+        }
+
+        span {
+            @include discount-style(0.2rem 1rem, 600, .9rem, var(--font-gontSerrat));
+            border-radius: 1rem;
+        }
+    }
+
+    /* Info Container */
+    .game-title {
+        font-size: .8rem;
+    }
+
+    .prices-container {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: baseline;
+        gap: -1rem;
+    }
+
+    .current-price {
+        @include current-price-style(.8rem, 600, 3px, 0rem, var(--font-gontSerrat));
+    }
+
+    .regular-price {
+        @include cancelled-price(0.6rem, 600);
+    }
+
+    .web-offer {
+        width: 30px;
+        height: 30px;
+    }
+}

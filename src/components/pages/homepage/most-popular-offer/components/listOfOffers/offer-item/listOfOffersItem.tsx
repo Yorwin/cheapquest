@@ -34,7 +34,7 @@ const OfferContainer = ({ title, platform, discount, oldPrice, currentPrice, web
                         style={{ objectFit: 'cover' }}
                     />
                 </div>
-                <h4 className={styles["list-info-container-title"]}>{title}</h4>
+                <h3 className={styles["list-info-container-title"]} title={title}>{title}</h3>
             </div>
             <div className={styles["secondary-price-offerorigin-container"]}>
                 <div className={styles["content-container"]}>

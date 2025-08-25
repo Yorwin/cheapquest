@@ -58,40 +58,10 @@ const AgedLikeWine = async () => {
             })
         }
 
-        const agedLikeWineFirstRow = agedLikeWine.slice(0, 5).map((e, index) => {
-            return (
-                <VerticalGameCardWrapper
-                    key={index}
-                    gameImage={e.gameImage}
-                    oldPrice={e.oldPrice}
-                    platform={e.platform}
-                    discount={e.discount}
-                    title={e.title}
-                    currentPrice={e.currentPrice}
-                    webOffer={e.webOffer}
-                />
-            )
-        });
-
-        const agedLikeWineSecondRow = agedLikeWine.slice(5, 10).map((e, index) => {
-            return (
-                <VerticalGameCardWrapper
-                    key={index}
-                    gameImage={e.gameImage}
-                    oldPrice={e.oldPrice}
-                    platform={e.platform}
-                    discount={e.discount}
-                    title={e.title}
-                    currentPrice={e.currentPrice}
-                    webOffer={e.webOffer}
-                />
-            )
-        });
-
         return <>
             <section className={styles["aged-like-wine-offers-main-container"]}>
                 <h1 className={styles["title"]}>ENVEJECIDOS COMO EL VINO...</h1>
-                    <ContentDistributionManager gameInfo={agedLikeWine} />
+                <ContentDistributionManager gameInfo={agedLikeWine} />
             </section>
         </>
 
