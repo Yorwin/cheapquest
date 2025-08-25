@@ -11,14 +11,12 @@
     position: absolute;
     inset: 0;
     z-index: 4;
-    text-indent: -9999px;
 }
 
 .main-header-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: 1;
 }
 
 .overlay {
@@ -37,7 +35,7 @@
     top: 50%;
     left: 15%;
     transform: translateY(-50%);
-    z-index: 3;
+    z-index: 5;
 }
 
 .offer-title {
@@ -48,6 +46,7 @@
     text-transform: uppercase;
     margin-bottom: 1.2rem;
     text-shadow: $title-shadow;
+    @include resume-game-title-two-lines;
 }
 
 .price-container {
@@ -65,4 +64,95 @@
 .current-price {
     @include current-price-style(2.4rem, 700, 2px, 1rem, var(--font-gontSerrat));
     text-shadow: $title-shadow;
+}
+
+@media screen and (max-width: 1200px) {
+    .main-offer-container {
+        height: 490px;
+    }
+
+    .offer {
+        left: 9%;
+    }
+
+    .offer-title {
+        font-size: 2.4rem;
+    }
+
+    .discount {
+        @include discount-style(.5rem, 600, 1.7rem, var(--font-gontSerrat));
+    }
+
+    .current-price {
+        @include current-price-style(2.2rem, 700, 2px, .7 rem, var(--font-gontSerrat));
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .main-offer-container {
+        height: 460px;
+    }
+
+    .offer {
+        left: 8%;
+    }
+
+    .offer-title {
+        font-size: 2.2rem;
+        margin-bottom: .5rem;
+    }
+
+    .discount {
+        @include discount-style(.5rem, 600, 1.5rem, var(--font-gontSerrat));
+    }
+
+    .current-price {
+        @include current-price-style(2rem, 700, 2px, .5rem, var(--font-gontSerrat));
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .main-offer-container {
+        height: 420px;
+    }
+
+    .offer {
+        left: 5%;
+    }
+
+    .offer-title {
+        font-size: 2rem;
+    }
+
+    .discount {
+        @include discount-style(.5rem, 600, 1.4rem, var(--font-gontSerrat));
+    }
+
+    .current-price {
+        @include current-price-style(1.8rem, 700, 2px, .5rem, var(--font-gontSerrat));
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .main-offer-container {
+        height: 340px;
+    }
+
+    .offer {
+        left: 5%;
+    }
+
+    .offer-title {
+        font-weight: 700;
+        font-size: 1.6rem;
+        margin-bottom: .5rem;
+    }
+
+    .discount {
+        @include discount-style(.3rem, 600, 1.2rem, var(--font-gontSerrat));
+    }
+
+    .current-price {
+        @include current-price-style(1.5rem, 700, 2px, .5rem, var(--font-gontSerrat));
+    }
 }
