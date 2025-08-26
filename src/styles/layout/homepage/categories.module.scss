@@ -12,7 +12,7 @@
     margin-bottom: 2rem;
     padding-left: 0rem;
     color: map.get($colores, font-dark-background-color);
-    @include offers-title-typography(1.8rem);
+    @include offers-title-typography($title-font-size-default);
     z-index: 2;
 }
 
@@ -113,4 +113,42 @@
     transition: transform 1s;
     z-index: 1;
     transform-origin: bottom left;
+}
+
+@media screen and (max-width: 500px) {
+    .title {
+        @include offers-title-typography(1rem);
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .title {
+        @include offers-title-typography($title-font-size-xl);
+    }
+}
+
+@media screen and (max-width: 992px) {}
+
+@media screen and (max-width: 768px) {
+    .title {
+        @include offers-title-typography($title-font-size-md);
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .title {
+        @include offers-title-typography($title-font-size-sm);
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .title {
+        @include offers-title-typography($title-font-size-xsm);
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .title {
+        @include offers-title-typography(1rem);
+    }
 }

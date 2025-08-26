@@ -10,7 +10,7 @@
 .title {
     margin-bottom: 2rem;
     color: map.get($colores, font-dark-background-color);
-    @include offers-title-typography(1.8rem);
+    @include offers-title-typography($title-font-size-default);
 }
 
 .offers-container {
@@ -288,11 +288,10 @@
     /* Main Card */
 
     /* Title */
-
     .title {
         margin-bottom: 2rem;
         color: map.get($colores, font-dark-background-color);
-        @include offers-title-typography(1.6rem);
+        @include offers-title-typography($title-font-size-xl);
     }
 
     /* Prices */
@@ -378,7 +377,7 @@
 
     .title {
         margin-bottom: 1.2rem;
-        @include offers-title-typography(1.2rem);
+        @include offers-title-typography($title-font-size-sm);
     }
 
     /* Secondary Card */
@@ -414,7 +413,6 @@
     }
 
     /* Button */
-
     .button-container button {
         font-weight: 700;
         font-size: 1.1rem;
@@ -422,8 +420,8 @@
     }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
     .title {
-        @include offers-title-typography(1rem);
+        @include offers-title-typography($title-font-size-xsm);
     }
 }

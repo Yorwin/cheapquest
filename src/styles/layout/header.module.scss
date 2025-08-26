@@ -2,8 +2,8 @@
 @use '../_variables/mixins' as *;
 @use 'sass:map';
 
-@mixin font-style-header {
-    font-size: 1.1rem;
+@mixin font-style-header($font-size) {
+    font-size: $font-size;
     font-weight: 600;
     font-family: var(--font-gontSerrat);
     font-style: normal;
@@ -12,27 +12,28 @@
 
 .header-main-container {
     width: 100%;
-    height: 100px;
+    height: 80px;
     @include flex-center-elements-XY;
     background-color: map.get($colores, primary-color);
 }
 
 .headers-list {
     height: 100%;
+    width: 100%;
     margin: 0px;
     padding: 0px;
     list-style-type: none;
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
 
     li {
-
         @include flex-center-elements-XY;
         white-space: nowrap;
         text-align: center;
         text-transform: uppercase;
-        @include font-style-header;
+        @include font-style-header(1.1rem);
         width: auto;
         height: auto;
 
@@ -95,7 +96,7 @@
 }
 
 .button {
-    @include font-style-header;
+    @include font-style-header(1.1rem);
     background-color: transparent;
     color: map.get($colores, font-dark-background-color);
     border: none;
@@ -108,5 +109,71 @@
     &:hover {
         cursor: pointer;
         text-decoration: $default-text-decoration;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .headers-list {
+        li {
+            @include font-style-header(1rem);
+
+            .image-container {
+                position: relative;
+                width: 170px;
+                height: 40px;
+            }
+        }
+    }
+
+    .button {
+        @include font-style-header(1rem);
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .headers-list {
+        li {
+            @include font-style-header(.9rem);
+
+            .image-container {
+                position: relative;
+                width: 160px;
+                height: 35px;
+            }
+        }
+    }
+
+    .button {
+        @include font-style-header(.9rem);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header-main-container {
+        height: 70px;
+    }
+
+    .headers-list {
+        width: 70%;
+
+        li {
+            white-space: normal;
+            @include font-style-header(.8rem);
+            
+            .image-container {
+                position: relative;
+                width: 120px;
+                height: 30px;
+            }
+        }
+    }
+
+    .button {
+        white-space: nowrap;
+        @include font-style-header(.8rem);
+
+        i {
+            padding-left: 0.1rem;
+        }
     }
 }

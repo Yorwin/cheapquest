@@ -16,7 +16,7 @@
 .title {
     margin-bottom: 1rem;
     color: map.get($colores, font-dark-background-color);
-    @include offers-title-typography(1.8rem);
+    @include offers-title-typography($title-font-size-default);
 }
 
 .vertical-card-container {
@@ -154,7 +154,7 @@
 
     /* Title */
     .title {
-        @include offers-title-typography(1.6rem);
+        @include offers-title-typography($title-font-size-xl);
     }
 
     /* Discount and Platform */
@@ -223,7 +223,7 @@
     }
 
     .title {
-        @include offers-title-typography(1.5rem);
+        @include offers-title-typography($title-font-size-md);
     }
 }
 
@@ -235,7 +235,7 @@
     /* Title */
 
     .title {
-        @include offers-title-typography(1.2rem);
+        @include offers-title-typography($title-font-size-sm);
     }
 
     /* Prices Container */
@@ -309,7 +309,7 @@
     }
 
     .title {
-        @include offers-title-typography(1rem);
+        @include offers-title-typography($title-font-size-xsm);
     }
 
     .game-title {
@@ -340,16 +340,5 @@
 
     .web-offer {
         display: none;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    .title {
-        @include offers-title-typography(1rem);
-    }
-
-    .price-and-platform-container {
-        justify-content: center;
-        align-items: center;
     }
 }

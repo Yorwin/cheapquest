@@ -11,7 +11,7 @@
 .title {
     margin-bottom: 1rem;
     color: map.get($colores, font-dark-background-color);
-    @include offers-title-typography(1.8rem);
+    @include offers-title-typography($title-font-size-default);
 }
 
 .list-offer-format-container {
