@@ -63,6 +63,10 @@
     height: 100%;
 }
 
+.search {
+    margin-left: 1rem;
+}
+
 .click-overlay {
     width: 100%;
     height: 100%;
@@ -143,6 +147,11 @@
         }
     }
 
+
+    .search {
+        margin-left: .4rem;
+    }
+
     .button {
         @include font-style-header(.9rem);
     }
@@ -159,7 +168,7 @@
         li {
             white-space: normal;
             @include font-style-header(.8rem);
-            
+
             .image-container {
                 position: relative;
                 width: 120px;
@@ -171,6 +180,63 @@
     .button {
         white-space: nowrap;
         @include font-style-header(.8rem);
+
+        i {
+            padding-left: 0.1rem;
+        }
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .header-main-container {
+        height: 65px;
+    }
+
+    .headers-list {
+        width: 70%;
+        gap: 0.7rem;
+
+        li {
+            white-space: normal;
+            @include font-style-header(.7rem);
+
+            .image-container {
+                position: relative;
+                width: 110px;
+                height: 27px;
+            }
+        }
+    }
+
+    .button {
+        white-space: nowrap;
+        @include font-style-header(.7rem);
+
+        i {
+            padding-left: 0.1rem;
+        }
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .headers-list {
+        width: 70%;
+        gap: 0.4rem;
+
+        li {
+            @include font-style-header(.6rem);
+
+            .image-container {
+                position: relative;
+                width: 100px;
+                height: 25px;
+            }
+        }
+    }
+
+    .button {
+        white-space: nowrap;
+        @include font-style-header(.6rem);
 
         i {
             padding-left: 0.1rem;

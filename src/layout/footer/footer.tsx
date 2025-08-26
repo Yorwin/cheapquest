@@ -18,8 +18,9 @@ const Footer = () => {
                             sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor
                             pulvinar vivamus fringilla.
                         </p>
-                        <small>All copyrights, trademarks and registered trademarks are the property of their  respective owners.</small>
+                        <p className={styles["legal-remark"]}>Todos los derechos de autor, marcas comerciales y marcas registradas son propiedad de sus respectivos propietarios.</p>
                     </div>
+
                     <div className={styles["line-separation"]}></div>
 
                     {/* Info Container */}
@@ -29,18 +30,18 @@ const Footer = () => {
                         {/* Navigation */}
 
                         <nav className={styles["navigation-container"]} aria-label="Footer site links">
-                            <h4>Navigation</h4>
+                            <h4>Navegación</h4>
                             <ul>
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Terms & Conditions</a></li>
+                                <li><a href="#">Sobre Nosotros</a></li>
+                                <li><a href="#">Política de Privacidad</a></li>
+                                <li><a href="#">Términos y Condiciones</a></li>
                             </ul>
                         </nav>
 
                         {/* Contact Us */}
 
                         <address className={styles["contact-us-container"]} aria-label="Contact information">
-                            <h4>Contact Us</h4>
+                            <h4>Contáctanos</h4>
                             <ul>
                                 <li><a href="mailto:contactemail@contactemail.com">contactemail@contactemail.com</a></li>
                                 <li><a href="mailto:contactemail@contactemail.com">contactemail@contactemail.com</a></li>

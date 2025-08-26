@@ -101,3 +101,24 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* Footer Styles */
+
+@mixin footer-title-styles($font-size, $margin-bottom) {
+    margin-bottom: $margin-bottom;
+    font-family: var(--font-gontSerrat);
+    font-weight: 600;
+    font-size: $font-size;
+}
+
+@mixin footer-p-styles($font-size, $margin-bottom) {
+    margin-bottom: $margin-bottom;
+    font-size: $font-size;
+    font-family: var(--font-timeless);
+}
+
+@mixin footer-small-styles($font-size) {
+    font-size: $font-size;
+    font-weight: 700;
+    font-family: var(--font-timeless);
+}

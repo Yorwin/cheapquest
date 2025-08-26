@@ -41,7 +41,7 @@ const Header = () => {
                     <li>
                         <Link href="/login-page">Iniciar sesión</Link>
                     </li>
-                    <li>
+                    <li className={styles["search"]}>
                         <Link href={"/search"}>
                             <i className="bi bi-search"></i>
                         </Link>
