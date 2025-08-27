@@ -2,6 +2,10 @@ import React from "react";
 import styles from "@/styles/layout/footer.module.scss"
 
 const Footer = () => {
+
+    const aboutUs = "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesqu sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor pulvinar vivamus fringilla."
+    const copyRightDeclaration = "Todos los derechos de autor, marcas comerciales y marcas registradas son propiedad de sus respectivos propietarios.";
+
     return (
         <>
             {/* Footer Section */}
@@ -13,12 +17,12 @@ const Footer = () => {
 
                     <div className={styles["about-us-container"]} aria-label="About CheapQuest">
                         <h3>CheapQuest</h3>
-                        <p>
+                        <p title={aboutUs}>
                             Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque
                             sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor
                             pulvinar vivamus fringilla.
                         </p>
-                        <p className={styles["legal-remark"]}>Todos los derechos de autor, marcas comerciales y marcas registradas son propiedad de sus respectivos propietarios.</p>
+                        <p className={styles["legal-remark"]} title={copyRightDeclaration}>{copyRightDeclaration}</p>
                     </div>
 
                     <div className={styles["line-separation"]}></div>

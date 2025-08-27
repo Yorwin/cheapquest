@@ -102,6 +102,15 @@
     text-overflow: ellipsis;
 }
 
+@mixin resume-lines-footer {
+    display: -webkit-box;
+    line-clamp: 5;
+    -webkit-line-clamp: 5; // 👈 máximo de líneas visibles
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Footer Styles */
 
 @mixin footer-title-styles($font-size, $margin-bottom) {

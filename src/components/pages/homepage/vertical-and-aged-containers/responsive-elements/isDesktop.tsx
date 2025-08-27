@@ -38,7 +38,7 @@ const IsDesktop = ({ offersData }: verticalContainerProps) => {
     });
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid p-0">
             <div className="row row-cols-5 g-3 mb-4">
                 {verticalCardFirstRow}
             </div>

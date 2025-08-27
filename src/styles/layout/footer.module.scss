@@ -35,7 +35,7 @@
 
     .legal-remark {
         line-height: 1rem;
-        font-size: 0.5rem;
+        font-size: 0.7rem;
         font-weight: 600;
         font-family: var(--font-timeless);
     }
@@ -80,6 +80,8 @@
 }
 
 .contact-us-container {
+    margin-bottom: 0rem;
+
     h4 {
         font-family: var(--font-gontSerrat);
         font-weight: 600
@@ -88,7 +90,6 @@
     ul {
         padding-left: 0rem;
         list-style-type: none;
-        line-height: 1.6rem;
     }
 }
 
@@ -165,8 +166,6 @@
     }
 }
 
-@media screen and (max-width: 992px) {}
-
 @media screen and (max-width: 768px) {
     .about-us-container {
         margin-right: 0rem;
@@ -179,14 +178,14 @@
             @include footer-p-styles($footer-size-p-lg, .4rem);
         }
 
-        small {
-            line-height: 0rem;
-            @include footer-small-styles($footer-size-small-lg);
+        .legal-remark {
+            line-height: .7rem;
+            font-size: 0.5rem;
         }
     }
 
     .line-separation {
-        width: 5px;
+        width: 3px;
     }
 
     .navigation-container {
@@ -221,17 +220,43 @@
 }
 
 @media screen and (max-width: 568px) {
+    .content-container {
+        padding: 1.2rem .1rem;
+    }
+
+    .about-us-container {
+        h3 {
+            @include footer-title-styles($footer-subtitle-lg, .7rem);
+        }
+
+        p {
+            margin-top: .4rem;
+            width: 100%;
+            @include footer-p-styles($footer-size-p-lg, .7rem);
+            @include resume-lines-footer;
+        }
+
+        .legal-remark {
+            line-height: .4rem;
+            font-size: 0.4rem;
+            @include resume-game-title-two-lines;
+        }
+    }
+
     .info-container {
         display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
+        justify-content: center;
         flex-direction: column;
         height: 100%;
     }
 
+
+    .line-separation {
+        width: 2px;
+    }
+
     .navigation-container {
         margin-left: 0rem;
-        margin-right: 2rem;
 
         h4 {
             @include footer-title-styles($footer-subtitle-lg, .3rem);
@@ -257,5 +282,14 @@
             list-style-type: none;
             line-height: 1.1rem;
         }
+    }
+
+    .legal-remark {
+        line-height: 0rem;
+    }
+
+    .copyright-container {
+        font-size: .8rem;
+        height: 30px;
     }
 }
