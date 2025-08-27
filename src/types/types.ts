@@ -246,10 +246,10 @@ export interface GameStandardControllerType {
 }
 
 export interface listFormatOfferProps {
-    index: number,
+    index?: number,
     offerImage: StaticImageData,
     gameTitle: string,
-    link: string,
+    link?: string,
     oldPrice: string,
     currentPrice: string,
     discountPercentage: string,

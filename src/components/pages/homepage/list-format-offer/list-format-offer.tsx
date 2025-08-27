@@ -1,9 +1,10 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/list-format-offers.module.scss"
 import Image from "@/resources/offer-img/image.jpg"
-import ListFormatOffersWrapper from "@/components/general/list-card/list-format-offer-wrapper";
 import { offersByPercentage, historicLows } from "@/utils/getOffers";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
+import ContentDistributionManager from "./content-distribution-manager";
+import Button from "@/components/general/buttons-container";
 
 const ListFormatOffers = async () => {
     try {
@@ -55,54 +56,30 @@ const ListFormatOffers = async () => {
             }
         });
 
-        const bestOffersByPercentageContainer = bestOffersByPercentage.map((e, index) => {
-            return (
-                <ListFormatOffersWrapper
-                    key={index}
-                    index={index}
-                    link="#"
-                    offerImage={e.offerImage}
-                    gameTitle={e.gameTitle}
-                    oldPrice={e.oldPrice}
-                    currentPrice={e.currentPrice}
-                    discountPercentage={e.discountPercentage}
-                />
-            );
-        });
-
-        const historicalLowsContainer = historicalLows.map((e, index) => {
-            return (
-                <ListFormatOffersWrapper
-                    key={index}
-                    index={index}
-                    link="#"
-                    offerImage={e.offerImage}
-                    gameTitle={e.gameTitle}
-                    oldPrice={e.oldPrice}
-                    currentPrice={e.currentPrice}
-                    discountPercentage={e.discountPercentage}
-                />
-            );
-        });
-
         return <>
             <section className={styles["list-format-offers-container"]}>
+
+                <ContentDistributionManager offersByPercentage={bestOffersByPercentage} historicLowsOffers={historicalLows}></ContentDistributionManager>
+                {/* 
+                
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-6 col-sm-12">
                             <h1 className={styles["title"]}>MEJORES OFERTAS POR %</h1>
                             <article className={styles["list-offer-format-container"]}>
-                                {bestOffersByPercentageContainer}
+                                <ContentDistributionManager gameInfo={bestOffersByPercentage} />
                             </article>
                         </div>
                         <div className="col-md-6 col-sm-12">
                             <h1 className={styles["title"]}>BAJOS HISTORICOS</h1>
                             <article className={styles["list-offer-format-container"]}>
-                                {historicalLowsContainer}
+                                <ContentDistributionManager gameInfo={historicalLows} />
                             </article>
                         </div>
                     </div>
-                </div>
+                </div> 
+                
+                */}
             </section>
         </>
     } catch (error) {

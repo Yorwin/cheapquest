@@ -49,36 +49,6 @@ const NewOffers = async () => {
 
         }
 
-        const newOffersContainerFirstRow = newOffers.slice(0, 5).map((e, index) => {
-            return (
-                <VerticalGameCardWrapper
-                    key={index}
-                    gameImage={e.gameImage}
-                    oldPrice={e.oldPrice}
-                    platform={e.platform}
-                    discount={e.discount}
-                    title={e.title}
-                    currentPrice={e.currentPrice}
-                    webOffer={e.webOffer}
-                />
-            )
-        });
-
-        const newOffersContainerSecondRow = newOffers.slice(5, 10).map((e, index) => {
-            return (
-                <VerticalGameCardWrapper
-                    key={index}
-                    gameImage={e.gameImage}
-                    oldPrice={e.oldPrice}
-                    platform={e.platform}
-                    discount={e.discount}
-                    title={e.title}
-                    currentPrice={e.currentPrice}
-                    webOffer={e.webOffer}
-                />
-            )
-        });
-
         return <>
             <section className={styles["new-offers-main-container"]}>
                 <h1 className={styles["title"]}>NUEVAS OFERTAS</h1>
