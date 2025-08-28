@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/list-format-offers.module.scss"
 import Link from "next/link";
-import { listFormatOfferProps } from "@/types/types";
+import { listOffersWrapperProps } from "@/types/types";
 
-const ListFormatContainer = ({ index, gameTitle, link, oldPrice, currentPrice, discountPercentage, children }: listFormatOfferProps) => {
+const ListFormatContainer = ({ index, gameTitle, link, oldPrice, currentPrice, discountPercentage, children }: listOffersWrapperProps) => {
     return <>
         <section className={styles["game-info-container"]}>
             <Link href={link} className={styles["enlace"]} />

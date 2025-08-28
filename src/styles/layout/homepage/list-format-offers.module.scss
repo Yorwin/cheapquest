@@ -89,7 +89,6 @@
     h3 {
         font-size: 1rem;
         width: 100%;
-        font-size: 1rem;
         font-weight: 600;
         font-family: var(--font-gontSerrat);
         margin-bottom: 0rem;
@@ -137,21 +136,31 @@
     }
 }
 
+/* Large Media */
+
 @media screen and (max-width:1200px) {
+
+    /* Main Container */
     .list-format-offers-container {
         padding: $homepage-xl-offers-padding;
     }
 }
 
+/* Medium Media */
+
 @media screen and (max-width: 992px) {
+
+    /* Main Container */
     .list-format-offers-container {
         padding: $homepage-lg-offers-padding;
     }
 
+    /* Offers Container */
     .list-offer-format-container {
         width: 80%;
     }
 
+    /* Title Button Container */
     .button-title {
         width: 100%;
         padding: 0rem;
@@ -160,40 +169,116 @@
         border: none;
     }
 
+    /* Title */
     .select-offers-container {
         display: flex;
+        align-items: center;
         justify-content: space-evenly;
     }
 
     .select-offer {
         @include offers-title-typography(1.2rem);
+        margin-bottom: 0rem;
         color: map.get($colores, font-dark-background-color);
         width: auto;
     }
 
+    .active {
+        color: map.get($colores, secondary-color);
+    }
+
+    /* Divisor */
     .divisor-line {
         width: 3px;
         height: 30px;
         background-color: map.get($colores, font-dark-background-color);
     }
 
-    .active {
-        color: #B8F7FF;
+    /* Offers */
+
+    /* Numbers */
+    .offer-number-container {
+        height: 100%;
+        width: 7%;
+    }
+
+    .offer-number {
+        font-size: 1.2rem;
+        padding: 0.2rem;
+    }
+
+    /* Images */
+    .image-container {
+        width: 20%;
+    }
+
+    /* Game Details */
+
+    /* Main Container */
+    .details {
+        padding: 0rem .6rem;
+        width: 73%;
+    }
+
+    /* Game Title */
+    .game-title-and-extra-info {
+        h3 {
+            font-size: 1rem;
+        }
+    }
+
+    /* Prices Format */
+    .prices-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-right: .8rem;
+        line-height: 1.2rem
+    }
+
+    .old-price {
+        @include cancelled-price(.7rem, 600);
+    }
+
+    .current-price {
+        @include current-price-style(1rem, 500, 3px, 0rem, var(--font-gontSerrat));
+    }
+
+    .discount-container {
+        span {
+            @include discount-style(.4rem .3rem, 700, 1rem, var(--font-gontSerrat));
+            border-radius: 1rem;
+        }
     }
 }
 
+/* Small Media */
+
 @media screen and (max-width: 768px) {
+
+    /* Main Container */
     .list-format-offers-container {
         padding: $homepage-sm-offers-padding
     }
 
+    /* Title */
     .select-offer {
         font-size: $title-font-size-sm;
     }
 }
 
+/* Extra Small Media */
+
 @media screen and (max-width: 568px) {
+    /* Offers Container */
+    .list-offer-format-container {
+        width: 100%;
+    }
+
+    /* Title */
     .select-offer {
         font-size: $title-font-size-xsm;
     }
+
+
 }

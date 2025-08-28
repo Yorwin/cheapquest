@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { listFormatOfferProps } from "@/types/types";
 import Title from "../components/title";
 import ListFormatOffersWrapper from "@/components/general/list-card/list-format-offer-wrapper";

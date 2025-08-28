@@ -245,15 +245,24 @@ export interface GameStandardControllerType {
     children?: React.ReactNode;
 }
 
-export interface listFormatOfferProps {
-    index?: number,
+export interface listOffersWrapperProps {
+    index: number,
     offerImage: StaticImageData,
     gameTitle: string,
-    link?: string,
+    link: string,
     oldPrice: string,
     currentPrice: string,
     discountPercentage: string,
     children?: React.ReactNode,
+}
+
+
+export interface listFormatOfferProps {
+    offerImage: StaticImageData,
+    gameTitle: string,
+    oldPrice: string,
+    currentPrice: string,
+    discountPercentage: string,
 }
 
 export interface responsiveDesktopDesignProps {
