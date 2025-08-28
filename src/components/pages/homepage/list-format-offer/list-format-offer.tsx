@@ -58,28 +58,7 @@ const ListFormatOffers = async () => {
 
         return <>
             <section className={styles["list-format-offers-container"]}>
-
                 <ContentDistributionManager offersByPercentage={bestOffersByPercentage} historicLowsOffers={historicalLows}></ContentDistributionManager>
-                {/* 
-                
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-md-6 col-sm-12">
-                            <h1 className={styles["title"]}>MEJORES OFERTAS POR %</h1>
-                            <article className={styles["list-offer-format-container"]}>
-                                <ContentDistributionManager gameInfo={bestOffersByPercentage} />
-                            </article>
-                        </div>
-                        <div className="col-md-6 col-sm-12">
-                            <h1 className={styles["title"]}>BAJOS HISTORICOS</h1>
-                            <article className={styles["list-offer-format-container"]}>
-                                <ContentDistributionManager gameInfo={historicalLows} />
-                            </article>
-                        </div>
-                    </div>
-                </div> 
-                
-                */}
             </section>
         </>
     } catch (error) {
