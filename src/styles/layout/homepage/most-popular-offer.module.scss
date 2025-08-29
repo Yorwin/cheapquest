@@ -2,14 +2,22 @@
 @use '../../_variables/mixins' as *;
 @use 'sass:map';
 
+// Variables locales para evitar repetición
+$card-transition: transform 0.3s ease;
+$card-hover-scale: scale(1.03);
+$primary-bg: map.get($colores, primary-color);
+$complementary-bg: map.get($colores, complementary-color);
+$platform-bg: map.get($colores, platform-color);
+$font-dark: map.get($colores, font-dark-background-color);
+
 .most-popular-offer-container {
-    background-color: map.get($colores, complementary-color);
+    background-color: $complementary-bg;
     padding: $homepage-offers-padding;
 }
 
 .title {
     margin-bottom: 2rem;
-    color: map.get($colores, font-dark-background-color);
+    color: $font-dark;
     @include offers-title-typography($title-font-size-default);
 }
 
@@ -26,19 +34,29 @@
     height: 450px;
 }
 
-.main-gamecard-offer {
+// Clase base para gamecard offers
+%gamecard-base {
     position: relative;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    width: calc(50% - 25px);
     height: 100%;
     @include offer-shadow;
-    transition: transform 0.3s ease;
+    transition: $card-transition;
 
     &:hover {
-        transform: scale(1.03);
+        transform: $card-hover-scale;
     }
+}
+
+.main-gamecard-offer {
+    @extend %gamecard-base;
+    width: calc(50% - 25px);
+}
+
+.secondary-gamecard-offer {
+    @extend %gamecard-base;
+    width: calc(50% - 10px);
 }
 
 .click-overlay {
@@ -60,7 +78,6 @@
     width: 100%;
     height: 65%;
     position: relative;
-
     background-image: url("../../../resources/loading-img/loading-offer.webp");
     background-size: cover;
     background-position: center;
@@ -72,7 +89,7 @@
     flex-direction: column;
     height: 35%;
     width: 100%;
-    background-color: map.get($colores, primary-color);
+    background-color: $primary-bg;
     overflow: hidden;
 }
 
@@ -82,13 +99,23 @@
     align-items: center;
     height: 40%;
     width: 100%;
-    background-color: map.get($colores, platform-color)
+    background-color: $platform-bg;
+}
+
+// Clase base para price containers
+%price-container-base {
+    width: 100%;
+    height: 65%;
 }
 
 .price-offerorigin-container {
+    @extend %price-container-base;
     padding: 1rem;
-    width: 100%;
-    height: 65%;
+}
+
+.secondary-price-offerorigin-container {
+    @extend %price-container-base;
+    padding: 0.8rem;
 }
 
 .content-container {
@@ -105,14 +132,26 @@
     flex-direction: row;
 }
 
-.prices {
+// Clase base para prices
+%prices-base {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-left: 1rem;
-    line-height: 2rem
 }
 
+.prices {
+    @extend %prices-base;
+    margin-left: 1rem;
+    line-height: 2rem;
+}
+
+.secondary-prices {
+    @extend %prices-base;
+    margin-left: .5rem;
+    line-height: 1.2rem;
+}
+
+// Estilos de precios principales
 .discount {
     @include discount-style(.7rem, 500, 1.8rem, var(--font-gontSerrat));
 }
@@ -125,97 +164,7 @@
     @include cancelled-price(1.4rem, 500);
 }
 
-.main-game-title {
-    max-width: 70%;
-    margin-left: 0.5rem;
-    font-size: 1.4rem;
-    font-weight: 500;
-    color: map.get($colores, font-dark-background-color);
-    margin-bottom: 0rem;
-    z-index: 2;
-    @include resume-game-title;
-}
-
-.secondary-game-title {
-    font-size: 1rem;
-    z-index: 2;
-    @extend .main-game-title;
-    @include resume-game-title;
-}
-
-.list-info-container-title {
-    font-size: 1rem;
-    @extend .main-game-title;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    z-index: 2;
-}
-
-.icon-container {
-    position: relative;
-    width: 35px;
-    height: 35px;
-}
-
-.web-offer {
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 120px;
-    height: 80px;
-}
-
-.web-offer img {
-    width: 60%;
-    height: 100%;
-}
-
-.secondary-web-offer {
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 35px;
-    height: 100%;
-}
-
-.secondary-web-offer img {
-    width: 85%;
-    height: 100%;
-}
-
-/* Secondary Cards */
-
-.secondary-gamecard-offer {
-    width: calc(50% - 10px);
-    @extend .main-gamecard-offer;
-    @include offer-shadow;
-}
-
-.pair {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-bottom: 0px;
-    width: 100%;
-    height: 100%;
-    gap: 1rem;
-}
-
-.secondary-prices {
-    @extend .prices;
-    margin-left: .5rem;
-    line-height: 1.2rem
-}
-
-.secondary-icon-container {
-    position: relative;
-    width: 17px;
-    height: 17px;
-}
-
+// Estilos de precios secundarios
 .secondary-discount {
     @include discount-style(.2rem, 500, 1.2rem, var(--font-gontSerrat));
 }
@@ -228,29 +177,108 @@
     @include cancelled-price(.8rem, 500);
 }
 
-.secondary-price-offerorigin-container {
-    padding: 0.8rem;
-    @extend .price-offerorigin-container;
+// Clase base para títulos de juegos
+%game-title-base {
+    color: $font-dark;
+    margin-bottom: 0rem;
+    z-index: 2;
+    @include resume-game-title;
 }
 
-/* Rest of the list */
+.main-game-title {
+    @extend %game-title-base;
+    max-width: 70%;
+    margin-left: 0.5rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.secondary-game-title {
+    @extend %game-title-base;
+    font-size: 1rem;
+    max-width: 70%;
+    margin-left: 0.5rem;
+    font-weight: 500;
+}
+
+.list-info-container-title {
+    @extend %game-title-base;
+    font-size: 1rem;
+    max-width: 70%;
+    margin-left: 0.5rem;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// Clase base para icon containers
+%icon-container-base {
+    position: relative;
+}
+
+.icon-container {
+    @extend %icon-container-base;
+    width: 35px;
+    height: 35px;
+}
+
+.secondary-icon-container {
+    @extend %icon-container-base;
+    width: 17px;
+    height: 17px;
+}
+
+// Clase base para web offers
+%web-offer-base {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+}
+
+.web-offer {
+    @extend %web-offer-base;
+    width: 120px;
+    height: 80px;
+
+    img {
+        width: 60%;
+        height: 100%;
+    }
+}
+
+.secondary-web-offer {
+    @extend %web-offer-base;
+    width: 35px;
+
+    img {
+        width: 85%;
+        height: 100%;
+    }
+}
+
+.pair {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 0px;
+    width: 100%;
+    height: 100%;
+    gap: 1rem;
+}
 
 .rest-of-the-offers-container {
     position: relative;
     height: 260px;
     width: 95%;
     @include offer-shadow;
-    transition: transform 0.3s ease;
+    transition: $card-transition;
 
     &:hover {
-        transform: scale(1.03);
+        transform: $card-hover-scale;
     }
-}
-
-.click-overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
 }
 
 .button-container {
@@ -259,79 +287,62 @@
     align-items: center;
     width: 100%;
     padding: 0rem;
-}
 
-.button-container button {
-    border: none;
-    background-color: map.get($colores, primary-color);
-    color: map.get($colores, font-dark-background-color);
-    font-weight: 700;
-    font-family: var(--font-gontSerrat);
-    font-size: 1.6rem;
-    text-transform: uppercase;
-    padding: 1rem 2.5rem;
-    @include button-shadow-homepage;
+    button {
+        border: none;
+        background-color: $primary-bg;
+        color: $font-dark;
+        font-weight: 700;
+        font-family: var(--font-gontSerrat);
+        font-size: 1.6rem;
+        text-transform: uppercase;
+        padding: 1rem 2.5rem;
+        @include button-shadow-homepage;
 
-    &:hover {
-        text-decoration: $default-text-decoration;
+        &:hover {
+            text-decoration: $default-text-decoration;
+        }
     }
 }
 
 /* Responsive Styles */
-
 @media screen and (max-width: 1200px) {
     .most-popular-offer-container {
-        background-color: map.get($colores, complementary-color);
         padding: $homepage-xl-offers-padding;
     }
 
-    /* Main Card */
-
-    /* Title */
     .title {
-        margin-bottom: 2rem;
-        color: map.get($colores, font-dark-background-color);
         @include offers-title-typography($title-font-size-xl);
     }
 
-    /* Prices */
     .prices {
-        line-height: 1.6rem
+        line-height: 1.6rem;
     }
 
-    /* Main Discount */
     .discount {
         @include discount-style(.7rem, 500, 1.5rem, var(--font-gontSerrat));
     }
 
-    /* Main Current Price */
     .current-price {
         @include current-price-style(1.7rem, 400, 3px, 0rem, var(--font-gontSerrat));
     }
 
-    /* Main Last Price */
     .last-price {
         @include cancelled-price(1.2rem, 500);
     }
 
-    /* Secondary Card */
-
-    /* Prices */
     .secondary-prices {
         line-height: 1rem;
     }
 
-    /* Current Price */
     .secondary-current-price {
         @include current-price-style(1rem, 500, 3px, 0rem, var(--font-gontSerrat));
     }
 
-    /* Last Price */
     .secondary-last-price {
         @include cancelled-price(.6rem, 500);
     }
 
-    /* Discount */
     .secondary-discount {
         @include discount-style(.2rem, 500, 1rem, var(--font-gontSerrat));
     }
@@ -339,7 +350,6 @@
 
 @media screen and (max-width: 992px) {
     .most-popular-offer-container {
-        background-color: map.get($colores, complementary-color);
         padding: $homepage-lg-offers-padding;
     }
 
@@ -359,62 +369,42 @@
     }
 
     .button-container button {
-        font-weight: 700;
         font-size: 1.3rem;
         padding: 0.7rem 2rem;
     }
 }
 
 @media screen and (max-width: 568px) {
-
-    /* Most Popular Offer */
-
     .most-popular-offer-container {
         padding: $homepage-sm-offers-padding;
     }
-
-    /* Title */
 
     .title {
         margin-bottom: 1.2rem;
         @include offers-title-typography($title-font-size-sm);
     }
 
-    /* Secondary Card */
-
-    /* Prices */
     .secondary-prices {
         line-height: .9rem;
     }
 
-    /* Current Price */
     .secondary-current-price {
         @include current-price-style(.9rem, 500, 3px, 0rem, var(--font-gontSerrat));
     }
 
-    /* Last Price */
     .secondary-last-price {
         @include cancelled-price(.5rem, 600);
     }
 
-    /* Discount */
     .secondary-discount {
         @include discount-style(.2rem, 600, .9rem, var(--font-gontSerrat));
     }
 
-    /* Web Offer */
     .secondary-web-offer {
         width: 25px;
-        height: 100%;
     }
 
-    .rest-of-the-offers-container {
-        width: 95%;
-    }
-
-    /* Button */
     .button-container button {
-        font-weight: 700;
         font-size: 1.1rem;
         padding: 0.5rem 1.7rem;
     }

@@ -2,6 +2,35 @@
 @use '../../_variables/mixins' as *;
 @use 'sass:map';
 
+// Variables locales para evitar repetición
+$font-dark: map.get($colores, font-dark-background-color);
+$font-family: var(--font-gontSerrat);
+$box-shadow-discount: 17px 0px 72px -11px rgba(0, 0, 0, 1);
+
+// Mixin para breakpoints con valores responsive
+@mixin responsive-main-offer($height, $left, $title-size, $title-margin: 1.2rem, $discount-size: 1.8rem, $price-size: 2.4rem, $price-margin: 1rem) {
+    .main-offer-container {
+        height: $height;
+    }
+
+    .offer {
+        left: $left;
+    }
+
+    .offer-title {
+        font-size: $title-size;
+        margin-bottom: $title-margin;
+    }
+
+    .discount {
+        @include discount-style(.5rem, 600, $discount-size, $font-family);
+    }
+
+    .current-price {
+        @include current-price-style($price-size, 700, 2px, $price-margin, $font-family);
+    }
+}
+
 .main-offer-container {
     height: 540px;
     position: relative;
@@ -39,8 +68,8 @@
 }
 
 .offer-title {
-    color: map.get($colores, font-dark-background-color);
-    font-family: var(--font-gontSerrat);
+    color: $font-dark;
+    font-family: $font-family;
     font-weight: 700;
     font-size: 2.8rem;
     text-transform: uppercase;
@@ -55,104 +84,35 @@
 }
 
 .discount {
-    @include discount-style(.5rem, 600, 1.8rem, var(--font-gontSerrat));
-    box-shadow: 17px 0px 72px -11px rgba(0, 0, 0, 1);
-    -webkit-box-shadow: 17px 0px 72px -11px rgba(0, 0, 0, 1);
-    -moz-box-shadow: 17px 0px 72px -11px rgba(0, 0, 0, 1);
+    @include discount-style(.5rem, 600, 1.8rem, $font-family);
+    box-shadow: $box-shadow-discount;
+    -webkit-box-shadow: $box-shadow-discount;
+    -moz-box-shadow: $box-shadow-discount;
 }
 
 .current-price {
-    @include current-price-style(2.4rem, 700, 2px, 1rem, var(--font-gontSerrat));
+    @include current-price-style(2.4rem, 700, 2px, 1rem, $font-family);
     text-shadow: $title-shadow;
 }
 
+/* Responsive Styles */
 @media screen and (max-width: 1200px) {
-    .main-offer-container {
-        height: 490px;
-    }
-
-    .offer {
-        left: 9%;
-    }
-
-    .offer-title {
-        font-size: 2.4rem;
-    }
-
-    .discount {
-        @include discount-style(.5rem, 600, 1.7rem, var(--font-gontSerrat));
-    }
-
-    .current-price {
-        @include current-price-style(2.2rem, 700, 2px, .7 rem, var(--font-gontSerrat));
-    }
+    @include responsive-main-offer(490px, 9%, 2.4rem, 1.2rem, 1.7rem, 2.2rem, 0.7rem);
 }
 
 @media screen and (max-width: 992px) {
-    .main-offer-container {
-        height: 460px;
-    }
-
-    .offer {
-        left: 8%;
-    }
-
-    .offer-title {
-        font-size: 2.2rem;
-        margin-bottom: .5rem;
-    }
-
-    .discount {
-        @include discount-style(.5rem, 600, 1.5rem, var(--font-gontSerrat));
-    }
-
-    .current-price {
-        @include current-price-style(2rem, 700, 2px, .5rem, var(--font-gontSerrat));
-    }
+    @include responsive-main-offer(460px, 8%, 2.2rem, 0.5rem, 1.5rem, 2rem, 0.5rem);
 }
 
 @media screen and (max-width: 768px) {
-    .main-offer-container {
-        height: 420px;
-    }
-
-    .offer {
-        left: 5%;
-    }
-
-    .offer-title {
-        font-size: 2rem;
-    }
-
-    .discount {
-        @include discount-style(.5rem, 600, 1.4rem, var(--font-gontSerrat));
-    }
-
-    .current-price {
-        @include current-price-style(1.8rem, 700, 2px, .5rem, var(--font-gontSerrat));
-    }
+    @include responsive-main-offer(420px, 5%, 2rem, 1.2rem, 1.4rem, 1.8rem, 0.5rem);
 }
 
 @media screen and (max-width: 568px) {
-    .main-offer-container {
-        height: 340px;
-    }
+    @include responsive-main-offer(340px, 5%, 1.6rem, 0.5rem, 1.2rem, 1.5rem, 0.5rem);
 
-    .offer {
-        left: 5%;
-    }
-
-    .offer-title {
-        font-weight: 700;
-        font-size: 1.6rem;
-        margin-bottom: .5rem;
-    }
-
+    // Ajuste específico para el padding del discount en mobile
     .discount {
-        @include discount-style(.3rem, 600, 1.2rem, var(--font-gontSerrat));
-    }
-
-    .current-price {
-        @include current-price-style(1.5rem, 700, 2px, .5rem, var(--font-gontSerrat));
+        @include discount-style(.3rem, 600, 1.2rem, $font-family);
     }
 }

@@ -10,6 +10,28 @@
     letter-spacing: 0.02rem;
 }
 
+// Mixin responsive para títulos y botones
+@mixin responsive-header($font-size, $width, $height, $icon-padding: 0.3rem, $wrap: nowrap) {
+    .headers-list li {
+        @include font-style-header($font-size);
+        white-space: $wrap;
+
+        .image-container {
+            width: $width;
+            height: $height;
+        }
+    }
+
+    .button {
+        @include font-style-header($font-size);
+        white-space: nowrap; // 🔒 los botones nunca se parten en varias líneas
+
+        i {
+            padding-left: $icon-padding;
+        }
+    }
+}
+
 .header-main-container {
     width: 100%;
     height: 80px;
@@ -20,8 +42,8 @@
 .headers-list {
     height: 100%;
     width: 100%;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     list-style-type: none;
     display: flex;
     justify-content: center;
@@ -34,8 +56,6 @@
         text-align: center;
         text-transform: uppercase;
         @include font-style-header(1.1rem);
-        width: auto;
-        height: auto;
 
         .image-container {
             position: relative;
@@ -81,8 +101,7 @@
     position: absolute;
     bottom: -70px;
     left: 50%;
-    transform: translateX(-50%); // Centra horizontalmente
-
+    transform: translateX(-50%);
     display: flex;
     flex-direction: row;
     gap: 6px;
@@ -116,44 +135,16 @@
     }
 }
 
+/* ✅ Media queries optimizadas */
 @media screen and (max-width: 1200px) {
-    .headers-list {
-        li {
-            @include font-style-header(1rem);
-
-            .image-container {
-                position: relative;
-                width: 170px;
-                height: 40px;
-            }
-        }
-    }
-
-    .button {
-        @include font-style-header(1rem);
-    }
+    @include responsive-header(1rem, 170px, 40px);
 }
 
 @media screen and (max-width: 992px) {
-    .headers-list {
-        li {
-            @include font-style-header(.9rem);
-
-            .image-container {
-                position: relative;
-                width: 160px;
-                height: 35px;
-            }
-        }
-    }
-
+    @include responsive-header(.9rem, 160px, 35px);
 
     .search {
         margin-left: .4rem;
-    }
-
-    .button {
-        @include font-style-header(.9rem);
     }
 }
 
@@ -164,27 +155,9 @@
 
     .headers-list {
         width: 70%;
-
-        li {
-            white-space: normal;
-            @include font-style-header(.8rem);
-
-            .image-container {
-                position: relative;
-                width: 120px;
-                height: 30px;
-            }
-        }
     }
 
-    .button {
-        white-space: nowrap;
-        @include font-style-header(.8rem);
-
-        i {
-            padding-left: 0.1rem;
-        }
-    }
+    @include responsive-header(.8rem, 120px, 30px, 0.1rem, normal); // li puede romper línea
 }
 
 @media screen and (max-width: 568px) {
@@ -195,51 +168,16 @@
     .headers-list {
         width: 70%;
         gap: 0.7rem;
-
-        li {
-            white-space: normal;
-            @include font-style-header(.7rem);
-
-            .image-container {
-                position: relative;
-                width: 110px;
-                height: 27px;
-            }
-        }
     }
 
-    .button {
-        white-space: nowrap;
-        @include font-style-header(.7rem);
-
-        i {
-            padding-left: 0.1rem;
-        }
-    }
+    @include responsive-header(.7rem, 110px, 27px, 0.1rem, normal); // li puede romper línea
 }
 
 @media screen and (max-width: 500px) {
     .headers-list {
         width: 70%;
         gap: 0.4rem;
-
-        li {
-            @include font-style-header(.6rem);
-
-            .image-container {
-                position: relative;
-                width: 100px;
-                height: 25px;
-            }
-        }
     }
 
-    .button {
-        white-space: nowrap;
-        @include font-style-header(.6rem);
-
-        i {
-            padding-left: 0.1rem;
-        }
-    }
+    @include responsive-header(.6rem, 100px, 25px, 0.1rem, normal); // li puede romper línea
 }
