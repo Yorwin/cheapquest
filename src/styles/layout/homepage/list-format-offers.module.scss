@@ -136,43 +136,115 @@
     }
 }
 
-/* Large Media */
+.button-title {
+    width: 100%;
+    padding: 0rem;
+    margin-bottom: 1.2rem;
+    background-color: transparent;
+    border: none;
+}
 
-@media screen and (max-width:1200px) {
+.select-offers-container {
+    display: flex;
+    align-items: center;
+}
 
-    /* Main Container */
+.active {
+    color: map.get($colores, secondary-color);
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.prices-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.discount-container span {
+    @include discount-style(.4rem .3rem, 700, 1rem, var(--font-gontSerrat));
+    border-radius: 1rem;
+}
+
+.offer-number-container {
+    height: 100%;
+}
+
+/* Extra Large Media */
+@media screen and (max-width: 1500px) {
+    .title {
+        @include offers-title-typography(1.3rem);
+    }
+
     .list-format-offers-container {
         padding: $homepage-xl-offers-padding;
+    }
+
+    .list-offer-format-container {
+        width: 95%;
+    }
+
+    .offer-number-container {
+        width: 7%;
+    }
+
+    .offer-number {
+        font-size: 1.1rem;
+        padding: 0.3rem;
+    }
+
+    .image-container {
+        width: 20%;
+    }
+
+    .details {
+        padding: 0rem .4rem;
+        width: 73%;
+    }
+
+    .game-title-and-extra-info h3 {
+        font-size: .9rem;
+    }
+
+    .prices-container {
+        margin-right: .6rem;
+        line-height: 1rem;
+    }
+
+    .old-price {
+        @include cancelled-price(.7rem, 600);
+    }
+
+    .current-price {
+        @include current-price-style(.9rem, 500, 3px, 0rem, var(--font-gontSerrat));
+    }
+}
+
+/* Large Media */
+@media screen and (max-width: 1200px) {
+    .title {
+        @include offers-title-typography(1.4rem);
+    }
+
+    .game-title-and-extra-info h3 {
+        font-size: .8rem;
     }
 }
 
 /* Medium Media */
-
 @media screen and (max-width: 992px) {
-
-    /* Main Container */
     .list-format-offers-container {
         padding: $homepage-lg-offers-padding;
     }
 
-    /* Offers Container */
     .list-offer-format-container {
         width: 80%;
     }
 
-    /* Title Button Container */
-    .button-title {
-        width: 100%;
-        padding: 0rem;
-        margin-bottom: 1.2rem;
-        background-color: transparent;
-        border: none;
-    }
-
-    /* Title */
     .select-offers-container {
-        display: flex;
-        align-items: center;
         justify-content: space-evenly;
     }
 
@@ -187,19 +259,10 @@
         color: map.get($colores, secondary-color);
     }
 
-    /* Divisor */
     .divisor-line {
         width: 3px;
         height: 30px;
         background-color: map.get($colores, font-dark-background-color);
-    }
-
-    /* Offers */
-
-    /* Numbers */
-    .offer-number-container {
-        height: 100%;
-        width: 7%;
     }
 
     .offer-number {
@@ -207,78 +270,129 @@
         padding: 0.2rem;
     }
 
-    /* Images */
-    .image-container {
-        width: 20%;
-    }
-
-    /* Game Details */
-
-    /* Main Container */
     .details {
         padding: 0rem .6rem;
-        width: 73%;
     }
 
-    /* Game Title */
-    .game-title-and-extra-info {
-        h3 {
-            font-size: 1rem;
-        }
+    .game-title-and-extra-info h3 {
+        font-size: 1rem;
     }
 
-    /* Prices Format */
     .prices-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
         margin-right: .8rem;
-        line-height: 1.2rem
-    }
-
-    .old-price {
-        @include cancelled-price(.7rem, 600);
+        line-height: 1.2rem;
     }
 
     .current-price {
         @include current-price-style(1rem, 500, 3px, 0rem, var(--font-gontSerrat));
     }
-
-    .discount-container {
-        span {
-            @include discount-style(.4rem .3rem, 700, 1rem, var(--font-gontSerrat));
-            border-radius: 1rem;
-        }
-    }
 }
 
 /* Small Media */
-
 @media screen and (max-width: 768px) {
-
-    /* Main Container */
     .list-format-offers-container {
-        padding: $homepage-sm-offers-padding
+        padding: $homepage-sm-offers-padding;
     }
 
-    /* Title */
+    .select-offers-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
     .select-offer {
         font-size: $title-font-size-sm;
+    }
+
+    .divisor-line {
+        width: 80%;
+        height: 3px;
     }
 }
 
 /* Extra Small Media */
-
 @media screen and (max-width: 568px) {
-    /* Offers Container */
+    .game-info-container {
+        height: 50px;
+    }
+
     .list-offer-format-container {
         width: 100%;
     }
 
-    /* Title */
     .select-offer {
         font-size: $title-font-size-xsm;
     }
 
+    .offer-number-container {
+        width: 6%;
+    }
 
+    .offer-number {
+        font-size: 1rem;
+        padding: 0.1rem;
+    }
+
+    .image-container {
+        width: 18%;
+    }
+
+    .details {
+        width: 75%;
+    }
+
+    .game-title-and-extra-info h3 {
+        font-size: .8rem;
+    }
+
+    .prices-container {
+        margin-right: .4rem;
+        line-height: .9rem;
+    }
+
+    .old-price {
+        @include cancelled-price(.5rem, 600);
+    }
+
+    .current-price {
+        @include current-price-style(.8rem, 500, 3px, 0rem, var(--font-gontSerrat));
+    }
+
+    .discount-container span {
+        @include discount-style(.3rem .3rem, 700, .9rem, var(--font-gontSerrat));
+    }
+}
+
+/* 400px and below */
+@media screen and (max-width: 400px) {
+    .offer-number-container {
+        width: 5%;
+    }
+
+    .offer-number {
+        font-size: .8rem;
+    }
+
+    .details {
+        padding: 0rem .3rem;
+    }
+
+    .game-title-and-extra-info h3 {
+        font-size: .7rem;
+    }
+
+    .prices-container {
+        line-height: .7rem;
+    }
+
+    .old-price {
+        @include cancelled-price(.4rem, 600);
+    }
+
+    .current-price {
+        @include current-price-style(.7rem, 500, 3px, 0rem, var(--font-gontSerrat));
+    }
+
+    .discount-container span {
+        @include discount-style(.3rem .3rem, 700, .8rem, var(--font-gontSerrat));
+    }
 }
