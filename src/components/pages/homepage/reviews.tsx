@@ -3,136 +3,80 @@ import styles from "@/styles/layout/homepage/reviews.module.scss"
 import Image from "next/image";
 import ProfileImg from "@/resources/profile/profile.png"
 import ErrorReviewsLoad from "@/resources/error-image/error-review.png"
+import StarsReview from "@/components/general/stars-review";
 
 const Reviews = () => {
+
+    const reviewsData = [
+        {
+            profileImage: ProfileImg,
+            rating: 4,
+            userName: "Elizabeth",
+            description: "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.",
+            time: "Hace 1 hora"
+        },
+        {
+            profileImage: ProfileImg,
+            rating: 5,
+            userName: "Elizabeth",
+            description: "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.",
+            time: "Hace 1 hora"
+        },
+        {
+            profileImage: ProfileImg,
+            rating: 4,
+            userName: "Elizabeth",
+            description: "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.",
+            time: "Hace 1 hora"
+        },
+        {
+            profileImage: ProfileImg,
+            rating: 4.5,
+            userName: "Elizabeth",
+            description: "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.",
+            time: "Hace 1 hora"
+        },
+    ]
+
+    /* Given Rating */
+
+    const reviews = reviewsData.map((e: any, index: number) => {
+        return (
+            <div className="col-xl-3 col-lg-6 col-sm-12" key={index}>
+                <div className={`${styles["review-container"]}`}>
+                    <div className={styles["profile-section"]}>
+                        <div className={styles["image-container"]}>
+                            <Image
+                                src={e.profileImage}
+                                sizes="50vw"
+                                alt="Plataforma de juego"
+                                fill
+                                style={{ objectFit: 'cover' }}
+                            />
+                        </div>
+                        <div className={styles["user-info"]}>
+                            <div className={styles["rating-container"]}>
+                                <StarsReview rating={e.rating} />
+                            </div>
+                            <h3>{e.userName}</h3>
+                        </div>
+                    </div>
+                    <div className={styles["description"]}>
+                        {e.description}
+                    </div>
+                    <div className={styles["published-time"]}>
+                        {e.time}
+                    </div>
+                </div>
+            </div>
+        )
+    });
+
     try {
         return <section className={styles["reviews-container"]}>
             <article className="container-fluid">
-                <div className="row">
-                    <div className="col-md-3 col-sm-6">
-                        <div className={styles["review-container"]}>
-                            <div className={styles["profile-section"]}>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={ProfileImg}
-                                        sizes="50vw"
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["user-info"]}>
-                                    <div className={styles["rating-container"]}>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                    </div>
-                                    <h3>Elizabeth</h3>
-                                </div>
-                            </div>
-                            <div className={styles["description"]}>
-                                Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.
-                            </div>
-                            <div className={styles["published-time"]}>
-                                Hace 1 hora
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-3 col-sm-6">
-                        <div className={styles["review-container"]}>
-                            <div className={styles["profile-section"]}>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={ProfileImg}
-                                        sizes="50vw"
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["user-info"]}>
-                                    <div className={styles["rating-container"]}>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                    </div>
-                                    <h3>Elizabeth</h3>
-                                </div>
-                            </div>
-                            <div className={styles["description"]}>
-                                Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.
-                            </div>
-                            <div className={styles["published-time"]}>
-                                Hace 1 hora
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-3 col-sm-6">
-                        <div className={styles["review-container"]}>
-                            <div className={styles["profile-section"]}>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={ProfileImg}
-                                        sizes="50vw"
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["user-info"]}>
-                                    <div className={styles["rating-container"]}>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                    </div>
-                                    <h3>Elizabeth</h3>
-                                </div>
-                            </div>
-                            <div className={styles["description"]}>
-                                Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.
-                            </div>
-                            <div className={styles["published-time"]}>
-                                Hace 1 hora
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-3 col-sm-6">
-                        <div className={styles["review-container"]}>
-                            <div className={styles["profile-section"]}>
-                                <div className={styles["image-container"]}>
-                                    <Image
-                                        src={ProfileImg}
-                                        sizes="50vw"
-                                        alt="Plataforma de juego"
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className={styles["user-info"]}>
-                                    <div className={styles["rating-container"]}>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                        <i className="bi bi-star-fill"></i>
-                                    </div>
-                                    <h3>Elizabeth</h3>
-                                </div>
-                            </div>
-                            <div className={styles["description"]}>
-                                Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.
-                            </div>
-                            <div className={styles["published-time"]}>
-                                Hace 1 hora
-                            </div>
-                        </div>
-                    </div>
+                <div className={`row ${styles["container-reviews"]}`}>
+                    {reviews}
                 </div>
             </article>
         </section>

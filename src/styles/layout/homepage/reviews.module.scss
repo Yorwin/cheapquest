@@ -92,3 +92,30 @@
     width: 40%;
 }
 
+@media screen and (max-width: 1200px) {
+    .reviews-container {
+        padding: $homepage-xl-offers-padding;
+    }
+
+    .review-container {
+        margin-bottom: 2rem;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .reviews-container {
+        padding: $homepage-lg-offers-padding;
+    }
+
+    .review-container {
+        margin-bottom: 2rem;
+    }
+}
+
+@media screen and (max-width: 768px) {}
+
+@media screen and (max-width: 568px) {
+    .reviews-container {
+        padding: $homepage-sm-offers-padding;
+    }
+}
