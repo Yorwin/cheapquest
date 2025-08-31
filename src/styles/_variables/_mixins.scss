@@ -111,6 +111,15 @@
     text-overflow: ellipsis;
 }
 
+@mixin resume-lines-reviews($lines-number) {
+    display: -webkit-box;
+    line-clamp: $lines-number;
+    -webkit-line-clamp: $lines-number; // 👈 máximo de líneas visibles
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Footer Styles */
 
 @mixin footer-title-styles($font-size, $margin-bottom) {

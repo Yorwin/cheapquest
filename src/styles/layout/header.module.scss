@@ -170,7 +170,7 @@
         gap: 0.7rem;
     }
 
-    @include responsive-header(.7rem, 110px, 27px, 0.1rem, normal); // li puede romper línea
+    @include responsive-header(.7rem, 110px, 27px, 0.1rem, normal);
 }
 
 @media screen and (max-width: 500px) {
@@ -179,5 +179,21 @@
         gap: 0.4rem;
     }
 
-    @include responsive-header(.6rem, 100px, 25px, 0.1rem, normal); // li puede romper línea
+    @include responsive-header(.6rem, 100px, 25px, 0.1rem, normal);
+}
+
+@media screen and (max-width: 400px) {
+    .header-main-container {
+        height: 60px;
+    }
+
+    @include responsive-header(.5rem, 80px, 20px, 0.1rem, normal);
+}
+
+@media screen and (max-width: 350px) {
+    .header-main-container {
+        height: 40px;
+    }
+
+    @include responsive-header(.4rem, 80px, 20px, 0.1rem, normal);
 }

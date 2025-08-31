@@ -18,6 +18,7 @@
     background-color: map.get($colores, dark-background-color);
     border-radius: 20px;
     padding: 2rem 1.4rem;
+    overflow: hidden;
 
     @include review-box-shadow;
 }
@@ -42,7 +43,7 @@
 
 .user-info h3 {
     font-family: var(--font-gontSerrat);
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: map.get($colores, font-dark-background-color);
     margin-bottom: 0rem;
 }
@@ -53,6 +54,7 @@
     gap: 0.2rem;
 
     i {
+        font-size: .8rem;
         color: #EEFF04;
     }
 }
@@ -61,11 +63,13 @@
     color: map.get($colores, font-dark-background-color);
     font-family: var(--font-timeless);
     font-weight: 500;
+    font-size: .8rem;
+    @include resume-lines-reviews(4);
 }
 
 .published-time {
     font-family: var(--font-gontSerrat);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     color: map.get($colores, font-dark-background-color);
 }
@@ -92,6 +96,38 @@
     width: 40%;
 }
 
+@media screen and (max-width: 1600px) {
+
+    .review-container {
+        height: 225px;
+        padding: 1.6rem 1rem;
+    }
+
+    .rating-container {
+        i {
+            font-size: .8rem;
+            color: #EEFF04;
+        }
+    }
+
+    .image-container {
+        width: 50px;
+        height: 50px;
+    }
+
+    .user-info h3 {
+        font-size: 1rem;
+    }
+
+    .description {
+        font-size: .8rem;
+    }
+
+    .published-time {
+        font-size: .9rem;
+    }
+}
+
 @media screen and (max-width: 1200px) {
     .reviews-container {
         padding: $homepage-xl-offers-padding;
@@ -108,14 +144,45 @@
     }
 
     .review-container {
-        margin-bottom: 2rem;
+        height: 180px;
+        padding: 1.6rem 1rem;
+    }
+
+    .description {
+        @include resume-lines-reviews(2);
     }
 }
-
-@media screen and (max-width: 768px) {}
 
 @media screen and (max-width: 568px) {
     .reviews-container {
         padding: $homepage-sm-offers-padding;
+    }
+
+    .review-container {
+        height: 200px;
+    }
+
+    .rating-container {
+        i {
+            font-size: .6rem;
+            color: #EEFF04;
+        }
+    }
+
+    .image-container {
+        width: 40px;
+        height: 40px;
+    }
+
+    .user-info h3 {
+        font-size: 1rem;
+    }
+
+    .description {
+        font-size: .9rem;
+    }
+
+    .published-time {
+        font-size: .8rem;
     }
 }

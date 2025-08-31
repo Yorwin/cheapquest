@@ -103,18 +103,16 @@ $font-dark: map.get($colores, font-dark-background-color);
 }
 
 // Clase base para price containers
-%price-container-base {
-    width: 100%;
-    height: 65%;
-}
 
 .price-offerorigin-container {
-    @extend %price-container-base;
+    width: 100%;
+    height: 65%;
     padding: 1rem;
 }
 
 .secondary-price-offerorigin-container {
-    @extend %price-container-base;
+    width: 100%;
+    height: 65%;
     padding: 0.8rem;
 }
 
@@ -148,10 +146,11 @@ $font-dark: map.get($colores, font-dark-background-color);
 .secondary-prices {
     @extend %prices-base;
     margin-left: .5rem;
-    line-height: 1.2rem;
+    line-height: 1.1rem;
 }
 
 // Estilos de precios principales
+
 .discount {
     @include discount-style(.7rem, 500, 1.8rem, var(--font-gontSerrat));
 }
@@ -332,7 +331,7 @@ $font-dark: map.get($colores, font-dark-background-color);
     }
 
     .secondary-prices {
-        line-height: 1rem;
+        line-height: .9rem;
     }
 
     .secondary-current-price {
@@ -353,6 +352,10 @@ $font-dark: map.get($colores, font-dark-background-color);
         padding: $homepage-lg-offers-padding;
     }
 
+    .title {
+        @include offers-title-typography($title-font-size-md);
+    }
+
     .main-gamecard-offer {
         width: calc(50% - 10px);
     }
@@ -365,7 +368,7 @@ $font-dark: map.get($colores, font-dark-background-color);
 
     .title {
         margin-bottom: 1.4rem;
-        @include offers-title-typography(1.5rem);
+        @include offers-title-typography($title-font-size-sm);
     }
 
     .button-container button {
@@ -381,11 +384,48 @@ $font-dark: map.get($colores, font-dark-background-color);
 
     .title {
         margin-bottom: 1.2rem;
-        @include offers-title-typography($title-font-size-sm);
+        @include offers-title-typography($title-font-size-xsm);
+    }
+
+    .gameimage-container {
+        height: 70%;
+    }
+
+    .gameinfo-container {
+        height: 30%;
+    }
+
+    .main-game-title {
+        font-size: 1rem;
+    }
+
+    .prices {
+        line-height: 1.3rem;
+        margin-left: .5rem;
+    }
+
+    .discount {
+        @include discount-style(.5rem, 500, 1.4rem, var(--font-gontSerrat));
+    }
+
+    .current-price {
+        @include current-price-style(1.4rem, 400, 3px, 0rem, var(--font-gontSerrat));
+    }
+
+    .last-price {
+        @include cancelled-price(1rem, 500);
+    }
+
+    .list-info-container-title {
+        font-size: .6rem;
+    }
+
+    .secondary-price-offerorigin-container {
+        padding: 0.5rem;
     }
 
     .secondary-prices {
-        line-height: .9rem;
+        line-height: .7rem;
     }
 
     .secondary-current-price {
@@ -404,6 +444,17 @@ $font-dark: map.get($colores, font-dark-background-color);
         width: 25px;
     }
 
+    .web-offer {
+        @extend %web-offer-base;
+        width: 90px;
+        height: 50px;
+
+        img {
+            width: 60%;
+            height: 100%;
+        }
+    }
+
     .button-container button {
         font-size: 1.1rem;
         padding: 0.5rem 1.7rem;
@@ -413,5 +464,80 @@ $font-dark: map.get($colores, font-dark-background-color);
 @media screen and (max-width: 500px) {
     .title {
         @include offers-title-typography($title-font-size-xsm);
+    }
+
+    .secondary-prices {
+        margin-left: .3rem;
+        line-height: .8rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .title {
+        @include offers-title-typography($title-font-size-xsm);
+    }
+
+    .secondary-prices {
+        margin-left: .3rem;
+        line-height: .6rem;
+    }
+
+    .secondary-current-price {
+        @include current-price-style(.7rem, 500, 3px, 0rem, var(--font-gontSerrat));
+    }
+
+    .secondary-last-price {
+        @include cancelled-price(.4rem, 600);
+    }
+
+    .secondary-discount {
+        @include discount-style(.1rem, 600, .7rem, var(--font-gontSerrat));
+    }
+
+    .secondary-web-offer {
+        width: 25px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .title {
+        @include offers-title-typography($title-font-size-xsm);
+    }
+
+    .prices {
+        margin-left: .3rem;
+        line-height: 1.2rem;
+    }
+
+    .discount {
+        @include discount-style(.5rem, 500, 1.2rem, var(--font-gontSerrat));
+    }
+
+    .current-price {
+        @include current-price-style(1.1rem, 400, 3px, 0rem, var(--font-gontSerrat));
+    }
+
+    .last-price {
+        @include cancelled-price(.8rem, 500);
+    }
+
+    .secondary-prices {
+        line-height: .6rem;
+    }
+
+    .secondary-current-price {
+        @include current-price-style(.5rem, 600, 3px, 0rem, var(--font-gontSerrat));
+    }
+
+    .secondary-last-price {
+        @include cancelled-price(.3rem, 600);
+    }
+
+    .secondary-discount {
+        @include discount-style(.1rem, 600, .7rem, var(--font-gontSerrat));
+    }
+
+    .secondary-web-offer {
+        width: 20px;
     }
 }

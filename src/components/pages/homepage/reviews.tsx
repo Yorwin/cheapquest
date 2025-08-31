@@ -12,28 +12,28 @@ const Reviews = () => {
             profileImage: ProfileImg,
             rating: 4,
             userName: "Elizabeth",
-            description: "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.",
+            description: "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae. Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.",
             time: "Hace 1 hora"
         },
         {
             profileImage: ProfileImg,
             rating: 5,
             userName: "Elizabeth",
-            description: "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.",
+            description: "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae. Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae. Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae",
             time: "Hace 1 hora"
         },
         {
             profileImage: ProfileImg,
             rating: 4,
             userName: "Elizabeth",
-            description: "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.",
+            description: "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae. Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae. Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae",
             time: "Hace 1 hora"
         },
         {
             profileImage: ProfileImg,
             rating: 4.5,
             userName: "Elizabeth",
-            description: "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.",
+            description: "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae. Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae.",
             time: "Hace 1 hora"
         },
     ]
@@ -61,7 +61,7 @@ const Reviews = () => {
                             <h3>{e.userName}</h3>
                         </div>
                     </div>
-                    <div className={styles["description"]}>
+                    <div className={styles["description"]} title={e.description}>
                         {e.description}
                     </div>
                     <div className={styles["published-time"]}>
