@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "@/styles/layout/homepage/most-popular-offer.module.scss"
 import { responsiveMobileDesignProps, GameStandardContainerType } from "@/types/types";
 

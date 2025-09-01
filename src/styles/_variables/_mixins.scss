@@ -19,12 +19,12 @@
     -moz-box-shadow: 9px 18px 88px -8px rgba(0, 0, 0, 1);
 }
 
-@mixin offers-title-typography($font-size) {
+@mixin offers-title-typography($font-size, $white-space) {
     font-family: var(--font-gontSerrat);
     font-size: $font-size;
     font-weight: 700;
     letter-spacing: 2px;
-    white-space: nowrap;
+    white-space: $white-space;
 }
 
 @mixin discount-style($padding-size, $font-weight, $font-size, $font-family) {

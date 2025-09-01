@@ -2,153 +2,199 @@
 @use '../../_variables/mixins' as *;
 @use 'sass:map';
 
+// Variables locales para mejorar mantenibilidad
+$category-height: 250px;
+$category-border-radius: 5px;
+$category-background-brightness: 0.6;
+$character-transition-duration: 1s;
+$character-scale-factor: 1.06;
+
+// Mapa de categorías para generar estilos dinámicamente
+$categories: (
+    'action': '../../../resources/categories/Action/background.png',
+    'arcade': '../../../resources/categories/Arcade/background.png',
+    'adventure': '../../../resources/categories/Aventura/background.jpg',
+    'strategy': '../../../resources/categories/Estrategia/background.jpg',
+    'fps': '../../../resources/categories/FPS/background.jpg',
+    'fight': '../../../resources/categories/Lucha/background.jpg',
+    'rpg': '../../../resources/categories/RPG/background.webp',
+    'single-player': '../../../resources/categories/Un_solo_jugador/background.jpg',
+    'vr': '../../../resources/categories/VR/background.png'
+);
+
+// Mixins locales
+@mixin category-background($image-url) {
+    &::before {
+        background-image: url($image-url);
+    }
+}
+
+@mixin responsive-padding($padding-var) {
+    padding: $padding-var;
+}
+
+@mixin responsive-title($font-size-var, $white-space) {
+    @include offers-title-typography($font-size-var, $white-space);
+}
+
+// Estilos principales
 .categories-container {
     width: 100%;
-    padding: $homepage-offers-padding;
+    @include responsive-padding($homepage-offers-padding);
     background-color: map.get($colores, dark-background-color);
 }
 
 .title {
     margin-bottom: 2rem;
-    padding-left: 0rem;
+    padding-left: 0;
     color: map.get($colores, font-dark-background-color);
-    @include offers-title-typography($title-font-size-default);
+    @include offers-title-typography($title-font-size-default, nowrap);
     z-index: 2;
 }
 
 .category-container {
     position: relative;
-    height: 250px;
+    height: $category-height;
     width: 94%;
-    border-radius: 5px;
-    z-index: 0;
+    border-radius: $category-border-radius;
     cursor: pointer;
+    z-index: 0;
     @include offer-shadow;
+    overflow: hidden;
 
+    // Pseudo-elemento para background con overlay
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: brightness($category-background-brightness);
+        z-index: -1;
+    }
+
+    // Efecto hover optimizado
     &:hover .image-character {
-        transform: scale(1.06);
+        transform: scale($character-scale-factor);
+    }
+
+    // Título de categoría
+    h2 {
+        position: absolute;
+        top: 50%;
+        left: 2rem;
+        color: map.get($colores, font-dark-background-color);
+        font-size: 2rem;
+        font-family: var(--font-gontSerrat);
+        font-weight: 700;
+        text-align: left;
+        z-index: 2;
+        transform: translateY(-50%);
+    }
+}
+
+// Generación dinámica de estilos para cada categoría
+@each $category, $image-url in $categories {
+    .category-container.#{$category} {
+        @include category-background($image-url);
     }
 }
 
 .enlace-categoria {
     position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.category-container::before {
-    content: "";
-    position: absolute;
     inset: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: brightness(0.6);
-    /* Compensa el "borde blureado" */
-    z-index: -1;
-}
-
-.category-container.action::before {
-    background-image: url('../../../resources/categories/Action/background.png');
-}
-
-.category-container.arcade::before {
-    background-image: url('../../../resources/categories/Arcade/background.png');
-}
-
-.category-container.adventure::before {
-    background-image: url('../../../resources/categories/Aventura/background.jpg');
-}
-
-.category-container.strategy::before {
-    background-image: url('../../../resources/categories/Estrategia/background.jpg');
-}
-
-.category-container.fps::before {
-    background-image: url('../../../resources/categories/FPS/background.jpg');
-}
-
-.category-container.fight::before {
-    background-image: url('../../../resources/categories/Lucha/background.jpg');
-}
-
-.category-container.rpg::before {
-    background-image: url('../../../resources/categories/RPG/background.webp');
-}
-
-.category-container.single-player::before {
-    background-image: url('../../../resources/categories/Un_solo_jugador/background.jpg');
-}
-
-.category-container.vr::before {
-    background-image: url('../../../resources/categories/VR/background.png');
-}
-
-.category-container h2 {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 2rem;
-    /* Puedes ajustar el valor para ubicarlo horizontalmente */
-    color: map.get($colores, font-dark-background-color);
-    font-size: 2rem;
-    font-family: var(--font-gontSerrat);
-    font-weight: 700;
-    text-align: left;
-    /* o 'center' si lo necesitas */
-    z-index: 2;
 }
 
 .image-character-container {
     position: absolute;
-    right: -70px;
-    width: 100%;
-    height: 100%;
+    right: 20px;
+    bottom: 0;
+    width: auto;
+    height: 95%;
 }
 
 .image-character {
-    object-fit: contain;
     width: 100%;
     height: 100%;
-    transition: transform 1s;
-    z-index: 1;
+    object-fit: cover;
+    transition: transform $character-transition-duration;
     transform-origin: bottom left;
-}
-
-@media screen and (max-width: 500px) {
-    .title {
-        @include offers-title-typography(1rem);
-    }
+    z-index: 1;
 }
 
 @media screen and (max-width: 1200px) {
+    .categories-container {
+        @include responsive-padding($homepage-xl-offers-padding);
+    }
+
     .title {
-        @include offers-title-typography($title-font-size-xl);
+        @include offers-title-typography($title-font-size-xl, nowrap);
+    }
+
+    .category-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .image-character-container {
+        right: 15px;
+        height: 90%;
     }
 }
 
-@media screen and (max-width: 992px) {}
+@media screen and (max-width: 992px) {
+    .categories-container {
+        @include responsive-padding($homepage-lg-offers-padding);
+    }
+
+    .category-container {
+        width: 100%;
+
+        h2 {
+            font-size: 2rem;
+        }
+    }
+
+    .image-character-container {
+        right: 25px;
+        height: 95%;
+    }
+}
 
 @media screen and (max-width: 768px) {
+    .categories-container {
+        @include responsive-padding($homepage-sm-offers-padding);
+    }
+
     .title {
-        @include offers-title-typography($title-font-size-md);
+        @include offers-title-typography($title-font-size-md, nowrap);
     }
 }
 
 @media screen and (max-width: 568px) {
     .title {
-        @include offers-title-typography($title-font-size-sm);
+        @include offers-title-typography($title-font-size-sm, normal);
+    }
+
+    .category-container h2 {
+        font-size: 1.2rem;
+    }
+
+    .image-character-container {
+        right: 20px;
+        height: 85%;
     }
 }
 
 @media screen and (max-width: 500px) {
     .title {
-        @include offers-title-typography($title-font-size-xsm);
+        @include offers-title-typography($title-font-size-xsm, normal);
     }
 }
 
-@media screen and (max-width: 500px) {
-    .title {
-        @include offers-title-typography(1rem);
+@media screen and (max-width: 400px) {
+    .image-character-container {
+        right: 0px;
+        height: 85%;
     }
 }

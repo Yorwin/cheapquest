@@ -7,9 +7,11 @@
     width: 100%;
     background-color: map.get($colores, dark-background-color);
     padding: $homepage-offers-padding;
+    overflow: hidden;
 }
 
 .aged-like-wine-offers-main-container {
+    overflow: hidden;
     @extend .new-offers-main-container;
     background-color: map.get($colores, complementary-color);
 }
@@ -17,7 +19,7 @@
 .title {
     margin-bottom: 1rem;
     color: map.get($colores, font-dark-background-color);
-    @include offers-title-typography($title-font-size-default);
+    @include offers-title-typography($title-font-size-default, nowrap);
 }
 
 .vertical-card-container {
@@ -151,7 +153,7 @@
     }
 
     .title {
-        @include offers-title-typography($title-font-size-xl);
+        @include offers-title-typography($title-font-size-xl, nowrap);
     }
 
     .platform-discount-container {
@@ -204,14 +206,14 @@
     }
 
     .title {
-        @include offers-title-typography($title-font-size-md);
+        @include offers-title-typography($title-font-size-md, nowrap);
     }
 }
 
 /* 568px and below */
 @media screen and (max-width: 568px) {
     .title {
-        @include offers-title-typography($title-font-size-sm);
+        @include offers-title-typography($title-font-size-sm, normal);
     }
 
     .platform-discount-container {
@@ -248,6 +250,10 @@
 
 /* 500px and below */
 @media screen and (max-width: 500px) {
+    .title {
+        @include offers-title-typography($title-font-size-xsm, normal);
+    }
+
     .info-container {
         justify-content: space-evenly;
     }
@@ -260,10 +266,6 @@
         span {
             @include discount-style(0.2rem .4rem, 600, .8rem, var(--font-gontSerrat));
         }
-    }
-
-    .title {
-        @include offers-title-typography($title-font-size-xsm);
     }
 
     .price-and-platform-container {

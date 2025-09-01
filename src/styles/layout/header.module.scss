@@ -37,6 +37,7 @@
     height: 80px;
     @include flex-center-elements-XY;
     background-color: map.get($colores, primary-color);
+    overflow: hidden;
 }
 
 .headers-list {

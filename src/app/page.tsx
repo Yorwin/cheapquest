@@ -6,7 +6,7 @@ import NewOffers from "@/components/pages/homepage/vertical-and-aged-containers/
 import AgedLikeWine from "@/components/pages/homepage/vertical-and-aged-containers/aged-like-wine";
 import ListFormatOffers from "@/components/pages/homepage/list-format-offer/list-format-offer"
 import Reviews from "@/components/pages/homepage/reviews"
-import Categories from "@/components/pages/homepage/categories";
+import Categories from "@/components/pages/homepage/categories/categories";
 
 const HomePage = async () => {
   return <>

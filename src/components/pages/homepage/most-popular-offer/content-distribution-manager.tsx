@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useWindowWidth from "@/functions/hooks/useWindowWidth";
 import { GameStandardContainerType } from "@/types/types";
 import SkeletonLoader from "@/components/general/skelettonLoader";

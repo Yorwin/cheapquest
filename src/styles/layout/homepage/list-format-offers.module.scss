@@ -6,12 +6,13 @@
     width: 100%;
     background-color: map.get($colores, dark-background-color);
     padding: $homepage-offers-padding;
+    overflow: hidden;
 }
 
 .title {
     margin-bottom: 1rem;
     color: map.get($colores, font-dark-background-color);
-    @include offers-title-typography($title-font-size-default);
+    @include offers-title-typography($title-font-size-default, nowrap);
 }
 
 .list-offer-format-container {
@@ -176,7 +177,7 @@
 /* Extra Large Media */
 @media screen and (max-width: 1500px) {
     .title {
-        @include offers-title-typography(1.3rem);
+        @include offers-title-typography(1.3rem, nowrap);
     }
 
     .list-format-offers-container {
@@ -226,7 +227,7 @@
 /* Large Media */
 @media screen and (max-width: 1200px) {
     .title {
-        @include offers-title-typography(1.4rem);
+        @include offers-title-typography(1.4rem, nowrap);
     }
 
     .game-title-and-extra-info h3 {
@@ -249,7 +250,7 @@
     }
 
     .select-offer {
-        @include offers-title-typography(1.2rem);
+        @include offers-title-typography(1.2rem, nowrap);
         margin-bottom: 0rem;
         color: map.get($colores, font-dark-background-color);
         width: auto;
@@ -311,6 +312,10 @@
 
 /* Extra Small Media */
 @media screen and (max-width: 568px) {
+    .title {
+        @include offers-title-typography($title-font-size-default, normal);
+    }
+
     .game-info-container {
         height: 50px;
     }
@@ -320,7 +325,7 @@
     }
 
     .select-offer {
-        font-size: $title-font-size-xsm;
+        @include offers-title-typography(.8rem, nowrap);
     }
 
     .offer-number-container {
@@ -364,6 +369,10 @@
 
 /* 400px and below */
 @media screen and (max-width: 400px) {
+    .title {
+        @include offers-title-typography($title-font-size-default, normal);
+    }
+
     .offer-number-container {
         width: 5%;
     }

@@ -21,7 +21,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <header>
           <Header />
         </header>
-        <main>
+        <main className="contenedor-principal">
           {children}
         </main>
         <footer>

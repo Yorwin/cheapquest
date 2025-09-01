@@ -18,7 +18,7 @@ $font-dark: map.get($colores, font-dark-background-color);
 .title {
     margin-bottom: 2rem;
     color: $font-dark;
-    @include offers-title-typography($title-font-size-default);
+    @include offers-title-typography($title-font-size-default, nowrap);
 }
 
 .offers-container {
@@ -311,7 +311,7 @@ $font-dark: map.get($colores, font-dark-background-color);
     }
 
     .title {
-        @include offers-title-typography($title-font-size-xl);
+        @include offers-title-typography($title-font-size-xl, nowrap);
     }
 
     .prices {
@@ -353,7 +353,7 @@ $font-dark: map.get($colores, font-dark-background-color);
     }
 
     .title {
-        @include offers-title-typography($title-font-size-md);
+        @include offers-title-typography($title-font-size-md, nowrap);
     }
 
     .main-gamecard-offer {
@@ -368,7 +368,7 @@ $font-dark: map.get($colores, font-dark-background-color);
 
     .title {
         margin-bottom: 1.4rem;
-        @include offers-title-typography($title-font-size-sm);
+        @include offers-title-typography($title-font-size-sm, nowrap);
     }
 
     .button-container button {
@@ -378,13 +378,13 @@ $font-dark: map.get($colores, font-dark-background-color);
 }
 
 @media screen and (max-width: 568px) {
-    .most-popular-offer-container {
-        padding: $homepage-sm-offers-padding;
-    }
-
     .title {
         margin-bottom: 1.2rem;
-        @include offers-title-typography($title-font-size-xsm);
+        @include offers-title-typography($title-font-size-xsm, normal); // Cambiado a 'normal' para permitir saltos de línea
+    }
+
+    .most-popular-offer-container {
+        padding: $homepage-sm-offers-padding;
     }
 
     .gameimage-container {
@@ -463,7 +463,7 @@ $font-dark: map.get($colores, font-dark-background-color);
 
 @media screen and (max-width: 500px) {
     .title {
-        @include offers-title-typography($title-font-size-xsm);
+        @include offers-title-typography($title-font-size-xsm, normal); // Mantiene 'normal'
     }
 
     .secondary-prices {
@@ -474,7 +474,7 @@ $font-dark: map.get($colores, font-dark-background-color);
 
 @media screen and (max-width: 400px) {
     .title {
-        @include offers-title-typography($title-font-size-xsm);
+        @include offers-title-typography($title-font-size-xsm, normal); // Mantiene 'normal'
     }
 
     .secondary-prices {
@@ -501,7 +501,7 @@ $font-dark: map.get($colores, font-dark-background-color);
 
 @media screen and (max-width: 350px) {
     .title {
-        @include offers-title-typography($title-font-size-xsm);
+        @include offers-title-typography($title-font-size-xsm, normal); // Mantiene 'normal'
     }
 
     .prices {
