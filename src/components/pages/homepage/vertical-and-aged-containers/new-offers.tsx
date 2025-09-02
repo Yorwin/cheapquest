@@ -39,7 +39,7 @@ const NewOffers = async () => {
 
             newOffers.push({
                 gameImage: result.background_image,
-                title: result.name,
+                title: newDeals[i].title,
                 oldPrice: `${resultRegularPrice}€`,
                 currentPrice: `${resultPrice}€`,
                 discount: `${Number(newDeals[i].savings).toFixed(0)}%`,

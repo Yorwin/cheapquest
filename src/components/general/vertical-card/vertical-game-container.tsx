@@ -7,7 +7,7 @@ import { VerticalCardContainerType } from "@/types/types";
 const VerticalGameCard = ({ platform, oldPrice, discount, title, currentPrice, webOffer, children }: VerticalCardContainerType) => {
     return (
         <div className={styles["vertical-card-container"]}>
-            <Link href="/producto/black-ops-6" className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
+            <Link href="/game-page/black-ops-6" className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
             <div className={styles["image-container"]}>
                 {children}
                 <div className={styles["platform-discount-container"]}>

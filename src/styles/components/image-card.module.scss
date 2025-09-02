@@ -1,0 +1,121 @@
+@use '../../styles/_variables/variables' as *;
+@use '../../styles/_variables/mixins' as *;
+@use 'sass:map';
+
+$background-color: map.get($colores, dark-background-color);
+$background-color-button: map.get($colores, primary-color);
+$font-color: map.get($colores, font-dark-background-color);
+
+$primary-font-style: var(--font-gontSerrat);
+$seconday-font-style: var(--font-timeless);
+
+$current-price-shadow: 1px 0 #000,
+    -1px 0 #000,
+    0 1px #000,
+    0 -1px #000,
+    1px 1px #000,
+    -1px -1px #000,
+    1px -1px #000,
+    -1px 1px #000;
+
+.image-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 400px;
+    height: 250px;
+    background-color: $background-color;
+    border-radius: 1rem;
+    padding: 1rem;
+    overflow: hidden;
+
+    h3 {
+        text-align: center;
+        color: $font-color;
+        font-family: $primary-font-style;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+}
+
+.image {
+    width: 35px;
+    height: 35px;
+}
+
+.offer-info-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.offer-info {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    color: $font-color;
+    list-style-type: none;
+    margin-bottom: 0rem;
+    padding-left: 0rem;
+
+    li {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        font-family: var(--font-timeless);
+        gap: .5rem;
+    }
+}
+
+/* Prices */
+
+.prices {
+    text-align: center;
+    line-height: 1.5rem;
+}
+
+.old-discount-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.old-price {
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: $primary-font-style;
+    color: #000;
+    text-decoration: line-through 3px;
+}
+
+.discount {
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: $primary-font-style;
+    color: red;
+}
+
+.current-price {
+    @include current-price-style(1.5rem, 600, .1rem, 0rem, $primary-font-style);
+    text-shadow: $current-price-shadow;
+}
+
+/* Button */
+
+.offer-button {
+    width: 45%;
+    padding: 0.4rem;
+    background-color: $background-color-button;
+    color: $font-color;
+    font-weight: 600;
+    font-family: $primary-font-style;
+    border: none;
+    border-radius: 2rem;
+
+    &:hover {
+        text-decoration: underline 0.1rem #fff;
+    }
+}

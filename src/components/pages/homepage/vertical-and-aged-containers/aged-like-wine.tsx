@@ -31,7 +31,7 @@ const AgedLikeWine = async () => {
 
             const getInfo = await getGameInfo(AgedLikeWineGames[i] ? AgedLikeWineGames[i].title : "Resident Evil");
 
-            const gameTitle = getInfo.results[0].name;
+            const gameTitle = AgedLikeWineGames[i].title;
             const gameImage = getInfo.results[0].background_image;
             const discount = AgedLikeWineGames[i].savings;
             const price: number = Number(AgedLikeWineGames[i].salePrice);

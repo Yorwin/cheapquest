@@ -68,7 +68,7 @@ export const getMostPopularOffers = async () => {
 
 export const getNewDeals = async () => {
     const response = await fetch("https://www.cheapshark.com/api/1.0/deals?maxAge=12&onSale=1&sortBy=DealRating", {
-        cache: "force-cache"
+        cache: "no-store"
     })
 
     if (!response.ok) {
