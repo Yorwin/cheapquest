@@ -19,7 +19,6 @@ const GamePage = ({ params }: ParamsGame) => {
             <div className={styles["game-info-container"]}>
                 <GameImagesVideos />
                 <AboutTheGame />
-               
             </div>
         </article>
     )

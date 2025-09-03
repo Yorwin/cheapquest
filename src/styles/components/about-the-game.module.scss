@@ -1,0 +1,21 @@
+@use '../_variables/variables' as *;
+@use '../_variables/mixins' as *;
+@use 'sass:map';
+
+$font-main-color: map.get($colores, font-dark-background-color);
+
+.about-the-game-container {
+    color: $font-main-color;
+
+    h3 {
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        font-weight: 700;
+        font-family: var(--font-gontSerrat);
+    }
+
+    p {
+        font-family: var(--font-timeless);
+        margin-bottom: 0rem;
+    }
+}
