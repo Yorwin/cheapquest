@@ -1,0 +1,30 @@
+@use '../_variables/variables' as *;
+@use '../_variables/mixins' as *;
+@use 'sass:map';
+
+$font-main-color: map.get($colores, font-dark-background-color);
+$lines-color: map.get($colores, dark-background-color);
+
+$main-font: var(--font-gontSerrat);
+$secondary-font: var(--font-timeless);
+
+.game-info-container {
+    h2 {
+        @include secondaryTitleGamePage;
+    }
+}
+
+.table {
+    color: $font-main-color;
+    font-family: $secondary-font;   
+}
+
+.table th {
+    border-right: .4rem solid $lines-color;
+    padding: 8px 8px 8px 0px;
+    text-align: left;
+}
+
+.table td {
+    padding: 8px;
+}

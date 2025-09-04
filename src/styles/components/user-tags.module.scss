@@ -1,0 +1,50 @@
+@use '../_variables/variables' as *;
+@use '../_variables/mixins' as *;
+@use 'sass:map';
+
+$tag-background-color: map.get($colores, dark-background-color);
+$button-background-color: map.get($colores, primary-color);
+
+$font-main-color: map.get($colores, font-dark-background-color);
+
+.user-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-tags-container h2 {
+    @include mainTitleGamePage;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.user-tags-container p {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag {
+    font-family: var(--font-timeless);
+    font-size: .8rem;
+    color: $font-main-color;
+    background-color: $tag-background-color;
+    text-transform: uppercase;
+    border-radius: 1rem;
+    padding: .6rem;
+}
+
+.button-tags {
+    font-family: var(--font-timeless);
+    font-size: .8rem;
+    font-weight: 600;
+    padding: .6rem .8rem;
+    border-radius: 1rem;
+    background-color: $button-background-color;
+    border: none;
+    color: $font-main-color;
+}

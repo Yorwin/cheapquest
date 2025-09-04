@@ -1,0 +1,51 @@
+@use '../_variables/variables' as *;
+@use '../_variables/mixins' as *;
+@use 'sass:map';
+
+$font-main-color: map.get($colores, font-dark-background-color);
+$lines-color: map.get($colores, dark-background-color);
+
+$main-font: var(--font-gontSerrat);
+$secondary-font: var(--font-timeless);
+
+$good-critic: #26F160;
+$bad-critic: #FE392B;
+
+.metacritic-container {
+
+    margin-bottom: 2rem;
+
+    h2 {
+        @include secondaryTitleGamePage;
+    }
+}
+
+.rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .6rem;
+
+    .points {
+        font-size: 1.2rem;
+        font-family: $main-font;
+        font-weight: 500;
+        padding: .6rem;
+        border-radius: 1.6rem;
+        background-color: #26F160;
+        color: $font-main-color;
+    }
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5rem;
+
+    .text {
+        font-family: var(--font-timeless);
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: $font-main-color;
+    }
+}

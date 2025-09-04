@@ -18,7 +18,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body className={`${gontSerrat.variable} ${timeLess.variable}`}>
-        <header>
+        <header className="header">
           <Header />
         </header>
         <main className="contenedor-principal">

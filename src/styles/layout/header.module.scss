@@ -24,7 +24,7 @@
 
     .button {
         @include font-style-header($font-size);
-        white-space: nowrap; // 🔒 los botones nunca se parten en varias líneas
+        white-space: nowrap;
 
         i {
             padding-left: $icon-padding;
@@ -37,7 +37,6 @@
     height: 80px;
     @include flex-center-elements-XY;
     background-color: map.get($colores, primary-color);
-    overflow: hidden;
 }
 
 .headers-list {

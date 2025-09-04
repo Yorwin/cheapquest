@@ -2,7 +2,10 @@ import React from "react";
 import styles from "@/styles/layout/gamepage/gamepage-general-styles.module.scss"
 import Presentation from "@/components/pages/game-page/presentation"
 import GameImagesVideos from "@/components/pages/game-page/game-images-videos"
-import AboutTheGame from "@/components/general/about-this-game";
+import AboutTheGame from "@/components/general/about-this-game/about-this-game";
+import MetaCritic from "@/components/general/metacritic";
+import GameInfo from "@/components/general/game-info";
+import GameTags from "@/components/general/game-tags/game-tags";
 
 interface ParamsGame {
     params: {
@@ -18,7 +21,18 @@ const GamePage = ({ params }: ParamsGame) => {
             <Presentation />
             <div className={styles["game-info-container"]}>
                 <GameImagesVideos />
-                <AboutTheGame />
+                <div className="container-fluid mb-5">
+                    <div className="row">
+                        <div className="col-7 p-0">
+                            <AboutTheGame />
+                        </div>
+                        <div className="col-5 p-0">
+                            <MetaCritic />
+                            <GameInfo />
+                        </div>
+                    </div>
+                </div>
+                <GameTags />
             </div>
         </article>
     )

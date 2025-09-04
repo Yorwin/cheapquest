@@ -37,7 +37,6 @@ const MainOffer = async () => {
                     height={1080}
                     sizes="100vw"
                     priority
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
                 <div className={styles["overlay"]}></div>
                 <section className={styles["offer"]}>
