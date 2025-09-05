@@ -6,9 +6,6 @@ $background-color: map.get($colores, dark-background-color);
 $background-color-button: map.get($colores, primary-color);
 $font-color: map.get($colores, font-dark-background-color);
 
-$primary-font-style: var(--font-gontSerrat);
-$seconday-font-style: var(--font-timeless);
-
 $current-price-shadow: 1px 0 #000,
     -1px 0 #000,
     0 1px #000,

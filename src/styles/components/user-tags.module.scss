@@ -13,6 +13,7 @@ $font-main-color: map.get($colores, font-dark-background-color);
     flex-direction: row;
     align-items: center;
     gap: 8px;
+    margin-bottom: 2.5rem;
 }
 
 .user-tags-container h2 {

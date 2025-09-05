@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "@/styles/components/user-tags.module.scss"
-import Tags from "./tags-controller";
+import Tags from "../../general/game-tags/tags-controller";
 
 const GameTags = () => {
 

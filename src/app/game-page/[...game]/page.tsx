@@ -5,7 +5,8 @@ import GameImagesVideos from "@/components/pages/game-page/game-images-videos"
 import AboutTheGame from "@/components/general/about-this-game/about-this-game";
 import MetaCritic from "@/components/general/metacritic";
 import GameInfo from "@/components/general/game-info";
-import GameTags from "@/components/general/game-tags/game-tags";
+import GameTags from "@/components/pages/game-page/game-tags";
+import OfficialStoreList from "@/components/pages/game-page/official-store-list";
 
 interface ParamsGame {
     params: {
@@ -33,6 +34,7 @@ const GamePage = ({ params }: ParamsGame) => {
                     </div>
                 </div>
                 <GameTags />
+                <OfficialStoreList />
             </div>
         </article>
     )
