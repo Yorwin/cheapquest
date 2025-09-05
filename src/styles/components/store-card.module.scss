@@ -5,6 +5,13 @@
 $offer-background-color: map.get($colores, dark-background-color);
 $main-font-color: map.get($colores, font-dark-background-color);
 
+.stores-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
 .store-card-container {
     display: flex;
     align-items: center;
@@ -12,6 +19,35 @@ $main-font-color: map.get($colores, font-dark-background-color);
     height: 100px;
     background-color: $offer-background-color;
     border-radius: 1rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.offer-data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    padding: 1.7rem 2rem 1.7rem .7rem;
 }
 
 .offer-info-container h3 {
@@ -32,4 +68,76 @@ $main-font-color: map.get($colores, font-dark-background-color);
 .released-time {
     display: flex;
     gap: .3rem;
+}
+
+.price-and-cta-container {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    height: 100%;
+}
+
+.prices-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 0.5rem;
+    font-family: $primary-font-style;
+    color: $main-font-color;
+    font-weight: 600;
+}
+
+.discount {
+    display: flex;
+    align-items: center;
+    background-color: map.get($colores, discount-color);
+    border-radius: 1rem;
+    height: 100%;
+    padding: .4rem;
+    font-weight: 600;
+}
+
+.prices {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2rem;
+}
+
+.old-price {
+    color: map.get($colores, secondary-color);
+}
+
+.new-price {
+    color: map.get($colores, color-price);
+}
+
+.action-button {
+    height: 100%;
+    padding: 0rem 1rem;
+    font-family: $primary-font-style;
+    font-weight: 600;
+    background-color: map.get($colores, complementary-color);
+    color: $main-font-color;
+    border: none;
+    border-radius: 2rem;
+
+    &:hover {
+        text-decoration: underline 2px $main-font-color;
+    }
+}
+
+.button-see-offers {
+    background-color: map.get($colores, primary-color);
+    border: none;
+    border-radius: 2rem;
+    color: $main-font-color;
+    font-family: $primary-font-style;
+    font-weight: 600;
+    height: 50px;
+    width: 25%;
+
+    &:hover {
+        text-decoration: underline .1rem #fff;
+    }
+
 }
