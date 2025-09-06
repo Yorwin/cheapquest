@@ -126,18 +126,4 @@ $main-font-color: map.get($colores, font-dark-background-color);
     }
 }
 
-.button-see-offers {
-    background-color: map.get($colores, primary-color);
-    border: none;
-    border-radius: 2rem;
-    color: $main-font-color;
-    font-family: $primary-font-style;
-    font-weight: 600;
-    height: 50px;
-    width: 25%;
-
-    &:hover {
-        text-decoration: underline .1rem #fff;
-    }
-
-}
+@include seeAllOffers;

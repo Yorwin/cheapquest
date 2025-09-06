@@ -1,0 +1,84 @@
+@use '../_variables/variables' as *;
+@use '../_variables/mixins' as *;
+@use 'sass:map';
+
+$main-font-color: map.get($colores, font-dark-background-color);
+
+.franchise-card-container {
+    height: 280px;
+}
+
+.franchise-card {
+    position: relative;
+    width: 100%;
+    height: 70%;
+    margin-bottom: 1.3rem;
+}
+
+.game-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    object-fit: cover;
+    @include offer-shadow;
+}
+
+/* Discount */
+
+.discount-and-store-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: absolute;
+    background-color: map.get($colores, discount-color);
+    padding: .3rem;
+    width: 90px;
+    height: 40px;
+    bottom: -10px;
+    left: -10px;
+    z-index: 3;
+}
+
+.discount {
+    color: $main-font-color;
+    font-weight: 500;
+    font-family: var(--font-gontSerrat);
+    font-size: 1.1rem;
+}
+
+.store {
+    width: 30px;
+    height: 30px;
+}
+
+/* Game Info */
+
+.game-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: $main-font-color;
+    width: 100%;
+    height: 30%;
+}
+
+.info h3 {
+    font-size: 1.1rem;
+    margin-bottom: .3rem;
+}
+
+.released-time {
+    font-size: .9rem;
+    font-family: $seconday-font-style;
+    opacity: .8;
+}
+
+.price {
+    font-size: 1.4rem;
+    font-weight: 600;
+    font-family: $primary-font-style;
+}
+
+
+
+

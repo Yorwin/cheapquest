@@ -7,6 +7,7 @@ import MetaCritic from "@/components/general/metacritic";
 import GameInfo from "@/components/general/game-info";
 import GameTags from "@/components/pages/game-page/game-tags";
 import OfficialStoreList from "@/components/pages/game-page/official-store-list";
+import FranchiseGames from "@/components/pages/game-page/franchise-games";
 
 interface ParamsGame {
     params: {
@@ -35,6 +36,7 @@ const GamePage = ({ params }: ParamsGame) => {
                 </div>
                 <GameTags />
                 <OfficialStoreList />
+                <FranchiseGames />
             </div>
         </article>
     )

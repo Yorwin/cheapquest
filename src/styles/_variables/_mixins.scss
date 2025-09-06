@@ -166,3 +166,25 @@ $lines-color: map.get($colores, dark-background-color);
     border-bottom: .4rem solid $lines-color;
     margin-bottom: 1rem;
 }
+
+/* See more offers style */
+
+$main-font-color: map.get($colores, font-dark-background-color);
+
+@mixin seeAllOffers {
+    .button-see-offers {
+        text-align: center;
+        background-color: map.get($colores, primary-color);
+        border: none;
+        border-radius: 2rem;
+        color: $main-font-color;
+        font-family: $primary-font-style;
+        font-weight: 600;
+        height: 50px;
+        width: 25%;
+
+        &:hover {
+            text-decoration: underline .1rem #fff;
+        }
+    }
+}
