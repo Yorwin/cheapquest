@@ -6,9 +6,9 @@ import useWindowWidth from "@/functions/hooks/useWindowWidth";
 import SkeletonLoader from "@/components/general/skelettonLoader";
 
 /* Responsive Elements */
-import IsDesktop from "./responsive-elements/IsDekstop";
-import IsTablet from "./responsive-elements/IsTablet";
-import IsMobile from "./responsive-elements/IsMobile";
+import IsDesktop from "@/components/general/list-card/responsive-elements/IsDekstop";
+import IsTablet from "@/components/general/list-card/responsive-elements/IsTablet";
+import IsMobile from "@/components/general/list-card/responsive-elements/IsMobile";
 
 interface ContentDistributionType {
     offersByPercentage: listFormatOfferProps[];

@@ -1,5 +1,8 @@
 import React from "react";
 import styles from "@/styles/layout/gamepage/gamepage-general-styles.module.scss"
+
+/* Page Sections */
+
 import Presentation from "@/components/pages/game-page/presentation"
 import GameImagesVideos from "@/components/pages/game-page/game-images-videos"
 import AboutTheGame from "@/components/general/about-this-game/about-this-game";
@@ -8,6 +11,7 @@ import GameInfo from "@/components/general/game-info";
 import GameTags from "@/components/pages/game-page/game-tags";
 import OfficialStoreList from "@/components/pages/game-page/official-store-list";
 import FranchiseGames from "@/components/pages/game-page/franchise-games";
+import RelatedOffers from "@/components/pages/game-page/related-offers/related-offers";
 
 interface ParamsGame {
     params: {
@@ -27,6 +31,7 @@ const GamePage = ({ params }: ParamsGame) => {
                     <div className="row">
                         <div className="col-7 p-0">
                             <AboutTheGame />
+                            <GameTags />
                         </div>
                         <div className="col-5 p-0">
                             <MetaCritic />
@@ -34,9 +39,9 @@ const GamePage = ({ params }: ParamsGame) => {
                         </div>
                     </div>
                 </div>
-                <GameTags />
                 <OfficialStoreList />
                 <FranchiseGames />
+                <RelatedOffers />
             </div>
         </article>
     )

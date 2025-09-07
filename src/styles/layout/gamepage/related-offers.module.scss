@@ -2,18 +2,7 @@
 @use '../../_variables/variables' as *;
 @use 'sass:map';
 
-.franchise-container {
-    width: 100%;
-    margin-bottom: 2.5rem
-}
-
 .title {
     @include mainTitleGamePage;
     margin-bottom: 2rem;
 }
-
-.franchise-cards-container {
-    width: 100%;
-}
-
-@include seeAllOffers;

@@ -158,7 +158,7 @@ export interface VerticalCardWrapperType {
     discount: string,
     oldPrice: string,
     currentPrice: string,
-    webOffer: StaticImageData | string,
+    webOffer: StaticImageData,
 }
 
 export interface VerticalCardContainerType {
@@ -208,7 +208,7 @@ export interface gameOfferInfo {
 }
 
 export interface GameStandardContainerType {
-    gameImage: StaticImageData,
+    gameImage: StaticImageData | string,
     title: string,
     platform: StaticImageData | string,
     discount: string,
