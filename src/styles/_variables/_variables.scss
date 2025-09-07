@@ -41,3 +41,11 @@ $footer-info-font-size-xl: 0.8rem;
 
 $footer-subtitle-lg: .9rem;
 $footer-info-font-size-lg: .7rem;
+
+/* Game Page */
+
+$game-page-padding-x-axis: clamp(.7rem, 5vw, 7rem);
+
+/* Game Cards Styles */
+$offerimage-and-gameimage-width: 45%;
+$offerimage-and-gameimage-height: clamp(250px, 35vw, 325px);

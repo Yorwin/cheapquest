@@ -20,8 +20,8 @@ $current-price-shadow: 1px 0 #000,
     align-items: center;
     justify-content: space-around;
     flex-direction: column;
-    width: 400px;
-    height: 250px;
+    width: $offerimage-and-gameimage-width;
+    height: $offerimage-and-gameimage-height;
     background-color: $background-color;
     border-radius: 1rem;
     padding: 1rem;

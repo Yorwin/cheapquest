@@ -10,17 +10,13 @@ $font-main-color: map.get($colores, font-dark-background-color);
 }
 
 .title {
-    text-transform: uppercase;
-    color: $font-main-color;
-    font-family: var(--font-gontSerrat);
-    font-weight: 700;
-    font-size: 1.4rem;
+    @include mainTitleGamePage;
 }
 
 .game-trailer-container {
     width: 100%;
     height: 400px;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .game-trailer {
@@ -30,21 +26,54 @@ $font-main-color: map.get($colores, font-dark-background-color);
 
 .main-images-container {
     display: flex;
-    gap: 1rem;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0rem;
     margin-bottom: 1rem;
+
+    .image-container {
+        position: relative;
+        width: 49%;
+        height: 250px;
+    }
 }
 
 .rest-images-container {
     display: flex;
-    gap: 1rem;
-}
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0rem;
 
-.image-container {
-    position: relative;
-    width: 100%;
-    height: 200px;
+    .image-container {
+        position: relative;
+        width: 23%;
+        height: 200px;
+    }
 }
 
 .image {
     object-fit: cover;
+}
+
+@media (max-width: 768px) {
+
+    /* primera imagen */
+    .rest-images-container .image-container:first-child {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    /* última imagen */
+    .rest-images-container .image-container:last-child {
+        width: 100%;
+    }
+
+    /* Resto de imagenes */
+
+    .rest-images-container .image-container {
+        width: 49%;
+        margin-bottom: 1rem;
+    }
 }

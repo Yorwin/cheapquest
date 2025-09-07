@@ -141,6 +141,8 @@
     font-family: var(--font-timeless);
 }
 
+/* Game Page */
+
 /* Title Reviews - MetaCritic */
 
 $main-font: var(--font-gontSerrat);
@@ -150,21 +152,22 @@ $lines-color: map.get($colores, dark-background-color);
 
 @mixin mainTitleGamePage {
     text-transform: uppercase;
-    font-size: 1.2rem;
+    font-size: clamp(.8rem, .4rem + 1vw, 1.3rem);
     font-weight: 700;
     font-family: $main-font;
     color: $font-main-color;
+    margin-bottom: clamp(.7rem, .5rem + 1vw, 1.7rem);
 }
 
 @mixin secondaryTitleGamePage {
     font-family: $main-font;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: clamp(.8rem, .4rem + 1vw, 1.3rem);
     text-transform: uppercase;
     color: $font-main-color;
     padding-bottom: .2rem;
     border-bottom: .4rem solid $lines-color;
-    margin-bottom: 1rem;
+    margin-bottom: clamp(.7rem, .5rem + 1vw, 1.7rem);
 }
 
 /* See more offers style */

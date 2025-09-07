@@ -6,9 +6,13 @@ $background-color: map.get($colores, dark-background-color);
 
 .image-card {
     position: relative;
-    width: 400px;
-    height: 250px;
+    width: $offerimage-and-gameimage-width;
+    height: $offerimage-and-gameimage-height;
     border-radius: 1rem;
     background-color: $background-color;
     overflow: hidden;
+}
+
+.image-item {
+    object-fit: cover;
 }

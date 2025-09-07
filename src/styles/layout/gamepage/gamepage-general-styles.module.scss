@@ -1,3 +1,7 @@
+@use '../../_variables/mixins' as *;
+@use '../../_variables/variables' as *;
+@use 'sass:map';
+
 .game-info-container {
-    padding: 2rem 5rem;
+    padding: 3rem $game-page-padding-x-axis;
 }

@@ -1,8 +1,8 @@
 .game-image-container {
     position: relative;
     width: 100%;
-    min-height: 35vh;
-    margin-bottom: 10rem;
+    min-height: 45vh;
+    margin-bottom: clamp(7rem, 5rem + 8vw, 12rem);
 }
 
 .game-image {
@@ -13,4 +13,22 @@
 
     /* Rampa invertida y menos inclinada */
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 97%);
+}
+
+@media screen and (max-width: 1200px) {
+    .game-image-container {
+        min-height: 40vh;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .game-image-container {
+        min-height: 30vh;
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .game-image-container {
+        min-height: 25vh;
+    }
 }

@@ -1,7 +1,18 @@
+@use '../../_variables/mixins' as *;
+@use '../../_variables/variables' as *;
+@use 'sass:map';
+
 .cards-container {
     position: absolute;
     display: flex;
-    justify-content: space-around;
-    bottom: -100px;
+    justify-content: space-between;
+    bottom: -160px;
     width: 100%;
+    padding: 0rem $game-page-padding-x-axis;
+}
+
+@media screen and (max-width: 768px) {
+    .cards-container {
+        bottom: -140px;
+    }
 }
