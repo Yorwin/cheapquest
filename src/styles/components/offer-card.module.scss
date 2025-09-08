@@ -31,14 +31,14 @@ $current-price-shadow: 1px 0 #000,
         text-align: center;
         color: $font-color;
         font-family: $primary-font-style;
-        font-size: 1.2rem;
+        font-size: clamp(.8rem, .4rem + 2vw, 1.5rem);
         font-weight: 700;
     }
 }
 
 .image {
-    width: 35px;
-    height: 35px;
+    width: 55px;
+    height: 55px;
 }
 
 .offer-info-container {
@@ -61,6 +61,7 @@ $current-price-shadow: 1px 0 #000,
         align-items: center;
         flex-direction: column;
         font-family: var(--font-timeless);
+        font-size: clamp(1rem, .4rem + 2vw, 1.5rem);
         gap: .5rem;
     }
 }
@@ -69,7 +70,7 @@ $current-price-shadow: 1px 0 #000,
 
 .prices {
     text-align: center;
-    line-height: 1.5rem;
+    line-height: 1.9rem;
 }
 
 .old-discount-container {
@@ -81,37 +82,100 @@ $current-price-shadow: 1px 0 #000,
 
 .old-price {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: $offer-oldprice-discount-font-size;
     font-family: $primary-font-style;
-    color: #000;
+    color: #fff;
     text-decoration: line-through 3px;
 }
 
 .discount {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: $offer-oldprice-discount-font-size;
     font-family: $primary-font-style;
     color: red;
 }
 
 .current-price {
-    @include current-price-style(1.5rem, 600, .1rem, 0rem, $primary-font-style);
+    @include current-price-style(clamp(1rem, .5rem + 2vw, 1.8rem), 600, .1rem, 0rem, $primary-font-style);
     text-shadow: $current-price-shadow;
 }
 
 /* Button */
 
 .offer-button {
-    width: 45%;
+    width: 50%;
     padding: 0.4rem;
     background-color: $background-color-button;
     color: $font-color;
     font-weight: 600;
     font-family: $primary-font-style;
+    font-size: clamp(.8rem, 2vw, 1.3rem);
     border: none;
     border-radius: 2rem;
 
     &:hover {
         text-decoration: underline 0.1rem #fff;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .image {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .prices {
+        line-height: 1.7rem;
+    }
+
+    .offer-button {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .image {
+        width: 45px;
+        height: 45px;
+    }
+
+    .prices {
+        line-height: 1.6rem;
+    }
+
+    .offer-button {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .image {
+        width: 40px;
+        height: 40px;
+    }
+
+    .prices {
+        line-height: 1.5rem;
+    }
+
+    .offer-button {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .image {
+        width: 35px;
+        height: 35px;
+    }
+
+    .prices {
+        line-height: 1.2rem;
+    }
+
+    .offer-button {
+        width: 90%;
     }
 }
