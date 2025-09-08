@@ -16,15 +16,18 @@ $secondary-font: var(--font-timeless);
 
 .table {
     color: $font-main-color;
-    font-family: $secondary-font;   
+    font-family: $secondary-font;
+    font-size: clamp(.8rem, .6rem + 1vw, 1.2rem);
 }
 
 .table th {
+    font-weight: 600;
     border-right: .4rem solid $lines-color;
     padding: 8px 8px 8px 0px;
     text-align: left;
 }
 
 .table td {
+    font-weight: 500;
     padding: 8px;
 }

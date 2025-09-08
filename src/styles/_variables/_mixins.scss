@@ -170,6 +170,14 @@ $lines-color: map.get($colores, dark-background-color);
     margin-bottom: clamp(.7rem, .5rem + 1vw, 1.7rem);
 }
 
+/* Game Image and Videos Section */
+
+@mixin game-content-shadow {
+    box-shadow: 0px 16px 42px -18px rgba(0, 0, 0, 0.60);
+    -webkit-box-shadow: 0px 16px 42px -18px rgba(0, 0, 0, 0.60);
+    -moz-box-shadow: 0px 16px 42px -18px rgba(0, 0, 0, 0.60);
+}
+
 /* See more offers style */
 
 $main-font-color: map.get($colores, font-dark-background-color);

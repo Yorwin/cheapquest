@@ -50,8 +50,14 @@ $main-font-color: map.get($colores, font-dark-background-color);
     padding: 1.7rem 2rem 1.7rem .7rem;
 }
 
+.offer-info-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
 .offer-info-container h3 {
-    font-size: 1.2rem;
+    font-size: clamp(.8rem, .5rem + 1vw, 1.4rem);
     font-family: $primary-font-style;
     font-weight: 600;
     color: $main-font-color;
@@ -60,8 +66,9 @@ $main-font-color: map.get($colores, font-dark-background-color);
 .offer-specs {
     display: flex;
     gap: .7rem;
+    white-space: nowrap;
     font-family: $seconday-font-style;
-    font-size: .9rem;
+    font-size: clamp(.7rem, .4rem + 1vw, 1.2rem);
     color: $main-font-color;
 }
 
@@ -95,6 +102,7 @@ $main-font-color: map.get($colores, font-dark-background-color);
     height: 100%;
     padding: .4rem;
     font-weight: 600;
+    font-size: clamp(.6rem, .5rem + 1vw, 1rem);
 }
 
 .prices {
@@ -104,10 +112,12 @@ $main-font-color: map.get($colores, font-dark-background-color);
 }
 
 .old-price {
+    font-size: clamp(.6rem, .4rem + 1vw, 1rem);
     color: map.get($colores, secondary-color);
 }
 
 .new-price {
+    font-size: clamp(.6rem, .4rem + 1vw, 1rem);
     color: map.get($colores, color-price);
 }
 
@@ -116,6 +126,7 @@ $main-font-color: map.get($colores, font-dark-background-color);
     padding: 0rem 1rem;
     font-family: $primary-font-style;
     font-weight: 600;
+    font-size: clamp(.7rem, .4rem + 1vw, 1.2rem);
     background-color: map.get($colores, complementary-color);
     color: $main-font-color;
     border: none;
@@ -127,3 +138,52 @@ $main-font-color: map.get($colores, font-dark-background-color);
 }
 
 @include seeAllOffers;
+
+@media screen and (max-width: 768px) {
+    .offer-data {
+        padding: 1.7rem .6rem 1.7rem .4rem;
+    }
+}
+
+@media screen and (max-width: 568px) {
+
+    /* Image Container */
+
+    .image-container {
+        width: 15%;
+    }
+
+    .image {
+        width: 35px;
+        height: 35px;
+        object-fit: cover;
+    }
+
+    /* Main Container */
+
+    .offer-info-container {
+        line-height: .8rem;
+    }
+
+    .offer-specs {
+        gap: .5rem;
+    }
+
+    .price-and-cta-container {
+        gap: .3rem;
+    }
+
+    .prices-container {
+        gap: 0.3rem;
+    }
+
+    .discount {
+        padding: .1rem;
+    }
+
+    .action-button {
+        width: 60px;
+        white-space: normal;
+        padding: 0rem .4rem;
+    }
+}

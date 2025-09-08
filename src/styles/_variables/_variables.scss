@@ -53,3 +53,9 @@ $offerimage-and-gameimage-height: clamp(250px, 35vw, 325px);
 /* Offer Card */
 
 $offer-oldprice-discount-font-size: clamp(.7rem, .4rem + 2vw, 1.4rem);
+
+/* Videos and Images Container */
+
+$vertical-margin-video-images: 1rem;
+$game-images-width: calc(50% - .5rem);
+$border-radius-gamecontent: 1rem;

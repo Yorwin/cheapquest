@@ -28,6 +28,7 @@ $current-price-shadow: 1px 0 #000,
     overflow: hidden;
 
     h3 {
+        text-decoration: underline 0.1rem #fff;
         text-align: center;
         color: $font-color;
         font-family: $primary-font-style;

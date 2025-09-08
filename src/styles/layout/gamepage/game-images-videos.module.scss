@@ -20,8 +20,10 @@ $font-main-color: map.get($colores, font-dark-background-color);
 }
 
 .game-trailer {
+    border-radius: 1rem;
     width: 100%;
     height: 100%;
+    @include game-content-shadow;
 }
 
 .main-images-container {
@@ -34,7 +36,7 @@ $font-main-color: map.get($colores, font-dark-background-color);
 
     .image-container {
         position: relative;
-        width: 49%;
+        width: $game-images-width;
         height: 250px;
     }
 }
@@ -48,12 +50,14 @@ $font-main-color: map.get($colores, font-dark-background-color);
 
     .image-container {
         position: relative;
-        width: 23%;
+        width: calc(25% - .5rem);
         height: 200px;
     }
 }
 
 .image {
+    @include game-content-shadow;
+    border-radius: $border-radius-gamecontent;
     object-fit: cover;
 }
 
@@ -62,7 +66,7 @@ $font-main-color: map.get($colores, font-dark-background-color);
     /* primera imagen */
     .rest-images-container .image-container:first-child {
         width: 100%;
-        margin-bottom: 1rem;
+        margin-bottom: $vertical-margin-video-images;
     }
 
     /* última imagen */
@@ -73,7 +77,7 @@ $font-main-color: map.get($colores, font-dark-background-color);
     /* Resto de imagenes */
 
     .rest-images-container .image-container {
-        width: 49%;
-        margin-bottom: 1rem;
+        width: $game-images-width;
+        margin-bottom: $vertical-margin-video-images;
     }
 }

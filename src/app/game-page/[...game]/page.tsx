@@ -29,11 +29,11 @@ const GamePage = ({ params }: ParamsGame) => {
                 <GameImagesVideos />
                 <div className="container-fluid mb-5">
                     <div className="row">
-                        <div className="col-7 p-0">
+                        <div className="col-md-7 col-sm-12 p-0">
                             <AboutTheGame />
                             <GameTags />
                         </div>
-                        <div className="col-5 p-0">
+                        <div className="col-md-5 col-sm-12 p-0">
                             <MetaCritic />
                             <GameInfo />
                         </div>

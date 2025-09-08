@@ -27,7 +27,7 @@ $bad-critic: #FE392B;
     gap: .6rem;
 
     .points {
-        font-size: 1.2rem;
+        font-size: clamp(1rem, .5rem + 1vw, 1.5rem);
         font-family: $main-font;
         font-weight: 500;
         padding: .6rem;
@@ -44,8 +44,34 @@ $bad-critic: #FE392B;
 
     .text {
         font-family: var(--font-timeless);
-        font-size: 1.3rem;
+        font-size: clamp(1rem, .5rem + 1vw, 1.3rem);
         font-weight: 600;
         color: $font-main-color;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .rating {
+        .points {
+            padding: .5rem .6rem;
+        }
+    }
+
+    .text-container {
+        line-height: 1.1rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .rating {
+        .points {
+            padding: .3rem .5rem;
+        }
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .text-container {
+        line-height: 1.2rem;
     }
 }
