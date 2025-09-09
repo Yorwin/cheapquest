@@ -5,6 +5,10 @@
 $font-main-color: map.get($colores, font-dark-background-color);
 $button-font-color: map.get($colores, secondary-color);
 
+.hidden-text {
+    display: none;
+}
+
 .about-the-game-container {
     color: $font-main-color;
     width: 85%;
@@ -15,18 +19,24 @@ $button-font-color: map.get($colores, secondary-color);
     }
 
     p {
+        font-size: clamp(.7rem, 0.6rem + 1vw, 1.2rem);
         font-family: var(--font-timeless);
-        margin-bottom: .5rem;
+        margin-bottom: .2rem;
     }
 }
 
 .read-more-button {
     font-family: var(--font-timeless);
-    font-size: 1.1rem;
+    font-size: clamp(.7rem, 0.6rem + 1vw, 1.2rem);
     font-weight: 700;
     color: $button-font-color;
     text-decoration: underline 0.1rem solid $button-font-color;
     background-color: transparent;
     border: none;
     padding: 0rem;
+
+    &:hover {
+        text-decoration: underline 0.1rem solid $font-main-color;
+        color: $font-main-color;
+    }
 }

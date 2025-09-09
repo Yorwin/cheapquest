@@ -182,7 +182,7 @@ $lines-color: map.get($colores, dark-background-color);
 
 $main-font-color: map.get($colores, font-dark-background-color);
 
-@mixin seeAllOffers {
+@mixin seeAllOffers($button-width) {
     .button-see-offers {
         text-align: center;
         background-color: map.get($colores, primary-color);
@@ -191,8 +191,9 @@ $main-font-color: map.get($colores, font-dark-background-color);
         color: $main-font-color;
         font-family: $primary-font-style;
         font-weight: 600;
+        font-size: clamp(.7rem, .6rem + 1vw, 1rem);
         height: 50px;
-        width: 25%;
+        width: $button-width;
 
         &:hover {
             text-decoration: underline .1rem #fff;

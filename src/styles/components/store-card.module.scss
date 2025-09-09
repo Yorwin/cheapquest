@@ -12,6 +12,10 @@ $main-font-color: map.get($colores, font-dark-background-color);
     width: 100%;
 }
 
+.hidden-store-card {
+    display: none;
+}
+
 .store-card-container {
     display: flex;
     align-items: center;
@@ -137,12 +141,22 @@ $main-font-color: map.get($colores, font-dark-background-color);
     }
 }
 
-@include seeAllOffers;
+@include seeAllOffers(40%);
+
+@media screen and (max-width: 1200px) {
+    @include seeAllOffers(50%);
+}
+
+@media screen and (max-width: 992px) {
+    @include seeAllOffers(60%);
+}
 
 @media screen and (max-width: 768px) {
     .offer-data {
         padding: 1.7rem .6rem 1.7rem .4rem;
     }
+
+    @include seeAllOffers(70%);
 }
 
 @media screen and (max-width: 568px) {
@@ -186,4 +200,6 @@ $main-font-color: map.get($colores, font-dark-background-color);
         white-space: normal;
         padding: 0rem .4rem;
     }
+
+    @include seeAllOffers(80%);
 }

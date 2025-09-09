@@ -6,6 +6,7 @@ $main-font-color: map.get($colores, font-dark-background-color);
 
 .franchise-card-container {
     height: 280px;
+    width: 100%;
 }
 
 .franchise-card {
@@ -62,23 +63,36 @@ $main-font-color: map.get($colores, font-dark-background-color);
     height: 30%;
 }
 
+.info {
+    line-height: 0.8rem;
+}
+
 .info h3 {
-    font-size: 1.1rem;
+    font-size: clamp(.9rem, 0.8rem + 1vw, 1.3rem);
     margin-bottom: .3rem;
 }
 
 .released-time {
-    font-size: .9rem;
+    font-size: clamp(0.6rem, 0.5rem + 1vw, .8rem);
     font-family: $seconday-font-style;
     opacity: .8;
+    white-space: nowrap;
 }
 
 .price {
-    font-size: 1.4rem;
+    font-size: clamp(1rem, .8rem + 1vw, 1.4rem);
     font-weight: 600;
     font-family: $primary-font-style;
 }
 
+@media screen and (max-width: 768px) {
+    .info {
+        line-height: 0.9rem;
+    }
+}
 
-
-
+@media screen and (max-width: 568px) {
+    .info {
+        line-height: 0.7rem;
+    }
+}

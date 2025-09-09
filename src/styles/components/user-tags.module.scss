@@ -7,13 +7,17 @@ $button-background-color: map.get($colores, primary-color);
 
 $font-main-color: map.get($colores, font-dark-background-color);
 
+.hidden-tag {
+    display: none;
+}
+
 .user-tags-container {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
     gap: 8px;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     width: 80%;
 }
 
@@ -32,7 +36,7 @@ $font-main-color: map.get($colores, font-dark-background-color);
 
 .tag {
     font-family: var(--font-timeless);
-    font-size: .8rem;
+    font-size: clamp(.5rem, .3rem + 1.5vw, 1rem);
     color: $font-main-color;
     background-color: $tag-background-color;
     text-transform: uppercase;
@@ -42,7 +46,7 @@ $font-main-color: map.get($colores, font-dark-background-color);
 
 .button-tags {
     font-family: var(--font-timeless);
-    font-size: .8rem;
+    font-size: clamp(.5rem, .3rem + 1.5vw, 1rem);
     font-weight: 600;
     padding: .6rem .8rem;
     border-radius: 1rem;

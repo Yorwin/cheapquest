@@ -7,6 +7,10 @@
     margin-bottom: 2.5rem
 }
 
+.hidden-franchise-card {
+    display: none;
+}
+
 .title {
     @include mainTitleGamePage;
 }
@@ -15,4 +19,20 @@
     width: 100%;
 }
 
-@include seeAllOffers;
+@include seeAllOffers(40%);
+
+@media screen and (max-width: 1200px) {
+    @include seeAllOffers(50%);
+}
+
+@media screen and (max-width: 992px) {
+    @include seeAllOffers(60%);
+}
+
+@media screen and (max-width: 768px) {
+    @include seeAllOffers(70%);
+}
+
+@media screen and (max-width: 568px) {
+    @include seeAllOffers(80%);
+}
