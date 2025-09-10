@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Currency } from "@/types/types";
 import { getMostPopularGame } from "@/utils/getGamesInfo";
-import { getMostPopularGameOffer } from "@/utils/getOffers";
+/* import { getMostPopularGameOffer } from "@/utils/getOffers" */
 import currencyRateCalculator from "@/utils/convertCurrency";
 
 const MainOffer = async () => {
