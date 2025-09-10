@@ -9,19 +9,22 @@ import currencyRateCalculator from "@/utils/convertCurrency";
 
 const MainOffer = async () => {
     const getGame = await getMostPopularGame();
-    const getOffer = await getMostPopularGameOffer(getGame.game);
+
+    /* const getOffer = await getMostPopularGameOffer(getGame.game); 
+
+    console.log(getGame);
 
     const bestDeal = getOffer.deals.reduce((best: any, current: any) => {
         return parseFloat(current.price) < parseFloat(best.price) ? current : best;
-    });
+    }); */
 
-    const convertPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, bestDeal.price);
+    const convertPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(getGame.deal.salePrice));
     const resultPrice = (convertPrice).toFixed(2);
 
     const offerInfo = {
-        gameName: getOffer.info.title,
+        gameName: getGame.name,
         gameImage: getGame.backgroundImage,
-        discount: Math.floor(parseFloat(bestDeal.savings)) + '%',
+        discount: Math.floor(parseFloat(getGame.deal.savings)) + '%',
         currentPrice: resultPrice + "€",
     }
 

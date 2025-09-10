@@ -13,19 +13,6 @@ const Tags = ({ tags }: { tags: string[] }) => {
         setIsExtended((e) => !e);
     };
 
-    const generateTags = tags.map((e, index) => {
-        return (
-            <span
-                key={index}
-                className={styles["tag"]}
-            >
-                {e}
-            </span>
-        )
-    })
-
-    const notExtendedTags = generateTags.slice(0, 4);
-
     return <>
         <TagsItem tags={tags} extended={isExtended} />
         {shouldShowButton ? <button className={styles["button-tags"]} onClick={toggleIsExtended}>{isExtended ? <i className="bi bi-arrow-bar-left"></i> : "..."}</button> : null}

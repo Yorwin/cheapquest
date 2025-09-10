@@ -5,33 +5,75 @@ import { getGameInfo } from "./getGamesInfo";
 
 const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
+/* Delay */
+
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 /* GET MAIN OFFER */
 
-export const getMostPopularGameOffer = async (e: string) => {
+export const getMostPopularGameOffer = async (e: string, retries = 3) => {
+    for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
 
-    const responseGame = await fetch(`https://www.cheapshark.com/api/1.0/games?title=~${e}`, {
-        cache: "force-cache"
-    });
+            const responseGame = await fetch(`https://www.cheapshark.com/api/1.0/games?title=~${e}`, {
+                next: {
+                    revalidate: 1800,
+                    tags: ['main-game', 'main-game-search']
+                },
+            });
 
-    if (!responseGame.ok) {
-        throw new Error("Failed to fetch data");
+            if (!responseGame.ok) {
+                throw new Error(`HTTP ${responseGame.status}: ${responseGame.statusText}`);
+            }
+
+            const gameData = await responseGame.json();
+
+            if (gameData.length === 0) {
+                throw new Error(`No results found for game: "${e}"`);
+            }
+
+            const selectedGame = gameData[0].gameID;
+
+            const responseOffers = await fetch(`https://www.cheapshark.com/api/1.0/games?id=${selectedGame}`, {
+                next: {
+                    revalidate: 300, // 4 minutos
+                    tags: ['offers', 'live-prices', `offers-${selectedGame}`]
+                }
+            });
+
+            if (!responseOffers.ok) {
+                throw new Error(`HTTP ${responseOffers.status}: ${responseOffers.statusText}`);
+            }
+
+            const offersData = await responseOffers.json();
+
+            if (!offersData) {
+                throw new Error('Empty response from offers API');
+            }
+
+            return {
+                ...offersData,
+                // Metadata útil
+                _metadata: {
+                    fetchedAt: new Date().toISOString(),
+                    gameSearchTerm: e,
+                    selectedGame
+                }
+            };
+
+        } catch (error) {
+
+            console.error(`Attempt ${attempt} failed for "${e}":`, error);
+
+            if (attempt === retries) {
+                // Último intento fallido
+                const errorMessage = error instanceof Error ? error.message : String(error);
+                throw new Error(`Failed to fetch offers after ${retries} attempts: ${errorMessage}`);
+            }
+
+            await delay(Math.pow(2, attempt) * 1000);
+        }
     }
-
-    const data = await responseGame.json();
-    const selectedGame = data.slice(0, 1);
-    const selectedGameID = selectedGame[0].gameID;
-
-    const responseOffers = await fetch(`https://www.cheapshark.com/api/1.0/games?id=${selectedGameID}`, {
-        cache: 'force-cache'
-    });
-
-    if (!responseOffers.ok) {
-        throw new Error("Failed to fetch data");
-    }
-
-    const offersData = await responseOffers.json();
-
-    return offersData;
 };
 
 /* GET MOST POPULAR OFFERS */
@@ -88,7 +130,7 @@ export const getNewDeals = async () => {
 export const searchOffers = async (e: string) => {
 
     const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?title=${e}`, {
-        cache: "force-cache"
+        cache: "no-store"
     });
 
     if (!response.ok) {
