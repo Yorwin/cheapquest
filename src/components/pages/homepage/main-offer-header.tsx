@@ -28,6 +28,8 @@ const MainOffer = async () => {
         currentPrice: resultPrice + "€",
     }
 
+    console.log(offerInfo);
+
     return (
         <>
             <article className={styles["main-offer-container"]}>

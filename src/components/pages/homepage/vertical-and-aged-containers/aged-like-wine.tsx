@@ -7,7 +7,6 @@ import { GameDealWithoutScore, StoreLogo } from "@/types/types";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
 import { getGameInfo } from "@/utils/getGamesInfo";
-import VerticalGameCardWrapper from "@/components/general/vertical-card/vertical-game-container-wrapper";
 import ErrorGameStandard, { inCaseOfError } from "@/components/general/error-loading-offers-fallback-container";
 import ContentDistributionManager from "./content-distribution-manager";
 

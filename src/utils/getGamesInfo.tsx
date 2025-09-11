@@ -8,12 +8,12 @@ const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
 /* GET MAIN GAME */
 
-export const getMostPopularGame = async (retries = 3) => {
-
+export const getMostPopularGame = async (retries = 3 )  => {
     const wantedMetacritic = "80,100"
     const url = `https://api.rawg.io/api/games?key=${API_KEY}&metacritic=${wantedMetacritic}&ordering=-metacritic&dates=${getThreeYearsDateRange()}&page_size=40`
 
-    for (let attempt = 1; attempt <= retries; attempt++) {
+    for (let attempt = 0; attempt < retries; attempt++) {
+
         try {
 
             /* Get Game Info */
@@ -40,23 +40,23 @@ export const getMostPopularGame = async (retries = 3) => {
                     score: calculatePopularityScore(e),
                 };
 
-                const search = await searchOffers(e.name);
-
+                const search = await searchOffers(gameInfo.name);
+                
                 const bestDeal = search.length > 0
                     ? search.reduce((max: GameDealWithoutScore, deal: GameDealWithoutScore) =>
                         parseFloat(deal.savings) > parseFloat(max.savings) ? deal : max
                     )
                     : null;
 
-                gamesWithDeals.push({
-                    ...gameInfo,
-                    deal: bestDeal
-                });
+                if (bestDeal) {
+                    gamesWithDeals.push({
+                        ...gameInfo,
+                        deal: bestDeal
+                    });
+                }
             }
 
-            const gamesWithValidDeals: bestOfferType[] = gamesWithDeals.filter(g => g.deal);
-
-            const bestGameDeal = gamesWithValidDeals.reduce((max: bestOfferType, game: bestOfferType) => {
+            const bestGameDeal = gamesWithDeals.reduce((max: bestOfferType, game: bestOfferType) => {
                 const current = parseFloat(game.deal.savings || "0");
                 const maxSavings = parseFloat(max.deal.savings || "0");
                 return current > maxSavings ? game : max;
@@ -65,13 +65,22 @@ export const getMostPopularGame = async (retries = 3) => {
             return bestGameDeal;
 
         } catch (error) {
-            console.error(`Attempt ${attempt} failed fetching best games info:`, error)
-            await delay(Math.pow(2, attempt) * 1000);
+            console.error("Se ha producido un error al intentar obtener el MainOffer" + error);
+
+            if (attempt === retries - 1) {
+                // Último intento fallido, devolver array vacío en lugar de fallar
+                console.error(`All attempts failed for game, returning empty array`);
+            }
+
+            // Espera exponencial
+            await new Promise(resolve =>
+                setTimeout(resolve, Math.pow(2, attempt) * 1000)
+            );
+            
         }
     }
+}
 
-    throw new Error('Unexpected end of function');
-};
 
 /* GET SPECIFIC GAME */
 

@@ -9,73 +9,6 @@ const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-/* GET MAIN OFFER */
-
-export const getMostPopularGameOffer = async (e: string, retries = 3) => {
-    for (let attempt = 1; attempt <= retries; attempt++) {
-        try {
-
-            const responseGame = await fetch(`https://www.cheapshark.com/api/1.0/games?title=~${e}`, {
-                next: {
-                    revalidate: 1800,
-                    tags: ['main-game', 'main-game-search']
-                },
-            });
-
-            if (!responseGame.ok) {
-                throw new Error(`HTTP ${responseGame.status}: ${responseGame.statusText}`);
-            }
-
-            const gameData = await responseGame.json();
-
-            if (gameData.length === 0) {
-                throw new Error(`No results found for game: "${e}"`);
-            }
-
-            const selectedGame = gameData[0].gameID;
-
-            const responseOffers = await fetch(`https://www.cheapshark.com/api/1.0/games?id=${selectedGame}`, {
-                next: {
-                    revalidate: 300, // 4 minutos
-                    tags: ['offers', 'live-prices', `offers-${selectedGame}`]
-                }
-            });
-
-            if (!responseOffers.ok) {
-                throw new Error(`HTTP ${responseOffers.status}: ${responseOffers.statusText}`);
-            }
-
-            const offersData = await responseOffers.json();
-
-            if (!offersData) {
-                throw new Error('Empty response from offers API');
-            }
-
-            return {
-                ...offersData,
-                // Metadata útil
-                _metadata: {
-                    fetchedAt: new Date().toISOString(),
-                    gameSearchTerm: e,
-                    selectedGame
-                }
-            };
-
-        } catch (error) {
-
-            console.error(`Attempt ${attempt} failed for "${e}":`, error);
-
-            if (attempt === retries) {
-                // Último intento fallido
-                const errorMessage = error instanceof Error ? error.message : String(error);
-                throw new Error(`Failed to fetch offers after ${retries} attempts: ${errorMessage}`);
-            }
-
-            await delay(Math.pow(2, attempt) * 1000);
-        }
-    }
-};
-
 /* GET MOST POPULAR OFFERS */
 
 export const getMostPopularOffers = async () => {
@@ -128,18 +61,33 @@ export const getNewDeals = async () => {
 /* GET SPECIFIC OFFERS */
 
 export const searchOffers = async (e: string) => {
+    try {
+        const cleanGameName = e.toLowerCase().replace(/[^a-z0-9]/g, '-');
 
-    const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?title=${e}`, {
-        cache: "no-store"
-    });
+        const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?title=${e}`, {
+            next: {
+                revalidate: 1800, // 30 minutos (más frecuente que el juego principal)
+                tags: ['game-deals',
+                    `deal-${cleanGameName}`,
+                    'cheapshark-api'],
+            }
+        });
 
-    if (!response.ok) {
-        throw new Error("Error when trying to search for a deal for this game");
+        if (!response.ok) {
+            if (response.status === 429) {
+                throw new Error('Rate limited by CheapShark API');
+            }
+
+            throw new Error(`CheapShark API Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data || []
+    } catch (error) {
+        console.error(`Error searching deals for "${e}":`, error);
+        return []; // Devolver array vacío en lugar de undefined
     }
 
-    const data = await response.json();
-
-    return data
 };
 
 /* GET AGED LIKE WINE GAMES */
