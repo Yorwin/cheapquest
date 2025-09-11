@@ -4,56 +4,59 @@ import Image from "next/image";
 import Link from "next/link";
 import { Currency } from "@/types/types";
 import { getMostPopularGame } from "@/utils/getGamesInfo";
-/* import { getMostPopularGameOffer } from "@/utils/getOffers" */
 import currencyRateCalculator from "@/utils/convertCurrency";
+import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
 
 const MainOffer = async () => {
-    const getGame = await getMostPopularGame();
+    try {
+        const getGame = await getMostPopularGame();
 
-    /* const getOffer = await getMostPopularGameOffer(getGame.game); 
+        if (!getGame || Array.isArray(getGame) || !getGame.name || !getGame.deal) {
+            throw new Error("Datos del juego inválidos o incompletos");
+        }
 
-    console.log(getGame);
+        const convertPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(getGame.deal.salePrice));
+        const resultPrice = (convertPrice).toFixed(2);
 
-    const bestDeal = getOffer.deals.reduce((best: any, current: any) => {
-        return parseFloat(current.price) < parseFloat(best.price) ? current : best;
-    }); */
+        const offerInfo = {
+            gameName: getGame.name,
+            gameImage: getGame.backgroundImage,
+            discount: Math.floor(parseFloat(getGame.deal.savings)) + '%',
+            currentPrice: resultPrice + "€",
+        }
 
-    const convertPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(getGame.deal.salePrice));
-    const resultPrice = (convertPrice).toFixed(2);
-
-    const offerInfo = {
-        gameName: getGame.name,
-        gameImage: getGame.backgroundImage,
-        discount: Math.floor(parseFloat(getGame.deal.savings)) + '%',
-        currentPrice: resultPrice + "€",
-    }
-
-    console.log(offerInfo);
-
-    return (
-        <>
-            <article className={styles["main-offer-container"]}>
-                <Link href="/producto/black-ops-6" className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
-                <Image
-                    src={offerInfo.gameImage}
-                    alt="Mejor oferta y más popular del momento"
-                    className={styles["main-header-image"]}
-                    width={1920}
-                    height={1080}
-                    sizes="100vw"
-                    priority
-                />
-                <div className={styles["overlay"]}></div>
-                <section className={styles["offer"]}>
-                    <h1 className={styles["offer-title"]}>{offerInfo.gameName}</h1>
-                    <div className={styles["price-container"]}>
-                        <span className={styles["discount"]}>{offerInfo.discount}</span>
-                        <span className={styles["current-price"]}>{offerInfo.currentPrice}</span>
-                    </div>
-                </section>
-            </article>
+        return (
+            <>
+                <article className={styles["main-offer-container"]}>
+                    <Link href="/producto/black-ops-6" className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
+                    <Image
+                        src={offerInfo.gameImage}
+                        alt="Mejor oferta y más popular del momento"
+                        className={styles["main-header-image"]}
+                        width={1920}
+                        height={1080}
+                        sizes="100vw"
+                        priority
+                    />
+                    <div className={styles["overlay"]}></div>
+                    <section className={styles["offer"]}>
+                        <h1 className={styles["offer-title"]}>{offerInfo.gameName}</h1>
+                        <div className={styles["price-container"]}>
+                            <span className={styles["discount"]}>{offerInfo.discount}</span>
+                            <span className={styles["current-price"]}>{offerInfo.currentPrice}</span>
+                        </div>
+                    </section>
+                </article>
+            </>
+        )
+    } catch (error) {
+        console.error("Error al intentar cargar la MainOffer");
+        return <>
+            <section className={styles["new-offers-main-container"]}>
+                <ErrorGameStandard />
+            </section>
         </>
-    )
+    }
 }
 
 export default MainOffer;
