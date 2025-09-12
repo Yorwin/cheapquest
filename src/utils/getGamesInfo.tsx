@@ -3,7 +3,6 @@ import { getThreeYearsDateRange, calculatePopularityScore } from "@/functions/fu
 import { searchOffers } from "./getOffers";
 import { bestOfferType, GameDealWithoutScore } from "@/types/types";
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
 /* GET MAIN GAME */
@@ -76,7 +75,6 @@ export const getMostPopularGame = async (retries = 3 )  => {
             await new Promise(resolve =>
                 setTimeout(resolve, Math.pow(2, attempt) * 1000)
             );
-            
         }
     }
 }

@@ -10,13 +10,15 @@ import Categories from "@/components/pages/homepage/categories/categories";
 
 const HomePage = async () => {
   return <>
-    <MainOffer /> 
+    <MainOffer />
     <MostPopularOffer />
+    {/* 
     <NewOffers />
     <AgedLikeWine />
     <ListFormatOffers />
     <Reviews />
     <Categories />
+    */}
   </>
 }
 

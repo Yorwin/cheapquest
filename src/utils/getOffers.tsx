@@ -11,32 +11,52 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 /* GET MOST POPULAR OFFERS */
 
-export const getMostPopularOffers = async () => {
-    const responseOffers = await fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=DealRating", {
-        cache: "force-cache"
-    });
+export const getMostPopularOffers = async (retries = 3) => {
 
-    if (!responseOffers.ok) {
-        throw new Error("Failed to fetch data");
-    }
+    for (let attempt = 0; attempt < retries; attempt++) {
+        try {
+            const responseOffers = await fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=DealRating", {
+                next: {
+                    revalidate: 3600,
+                    tags: ['most-popular-games-info', 'most-popular-games-search']
+                },
+            });
 
-    const response = await responseOffers.json();
+            if (!responseOffers.ok) {
+                throw new Error("Failed to fetch data");
+            }
 
-    const deduplicated: Record<string, GameDealWithoutScore> = {};
+            const response = await responseOffers.json();
 
-    response.forEach((e: GameDealWithoutScore) => {
-        const key = e.internalName;
-        const currentSavings = parseFloat(e.savings);
+            const deduplicated: Record<string, GameDealWithoutScore> = {};
 
-        if (!deduplicated[key] || currentSavings > parseFloat(deduplicated[key].savings)) {
-            deduplicated[key] = e;
+            response.forEach((e: GameDealWithoutScore) => {
+                const key = e.internalName;
+                const currentSavings = parseFloat(e.savings);
+
+                if (!deduplicated[key] || currentSavings > parseFloat(deduplicated[key].savings)) {
+                    deduplicated[key] = e;
+                }
+            })
+
+            const resultArray: GameDealWithoutScore[] = Object.values(deduplicated);
+            const getDeals = getTop11Deals(resultArray);
+
+            return getDeals;
+        } catch (error) {
+            console.error("Se ha producido un error al intentar obtener las ofertas más populares" + error);
+
+            if (attempt === retries - 1) {
+                // Último intento fallido, devolver array vacío en lugar de fallar
+                console.error(`All attempts failed for game, returning empty array`);
+            }
+
+            // Espera exponencial
+            await new Promise(resolve =>
+                setTimeout(resolve, Math.pow(2, attempt) * 1000)
+            );
         }
-    })
-
-    const resultArray: GameDealWithoutScore[] = Object.values(deduplicated);
-    const getDeals = getTop11Deals(resultArray);
-
-    return getDeals;
+    }
 };
 
 /* GET NEW DEALS */
