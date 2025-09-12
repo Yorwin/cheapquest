@@ -61,21 +61,42 @@ export const getMostPopularOffers = async (retries = 3) => {
 
 /* GET NEW DEALS */
 
-export const getNewDeals = async () => {
-    const response = await fetch("https://www.cheapshark.com/api/1.0/deals?maxAge=12&onSale=1&sortBy=DealRating", {
-        cache: "no-store"
-    })
+export const getNewDeals = async (retries = 3) => {
+    for (let attempt = 0; attempt < retries; attempt++) {
+        try {
+            const response = await fetch("https://www.cheapshark.com/api/1.0/deals?maxAge=12&onSale=1&sortBy=DealRating", {
+                next: {
+                    revalidate: 3600,
+                    tags: ["new-deals-info"]
+                }
+            })
 
-    if (!response.ok) {
-        throw new Error("Error when trying to fetch new offers");
+            console.log(response);
+
+            if (!response.ok) {
+                throw new Error("Error when trying to fetch new offers");
+            }
+
+            const data = await response.json();
+            const removeDuplicates = removeDuplicatesByBestPrice(data);
+
+            const newDeals: GameDealWithoutScore[] = removeDuplicates.slice(0, 10);
+
+            return newDeals;
+        } catch (error) {
+            console.error("Se ha producido un error al intentar obtener las nuevas ofertas" + error);
+
+            if (attempt === retries - 1) {
+                // Último intento fallido, devolver array vacío en lugar de fallar
+                console.error(`All attempts failed for game, returning empty array`);
+            }
+
+            // Espera exponencial
+            await new Promise(resolve =>
+                setTimeout(resolve, Math.pow(2, attempt) * 1000)
+            );
+        }
     }
-
-    const data = await response.json();
-    const removeDuplicates = removeDuplicatesByBestPrice(data);
-
-    const newDeals: GameDealWithoutScore[] = removeDuplicates.slice(0, 10);
-
-    return newDeals;
 };
 
 /* GET SPECIFIC OFFERS */

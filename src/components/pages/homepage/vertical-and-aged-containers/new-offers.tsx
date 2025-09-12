@@ -14,6 +14,10 @@ const NewOffers = async () => {
         const newDeals = await getNewDeals();
         const listOfStores = await searchForStore();
 
+        if(!newDeals) {
+            throw new Error("Se ha producido un error");
+        }
+
         const platforms = {
             PC: "bi bi-display",
             Xbox: "bi bi-xbox",
