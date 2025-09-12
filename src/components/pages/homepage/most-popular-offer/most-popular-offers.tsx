@@ -12,9 +12,13 @@ import ContentDistributionManager from "./content-distribution-manager";
 
 const MostPopularOffer = async () => {
     try {
-        const Offers: GameDeal[] = await getMostPopularOffers();
+        const Offers = await getMostPopularOffers();
         const listOfStores = await searchForStore();
         let maxIndex: number = 10;
+        
+        if(!Offers) {
+            throw new Error("Error al intentar cargar las ofertas más populares");
+        }
 
         const listInfo = [];
 

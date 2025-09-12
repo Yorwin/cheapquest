@@ -2,12 +2,14 @@ import "server-only";
 import { getThreeYearsDateRange, calculatePopularityScore } from "@/functions/functions";
 import { searchOffers } from "./getOffers";
 import { bestOfferType, GameDealWithoutScore } from "@/types/types";
+import searchForStore from "./seachForStore";
+import { storeLogos } from "@/resources/stores_icons"
 
 const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
 /* GET MAIN GAME */
 
-export const getMostPopularGame = async (retries = 3 )  => {
+export const getMostPopularGame = async (retries = 3) => {
     const wantedMetacritic = "80,100"
     const url = `https://api.rawg.io/api/games?key=${API_KEY}&metacritic=${wantedMetacritic}&ordering=-metacritic&dates=${getThreeYearsDateRange()}&page_size=40`
 
@@ -18,7 +20,7 @@ export const getMostPopularGame = async (retries = 3 )  => {
             /* Get Game Info */
             const res = await fetch(`${url}`, {
                 next: {
-                    revalidate: 3000,
+                    revalidate: 3600,
                     tags: ['main-game-info', 'main-game-search']
                 },
             });
@@ -40,7 +42,7 @@ export const getMostPopularGame = async (retries = 3 )  => {
                 };
 
                 const search = await searchOffers(gameInfo.name);
-                
+
                 const bestDeal = search.length > 0
                     ? search.reduce((max: GameDealWithoutScore, deal: GameDealWithoutScore) =>
                         parseFloat(deal.savings) > parseFloat(max.savings) ? deal : max
@@ -79,12 +81,9 @@ export const getMostPopularGame = async (retries = 3 )  => {
     }
 }
 
-
 /* GET SPECIFIC GAME */
 
 export const getGameInfo = async (e: string) => {
-
-    const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
     const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&search=${e}`, {
         cache: 'force-cache'
@@ -98,3 +97,108 @@ export const getGameInfo = async (e: string) => {
 
     return data;
 };
+
+/* GET GAME INFO FOR GAMEPAGE */
+
+export const getGameInfoGamePage = async (e: string) => {
+
+    const headerImage = await getHeaderImage(e);
+    const gameTrailer = await getGameTrailer(headerImage.id);
+    const gameOffers = await getGameOffers(e);
+
+    const data = {
+        gameTrailer: gameTrailer,
+        ...headerImage,
+        ...gameOffers,
+    }
+
+    return data;
+};
+
+export const getHeaderImage = async (e: string) => {
+
+    const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&search=${e}`)
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch data");
+    }
+
+    const data = await response.json();
+
+    const gameId = data.results[0].id;
+    const headerImage = data.results[0].background_image;
+    const screenshots = data.results[0].short_screenshots;
+
+    const images = {
+        id: gameId,
+        header: headerImage,
+        screenshots: screenshots,
+    }
+
+    return images;
+};
+
+export const getGameOffers = async (e: string) => {
+
+    const title = e.toUpperCase().replace(/-/g, "");
+    const gameOffers = await searchOffers(e);
+    const listOfStores = await searchForStore();
+
+    const filteredOffers = gameOffers.filter((offer: any) => {
+        return offer.internalName === title;
+    })
+
+    const bestDeal = filteredOffers.reduce((cheapest: any, current: any) => {
+        const cheapestPrice = Number(cheapest.salePrice);
+        const currentPrice = Number(current.salePrice);
+        return currentPrice < cheapestPrice ? current : cheapest;
+    });
+
+    const restOfTheOffers = filteredOffers.filter((e: any) => {
+        return e.dealID !== bestDeal.dealID;
+    })
+
+    const bestDealStore = listOfStores.find((e: any) => e.storeID === bestDeal.storeID);
+    const bealDealstoreImage = storeLogos.find((e: any) => e.name === bestDealStore.storeName);
+
+    const bestOfferData = {
+        discount: `${Number(bestDeal.savings).toFixed(0)}%`,
+        normalPrice: bestDeal.normalPrice,
+        currentPrice: bestDeal.salePrice,
+        store: bealDealstoreImage,
+    }
+
+    const restOfTheOffersData = restOfTheOffers.map((e: any) => {
+
+        const store = listOfStores.find((e: any) => e.storeID === bestDeal.storeID);
+        const storeImage = storeLogos.find((e: any) => e.name === store.storeName);
+
+        return {
+            discount: `${Number(e.savings).toFixed(0)}%`,
+            normalPrice: e.normalPrice,
+            currentPrice: e.salePrice,
+            store: storeImage,
+        }
+    })
+
+    const offers = {
+        bestOffer : bestOfferData,
+        restOfTheOffers : restOfTheOffersData,
+    }
+
+    return offers;
+};
+
+export const getGameTrailer = async (e: string) => {
+    const response = await fetch(`https://api.rawg.io/api/games/${e}/movies?key=${API_KEY}`)
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch data");
+    }
+
+    const data = await response.json();
+
+    const trailer = data.results[0];
+
+    return trailer;
+}

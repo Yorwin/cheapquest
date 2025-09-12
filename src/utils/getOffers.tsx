@@ -9,6 +9,37 @@ const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+/* GET SPECIFIC OFFERS */
+
+export const searchOffers = async (e: string) => {
+    try {
+        const cleanGameName = e.toLowerCase().replace(/[^a-z0-9]/g, '-');
+
+        const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?title=${e}`, {
+            next: {
+                revalidate: 1800, // 30 minutos (más frecuente que el juego principal)
+                tags: ['game-deals',
+                    `deal-${cleanGameName}`,
+                    'cheapshark-api'],
+            }
+        });
+
+        if (!response.ok) {
+            if (response.status === 429) {
+                throw new Error('Rate limited by CheapShark API');
+            }
+
+            throw new Error(`CheapShark API Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data || []
+    } catch (error) {
+        console.error(`Error searching deals for "${e}":`, error);
+        return []; // Devolver array vacío en lugar de undefined
+    }
+};
+
 /* GET MOST POPULAR OFFERS */
 
 export const getMostPopularOffers = async (retries = 3) => {
@@ -52,9 +83,7 @@ export const getMostPopularOffers = async (retries = 3) => {
             }
 
             // Espera exponencial
-            await new Promise(resolve =>
-                setTimeout(resolve, Math.pow(2, attempt) * 1000)
-            );
+            await delay(Math.pow(2, attempt) * 1000);
         }
     }
 };
@@ -70,8 +99,6 @@ export const getNewDeals = async (retries = 3) => {
                     tags: ["new-deals-info"]
                 }
             })
-
-            console.log(response);
 
             if (!response.ok) {
                 throw new Error("Error when trying to fetch new offers");
@@ -92,129 +119,114 @@ export const getNewDeals = async (retries = 3) => {
             }
 
             // Espera exponencial
-            await new Promise(resolve =>
-                setTimeout(resolve, Math.pow(2, attempt) * 1000)
-            );
+            await delay(Math.pow(2, attempt) * 1000);
         }
     }
-};
-
-/* GET SPECIFIC OFFERS */
-
-export const searchOffers = async (e: string) => {
-    try {
-        const cleanGameName = e.toLowerCase().replace(/[^a-z0-9]/g, '-');
-
-        const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?title=${e}`, {
-            next: {
-                revalidate: 1800, // 30 minutos (más frecuente que el juego principal)
-                tags: ['game-deals',
-                    `deal-${cleanGameName}`,
-                    'cheapshark-api'],
-            }
-        });
-
-        if (!response.ok) {
-            if (response.status === 429) {
-                throw new Error('Rate limited by CheapShark API');
-            }
-
-            throw new Error(`CheapShark API Error: ${response.status} - ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        return data || []
-    } catch (error) {
-        console.error(`Error searching deals for "${e}":`, error);
-        return []; // Devolver array vacío en lugar de undefined
-    }
-
 };
 
 /* GET AGED LIKE WINE GAMES */
 
-export const getAgedLikeWineGames = async () => {
-    const today = new Date();
-    const fiveYearsAgo = new Date(today.getFullYear() - 5, today.getMonth(), today.getDate())
-        .toISOString().split('T')[0]; // Formato YYYY-MM-DD
+export const getAgedLikeWineGames = async (retries = 3) => {
+    for (let attempt = 0; attempt < retries; attempt++) {
+        try {
+            const today = new Date();
+            const fiveYearsAgo = new Date(today.getFullYear() - 5, today.getMonth(), today.getDate())
+                .toISOString().split('T')[0]; // Formato YYYY-MM-DD
 
-    let agedLikeWineGames: any[] = [];
-    let page: number = 1;
-    const targetCount: number = 10; // Número mínimo de juegos que queremos
-    const maxPages: number = 5; // Límite de seguridad para evitar bucles infinitos
+            let agedLikeWineGames: any[] = [];
+            let page: number = 1;
+            const targetCount: number = 10; // Número mínimo de juegos que queremos
+            const maxPages: number = 5; // Límite de seguridad para evitar bucles infinitos
 
-    while (agedLikeWineGames.length < targetCount && page <= maxPages) {
+            while (agedLikeWineGames.length < targetCount && page <= maxPages) {
 
-        const response = await fetch(
-            `https://api.rawg.io/api/games?key=${API_KEY}&dates=1900-01-01,${fiveYearsAgo}&ordering=-rating&page_size=60&platforms=1&metacritic=80,100&page=${page}`,
-            { cache: "force-cache" }
-        );
+                const response = await fetch(
+                    `https://api.rawg.io/api/games?key=${API_KEY}&dates=1900-01-01,${fiveYearsAgo}&ordering=-rating&page_size=60&platforms=1&metacritic=80,100&page=${page}`,
+                    {
+                        next: {
+                            revalidate: 3600,
+                            tags: ['aged-like-wine-games', 'aged-like-wine-search']
+                        }
+                    }
+                );
 
-        if (!response.ok) {
-            throw new Error(`Error when trying to look for the old games on page ${page}`);
-        }
-
-        const data = await response.json();
-        const result = data.results;
-
-        // Si no hay más resultados, salir del bucle
-        if (!result || result.length === 0) {
-            break;
-        }
-
-        const listOfOffers: GameDealWithoutScore[][] = [];
-
-        // Buscar ofertas para cada juego de esta página
-        for (let i = 0; i < result.length; i++) {
-            const lookForEachGameOffer = await searchOffers(result[i].name);
-
-            const filterBestOffers = lookForEachGameOffer.filter((e: GameDealWithoutScore) => {
-                const valor = Math.trunc(Number(e.savings));
-                return valor > 75;
-            });
-
-            if (filterBestOffers.length > 0) {
-                listOfOffers.push(filterBestOffers);
-            }
-        }
-
-        // Obtener la mejor oferta de cada juego
-        const bestOffers = [];
-
-        for (let i = 0; i < listOfOffers.length; i++) {
-            const gameBestOffer = listOfOffers[i].reduce((prev: GameDealWithoutScore, curr: GameDealWithoutScore) => {
-                const prevValue = Math.trunc(Number(prev.savings));
-                const currentValue = Math.trunc(Number(curr.savings));
-
-                if (prevValue < currentValue) {
-                    return curr;
-                } else {
-                    return prev;
+                if (!response.ok) {
+                    throw new Error(`Error when trying to look for the old games on page ${page}`);
                 }
-            });
 
-            bestOffers.push(gameBestOffer);
+                const data = await response.json();
+                const result = data.results;
+
+                // Si no hay más resultados, salir del bucle
+                if (!result || result.length === 0) {
+                    break;
+                }
+
+                const listOfOffers: GameDealWithoutScore[][] = [];
+
+                // Buscar ofertas para cada juego de esta página
+                for (let i = 0; i < result.length; i++) {
+                    const lookForEachGameOffer = await searchOffers(result[i].name);
+
+                    const filterBestOffers = lookForEachGameOffer.filter((e: GameDealWithoutScore) => {
+                        const valor = Math.trunc(Number(e.savings));
+                        return valor > 75;
+                    });
+
+                    if (filterBestOffers.length > 0) {
+                        listOfOffers.push(filterBestOffers);
+                    }
+                }
+
+                // Obtener la mejor oferta de cada juego
+                const bestOffers = [];
+
+                for (let i = 0; i < listOfOffers.length; i++) {
+                    const gameBestOffer = listOfOffers[i].reduce((prev: GameDealWithoutScore, curr: GameDealWithoutScore) => {
+                        const prevValue = Math.trunc(Number(prev.savings));
+                        const currentValue = Math.trunc(Number(curr.savings));
+
+                        if (prevValue < currentValue) {
+                            return curr;
+                        } else {
+                            return prev;
+                        }
+                    });
+
+                    bestOffers.push(gameBestOffer);
+                }
+
+                // Agregar las nuevas ofertas al array principal   
+                agedLikeWineGames.push(...bestOffers);
+
+                // Eliminar duplicados después de cada iteración
+                agedLikeWineGames = removeDuplicatesByBestPrice(agedLikeWineGames);
+
+                // Incrementar página para la siguiente iteración
+                page++;
+            }
+
+            // Verificar si conseguimos el número deseado
+            if (agedLikeWineGames.length < targetCount) {
+                console.warn(`Solo se encontraron ${agedLikeWineGames.length} juegos de ${targetCount} deseados`);
+            }
+
+            // Limitar a exactamente 10 si tenemos más
+            const finalResult = agedLikeWineGames.slice(0, targetCount);
+
+            return finalResult;
+        } catch (error) {
+            console.error("Se ha producido un error al intentar obtener las nuevas ofertas" + error);
+
+            if (attempt === retries - 1) {
+                // Último intento fallido, devolver array vacío en lugar de fallar
+                console.error(`All attempts failed for game, returning empty array`);
+            }
+
+            // Espera exponencial
+            await delay(Math.pow(2, attempt) * 1000);
         }
-
-        // Agregar las nuevas ofertas al array principal   
-        agedLikeWineGames.push(...bestOffers);
-
-        // Eliminar duplicados después de cada iteración
-        agedLikeWineGames = removeDuplicatesByBestPrice(agedLikeWineGames);
-
-        // Incrementar página para la siguiente iteración
-        page++;
     }
-
-    // Verificar si conseguimos el número deseado
-    if (agedLikeWineGames.length < targetCount) {
-        console.warn(`Solo se encontraron ${agedLikeWineGames.length} juegos de ${targetCount} deseados`);
-    }
-
-    // Limitar a exactamente 10 si tenemos más
-    const finalResult = agedLikeWineGames.slice(0, targetCount);
-
-    return finalResult;
 };
 
 /* GET BEST OFFER BY PERCENTAGE */

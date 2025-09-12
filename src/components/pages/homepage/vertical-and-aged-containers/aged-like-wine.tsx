@@ -15,6 +15,10 @@ const AgedLikeWine = async () => {
         const listOfStores = await searchForStore();
         const AgedLikeWineGames = await getAgedLikeWineGames();
 
+        if (!AgedLikeWineGames) {
+            throw new Error("Error al intentar obtener ofertas de juegos antiguos");
+        }
+
         const platforms = {
             PC: "bi bi-display",
             Xbox: "bi bi-xbox",
@@ -28,7 +32,7 @@ const AgedLikeWine = async () => {
             const game = AgedLikeWineGames[i];
             if (!game) throw new Error("Juego no encontrado en la lista");
 
-            const getInfo = await getGameInfo(AgedLikeWineGames[i] ? AgedLikeWineGames[i].title : "Resident Evil");
+            const getInfo = await getGameInfo(AgedLikeWineGames[i].title);
 
             const gameTitle = AgedLikeWineGames[i].title;
             const gameImage = getInfo.results[0].background_image;

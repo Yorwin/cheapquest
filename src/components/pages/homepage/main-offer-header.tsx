@@ -15,6 +15,8 @@ const MainOffer = async () => {
             throw new Error("Datos del juego inválidos o incompletos");
         }
 
+        console.log(getGame);
+
         const convertPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(getGame.deal.salePrice));
         const resultPrice = (convertPrice).toFixed(2);
 
@@ -28,7 +30,7 @@ const MainOffer = async () => {
         return (
             <>
                 <article className={styles["main-offer-container"]}>
-                    <Link href="/producto/black-ops-6" className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
+                    <Link href={`/game-page/${getGame.name}`} className={styles["click-overlay"]} aria-label={`Ver ${getGame.name}`} />
                     <Image
                         src={offerInfo.gameImage}
                         alt="Mejor oferta y más popular del momento"
