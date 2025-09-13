@@ -168,3 +168,21 @@ export function removeDuplicatesByBestPrice(deals: GameDeal[]): GameDeal[] {
 
     return Array.from(gameMap.values());
 }
+
+// Función para crear URLs amigables
+export const createGameSlug = (gameName: string): string => {
+    return gameName
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '') // Remover caracteres especiales
+        .replace(/\s+/g, '-')         // Espacios por guiones
+        .replace(/-+/g, '-')          // Múltiples guiones por uno
+        .trim();
+};
+
+// Función para convertir slug de vuelta a nombre
+export const slugToGameName = (slug: string): string => {
+    return slug
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+};

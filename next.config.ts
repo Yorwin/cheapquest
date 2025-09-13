@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'www.cheapshark.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'shared.fastly.steamstatic.com',
+      },
     ],
   },
 };

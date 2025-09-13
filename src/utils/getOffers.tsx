@@ -13,13 +13,13 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const searchOffers = async (e: string) => {
     try {
-        const cleanGameName = e.toLowerCase().replace(/[^a-z0-9]/g, '-');
+        const cleanGameNameForTag = e.toLowerCase().replace(/[^a-z0-9]/g, '-');
 
-        const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?title=${e}`, {
+        const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?title=${e}&exact=1`, {
             next: {
                 revalidate: 1800, // 30 minutos (más frecuente que el juego principal)
                 tags: ['game-deals',
-                    `deal-${cleanGameName}`,
+                    `deal-${cleanGameNameForTag}`,
                     'cheapshark-api'],
             }
         });
@@ -33,7 +33,8 @@ export const searchOffers = async (e: string) => {
         }
 
         const data = await response.json();
-        return data || []
+
+        return data;
     } catch (error) {
         console.error(`Error searching deals for "${e}":`, error);
         return []; // Devolver array vacío en lugar de undefined

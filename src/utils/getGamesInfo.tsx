@@ -1,5 +1,5 @@
 import "server-only";
-import { getThreeYearsDateRange, calculatePopularityScore } from "@/functions/functions";
+import { getThreeYearsDateRange, calculatePopularityScore, slugToGameName } from "@/functions/functions";
 import { searchOffers } from "./getOffers";
 import { bestOfferType, GameDealWithoutScore } from "@/types/types";
 import searchForStore from "./seachForStore";
@@ -63,6 +63,8 @@ export const getMostPopularGame = async (retries = 3) => {
                 return current > maxSavings ? game : max;
             });
 
+            console.log(bestGameDeal);
+
             return bestGameDeal;
 
         } catch (error) {
@@ -103,14 +105,18 @@ export const getGameInfo = async (e: string) => {
 export const getGameInfoGamePage = async (e: string) => {
 
     const headerImage = await getHeaderImage(e);
-    const gameTrailer = await getGameTrailer(headerImage.id);
+    const gameTrailer = await getGameTrailer(headerImage.game_id);
     const gameOffers = await getGameOffers(e);
+    const gameData = await getGameData(headerImage.game_id);
 
     const data = {
         gameTrailer: gameTrailer,
         ...headerImage,
         ...gameOffers,
+        ...gameData,
     }
+
+    console.log(data);
 
     return data;
 };
@@ -130,7 +136,7 @@ export const getHeaderImage = async (e: string) => {
     const screenshots = data.results[0].short_screenshots;
 
     const images = {
-        id: gameId,
+        game_id: gameId,
         header: headerImage,
         screenshots: screenshots,
     }
@@ -140,12 +146,12 @@ export const getHeaderImage = async (e: string) => {
 
 export const getGameOffers = async (e: string) => {
 
-    const title = e.toUpperCase().replace(/-/g, "");
+    const titleForComparison = slugToGameName(e).toUpperCase().replace(/\s+/g, '');
     const gameOffers = await searchOffers(e);
     const listOfStores = await searchForStore();
 
     const filteredOffers = gameOffers.filter((offer: any) => {
-        return offer.internalName === title;
+        return offer.internalName === titleForComparison;
     })
 
     const bestDeal = filteredOffers.reduce((cheapest: any, current: any) => {
@@ -165,6 +171,7 @@ export const getGameOffers = async (e: string) => {
         discount: `${Number(bestDeal.savings).toFixed(0)}%`,
         normalPrice: bestDeal.normalPrice,
         currentPrice: bestDeal.salePrice,
+        offerImage: bestDeal.thumb.replace('capsule_sm_120', 'capsule_616x353'),
         store: bealDealstoreImage,
     }
 
@@ -182,8 +189,8 @@ export const getGameOffers = async (e: string) => {
     })
 
     const offers = {
-        bestOffer : bestOfferData,
-        restOfTheOffers : restOfTheOffersData,
+        bestOffer: bestOfferData,
+        restOfTheOffers: restOfTheOffersData,
     }
 
     return offers;
@@ -202,3 +209,29 @@ export const getGameTrailer = async (e: string) => {
 
     return trailer;
 }
+
+export const getGameData = async (e: string) => {
+    const response = await fetch(`https://api.rawg.io/api/games/${e}?key=${API_KEY}`)
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch data");
+    }
+
+    const data = await response.json();
+
+    const filteredData = {
+        description: data.description_raw,
+        meta_critic: data.metacritic,
+        about_the_game: {
+            esrb: data.esrb_rating.name,
+            released_date: data.released,
+            publishers: data.publishers.map((e: any) => e.name),
+            genres: data.genres.map((e: any) => e.name),
+            developers: data.developers.map((e: any) => e.name),
+            tags: data.tags.map((e: any) => e.name),
+        }
+    }
+
+    return filteredData;
+};
+

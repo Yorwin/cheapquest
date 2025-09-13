@@ -6,6 +6,7 @@ import { Currency } from "@/types/types";
 import { getMostPopularGame } from "@/utils/getGamesInfo";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
+import { createGameSlug } from "@/functions/functions";
 
 const MainOffer = async () => {
     try {
@@ -15,8 +16,6 @@ const MainOffer = async () => {
             throw new Error("Datos del juego inválidos o incompletos");
         }
 
-        console.log(getGame);
-
         const convertPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(getGame.deal.salePrice));
         const resultPrice = (convertPrice).toFixed(2);
 
@@ -25,12 +24,13 @@ const MainOffer = async () => {
             gameImage: getGame.backgroundImage,
             discount: Math.floor(parseFloat(getGame.deal.savings)) + '%',
             currentPrice: resultPrice + "€",
+            link: createGameSlug(getGame.name),
         }
 
         return (
             <>
                 <article className={styles["main-offer-container"]}>
-                    <Link href={`/game-page/${getGame.name}`} className={styles["click-overlay"]} aria-label={`Ver ${getGame.name}`} />
+                    <Link href={`/game-page/${offerInfo.link}`} className={styles["click-overlay"]} aria-label={`Ver ${getGame.name}`} />
                     <Image
                         src={offerInfo.gameImage}
                         alt="Mejor oferta y más popular del momento"

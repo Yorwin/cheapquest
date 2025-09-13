@@ -3,6 +3,7 @@ import styles from "@/styles/layout/homepage/most-popular-offer.module.scss"
 import Image from "next/image";
 import Link from "next/link";
 import { GameStandardControllerType } from "@/types/types";
+import { createGameSlug } from "@/functions/functions";
 
 const defaultClasses = {
     mainGameCard: "default-main-game-card",
@@ -18,8 +19,11 @@ const defaultClasses = {
 };
 
 const OfferContainer = ({ title, platform, discount, oldPrice, currentPrice, webOffer, children }: GameStandardControllerType) => {
+    
+    const link = createGameSlug(title);
+
     return <article className={styles["rest-of-the-offers-container"]}>
-        <Link href="/game-page/blackops-6" className={styles["click-overlay"]}></Link>
+        <Link href={`/game-page/${link}`} className={styles["click-overlay"]}></Link>
         <div className={styles["gameimage-container"]}>
             {children}
         </div>
