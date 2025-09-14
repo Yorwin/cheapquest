@@ -26,25 +26,25 @@ const GamePage = async ({ params }: ParamsGame) => {
     const parameters = params.game[0];
     const formatParemeter = slugToGameName(parameters);
     const getGameInfo = await getGameInfoGamePage(formatParemeter); 
-
+    
     return (
         <article className="main-article-gamepage">
-            <Presentation offerImageUrl={getGameInfo.bestOffer.offerImage} mainImage={getGameInfo.header} />
+            <Presentation title={getGameInfo.title} offerImageUrl={getGameInfo.bestOffer.offerImage} mainImage={getGameInfo.header} offer={getGameInfo.bestOffer}/>
             <div className={styles["game-info-container"]}>
-                <GameImagesVideos />
+                <GameImagesVideos screenshots={getGameInfo.screenshots}/>
                 <div className="container-fluid mb-5">
                     <div className="row">
                         <div className="col-md-7 col-sm-12 p-0">
-                            <AboutTheGame />
-                            <GameTags />
+                            <AboutTheGame description={getGameInfo.description}/>
+                            <GameTags tags={getGameInfo.about_the_game.tags}/>
                         </div>
                         <div className="col-md-5 col-sm-12 p-0">
-                            <MetaCritic />
-                            <GameInfo />
+                            <MetaCritic metacritic={getGameInfo.meta_critic}/>
+                            <GameInfo gameData={getGameInfo.about_the_game} />
                         </div>
                     </div>
                 </div>
-                <OfficialStoreList />
+                <OfficialStoreList restOfTheOffers={getGameInfo.restOfTheOffers}/>
                 <FranchiseGames />
                 <RelatedOffers />
             </div>

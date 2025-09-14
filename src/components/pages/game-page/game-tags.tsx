@@ -2,9 +2,11 @@ import React from "react";
 import styles from "@/styles/components/user-tags.module.scss"
 import Tags from "../../general/game-tags/tags-controller";
 
-const GameTags = () => {
+interface GameTagsProps {
+    tags: string[]
+}
 
-    const tags = ["Buena trama", "Disparos en primera persona", "Acción y aventura", "Postapocaliptico", "Buena trama", "Disparos en primera persona", "Acción y aventura", "Postapocaliptico"];
+const GameTags = ({tags} : GameTagsProps) => {
 
     return (
         <div className={styles["user-tags-container"]}>

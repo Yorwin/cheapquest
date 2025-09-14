@@ -1,5 +1,5 @@
 import "server-only";
-import { getThreeYearsDateRange, calculatePopularityScore, slugToGameName } from "@/functions/functions";
+import { getThreeYearsDateRange, calculatePopularityScore, slugToGameName, formatDateES, getTimeSinceRelease } from "@/functions/functions";
 import { searchOffers } from "./getOffers";
 import { bestOfferType, GameDealWithoutScore } from "@/types/types";
 import searchForStore from "./seachForStore";
@@ -63,8 +63,6 @@ export const getMostPopularGame = async (retries = 3) => {
                 return current > maxSavings ? game : max;
             });
 
-            console.log(bestGameDeal);
-
             return bestGameDeal;
 
         } catch (error) {
@@ -116,8 +114,6 @@ export const getGameInfoGamePage = async (e: string) => {
         ...gameData,
     }
 
-    console.log(data);
-
     return data;
 };
 
@@ -166,24 +162,27 @@ export const getGameOffers = async (e: string) => {
 
     const bestDealStore = listOfStores.find((e: any) => e.storeID === bestDeal.storeID);
     const bealDealstoreImage = storeLogos.find((e: any) => e.name === bestDealStore.storeName);
-
+    
     const bestOfferData = {
+        gameTitle: bestDeal.title,
         discount: `${Number(bestDeal.savings).toFixed(0)}%`,
-        normalPrice: bestDeal.normalPrice,
-        currentPrice: bestDeal.salePrice,
+        normalPrice: `${bestDeal.normalPrice}€`,
+        currentPrice: `${bestDeal.salePrice}€`,
         offerImage: bestDeal.thumb.replace('capsule_sm_120', 'capsule_616x353'),
         store: bealDealstoreImage,
     }
 
-    const restOfTheOffersData = restOfTheOffers.map((e: any) => {
+    const restOfTheOffersData = restOfTheOffers.map((offer: any, index: number) => {
 
-        const store = listOfStores.find((e: any) => e.storeID === bestDeal.storeID);
+        const store = listOfStores.find((e: any) => e.storeID === offer.storeID);
         const storeImage = storeLogos.find((e: any) => e.name === store.storeName);
 
         return {
-            discount: `${Number(e.savings).toFixed(0)}%`,
-            normalPrice: e.normalPrice,
-            currentPrice: e.salePrice,
+            gameTitle: offer.title,
+            discount: `${Number(offer.savings).toFixed(0)}%`,
+            normalPrice: `${offer.normalPrice}€`,
+            currentPrice: `${offer.salePrice}€`,
+            released: getTimeSinceRelease(offer.releaseDate),
             store: storeImage,
         }
     })
@@ -218,13 +217,14 @@ export const getGameData = async (e: string) => {
     }
 
     const data = await response.json();
-
+    
     const filteredData = {
+        title: data.name,
         description: data.description_raw,
         meta_critic: data.metacritic,
         about_the_game: {
             esrb: data.esrb_rating.name,
-            released_date: data.released,
+            released_data: `${formatDateES(data.released)}`,
             publishers: data.publishers.map((e: any) => e.name),
             genres: data.genres.map((e: any) => e.name),
             developers: data.developers.map((e: any) => e.name),

@@ -288,5 +288,20 @@ export interface verticalContainerProps {
     offersData: GameStandardContainerType[];
 }
 
+export interface bestOffer {
+    currentPrice: string,
+    discount: string,
+    normalPrice: string,
+    offerImage: string,
+    store: StoreLogo | undefined,
+}
 
+export interface comparisonOfferType {
+    gameTitle: string
+    currentPrice: string,
+    discount: string,
+    normalPrice: string,
+    released: string,
+    store: StoreLogo
+}
 

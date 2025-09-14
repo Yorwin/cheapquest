@@ -3,18 +3,15 @@
 import React, { useState } from "react"
 import StoreCard from "./store-card"
 import styles from "@/styles/components/store-card.module.scss"
+import { comparisonOfferType } from "@/types/types"
 
-const StoreCardController = () => {
+const StoreCardController = ({ offersData }: { offersData: comparisonOfferType[] }) => {
+    
     const [isExtended, setIsExtended] = useState(false)
 
-    const AllStores = [
-        <StoreCard key={1} />,
-        <StoreCard key={2} />,
-        <StoreCard key={3} />,
-        <StoreCard key={4} />,
-        <StoreCard key={5} />,
-        <StoreCard key={6} />
-    ]
+    const AllStores = offersData.map((e, index) => {
+        return <StoreCard offersData={e} key={index} />
+    });
 
     const shouldShowButton = AllStores.length > 3
 

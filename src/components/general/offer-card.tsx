@@ -1,13 +1,23 @@
 import React from "react";
 import styles from "@/styles/components/offer-card.module.scss"
 import Image from "next/image";
-import store from "@/resources/stores/greenman.png"
 import PC from "@/resources/platforms/pc.svg"
+import { StoreLogo, bestOffer } from "@/types/types";
 
-const OfferCard = () => {
+interface offerCardProps {
+    offer: bestOffer,
+    title: string,
+}
+
+const OfferCard = ({ title, offer }: offerCardProps) => {
+
+    const storeImage = offer.store ? offer.store.image : null;
+
+    console.log(offer);
+
     return (
         <section className={styles["offer-card"]}>
-            <h3>Black Ops 6</h3>
+            <h3>{title}</h3>
             <div className={styles["offer-info-container"]}>
                 <ul className={styles["offer-info"]}>
                     <li>
@@ -19,23 +29,25 @@ const OfferCard = () => {
                             className={styles["image"]}
                         />
                     </li>
-                    <li>
-                        <span>Oferta</span>
-                        <Image
-                            src={store}
-                            alt="platform"
-                            sizes="20vw"
-                            className={styles["image"]}
-                        />
-                    </li>
+                    {storeImage &&
+                        (<li>
+                            <span>Oferta</span>
+                            <Image
+                                src={storeImage}
+                                alt="platform"
+                                sizes="20vw"
+                                className={styles["image"]}
+                            />
+                        </li>
+                        )}
                 </ul>
             </div>
             <div className={styles["prices"]}>
                 <div className={styles["old-discount-container"]}>
-                    <span className={styles["old-price"]}>50€</span>
-                    <span className={styles["discount"]}>-39%</span>
+                    <span className={styles["old-price"]}>{offer.normalPrice}</span>
+                    <span className={styles["discount"]}>{offer.discount}</span>
                 </div>
-                <span className={styles["current-price"]}>35,69€</span>
+                <span className={styles["current-price"]}>{offer.currentPrice}</span>
             </div>
             <button className={styles["offer-button"]}>
                 Ir a la oferta

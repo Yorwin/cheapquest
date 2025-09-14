@@ -1,7 +1,16 @@
 import React from "react";
 import styles from "@/styles/components/game-info.module.scss"
 
-const GameInfo = () => {
+interface gameInfoProps {
+    developers: string[],
+    esrb: string,
+    genres: string[],
+    publishers: string[],
+    released_data: string,
+    tags: string[]
+}
+
+const GameInfo = ({gameData}: {gameData: gameInfoProps}) => {
     return (
         <div className={styles["game-info-container"]}>
             <h2>Información del juego</h2>
@@ -10,23 +19,23 @@ const GameInfo = () => {
                     <tbody>
                         <tr>
                             <th>Puntuación US</th>
-                            <td>Mature</td>
+                            <td>{gameData.esrb}</td>
                         </tr>
                         <tr>
                             <th>Desarrollador</th>
-                            <td>Ejemplo Estudio, Ejemplo Estudio</td>
+                            <td>{gameData.developers.join(", ")}</td>
                         </tr>
                         <tr>
                             <th>Fecha de Lanzamiento</th>
-                            <td>01/01/1999</td>
+                            <td>{gameData.released_data}</td>
                         </tr>
                         <tr>
                             <th>Género</th>
-                            <td>Acción, Aventura</td>
+                            <td>{gameData.genres.join(", ")}</td>
                         </tr>
                         <tr>
                             <th>Distribuidores</th>
-                            <td>Distribuidor Genérico</td>
+                            <td>{gameData.publishers}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -1,33 +1,39 @@
 import React from "react";
 import styles from "@/styles/components/store-card.module.scss"
 import Image from "next/image";
+import { comparisonOfferType } from "@/types/types";
 
 /* Store Example Image */
 import store from "@/resources/stores/fanatical.png"
 
-const StoreCard = () => {
+const StoreCard = ({ offersData }: { offersData: comparisonOfferType }) => {
+
+    const storeOfferImage = offersData.store.image ? offersData.store.image : null;
+
     return (
         <div className={styles["store-card-container"]}>
 
             <div className={styles["image-container"]}>
-                <Image 
-                    className={styles["image"]}
-                    src={store}
-                    alt="Store"
-                    sizes="35vw"
-                />
+                {storeOfferImage && (
+                    <Image
+                        className={styles["image"]}
+                        src={storeOfferImage}
+                        alt="Store"
+                        sizes="35vw"
+                    />
+                )}
             </div>
             <div className={styles["offer-data"]}>
 
                 {/* Offer Info */}
 
                 <div className={styles["offer-info-container"]}>
-                    <h3>Example Game</h3>
+                    <h3>{offersData.gameTitle}</h3>
                     <div className={styles["offer-specs"]}>
-                        <span>Steam</span>
+                        <span>{offersData.store.name}</span>
                         <time className={styles["released-time"]} dateTime="2025-09-03T12:00:00Z">
                             <i className="bi bi-clock"></i>
-                            <span>Hace 2 días</span>
+                            <span>{offersData.released}</span>
                         </time>
                     </div>
                 </div>
@@ -37,11 +43,11 @@ const StoreCard = () => {
                 <div className={styles["price-and-cta-container"]}>
                     <div className={styles["prices-container"]}>
                         <span className={styles["discount"]}>
-                            <span>-30%</span>
+                            <span>{offersData.discount}</span>
                         </span>
                         <div className={styles["prices"]}>
-                            <del className={styles["old-price"]}>49,99€</del>
-                            <span className={styles["new-price"]}>29,99€</span>
+                            <del className={styles["old-price"]}>{offersData.normalPrice}</del>
+                            <span className={styles["new-price"]}>{offersData.currentPrice}</span>
                         </div>
                     </div>
 
