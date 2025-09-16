@@ -27,11 +27,13 @@ const GamePage = async ({ params }: ParamsGame) => {
     const formatParemeter = slugToGameName(parameters);
     const getGameInfo = await getGameInfoGamePage(formatParemeter); 
     
+    console.log(getGameInfo);
+
     return (
         <article className="main-article-gamepage">
             <Presentation title={getGameInfo.title} offerImageUrl={getGameInfo.bestOffer.offerImage} mainImage={getGameInfo.header} offer={getGameInfo.bestOffer}/>
             <div className={styles["game-info-container"]}>
-                <GameImagesVideos screenshots={getGameInfo.screenshots}/>
+                <GameImagesVideos screenshots={getGameInfo.screenshots} trailer={getGameInfo.gameTrailer}/>
                 <div className="container-fluid mb-5">
                     <div className="row">
                         <div className="col-md-7 col-sm-12 p-0">
@@ -39,7 +41,7 @@ const GamePage = async ({ params }: ParamsGame) => {
                             <GameTags tags={getGameInfo.about_the_game.tags}/>
                         </div>
                         <div className="col-md-5 col-sm-12 p-0">
-                            <MetaCritic metacritic={getGameInfo.meta_critic}/>
+                            {getGameInfo.meta_critic && <MetaCritic metacritic={getGameInfo.meta_critic}/>}
                             <GameInfo gameData={getGameInfo.about_the_game} />
                         </div>
                     </div>

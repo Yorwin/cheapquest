@@ -1,37 +1,49 @@
 import React from "react";
 import styles from "@/styles/layout/gamepage/game-images-videos.module.scss"
 import Image from "next/image";
+import VideoPlayer from "@/components/general/video-player";
 
 interface imageArrayProps {
     id: number,
     image: string
 }
 
+interface GameTrailer {
+    data: {
+        [quality: string]: string;
+    };
+    id: number;
+    name: string;
+    preview: string;
+}
+
 interface GameImagesSectionProps {
+    trailer: GameTrailer,
     screenshots: imageArrayProps[]
 }
 
-const GameImagesSection = ({ screenshots }: GameImagesSectionProps) => {
+const GameImagesSection = ({ trailer, screenshots }: GameImagesSectionProps) => {
+
+    console.log(trailer);
+
     return (
         <section className={styles["game-images-video-container"]}>
             <h1 className={styles["title"]}>Obten un vistazo a fondo de Black Ops 6</h1>
 
             {/* Game Trailer */}
-            <div className={styles["game-trailer-container"]}>
-                <iframe
-                    className={styles["game-trailer"]}
-                    src="https://www.youtube.com/embed/K7wW6V0OiIU?si=capLIbbpZ_U1kGV6"
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                />
-            </div>
+
+            {trailer && (
+                <div className={styles["game-trailer-container"]}>
+                    <VideoPlayer
+                        trailer={trailer}
+                    />
+                </div>
+            )}
 
             {/* Game Images */}
 
             <div className={styles["main-images-container"]}>
-                {screenshots.slice(0, 2).map((shot) => (
+                {screenshots.slice(1, 3).map((shot) => (
                     <div className={styles["image-container"]} key={shot.id}>
                         <Image
                             className={styles["image"]}
@@ -45,7 +57,7 @@ const GameImagesSection = ({ screenshots }: GameImagesSectionProps) => {
             </div>
 
             <div className={styles["rest-images-container"]}>
-                {screenshots.slice(2, 6).map((shot) => (
+                {screenshots.slice(3, 7).map((shot) => (
                     <div className={styles["image-container"]} key={shot.id}>
                         <Image
                             className={styles["image"]}

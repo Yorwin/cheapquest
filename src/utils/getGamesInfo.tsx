@@ -11,12 +11,11 @@ const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
 export const getMostPopularGame = async (retries = 3) => {
     const wantedMetacritic = "80,100"
-    const url = `https://api.rawg.io/api/games?key=${API_KEY}&metacritic=${wantedMetacritic}&ordering=-metacritic&dates=${getThreeYearsDateRange()}&page_size=40`
+    const url = `https://api.rawg.io/api/games?key=${API_KEY}&metacritic=${wantedMetacritic}&ordering=-metacritic&dates=${getThreeYearsDateRange()}&page_size=20`
 
     for (let attempt = 0; attempt < retries; attempt++) {
 
         try {
-
             /* Get Game Info */
             const res = await fetch(`${url}`, {
                 next: {
@@ -106,6 +105,7 @@ export const getGameInfoGamePage = async (e: string) => {
     const gameTrailer = await getGameTrailer(headerImage.game_id);
     const gameOffers = await getGameOffers(e);
     const gameData = await getGameData(headerImage.game_id);
+    const getFranchise = await getFranchiseGames(headerImage.game_id);
 
     const data = {
         gameTrailer: gameTrailer,
@@ -162,7 +162,7 @@ export const getGameOffers = async (e: string) => {
 
     const bestDealStore = listOfStores.find((e: any) => e.storeID === bestDeal.storeID);
     const bealDealstoreImage = storeLogos.find((e: any) => e.name === bestDealStore.storeName);
-    
+
     const bestOfferData = {
         gameTitle: bestDeal.title,
         discount: `${Number(bestDeal.savings).toFixed(0)}%`,
@@ -217,13 +217,13 @@ export const getGameData = async (e: string) => {
     }
 
     const data = await response.json();
-    
+
     const filteredData = {
         title: data.name,
         description: data.description_raw,
         meta_critic: data.metacritic,
         about_the_game: {
-            esrb: data.esrb_rating.name,
+            esrb: data.esrb_rating ? data.esrb_rating.name : "No ESRB rating found",
             released_data: `${formatDateES(data.released)}`,
             publishers: data.publishers.map((e: any) => e.name),
             genres: data.genres.map((e: any) => e.name),
@@ -234,4 +234,17 @@ export const getGameData = async (e: string) => {
 
     return filteredData;
 };
+
+export const getFranchiseGames = async (e: string) => {
+
+    const response = await fetch(`https://api.rawg.io/api/games/${e}/game-series?key=${API_KEY}`);
+
+    if (!response.ok) {
+        throw new Error("Franchises could not be fetched, an error has occurred during fetching");
+    }
+
+    const data = await response.json();
+};
+
+
 

@@ -9,6 +9,7 @@ $main-font: var(--font-gontSerrat);
 $secondary-font: var(--font-timeless);
 
 $good-critic: #26F160;
+$regular-critic: orange;
 $bad-critic: #FE392B;
 
 .metacritic-container {
@@ -32,9 +33,20 @@ $bad-critic: #FE392B;
         font-weight: 500;
         padding: .6rem;
         border-radius: 1.6rem;
-        background-color: #26F160;
         color: $font-main-color;
     }
+}
+
+.good-critic {
+    background-color: $good-critic;
+}
+
+.regular-critic {
+    background-color: $regular-critic;
+}
+
+.bad-critic {
+    background-color: $bad-critic;
 }
 
 .text-container {

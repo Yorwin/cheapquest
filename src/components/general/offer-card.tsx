@@ -13,8 +13,6 @@ const OfferCard = ({ title, offer }: offerCardProps) => {
 
     const storeImage = offer.store ? offer.store.image : null;
 
-    console.log(offer);
-
     return (
         <section className={styles["offer-card"]}>
             <h3>{title}</h3>
