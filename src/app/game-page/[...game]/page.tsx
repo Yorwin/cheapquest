@@ -31,7 +31,7 @@ const GamePage = async ({ params }: ParamsGame) => {
         <article className="main-article-gamepage">
             <Presentation title={getGameInfo.title} offerImageUrl={getGameInfo.bestOffer.offerImage} mainImage={getGameInfo.header} offer={getGameInfo.bestOffer}/>
             <div className={styles["game-info-container"]}>
-                <GameImagesVideos screenshots={getGameInfo.screenshots} trailer={getGameInfo.gameTrailer}/>
+                <GameImagesVideos title={getGameInfo.title} screenshots={getGameInfo.screenshots} trailer={getGameInfo.gameTrailer}/>
                 <div className="container-fluid mb-5">
                     <div className="row">
                         <div className="col-md-7 col-sm-12 p-0">

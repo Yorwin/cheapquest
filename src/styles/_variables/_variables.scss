@@ -50,6 +50,8 @@ $game-page-padding-x-axis: clamp(.7rem, 5vw, 7rem);
 $offerimage-and-gameimage-width: 45%;
 $offerimage-and-gameimage-height: clamp(250px, 35vw, 325px);
 
+$offerimage-width: calc(#{$offerimage-and-gameimage-width} * 1.25);
+
 /* Offer Card */
 
 $offer-oldprice-discount-font-size: clamp(.7rem, .4rem + 2vw, 1.4rem);

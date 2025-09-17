@@ -34,6 +34,7 @@ $current-price-shadow: 1px 0 #000,
         font-family: $primary-font-style;
         font-size: clamp(.8rem, .4rem + 2vw, 1.5rem);
         font-weight: 700;
+        @include resume-game-title-two-lines;
     }
 }
 
@@ -127,8 +128,13 @@ $current-price-shadow: 1px 0 #000,
 }
 
 @media screen and (max-width: 1200px) {
+    .offer-card {
+        width: $offerimage-width;
+        height: $offerimage-and-gameimage-height;
+    }
+
     .prices {
-        line-height: 1.7rem;
+        line-height: 2.2rem;
     }
 
     .offer-button {

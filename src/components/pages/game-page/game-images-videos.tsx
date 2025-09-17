@@ -18,14 +18,15 @@ interface GameTrailer {
 }
 
 interface GameImagesSectionProps {
+    title: string,
     trailer: GameTrailer,
     screenshots: imageArrayProps[]
 }
 
-const GameImagesSection = ({ trailer, screenshots }: GameImagesSectionProps) => {
+const GameImagesSection = ({ title, trailer, screenshots }: GameImagesSectionProps) => {
     return (
         <section className={styles["game-images-video-container"]}>
-            <h1 className={styles["title"]}>Obten un vistazo a fondo de Black Ops 6</h1>
+            <h1 className={styles["title"]}>Obten un vistazo a fondo de {title}</h1>
 
             {/* Game Trailer */}
 

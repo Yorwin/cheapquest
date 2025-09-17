@@ -173,7 +173,7 @@ export const getGameOffers = async (e: string) => {
         store: bealDealstoreImage,
     }
 
-    const restOfTheOffersData = restOfTheOffers.map((offer: any, index: number) => {
+    const restOfTheOffersData = restOfTheOffers.map((offer: any) => {
 
         const store = listOfStores.find((e: any) => e.storeID === offer.storeID);
         const storeImage = storeLogos.find((e: any) => e.name === store.storeName);
@@ -183,7 +183,6 @@ export const getGameOffers = async (e: string) => {
             discount: `${Number(offer.savings).toFixed(0)}%`,
             normalPrice: `${offer.normalPrice}€`,
             currentPrice: `${offer.salePrice}€`,
-            released: getTimeSinceRelease(offer.releaseDate),
             store: storeImage,
         }
     })

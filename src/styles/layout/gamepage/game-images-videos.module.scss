@@ -10,6 +10,7 @@ $font-main-color: map.get($colores, font-dark-background-color);
 }
 
 .title {
+    @include resume-game-title-two-lines;
     @include mainTitleGamePage;
 }
 

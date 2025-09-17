@@ -3,9 +3,6 @@ import styles from "@/styles/components/store-card.module.scss"
 import Image from "next/image";
 import { comparisonOfferType } from "@/types/types";
 
-/* Store Example Image */
-import store from "@/resources/stores/fanatical.png"
-
 const StoreCard = ({ offersData }: { offersData: comparisonOfferType }) => {
 
     const storeOfferImage = offersData.store.image ? offersData.store.image : null;
@@ -31,10 +28,6 @@ const StoreCard = ({ offersData }: { offersData: comparisonOfferType }) => {
                     <h3>{offersData.gameTitle}</h3>
                     <div className={styles["offer-specs"]}>
                         <span>{offersData.store.name}</span>
-                        <time className={styles["released-time"]} dateTime="2025-09-03T12:00:00Z">
-                            <i className="bi bi-clock"></i>
-                            <span>{offersData.released}</span>
-                        </time>
                     </div>
                 </div>
 
