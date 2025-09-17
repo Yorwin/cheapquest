@@ -189,24 +189,24 @@ export const slugToGameName = (slug: string): string => {
 
 /* Función para formatear el Released Data */
 export const formatDateES = (isoDate: string) => {
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(isoDate));
+    return new Intl.DateTimeFormat("es-ES", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    }).format(new Date(isoDate));
 };
 
 export const getTimeSinceRelease = (releaseDate: number) => {
-  const now = Date.now(); // en ms
-  const releaseTime = releaseDate * 1000; // convertir segundos -> ms
-  const diff = now - releaseTime;
+    const now = Date.now(); // en ms
+    const releaseTime = releaseDate * 1000; // convertir segundos -> ms
+    const diff = now - releaseTime;
 
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-  if (days >= 1) {
-    return `${days} día${days > 1 ? "s" : ""}`;
-  } else {
-    return `${hours} hora${hours > 1 ? "s" : ""}`;
-  }
+    if (days >= 1) {
+        return `${days} día${days > 1 ? "s" : ""}`;
+    } else {
+        return `${hours} hora${hours > 1 ? "s" : ""}`;
+    }
 };

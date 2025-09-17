@@ -23,9 +23,6 @@ interface GameImagesSectionProps {
 }
 
 const GameImagesSection = ({ trailer, screenshots }: GameImagesSectionProps) => {
-
-    console.log(trailer);
-
     return (
         <section className={styles["game-images-video-container"]}>
             <h1 className={styles["title"]}>Obten un vistazo a fondo de Black Ops 6</h1>
