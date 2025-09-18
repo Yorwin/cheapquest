@@ -4,7 +4,9 @@ import { searchOffers } from "./getOffers";
 import { bestOfferType, GameDealWithoutScore } from "@/types/types";
 import searchForStore from "./seachForStore";
 import { storeLogos } from "@/resources/stores_icons"
-import { Translator, arrayTranslation } from "./translation";
+import { translateAndStoreGame } from "@/app/api/translations/route";
+import { translationService } from "./translationService";
+import { translateAndStoreGameAction } from "@/actions/translationActions";
 
 const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
@@ -217,34 +219,22 @@ export const getGameData = async (e: string) => {
     }
 
     const data = await response.json();
-    let description;
-    let tags;
-    let genres;
 
-    if (data.description_raw) {
-        description = await Translator(data.description_raw);
-    }
-
-    if (data.tags) {
-        tags = await arrayTranslation(data.tags);
-    }
-
-    if (data.genres && data.genres.length > 0) {
-        genres = await arrayTranslation(data.genres);
-        genres = genres.filter((g) => g && g.trim() !== "");
-    }
+    const result = await translateAndStoreGameAction({
+        gameId: `${data.id}`, description: data.description_raw, tags: data.tags, genres: data.genres
+    });
 
     const filteredData = {
         title: data.name,
-        description: description ? description : data.description_raw,
+        description: result.data.description ? result.data.description : data.description_raw,
         meta_critic: data.metacritic,
         about_the_game: {
             esrb: data.esrb_rating ? data.esrb_rating.name : "No ESRB rating found",
             released_data: `${formatDateES(data.released)}`,
             publishers: data.publishers.map((e: any) => e.name),
-            genres: genres,
+            genres: result.data.genres,
             developers: data.developers.map((e: any) => e.name),
-            tags: tags ? tags : data.tags.map((e: any) => e.name),
+            tags: result.data.tags ? result.data.tags : data.tags.map((e: any) => e.name),
         }
     }
 
@@ -261,6 +251,8 @@ export const getFranchiseGames = async (e: string) => {
 
     const data = await response.json();
 };
+
+/* Traduccionnes. */
 
 
 
