@@ -1,8 +1,8 @@
-'use server'
+'server-only'
 
 import admin from "firebase-admin";
 import { arrayTranslation, Translator } from "@/utils/translation";
-import { translationType } from "@/firebase/translations";
+import { translationType } from "@/types/types";
 
 if (!admin.apps.length) {
     admin.initializeApp({
@@ -21,16 +21,14 @@ export async function translateAndStoreGameAction({
     description,
     genres,
     tags,
-}: {
-    gameId: string;
-    description?: string;
-    genres?: string[];
-    tags?: string[];
-}): Promise<{ data: translationType; fromCache: boolean }> {
+}: translationType): Promise<{ data: translationType; fromCache: boolean }> {
+
+    /* Error boundary*/
     if (!gameId || typeof gameId !== 'string' || gameId.trim() === '') {
         throw new Error('gameId is required and must be a non-empty string');
     }
 
+    /* Comprobar base de datos */
     const docRef = db.collection("translations_for_each_game").doc(gameId);
     const docSnap = await docRef.get();
 
@@ -41,7 +39,9 @@ export async function translateAndStoreGameAction({
         };
     }
 
-    const gameData: translationType = { id: gameId };
+    /* Añadir nuevo juego si en la comprobación no se encontro nada */
+
+    const gameData: translationType = { gameId: gameId };
 
     if (description) {
         gameData.description = await Translator(description);

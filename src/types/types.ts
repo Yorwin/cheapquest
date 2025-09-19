@@ -102,7 +102,7 @@ export interface StoreEntry {
 export interface GameDeal {
     dealID: string;
     dealRating: string;
-    finalScore: number;
+    finalScore?: number;
     gameID: string;
     internalName: string;
     isOnSale: string;
@@ -149,6 +149,17 @@ export interface GameDealWithoutScore {
 export interface StoreLogo {
     name: string;
     image: StaticImageData | null;
+}
+
+export interface dealStoreData {
+    images: {
+        banner: string,
+        logo: string,
+        icon: string,
+    }
+    isActive: number,
+    storeID: string,
+    storeName: string,
 }
 
 export interface VerticalCardWrapperType {
@@ -305,3 +316,31 @@ export interface comparisonOfferType {
     store: StoreLogo
 }
 
+export interface translationType {
+    gameId: string,
+    description?: string,
+    genres?: string[],
+    tags?: string[],
+}
+
+export interface publishersAndDevelopersType {
+    id: number,
+    name: string,
+    slug: string,
+    games_count: number,
+    image_background: string,
+}
+
+export interface tag {
+    games_count: number,
+    id: number,
+    image_background: string,
+    language: string,
+    name: string,
+    slug: string,
+}
+
+export interface developerAndPublisherType {
+    developers?: string[],
+    publishers?: string[]
+}

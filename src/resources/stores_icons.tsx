@@ -29,15 +29,18 @@ import winGameStore from "@/resources/stores/wingamestore.png"
 import funStockDigital from "@/resources/stores/funstuckdigital.png"
 import gameBillet from "@/resources/stores/gamebillet.png"
 import voidu from "@/resources/stores/voidu.png"
+import GamesLoad from "@/resources/stores/gamesload.png"
+import direct2Drive from "@/resources/stores/direct2drive.png"
+
 import { StoreLogo } from "@/types/types"
 
-export const storeLogos : StoreLogo[] = [
+export const storeLogos: StoreLogo[] = [
     { name: 'Steam', image: steam },
     { name: 'GamersGate', image: gamersGate },
     { name: 'GreenManGaming', image: greenManGaming },
     { name: 'Amazon', image: amazon },
     { name: 'GameStop', image: gameStop },
-    { name: 'Direct2Drive', image: null },
+    { name: 'Direct2Drive', image: direct2Drive },
     { name: 'GOG', image: GOG },
     { name: 'Origin', image: origin },
     { name: 'Get Games', image: getGames },
@@ -59,7 +62,7 @@ export const storeLogos : StoreLogo[] = [
     { name: 'Epic Games Store', image: epicGames },
     { name: 'Razer Game Store', image: razer },
     { name: 'Gamesplanet', image: gamesPlanet },
-    { name: 'Gamesload', image: null },
+    { name: 'Gamesload', image: GamesLoad },
     { name: '2Game', image: twogame },
     { name: 'IndieGala', image: indiegala },
     { name: 'Blizzard Shop', image: blizzard },

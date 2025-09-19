@@ -1,14 +1,12 @@
 import "server-only";
-import { getThreeYearsDateRange, calculatePopularityScore, slugToGameName, formatDateES, getTimeSinceRelease } from "@/functions/functions";
+import { getThreeYearsDateRange, calculatePopularityScore, slugToGameName, formatDateES } from "@/functions/functions";
 import { searchOffers } from "./getOffers";
-import { bestOfferType, GameDealWithoutScore } from "@/types/types";
+import { bestOfferType, GameDealWithoutScore, GameDeal, dealStoreData, StoreLogo, publishersAndDevelopersType, tag, developerAndPublisherType } from "@/types/types";
 import searchForStore from "./seachForStore";
 import { storeLogos } from "@/resources/stores_icons"
-import { translateAndStoreGame } from "@/app/api/translations/route";
-import { translationService } from "./translationService";
 import { translateAndStoreGameAction } from "@/actions/translationActions";
 
-const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
+const API_KEY = process.env.RAWG_API_KEY;
 
 /* GET MAIN GAME */
 
@@ -129,6 +127,8 @@ export const getHeaderImage = async (e: string) => {
     }
 
     const data = await response.json();
+    
+    console.log(data);
 
     const gameId = data.results[0].id;
     const headerImage = data.results[0].background_image;
@@ -149,22 +149,22 @@ export const getGameOffers = async (e: string) => {
     const gameOffers = await searchOffers(e);
     const listOfStores = await searchForStore();
 
-    const filteredOffers = gameOffers.filter((offer: any) => {
+    const filteredOffers = gameOffers.filter((offer: GameDeal) => {
         return offer.internalName === titleForComparison;
     })
 
-    const bestDeal = filteredOffers.reduce((cheapest: any, current: any) => {
+    const bestDeal = filteredOffers.reduce((cheapest: GameDeal, current: GameDeal) => {
         const cheapestPrice = Number(cheapest.salePrice);
         const currentPrice = Number(current.salePrice);
         return currentPrice < cheapestPrice ? current : cheapest;
     });
 
-    const restOfTheOffers = filteredOffers.filter((e: any) => {
+    const restOfTheOffers = filteredOffers.filter((e: GameDeal) => {
         return e.dealID !== bestDeal.dealID;
     })
 
-    const bestDealStore = listOfStores.find((e: any) => e.storeID === bestDeal.storeID);
-    const bealDealstoreImage = storeLogos.find((e: any) => e.name === bestDealStore.storeName);
+    const bestDealStore = listOfStores.find((e: dealStoreData) => e.storeID === bestDeal.storeID);
+    const bestDealstoreImage = storeLogos.find((e: StoreLogo) => e.name === bestDealStore.storeName);
 
     const bestOfferData = {
         gameTitle: bestDeal.title,
@@ -172,13 +172,13 @@ export const getGameOffers = async (e: string) => {
         normalPrice: `${bestDeal.normalPrice}€`,
         currentPrice: `${bestDeal.salePrice}€`,
         offerImage: bestDeal.thumb.replace('capsule_sm_120', 'capsule_616x353'),
-        store: bealDealstoreImage,
+        store: bestDealstoreImage,
     }
 
-    const restOfTheOffersData = restOfTheOffers.map((offer: any) => {
+    const restOfTheOffersData = restOfTheOffers.map((offer: GameDeal) => {
 
-        const store = listOfStores.find((e: any) => e.storeID === offer.storeID);
-        const storeImage = storeLogos.find((e: any) => e.name === store.storeName);
+        const store = listOfStores.find((e: dealStoreData) => e.storeID === offer.storeID);
+        const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
 
         return {
             gameTitle: offer.title,
@@ -224,6 +224,20 @@ export const getGameData = async (e: string) => {
         gameId: `${data.id}`, description: data.description_raw, tags: data.tags, genres: data.genres
     });
 
+    let developersAndPublishers : developerAndPublisherType = {};
+
+    if (data.developers.length > 4) {
+        developersAndPublishers.developers = data.developers.slice(0, 4);
+    } else {
+        developersAndPublishers.developers = data.developers;
+    }
+
+    if (data.publishers.length > 4) {
+        developersAndPublishers.publishers = data.publishers.slice(0, 4);
+    } else {
+        developersAndPublishers.publishers = data.publishers;
+    }
+
     const filteredData = {
         title: data.name,
         description: result.data.description ? result.data.description : data.description_raw,
@@ -231,10 +245,10 @@ export const getGameData = async (e: string) => {
         about_the_game: {
             esrb: data.esrb_rating ? data.esrb_rating.name : "No ESRB rating found",
             released_data: `${formatDateES(data.released)}`,
-            publishers: data.publishers.map((e: any) => e.name),
+            publishers: data.publishers.map((e: publishersAndDevelopersType) => e.name),
             genres: result.data.genres,
-            developers: data.developers.map((e: any) => e.name),
-            tags: result.data.tags ? result.data.tags : data.tags.map((e: any) => e.name),
+            developers: data.developers.map((e: publishersAndDevelopersType) => e.name),
+            tags: result.data.tags ? result.data.tags : data.tags.map((e: tag) => e.name),
         }
     }
 

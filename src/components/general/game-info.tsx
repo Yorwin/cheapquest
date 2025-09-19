@@ -50,10 +50,13 @@ const GameInfo = ({ gameData }: { gameData: gameInfoProps }) => {
 
                         {/* Publishers */}
 
-                        <tr>
-                            <th>Distribuidores</th>
-                            <td>{gameData.publishers.join(", ")}</td>
-                        </tr>
+                        {gameData.publishers && gameData.publishers.length > 0 && (
+                            <tr>
+                                <th>Distribuidores</th>
+                                <td>{gameData.publishers.join(", ")}</td>
+                            </tr>
+                        )}
+
                     </tbody>
                 </table>
 

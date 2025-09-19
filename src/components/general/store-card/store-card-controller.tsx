@@ -6,10 +6,14 @@ import styles from "@/styles/components/store-card.module.scss"
 import { comparisonOfferType } from "@/types/types"
 
 const StoreCardController = ({ offersData }: { offersData: comparisonOfferType[] }) => {
-    
+
     const [isExtended, setIsExtended] = useState(false)
 
-    const AllStores = offersData.map((e, index) => {
+    const sortedOffers = [...offersData].sort(
+        (a, b) => parseFloat(a.currentPrice) - parseFloat(b.currentPrice)
+    );
+
+    const AllStores = sortedOffers.map((e, index) => {
         return <StoreCard offersData={e} key={index} />
     });
 
@@ -26,7 +30,7 @@ const StoreCardController = ({ offersData }: { offersData: comparisonOfferType[]
                     {AllStores.map((store, index) => (
                         <div
                             key={index}
-                            className={`col-12  ${index >= 3 && !isExtended ? styles['hidden-store-card'] : ''}`}
+                            className={`col-12 p-0  ${index >= 3 && !isExtended ? styles['hidden-store-card'] : ''}`}
                         >
                             {store}
                         </div>

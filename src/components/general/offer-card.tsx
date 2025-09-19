@@ -1,8 +1,7 @@
 import React from "react";
 import styles from "@/styles/components/offer-card.module.scss"
 import Image from "next/image";
-import PC from "@/resources/platforms/pc.svg"
-import { StoreLogo, bestOffer } from "@/types/types";
+import { bestOffer } from "@/types/types";
 
 interface offerCardProps {
     offer: bestOffer,
@@ -12,33 +11,23 @@ interface offerCardProps {
 const OfferCard = ({ title, offer }: offerCardProps) => {
 
     const storeImage = offer.store ? offer.store.image : null;
+    const storeName = offer.store ? offer.store.name : null;
 
     return (
         <section className={styles["offer-card"]}>
             <h3>{title}</h3>
             <div className={styles["offer-info-container"]}>
-                <ul className={styles["offer-info"]}>
-                    <li>
-                        <span>Platf.</span>
+                {(storeImage &&
+                    <div className={styles["offer-info"]}>
                         <Image
-                            src={PC}
-                            alt="platform"
+                            src={storeImage}
+                            alt={`Best offer for ${title} provided by ${storeName}`}
                             sizes="20vw"
+                            fill
                             className={styles["image"]}
                         />
-                    </li>
-                    {storeImage &&
-                        (<li>
-                            <span>Oferta</span>
-                            <Image
-                                src={storeImage}
-                                alt="platform"
-                                sizes="20vw"
-                                className={styles["image"]}
-                            />
-                        </li>
-                        )}
-                </ul>
+                    </div>
+                )}
             </div>
             <div className={styles["prices"]}>
                 <div className={styles["old-discount-container"]}>

@@ -13,8 +13,8 @@ const HomePage = async () => {
     <MainOffer />
     <MostPopularOffer />
     <NewOffers />
-    {/* 
     <AgedLikeWine />
+    {/* 
     <ListFormatOffers />
     <Reviews />
     <Categories />
