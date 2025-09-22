@@ -3,7 +3,7 @@ import { getThreeYearsDateRange, calculatePopularityScore, slugToGameName, forma
 import { searchOffers } from "./getOffers";
 import { bestOfferType, GameDealWithoutScore, GameDeal, dealStoreData, StoreLogo, publishersAndDevelopersType, tag, developerAndPublisherType } from "@/types/types";
 import searchForStore from "./seachForStore";
-import { storeLogos } from "@/resources/stores_icons"
+import { storeLogos, storeBanner } from "@/resources/stores_icons"
 import { translateAndStoreGameAction } from "@/actions/translationActions";
 
 const API_KEY = process.env.RAWG_API_KEY;
@@ -127,7 +127,7 @@ export const getHeaderImage = async (e: string) => {
     }
 
     const data = await response.json();
-    
+
     console.log(data);
 
     const gameId = data.results[0].id;
@@ -178,7 +178,7 @@ export const getGameOffers = async (e: string) => {
     const restOfTheOffersData = restOfTheOffers.map((offer: GameDeal) => {
 
         const store = listOfStores.find((e: dealStoreData) => e.storeID === offer.storeID);
-        const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
+        const storeImage = storeBanner.find((e: StoreLogo) => e.name === store.storeName);
 
         return {
             gameTitle: offer.title,
@@ -224,7 +224,7 @@ export const getGameData = async (e: string) => {
         gameId: `${data.id}`, description: data.description_raw, tags: data.tags, genres: data.genres
     });
 
-    let developersAndPublishers : developerAndPublisherType = {};
+    let developersAndPublishers: developerAndPublisherType = {};
 
     if (data.developers.length > 4) {
         developersAndPublishers.developers = data.developers.slice(0, 4);
