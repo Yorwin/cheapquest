@@ -102,7 +102,7 @@ export interface StoreEntry {
 export interface GameDeal {
     dealID: string;
     dealRating: string;
-    finalScore?: number;
+    finalScore: number;
     gameID: string;
     internalName: string;
     isOnSale: string;
@@ -344,3 +344,27 @@ export interface developerAndPublisherType {
     developers?: string[],
     publishers?: string[]
 }
+
+interface originalLangLanguages {
+    name: string,
+    id: number,
+}
+
+interface aboutTheGame {
+    developers: string[],
+    esrb: string,
+    genres?: string[],
+    original_lang_genres: originalLangLanguages[],
+    publishers: string[],
+    released_data: string,
+    tags: string[]
+}
+
+export interface gameData {
+    title: string,
+    meta_critic: number,
+    description: string,
+    about_the_game: aboutTheGame;
+};
+
+export type getGameDataProps = (gameId: string) => Promise<gameData>;

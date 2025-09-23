@@ -16,6 +16,9 @@ interface ContentDistributionType {
 }
 
 const ContentDistributionManager = ({ offersByPercentage, historicLowsOffers }: ContentDistributionType) => {
+    
+    console.log(offersByPercentage);
+
     const width = useWindowWidth();
 
     if (width === 0) {

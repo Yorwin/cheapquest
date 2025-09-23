@@ -1,7 +1,7 @@
 import "server-only";
-import { getThreeYearsDateRange, calculatePopularityScore, slugToGameName, formatDateES } from "@/functions/functions";
+import { getThreeYearsDateRange, calculatePopularityScore, slugToGameName, formatDateES, createGameSlug } from "@/functions/functions";
 import { searchOffers } from "./getOffers";
-import { bestOfferType, GameDealWithoutScore, GameDeal, dealStoreData, StoreLogo, publishersAndDevelopersType, tag, developerAndPublisherType } from "@/types/types";
+import { bestOfferType, GameDealWithoutScore, GameDeal, dealStoreData, StoreLogo, publishersAndDevelopersType, tag, developerAndPublisherType, Genre, getGameDataProps, gameData, GameStandardContainerType } from "@/types/types";
 import searchForStore from "./seachForStore";
 import { storeLogos, storeBanner } from "@/resources/stores_icons"
 import { translateAndStoreGameAction } from "@/actions/translationActions";
@@ -106,13 +106,16 @@ export const getGameInfoGamePage = async (e: string) => {
     const gameTrailer = await getGameTrailer(headerImage.game_id);
     const gameOffers = await getGameOffers(e);
     const gameData = await getGameData(headerImage.game_id);
-    const getFranchise = await getFranchiseGames(headerImage.game_id);
+    const franchise = await getFranchiseGames(headerImage.game_id);
+    const sameGenre = await getSameGenre(gameData.about_the_game.original_lang_genres[0].id);
 
     const data = {
         gameTrailer: gameTrailer,
         ...headerImage,
         ...gameOffers,
         ...gameData,
+        franchise: franchise,
+        sameGenre: sameGenre,
     }
 
     return data;
@@ -127,8 +130,6 @@ export const getHeaderImage = async (e: string) => {
     }
 
     const data = await response.json();
-
-    console.log(data);
 
     const gameId = data.results[0].id;
     const headerImage = data.results[0].background_image;
@@ -211,14 +212,21 @@ export const getGameTrailer = async (e: string) => {
     return trailer;
 }
 
-export const getGameData = async (e: string) => {
-    const response = await fetch(`https://api.rawg.io/api/games/${e}?key=${API_KEY}`)
+export const getGameData: getGameDataProps = async (gameId: string) => {
+    const response = await fetch(`https://api.rawg.io/api/games/${gameId}?key=${API_KEY}`)
 
     if (!response.ok) {
         throw new Error("Failed to fetch data");
     }
 
     const data = await response.json();
+
+    const originalLangGenres = data.genres.map((e: Genre) => {
+        return {
+            name: e.name,
+            id: e.id,
+        }
+    });
 
     const result = await translateAndStoreGameAction({
         gameId: `${data.id}`, description: data.description_raw, tags: data.tags, genres: data.genres
@@ -238,7 +246,7 @@ export const getGameData = async (e: string) => {
         developersAndPublishers.publishers = data.publishers;
     }
 
-    const filteredData = {
+    const filteredData: gameData = {
         title: data.name,
         description: result.data.description ? result.data.description : data.description_raw,
         meta_critic: data.metacritic,
@@ -246,6 +254,7 @@ export const getGameData = async (e: string) => {
             esrb: data.esrb_rating ? data.esrb_rating.name : "No ESRB rating found",
             released_data: `${formatDateES(data.released)}`,
             publishers: data.publishers.map((e: publishersAndDevelopersType) => e.name),
+            original_lang_genres: originalLangGenres,
             genres: result.data.genres,
             developers: data.developers.map((e: publishersAndDevelopersType) => e.name),
             tags: result.data.tags ? result.data.tags : data.tags.map((e: tag) => e.name),
@@ -264,9 +273,88 @@ export const getFranchiseGames = async (e: string) => {
     }
 
     const data = await response.json();
+
+    const filteredGameInfo = data.results.map((e: any) => {
+        return {
+            title: e.name,
+            released_date: e.released,
+            header_image: e.background_image,
+            link: createGameSlug(e.name),
+        }
+    })
+
+    const getGameOffer = await Promise.all(
+        filteredGameInfo.map(async (e: any) => {
+            const gameOffer = await searchOffers(e.title);
+            return {
+                ...e,
+                offer: gameOffer   // en vez de fusionar, lo metes en una propiedad
+            };
+        })
+    );
+
+    return getGameOffer;
 };
 
-/* Traduccionnes. */
+/* MAY BE YOU WILL LIKE TOO GAMES */
 
+export const getSameGenre = async (e: number) => {
+    const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&genres=${e}&page_size=${40}`);
+
+    if (!response.ok) {
+        throw new Error("Ha ocurrido un error al intentar buscar juegos del mismo genero");
+    }
+
+    const data = await response.json();
+    const maxOffersNumber = 10;
+    const resultGames = [];
+
+    const listOfStores = await searchForStore();
+
+    const platforms = {
+        PC: "bi bi-display",
+        Xbox: "bi bi-xbox",
+        PlayStation: "bi bi-playstation",
+    }
+
+    for (const game of data.results) {
+        // Si ya tenemos 10 juegos, cortamos
+        if (resultGames.length >= maxOffersNumber) break;
+
+        const gameOffers = await searchOffers(game.name);
+
+        // Saltar si no hay ofertas
+        if (!gameOffers || gameOffers.length === 0) {
+            continue
+        }
+
+        const validOffers = gameOffers.filter((offer: any) => offer.isOnSale === "1");
+
+        if (validOffers.length > 0) {
+            const bestOffer = validOffers.reduce((best: GameDealWithoutScore, current: GameDealWithoutScore) =>
+                parseFloat(current.savings) > parseFloat(best.savings) ? current : best
+            );
+
+            const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === bestOffer.storeID);
+            const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
+
+            resultGames.push({
+                title: game.name,
+                gameImage: game.background_image,
+                discount: bestOffer.savings,
+                oldPrice: bestOffer.oldPrice,
+                currentPrice: bestOffer.salePrice,
+                platforms: platforms.PC,
+                webOffer: storeImage,
+            });
+        }
+
+        if (validOffers.length === 0) {
+            continue;
+        }
+    }
+
+    return resultGames;
+};
 
 

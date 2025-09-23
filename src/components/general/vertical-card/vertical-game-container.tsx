@@ -3,11 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/layout/homepage/vertical-offers.module.module.scss"
 import { VerticalCardContainerType } from "@/types/types";
+import { createGameSlug } from "@/functions/functions";
 
 const VerticalGameCard = ({ platform, oldPrice, discount, title, currentPrice, webOffer, children }: VerticalCardContainerType) => {
+
+    const link = createGameSlug(title);
+
     return (
         <div className={styles["vertical-card-container"]}>
-            <Link href="/game-page/black-ops-6" className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
+            <Link href={`/game-page/${link}`} className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
             <div className={styles["image-container"]}>
                 {children}
                 <div className={styles["platform-discount-container"]}>

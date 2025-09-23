@@ -27,6 +27,8 @@ const GamePage = async ({ params }: ParamsGame) => {
     const formatParemeter = slugToGameName(parameters);
     const getGameInfo = await getGameInfoGamePage(formatParemeter); 
 
+    console.log(getGameInfo);
+
     return (
         <article className="main-article-gamepage">
             <Presentation title={getGameInfo.title} offerImageUrl={getGameInfo.bestOffer.offerImage} mainImage={getGameInfo.header} offer={getGameInfo.bestOffer}/>
