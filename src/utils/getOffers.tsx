@@ -1,5 +1,5 @@
 import "server-only";
-import { getTop11Deals, removeDuplicatesByBestPrice } from "@/functions/functions";
+import { fetchGamesInfoCheapShark, getTop11Deals, removeDuplicatesByBestPrice } from "@/functions/functions";
 import { GameDeal, GameDealWithoutScore, gameOfferInfo, dealsInfoOffer } from "@/types/types";
 import { getGameInfo } from "./getGamesInfo";
 
@@ -256,7 +256,9 @@ export const getAgedLikeWineGames = async (retries = 3) => {
                     agedLikeWineGames.push(...bestOffers);
                     agedLikeWineGames = removeDuplicatesByBestPrice(agedLikeWineGames);
 
-                    console.log(`Página ${page}: Encontrados ${agedLikeWineGames.length}/${targetCount} juegos`);
+                    //Verificar nro. de juegos encontrados. 
+                    /* console.log(`Página ${page}: Encontrados ${agedLikeWineGames.length}/${targetCount} juegos`);*/
+
                     page++;
                 }
 
@@ -265,7 +267,10 @@ export const getAgedLikeWineGames = async (retries = 3) => {
                 if (agedLikeWineGames.length < targetCount) {
                     currentSavingsLevel++;
                     if (currentSavingsLevel < savingsLevels.length) {
-                        console.log(`Cambiando a nivel de descuento: ${savingsLevels[currentSavingsLevel]}%`);
+
+                        //Cambio de nivel del descueto. 
+                        /* console.log(`Cambiando a nivel de descuento: ${savingsLevels[currentSavingsLevel]}%`); */
+
                         page = 1; // Reset página para el nuevo nivel
                     }
                 } else {
@@ -274,18 +279,22 @@ export const getAgedLikeWineGames = async (retries = 3) => {
             }
 
             // Verificar resultado final
-            if (agedLikeWineGames.length < targetCount) {
+
+            /* if (agedLikeWineGames.length < targetCount) {
                 console.warn(`Solo se encontraron ${agedLikeWineGames.length} juegos de ${targetCount} deseados después de todos los niveles`);
             } else {
                 console.log(`Búsqueda exitosa: ${agedLikeWineGames.length} juegos encontrados`);
             }
+            */
 
             // Limitar a exactamente el número objetivo si tenemos más
             const finalResult = agedLikeWineGames.slice(0, targetCount);
 
             // Log final del nivel de descuento utilizado
             const usedLevel = Math.min(currentSavingsLevel, savingsLevels.length - 1);
-            console.log(`Resultado final con nivel mínimo de descuento: ${savingsLevels[usedLevel]}%`);
+
+            //Verificar resultado
+            /* console.log(`Resultado final con nivel mínimo de descuento: ${savingsLevels[usedLevel]}%`); */
 
             return finalResult;
 
@@ -342,43 +351,34 @@ export const offersByPercentage = async () => {
 /* GET HISTORIC LOWS */
 
 export const historicLows = async () => {
-    const historicalLows = [];
+    const historicalLows: any[] = [];
     let pageNumber = 0;
     const targetElements = 10; // Número mínimo de elementos que queremos
 
     while (historicalLows.length < targetElements) {
-        const request = await fetch(
-            `https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&AAA=1&pageNumber=${pageNumber}`,
-            { cache: "force-cache" }
+        const requestAAAGames = await fetch(
+            `https://www.cheapshark.com/api/1.0/deals?onSale=1&AAA=1&pageNumber=${pageNumber}&pageSize=30`,
+            {
+                next: {
+                    revalidate: 3600,
+                    tags: [`deals-AAA-games-pagenumber${pageNumber + 1}`]
+                }
+            }
         );
 
-        if (!request.ok) {
-            throw new Error("Error when trying to get Historic Lows");
+        if (!requestAAAGames.ok) {
+            console.error(`Status: ${requestAAAGames.status}`);
+            throw new Error("Error when trying to get AAA Games");
         }
 
-        const res = await request.json();
+        const AAAGamesData = await requestAAAGames.json();
 
         // Si no hay más resultados, salir del loop
-        if (!res || res.length === 0) {
+        if (!AAAGamesData || AAAGamesData.length === 0) {
             break;
         }
 
-        const gamesPrices = [];
-
-        for (let i = 0; i < res.length; i++) {
-            const gameID = res[i].gameID;
-            const gameInfo = await fetch(
-                `https://www.cheapshark.com/api/1.0/games?id=${gameID}`,
-                { cache: "force-cache" }
-            );
-
-            if (!gameInfo.ok) {
-                throw new Error("Error when trying to get Historic Lows");
-            }
-
-            const gameInfoResponse = await gameInfo.json();
-            gamesPrices.push(gameInfoResponse);
-        }
+        const gamesPrices = await fetchGamesInfoCheapShark(AAAGamesData);
 
         const filteredGames = gamesPrices.filter((game: gameOfferInfo) => {
             // Si falta cheapestPriceEver o deals, lo descartamos
@@ -443,7 +443,7 @@ export const historicLows = async () => {
 
         pageNumber++;
 
-        if (pageNumber > 50) { // Ajusta este número según sea necesario
+        if (pageNumber > 50) {
             console.log("Maximum page limit reached");
             break;
         }

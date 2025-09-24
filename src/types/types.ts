@@ -368,3 +368,15 @@ export interface gameData {
 };
 
 export type getGameDataProps = (gameId: string) => Promise<gameData>;
+
+export interface Franchise {
+    gameTitle: string,
+    releaseDate: string,
+    currentPrice: string,
+    discount: string,
+    link: string,
+    headerImage: string,
+    webOffer: StaticImageData,
+}
+
+

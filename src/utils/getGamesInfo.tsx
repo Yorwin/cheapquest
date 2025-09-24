@@ -5,6 +5,7 @@ import { bestOfferType, GameDealWithoutScore, GameDeal, dealStoreData, StoreLogo
 import searchForStore from "./seachForStore";
 import { storeLogos, storeBanner } from "@/resources/stores_icons"
 import { translateAndStoreGameAction } from "@/actions/translationActions";
+import { inCaseOfError } from "@/components/general/error-loading-offers-fallback-container";
 
 const API_KEY = process.env.RAWG_API_KEY;
 
@@ -107,7 +108,7 @@ export const getGameInfoGamePage = async (e: string) => {
     const gameOffers = await getGameOffers(e);
     const gameData = await getGameData(headerImage.game_id);
     const franchise = await getFranchiseGames(headerImage.game_id);
-    const sameGenre = await getSameGenre(gameData.about_the_game.original_lang_genres[0].id);
+    const sameGenre = await getSameGenre(gameData.about_the_game.original_lang_genres[0].id, headerImage.game_id);
 
     const data = {
         gameTrailer: gameTrailer,
@@ -285,10 +286,31 @@ export const getFranchiseGames = async (e: string) => {
 
     const getGameOffer = await Promise.all(
         filteredGameInfo.map(async (e: any) => {
-            const gameOffer = await searchOffers(e.title);
+
+            const gameOffers = await searchOffers(e.title);
+            let bestOffer;
+
+            if (gameOffers.length > 0) {
+                bestOffer = gameOffers.reduce((best: GameDealWithoutScore, current: GameDealWithoutScore) =>
+                    parseFloat(current.savings) > parseFloat(best.savings) ? current : best
+                );
+            } else {
+                bestOffer = null;
+            }
+
+            if (bestOffer !== null) {
+                const listOfStores = await searchForStore();
+
+                const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === bestOffer.storeID);
+                const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
+                const inCaseOfErrorImage = listOfStores[Number(inCaseOfError[0].storeID)];
+
+                bestOffer.storeImage = storeImage ? storeImage : inCaseOfErrorImage;
+            }
+
             return {
                 ...e,
-                offer: gameOffer   // en vez de fusionar, lo metes en una propiedad
+                offer: bestOffer,
             };
         })
     );
@@ -298,8 +320,13 @@ export const getFranchiseGames = async (e: string) => {
 
 /* MAY BE YOU WILL LIKE TOO GAMES */
 
-export const getSameGenre = async (e: number) => {
-    const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&genres=${e}&page_size=${40}`);
+export const getSameGenre = async (e: number, gameID: number) => {
+    const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&genres=${e}&page_size=${40}`, {
+        next: {
+            revalidate: 86400,
+            tags: [`games-for-genre-${e}`]
+        }
+    });
 
     if (!response.ok) {
         throw new Error("Ha ocurrido un error al intentar buscar juegos del mismo genero");
@@ -307,7 +334,7 @@ export const getSameGenre = async (e: number) => {
 
     const data = await response.json();
     const maxOffersNumber = 10;
-    const resultGames = [];
+    const resultGames: GameStandardContainerType[] = [];
 
     const listOfStores = await searchForStore();
 
@@ -320,15 +347,16 @@ export const getSameGenre = async (e: number) => {
     for (const game of data.results) {
         // Si ya tenemos 10 juegos, cortamos
         if (resultGames.length >= maxOffersNumber) break;
+        if (game.id === gameID) continue;
 
         const gameOffers = await searchOffers(game.name);
 
-        // Saltar si no hay ofertas
+        // Saltar si no hay ofertas o si el juego es el mismo
         if (!gameOffers || gameOffers.length === 0) {
             continue
         }
 
-        const validOffers = gameOffers.filter((offer: any) => offer.isOnSale === "1");
+        const validOffers = gameOffers.filter((offer: any) => offer.isOnSale === "1" && offer.gameID !== gameID);
 
         if (validOffers.length > 0) {
             const bestOffer = validOffers.reduce((best: GameDealWithoutScore, current: GameDealWithoutScore) =>
@@ -337,15 +365,16 @@ export const getSameGenre = async (e: number) => {
 
             const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === bestOffer.storeID);
             const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
+            const inCaseOfErrorImage = listOfStores[Number(inCaseOfError[0].storeID)];
 
             resultGames.push({
                 title: game.name,
                 gameImage: game.background_image,
-                discount: bestOffer.savings,
-                oldPrice: bestOffer.oldPrice,
-                currentPrice: bestOffer.salePrice,
-                platforms: platforms.PC,
-                webOffer: storeImage,
+                discount: `${Number(bestOffer.savings).toFixed(0)}%`,
+                oldPrice: `${bestOffer.normalPrice}€`,
+                currentPrice: `${bestOffer.salePrice}€`,
+                platform: platforms.PC,
+                webOffer: storeImage?.image ?? inCaseOfErrorImage,
             });
         }
 

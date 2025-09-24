@@ -3,18 +3,29 @@
 import React, { useState } from "react"
 import FranchiseCard from "@/components/general/franchise-games-card/franchise-card"
 import styles from "@/styles/layout/gamepage/franchise.module.scss"
+import { Franchise } from "@/types/types"
 
-const FranchiseController = () => {
+interface FranchiseController {
+    franchiseData: Franchise[]
+}
+
+const FranchiseController = ({ franchiseData }: FranchiseController) => {
     const [isExtended, setIsExtended] = useState(false)
 
-    const allFranchiseElements = [
-        <FranchiseCard key={1} />,
-        <FranchiseCard key={2} />,
-        <FranchiseCard key={3} />,
-        <FranchiseCard key={4} />,
-        <FranchiseCard key={5} />,
-        <FranchiseCard key={6} />
-    ]
+    const allFranchiseElements = franchiseData
+        .filter((e: any) => e.offer !== null)
+        .map((e: any, index: number) => (
+            <FranchiseCard
+                key={index}
+                gameTitle={e.title}
+                releaseDate={e.released_date}
+                currentPrice={`${e.offer.salePrice}€`}
+                discount={`${Number(e.offer.savings).toFixed(0)}%`}
+                link={e.link}
+                headerImage={e.header_image}
+                webOffer={e.offer.storeImage.image}
+            />
+        ));
 
     const shouldShowButton = allFranchiseElements.length > 3
 
