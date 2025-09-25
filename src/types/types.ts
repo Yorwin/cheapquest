@@ -163,7 +163,7 @@ export interface dealStoreData {
 }
 
 export interface VerticalCardWrapperType {
-    gameImage: StaticImageData,
+    gameImage: StaticImageData | string,
     title: string,
     platform: StaticImageData | string,
     discount: string,
@@ -179,7 +179,7 @@ export interface VerticalCardContainerType {
     oldPrice: string,
     currentPrice: string,
     webOffer: StaticImageData,
-    children: React.ReactNode,
+    children?: React.ReactNode,
 }
 
 export interface bestOfferType {
@@ -296,7 +296,7 @@ export interface responsiveMobileDesignProps {
 }
 
 export interface verticalContainerProps {
-    offersData: GameStandardContainerType[];
+    offersData: VerticalCardWrapperType[];
 }
 
 export interface bestOffer {

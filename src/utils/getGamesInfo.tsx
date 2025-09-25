@@ -22,7 +22,7 @@ export const getMostPopularGame = async (retries = 3) => {
             /* Get Game Info */
             const res = await fetch(`${url}`, {
                 next: {
-                    revalidate: 3600,
+                    revalidate: 43200,
                     tags: ['main-game-info', 'main-game-search']
                 },
             });

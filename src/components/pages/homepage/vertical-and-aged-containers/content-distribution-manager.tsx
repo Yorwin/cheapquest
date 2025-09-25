@@ -3,7 +3,7 @@
 import React from "react";
 import useWindowWidth from "@/functions/hooks/useWindowWidth";
 import SkeletonLoader from "@/components/general/skelettonLoader";
-import { GameStandardContainerType } from "@/types/types";
+import { GameStandardContainerType, VerticalCardContainerType, VerticalCardWrapperType } from "@/types/types";
 
 /* Responsive Containers */
 import IsDesktop from "../../../general/vertical-card/responsive-elements/isDesktop";
@@ -11,7 +11,7 @@ import IsMobile from "../../../general/vertical-card/responsive-elements/isMobil
 import IsTablet from "../../../general/vertical-card/responsive-elements/isTablet";
 
 interface ContentDistributionType {
-    gameInfo: GameStandardContainerType[];
+    gameInfo: VerticalCardWrapperType[];
 }
 
 const ContentDistributionManager = ({ gameInfo }: ContentDistributionType) => {

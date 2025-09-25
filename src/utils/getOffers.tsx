@@ -109,7 +109,7 @@ export const getNewDeals = async (retries = 3) => {
             const data = await response.json();
             const removeDuplicates = removeDuplicatesByBestPrice(data);
 
-            const newDeals: GameDealWithoutScore[] = removeDuplicates.slice(0, 10);
+            const newDeals: GameDealWithoutScore[] = removeDuplicates.slice(0, 8);
 
             return newDeals;
         } catch (error) {
@@ -138,7 +138,7 @@ export const getAgedLikeWineGames = async (retries = 3) => {
             let agedLikeWineGames: any[] = [];
             let allFoundOffers: GameDealWithoutScore[] = []; // Cache
             let page: number = 1;
-            const targetCount: number = 10;
+            const targetCount: number = 8;
             const maxPages: number = 1;
 
             // Niveles de exigencia decrecientes
@@ -330,7 +330,7 @@ export const offersByPercentage = async () => {
 
     const filteredOffers = res.filter((offer: GameDeal) => !offer.title.includes("Bundle"));
 
-    const bestOffers = filteredOffers.slice(0, 10);
+    const bestOffers = filteredOffers.slice(0, 8);
 
     const completeDataPromises = bestOffers.map(async (offer: GameDeal) => {
         const title = offer.title;
@@ -351,17 +351,17 @@ export const offersByPercentage = async () => {
 
 /* GET HISTORIC LOWS */
 
-export const historicLows = async () => {
+export const historicalLows = async () => {
     const historicalLows: any[] = [];
     let pageNumber = 0;
-    const targetElements = 10; // Número mínimo de elementos que queremos
+    const targetElements = 8; // Número mínimo de elementos que queremos
 
     while (historicalLows.length < targetElements) {
         const requestAAAGames = await fetch(
             `https://www.cheapshark.com/api/1.0/deals?onSale=1&AAA=1&pageNumber=${pageNumber}&pageSize=30`,
             {
                 next: {
-                    revalidate: 3600,
+                    revalidate: 21600,
                     tags: [`deals-AAA-games-pagenumber${pageNumber + 1}`]
                 }
             }
@@ -373,6 +373,8 @@ export const historicLows = async () => {
         }
 
         const AAAGamesData = await requestAAAGames.json();
+
+        console.log(AAAGamesData);
 
         // Si no hay más resultados, salir del loop
         if (!AAAGamesData || AAAGamesData.length === 0) {

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "@/styles/layout/homepage/list-format-offers.module.scss"
 import Image from "@/resources/offer-img/image.jpg"
-import { offersByPercentage, historicLows } from "@/utils/getOffers";
+import { offersByPercentage, historicalLows } from "@/utils/getOffers";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
 import ContentDistributionManager from "./content-distribution-manager";
 import Button from "@/components/general/buttons-container";
@@ -32,9 +32,9 @@ const ListFormatOffers = async () => {
             }
         })
 
-        const historical = await historicLows();
+        const historical = await historicalLows();
 
-        const historicalLows = historical.map((e) => {
+        const historicalLowsOffers = historical.map((e) => {
             if (e) {
                 return {
                     offerImage: e.background_image,
@@ -58,7 +58,7 @@ const ListFormatOffers = async () => {
 
         return <>
             <section className={styles["list-format-offers-container"]}>
-                <ContentDistributionManager offersByPercentage={bestOffersByPercentage} historicLowsOffers={historicalLows}></ContentDistributionManager>
+                <ContentDistributionManager offersByPercentage={bestOffersByPercentage} historicLowsOffers={historicalLowsOffers}></ContentDistributionManager>
             </section>
         </>
     } catch (error) {

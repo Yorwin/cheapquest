@@ -3,12 +3,13 @@ import styles from "@/styles/layout/homepage/vertical-offers.module.module.scss"
 import { getAgedLikeWineGames } from "@/utils/getOffers";
 import searchForStore from "@/utils/seachForStore";
 import { storeLogos } from "@/resources/stores_icons";
-import { GameDealWithoutScore, StoreLogo } from "@/types/types";
+import { GameDealWithoutScore, StoreLogo, VerticalCardWrapperType } from "@/types/types";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
 import { getGameInfo } from "@/utils/getGamesInfo";
 import ErrorGameStandard, { inCaseOfError } from "@/components/general/error-loading-offers-fallback-container";
 import ContentDistributionManager from "./content-distribution-manager";
+import { StaticImageData } from "next/image";
 
 const AgedLikeWine = async () => {
     try {
@@ -25,7 +26,7 @@ const AgedLikeWine = async () => {
             PlayStation: "bi bi-playstation",
         }
 
-        const agedLikeWine = [];
+        const agedLikeWine: VerticalCardWrapperType[] = [];
 
         for (let i = 0; i <= AgedLikeWineGames.length - 1; i++) {
 
@@ -48,7 +49,7 @@ const AgedLikeWine = async () => {
 
             const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === AgedLikeWineGames[i].storeID);
             const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
-            const inCaseOfErrorImage = listOfStores[Number(inCaseOfError[0].storeID)];
+            const inCaseOfErrorImage: StaticImageData = listOfStores[Number(inCaseOfError[0].storeID)];
 
             agedLikeWine.push({
                 gameImage: gameImage,
@@ -57,7 +58,7 @@ const AgedLikeWine = async () => {
                 currentPrice: `${resultPrice}€`,
                 discount: `${Number(discount).toFixed(0)}%`,
                 platform: platforms.PC,
-                webOffer: storeImage ? storeImage.image : inCaseOfErrorImage,
+                webOffer: storeImage?.image ?? inCaseOfErrorImage,
             })
         }
 

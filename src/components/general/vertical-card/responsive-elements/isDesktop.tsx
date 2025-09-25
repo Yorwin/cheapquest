@@ -4,7 +4,7 @@ import VerticalGameCardWrapper from "@/components/general/vertical-card/vertical
 
 const IsDesktop = ({ offersData }: verticalContainerProps) => {
 
-    const verticalCardFirstRow = offersData.slice(0, 5).map((e, index) => {
+    const verticalCardFirstRow = offersData.slice(0, 4).map((e, index) => {
         return (
             <div className="col" key={index}>
                 <VerticalGameCardWrapper
@@ -21,7 +21,7 @@ const IsDesktop = ({ offersData }: verticalContainerProps) => {
         )
     });
 
-    const verticalCardSecondRow = offersData.slice(5, 10).map((e, index) => {
+    const verticalCardSecondRow = offersData.slice(4, 8).map((e, index) => {
         return (
             <div className="col" key={index}>
                 <VerticalGameCardWrapper
@@ -39,10 +39,10 @@ const IsDesktop = ({ offersData }: verticalContainerProps) => {
 
     return (
         <div className="container-fluid p-0">
-            <div className="row row-cols-5 g-3 mb-4">
+            <div className="row row-cols-4 g-3 mb-4">
                 {verticalCardFirstRow}
             </div>
-            <div className="row row-cols-5 g-3 mb-4">
+            <div className="row row-cols-4 g-3 mb-4">
                 {verticalCardSecondRow}
             </div>
         </div>

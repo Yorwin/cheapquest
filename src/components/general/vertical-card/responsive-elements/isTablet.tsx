@@ -8,7 +8,7 @@ const IsTablet = ({ offersData }: verticalContainerProps) => {
     const carouselRef = useRef<HTMLDivElement | null>(null);
 
     // Mapeamos las tarjetas (ejemplo: máx 10)
-    const verticalCards = offersData.slice(0, 10).map((item, index) => (
+    const verticalCards = offersData.slice(0, 8).map((item, index) => (
         <div key={index} className={styles["card-wrapper"]}>
             <VerticalGameCardWrapper
                 gameImage={item.gameImage}
