@@ -212,42 +212,34 @@ export const getTimeSinceRelease = (releaseDate: number) => {
 };
 
 
+const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
+
 export const fetchGamesInfoCheapShark = async (gamesData: GameDealWithoutScore[]) => {
     const gamesPrices = [];
-    const chunkSize = 5;
-    const delayMs = 5000;
 
-    for (let i = 0; i < gamesData.length; i += chunkSize) {
-        const chunk = gamesData.slice(i, i + chunkSize);
+    for (let i = 0; i < gamesData.length; i++) {
 
-        // Ejecutamos las requests en paralelo dentro del chunk
-        const results = await Promise.all(
-            chunk.map(async ({ gameID }) => {
-                try {
-                    const res = await fetch(`https://www.cheapshark.com/api/1.0/games?id=${gameID}`, {
-                        next: {
-                            revalidate: 3600,
-                            tags: [`offers-for-gameID=${gameID}`, `historical-low-offers`]
-                        }
-                    });
-                    if (!res.ok) {
-                        console.warn(`No data for gameID ${gameID}, status: ${res.status}`);
-                        return null;
-                    }
-                    return await res.json();
-                } catch (err) {
-                    console.error(`Error fetching gameID ${gameID}:`, err);
-                    return null;
+        const { gameID } = gamesData[i];
+
+        try {
+            const res = await fetch(`https://www.cheapshark.com/api/1.0/games?id=${gameID}`, {
+                next: {
+                    revalidate: 3600,
+                    tags: [`offers-for-gameID=${gameID}`, `historical-low-offers`]
                 }
-            })
-        );
+            });
+            if (!res.ok) {
+                console.warn(`No data for gameID ${gameID}, status: ${res.status}`);
+            } else {
+                gamesPrices.push(await res.json());
+            }
+        } catch (err) {
+            console.error(`Error fetching gameID ${gameID}:`, err);
+        }
 
-        // Guardamos solo los resultados válidos
-        gamesPrices.push(...results.filter(r => r !== null));
-
-        // Pequeña pausa antes del siguiente chunk
-        if (i + chunkSize < gamesData.length) {
-            await new Promise(r => setTimeout(r, delayMs));
+        // delay de 100ms entre llamadas
+        if (i < gamesData.length - 1) {
+            await sleep(100);
         }
     }
 

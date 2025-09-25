@@ -2,6 +2,7 @@ import "server-only";
 import { fetchGamesInfoCheapShark, getTop11Deals, removeDuplicatesByBestPrice } from "@/functions/functions";
 import { GameDeal, GameDealWithoutScore, gameOfferInfo, dealsInfoOffer } from "@/types/types";
 import { getGameInfo } from "./getGamesInfo";
+import GamePage from "@/app/game-page/[...game]/page";
 
 const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
@@ -379,6 +380,8 @@ export const historicLows = async () => {
         }
 
         const gamesPrices = await fetchGamesInfoCheapShark(AAAGamesData);
+
+        console.log(gamesPrices);
 
         const filteredGames = gamesPrices.filter((game: gameOfferInfo) => {
             // Si falta cheapestPriceEver o deals, lo descartamos
