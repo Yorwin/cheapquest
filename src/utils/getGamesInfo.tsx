@@ -1,4 +1,5 @@
 import "server-only";
+
 import { getThreeYearsDateRange, calculatePopularityScore, slugToGameName, formatDateES, createGameSlug } from "@/functions/functions";
 import { searchOffers } from "./getOffers";
 import { bestOfferType, GameDealWithoutScore, GameDeal, dealStoreData, StoreLogo, publishersAndDevelopersType, tag, developerAndPublisherType, Genre, getGameDataProps, gameData, GameStandardContainerType } from "@/types/types";

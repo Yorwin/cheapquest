@@ -11,9 +11,11 @@ import GameTags from "@/components/pages/game-page/game-tags";
 import OfficialStoreList from "@/components/pages/game-page/official-store-list";
 import FranchiseGames from "@/components/pages/game-page/franchise-games";
 import RelatedOffers from "@/components/pages/game-page/related-offers/related-offers";
+import SafeRender from "@/components/general/safe-render";
+
 import { getGameInfoGamePage } from "@/utils/getGamesInfo";
 import { slugToGameName } from "@/functions/functions";
-import SafeRender from "@/components/general/safe-render";
+import { Metadata } from "next";
 
 interface ParamsGame {
     params: {
@@ -21,10 +23,41 @@ interface ParamsGame {
     };
 }
 
+// -------------------- METADATA DINÁMICA --------------------
+export async function generateMetadata({ params }: ParamsGame): Promise<Metadata> {
+    const gameSlug = params.game[0];
+    const gameName = slugToGameName(gameSlug);
+
+    // Usamos fetch con revalidate para cache (12 horas)
+    const getGameInfo = await getGameInfoGamePage(gameName);
+
+    const title = getGameInfo.title;
+    const bestOffer = getGameInfo.bestOffer;
+
+    return {
+        title: `${title} - Mejor oferta: ${bestOffer.discount} de descuento`,
+        description: `Compra ${title} por ${bestOffer.normalPrice} en ${bestOffer.store}. ¡Ahorra ${bestOffer.discount}%!`,
+        openGraph: {
+            title: `${title} - Mejor oferta: ${bestOffer.discount}% de descuento`,
+            description: `Compra ${title} por ${bestOffer.normalPrice} en ${bestOffer.store}. ¡Ahorra ${bestOffer.discount}%!`,
+            images: [bestOffer.offerImage],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: `${title} - Mejor oferta: ${bestOffer.discount}% de descuento`,
+            description: `Compra ${title} por ${bestOffer.normalPrice} en ${bestOffer.store}. ¡Ahorra ${bestOffer.discount}%!`,
+            images: [bestOffer.offerImage],
+        },
+    };
+}
+
+// -------------------- COMPONENTE PRINCIPAL --------------------
 const GamePage = async ({ params }: ParamsGame) => {
-    const parameters = params.game[0];
-    const formatParemeter = slugToGameName(parameters);
-    const getGameInfo = await getGameInfoGamePage(formatParemeter);
+    const gameSlug = params.game[0];
+    const gameName = slugToGameName(gameSlug);
+
+    // ✅ Mismo fetch que en generateMetadata, solo se hace una vez
+    const getGameInfo = await getGameInfoGamePage(gameName);
 
     return (
         <article className="main-article-gamepage">

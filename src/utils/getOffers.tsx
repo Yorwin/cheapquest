@@ -97,7 +97,7 @@ export const getNewDeals = async (retries = 3) => {
         try {
             const response = await fetch("https://www.cheapshark.com/api/1.0/deals?maxAge=12&onSale=1&sortBy=DealRating", {
                 next: {
-                    revalidate: 3600,
+                    revalidate: 43200,
                     tags: ["new-deals-info"]
                 }
             })
@@ -380,8 +380,6 @@ export const historicLows = async () => {
         }
 
         const gamesPrices = await fetchGamesInfoCheapShark(AAAGamesData);
-
-        console.log(gamesPrices);
 
         const filteredGames = gamesPrices.filter((game: gameOfferInfo) => {
             // Si falta cheapestPriceEver o deals, lo descartamos
