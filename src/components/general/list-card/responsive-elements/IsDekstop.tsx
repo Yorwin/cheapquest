@@ -27,7 +27,7 @@ const IsDesktop = ({ offersByPercentage, historicLowsOffers }: ContentDistributi
                 discountPercentage={e.discountPercentage}
             />
         )
-    });
+    }); 
 
     const listHistoricLows = historicLowsOffers.map((e, index) => {
 
@@ -59,7 +59,7 @@ const IsDesktop = ({ offersByPercentage, historicLowsOffers }: ContentDistributi
                 <div className="col-md-6 col-sm-12">
                     <h1 className={styles["title"]}>BAJOS HISTORICOS</h1>
                     <article className={styles["list-offer-format-container"]}>
-                        {listHistoricLows}
+                        {/* listHistoricLows */}
                     </article>
                 </div>
             </div>
