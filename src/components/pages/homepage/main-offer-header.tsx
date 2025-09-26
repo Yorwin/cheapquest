@@ -7,6 +7,7 @@ import { getMostPopularGame } from "@/utils/getGamesInfo";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
 import { createGameSlug } from "@/functions/functions";
+import MainOfferImage from "@/components/general/main-offer-image";
 
 const MainOffer = async () => {
     try {
@@ -31,15 +32,7 @@ const MainOffer = async () => {
             <>
                 <article className={styles["main-offer-container"]}>
                     <Link href={`/game-page/${offerInfo.link}`} className={styles["click-overlay"]} aria-label={`Ver ${getGame.name}`} />
-                    <Image
-                        src={offerInfo.gameImage}
-                        alt="Mejor oferta y más popular del momento"
-                        className={styles["main-header-image"]}
-                        width={1920}
-                        height={1080}
-                        sizes="100vw"
-                        priority
-                    />
+                    <MainOfferImage gameImage={offerInfo.gameImage}/>
                     <div className={styles["overlay"]}></div>
                     <section className={styles["offer"]}>
                         <h1 className={styles["offer-title"]}>{offerInfo.gameName}</h1>

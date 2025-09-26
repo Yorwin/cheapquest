@@ -2,15 +2,16 @@ import React from "react";
 import styles from "@/styles/layout/header.module.scss"
 import Image from "next/image";
 import Link from "next/link";
-import LogoImg from "@/resources/logo/logo.webp";
+import LogoImg from "@/resources/logo/darkbackground-logo.webp";
 import OffersButton from "./component/button-offers";
+import HeaderMainContainer from "./component/header-main-container";
 
 const Header = () => {
     return (
         <>
             {/* Header Section */}
 
-            <div className={styles["header-main-container"]}>
+            <HeaderMainContainer>
                 <ul className={styles["headers-list"]}>
 
                     {/* Logo */}
@@ -23,7 +24,7 @@ const Header = () => {
                                 sizes="50vw"
                                 alt="Logo"
                                 fill
-                                style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                                style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                         </div>
                     </li>
 
@@ -47,7 +48,7 @@ const Header = () => {
                         </Link>
                     </li>
                 </ul>
-            </div>
+            </HeaderMainContainer>
         </>
     );
 }
