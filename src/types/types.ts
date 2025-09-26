@@ -120,6 +120,7 @@ export interface GameDeal {
     storeID: string;
     thumb: string;
     title: string;
+    url?: string;
 }
 
 export type Top11Deals = (gameDeal: GameDealWithoutScore[]) => GameDeal[];
@@ -305,6 +306,7 @@ export interface bestOffer {
     normalPrice: string,
     offerImage: string,
     store: StoreLogo | undefined,
+    url?: string,
 }
 
 export interface comparisonOfferType {
@@ -312,8 +314,8 @@ export interface comparisonOfferType {
     currentPrice: string,
     discount: string,
     normalPrice: string,
-    released: string,
-    store: StoreLogo
+    store: StoreLogo | undefined,
+    url?: string,
 }
 
 export interface translationType {

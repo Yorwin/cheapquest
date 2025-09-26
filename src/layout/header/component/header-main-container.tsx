@@ -1,13 +1,17 @@
 "use client"
 
 import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import styles from "@/styles/layout/header.module.scss"
 
 const HeaderMainContainer = ({ children }: { children: React.ReactNode }) => {
 
+    const pathname = usePathname();
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
+        if (pathname === "/search") setScrolled(true);
+
         const handleScroll = () => {
             setScrolled(window.scrollY > 0);
         };

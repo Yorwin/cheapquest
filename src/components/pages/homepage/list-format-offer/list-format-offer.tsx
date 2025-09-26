@@ -4,7 +4,7 @@ import Image from "@/resources/offer-img/image.jpg"
 import { offersByPercentage, historicalLows } from "@/utils/getOffers";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
 import ContentDistributionManager from "./content-distribution-manager";
-import Button from "@/components/general/buttons-container";
+import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
 
 const ListFormatOffers = async () => {
     try {
@@ -13,7 +13,7 @@ const ListFormatOffers = async () => {
         const bestOffersByPercentage = offers.map(offer => {
             if (offer) {
                 return {
-                    offerImage: offer.background_image,
+                    offerImage: offer.background_image !== null ? offer.background_image : NoImageFound.src,
                     gameTitle: offer.title,
                     gameDescription: "Example Game",
                     oldPrice: `${offer.normalPrice}€`,
@@ -34,15 +34,15 @@ const ListFormatOffers = async () => {
 
         const historical = await historicalLows();
 
-        const historicalLowsOffers = historical.map((e) => {
-            if (e) {
+        const historicalLowsOffers = historical.map((offer) => {
+            if (offer) {
                 return {
-                    offerImage: e.background_image,
-                    gameTitle: e.title,
+                    offerImage: offer.background_image !== null ? offer.background_image : NoImageFound.src,
+                    gameTitle: offer.title,
                     gameDescription: "Example Game",
-                    oldPrice: `${e.bestDeal.retailPrice}€`,
-                    currentPrice: `${e.bestDeal.price}€`,
-                    discountPercentage: `${Number(e.bestDeal.savings).toFixed(0)}%`
+                    oldPrice: `${offer.bestDeal.retailPrice}€`,
+                    currentPrice: `${offer.bestDeal.price}€`,
+                    discountPercentage: `${Number(offer.bestDeal.savings).toFixed(0)}%`
                 }
             } else {
                 return {

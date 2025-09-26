@@ -10,6 +10,7 @@ import { getGameInfo } from "@/utils/getGamesInfo";
 import ErrorGameStandard, { inCaseOfError } from "@/components/general/error-loading-offers-fallback-container";
 import ContentDistributionManager from "./content-distribution-manager";
 import { StaticImageData } from "next/image";
+import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
 
 const AgedLikeWine = async () => {
     try {
@@ -36,7 +37,7 @@ const AgedLikeWine = async () => {
             const getInfo = await getGameInfo(AgedLikeWineGames[i].title);
 
             const gameTitle = AgedLikeWineGames[i].title;
-            const gameImage = getInfo.results[0].background_image;
+            const gameImage = getInfo.results[0].background_image !== null ? getInfo.results[0].background_image : NoImageFound.src;
             const discount = AgedLikeWineGames[i].savings;
             const price: number = Number(AgedLikeWineGames[i].salePrice);
             const regularPrice: number = AgedLikeWineGames[i].normalPrice;

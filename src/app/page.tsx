@@ -14,9 +14,7 @@ const HomePage = async () => {
     <MostPopularOffer />
     <NewOffers />
     <AgedLikeWine />
-    {/* 
     <ListFormatOffers />
-    */}
     <Reviews />
     <Categories />
   </>

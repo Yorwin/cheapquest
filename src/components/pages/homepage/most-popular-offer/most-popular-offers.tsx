@@ -6,17 +6,18 @@ import { getMostPopularOffers } from "@/utils/getOffers";
 import searchForStore from "@/utils/seachForStore";
 import { getGameInfo } from "@/utils/getGamesInfo";
 import currencyRateCalculator from "@/utils/convertCurrency";
-import { Currency, GameDeal } from "@/types/types";
+import { Currency } from "@/types/types";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
 import ContentDistributionManager from "./content-distribution-manager";
+import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
 
 const MostPopularOffer = async () => {
     try {
         const Offers = await getMostPopularOffers();
         const listOfStores = await searchForStore();
         let maxIndex: number = 10;
-        
-        if(!Offers) {
+
+        if (!Offers) {
             throw new Error("Error al intentar cargar las ofertas más populares");
         }
 
@@ -35,7 +36,7 @@ const MostPopularOffer = async () => {
             const convertRegularPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(Offers[i].normalPrice));
             const resultRegularPrice = (convertRegularPrice).toFixed(2);
 
-            const gameImage = getGame.results[0].background_image;
+            const gameImage = getGame.results[0].background_image !== null ? getGame.results[0].background_image : NoImageFound.src;
 
             listInfo.push({
                 title: Offers[i].title,

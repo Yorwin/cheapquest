@@ -107,14 +107,31 @@ $box-shadow-discount: 17px 0px 72px -11px rgba(0, 0, 0, 1);
 }
 
 @media screen and (max-width: 768px) {
+    .main-header-image {
+        width: 140%;
+    }
+
     @include responsive-main-offer(420px, 5%, 2rem, 1.2rem, 1.4rem, 1.8rem, 0.5rem);
 }
 
 @media screen and (max-width: 568px) {
+
+    .main-header-image {
+        width: 150%;
+        height: 400px;
+        object-fit: cover;
+    }
+
     @include responsive-main-offer(340px, 5%, 1.6rem, 0.5rem, 1.2rem, 1.5rem, 0.5rem);
 
     // Ajuste específico para el padding del discount en mobile
     .discount {
         @include discount-style(.3rem, 600, 1.2rem, $font-family);
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .main-header-image {
+        height: 500px;
     }
 }

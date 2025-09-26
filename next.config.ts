@@ -20,6 +20,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'hb.imgix.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'sttc.gamersgate.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.gog-statics.com',
+      },
     ],
   },
 };

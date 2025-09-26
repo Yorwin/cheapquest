@@ -30,20 +30,55 @@ const Header = () => {
 
                     {/* Links */}
 
+                    {/* 
                     <li>
                         <OffersButton>
                             Ofertas
                             <i className="bi bi-caret-down"></i>
                         </OffersButton>
                     </li>
+                    */}
+
+                    {/* Más Populares */}
+
                     <li className={styles["next-releases-item"]}>
-                        <Link href="/next-releases">Proximos Lanzamientos</Link>
+                        <Link href="/next-releases">Más populares</Link>
                     </li>
-                    <li>
-                        <Link href="/login-page">Iniciar sesión</Link>
+
+                    {/* Nuevas Ofertas */}
+
+                    <li className={styles["next-releases-item"]}>
+                        <Link href="/next-releases">Nuevas Ofertas</Link>
                     </li>
-                    <li className={styles["search"]}>
-                        <Link href={"/search"}>
+
+                    {/* Vintage */}
+
+                    <li className={styles["next-releases-item"]}>
+                        <Link href="/next-releases">Vintage</Link>
+                    </li>
+
+                    {/* % de Descuento */}
+
+                    <li className={styles["next-releases-item"]}>
+                        <Link href="/next-releases">% de Descuento</Link>
+                    </li>
+
+                    {/* Bajos historicos */}
+
+                    <li className={styles["next-releases-item"]}>
+                        <Link href="/next-releases">Bajos historicos</Link>
+                    </li>
+
+                    {/* Categorias*/}
+
+                    <li className={styles["next-releases-item"]}>
+                        <Link href="/next-releases">Categorías</Link>
+                    </li>
+
+                    {/* Search */}
+
+                    <li className={styles["search-container"]}>
+                        <Link href={"/search"} className={styles["search"]}>
                             <i className="bi bi-search"></i>
                         </Link>
                     </li>

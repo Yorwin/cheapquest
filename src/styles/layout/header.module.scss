@@ -42,7 +42,7 @@
     background-color: transparent;
     backdrop-filter: none;
     transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-    z-index: 1000;
+    z-index: 9998;
 }
 
 .header-main-container.scrolled {
@@ -94,8 +94,18 @@
     height: 100%;
 }
 
-.search {
+.search-container {
     margin-left: 1rem;
+}
+
+.search {
+    i {
+        transition: font-size ease-in .3s;
+
+        &:hover {
+            font-size: 1.4rem;
+        }
+    }
 }
 
 .click-overlay {

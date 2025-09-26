@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "@/styles/components/offer-card.module.scss"
 import Image from "next/image";
+import Link from "next/link";
 import { bestOffer } from "@/types/types";
 
 interface offerCardProps {
@@ -36,9 +37,14 @@ const OfferCard = ({ title, offer }: offerCardProps) => {
                 </div>
                 <span className={styles["current-price"]}>{offer.currentPrice}</span>
             </div>
-            <button className={styles["offer-button"]}>
+            <Link
+                href={`${offer.url}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles["offer-button"]}
+            >
                 Ir a la oferta
-            </button>
+            </Link>
         </section>
     )
 };

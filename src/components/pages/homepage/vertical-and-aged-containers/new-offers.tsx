@@ -8,13 +8,14 @@ import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
 import ContentDistributionManager from "./content-distribution-manager";
+import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
 
 const NewOffers = async () => {
     try {
         const newDeals = await getNewDeals();
         const listOfStores = await searchForStore();
 
-        if(!newDeals) {
+        if (!newDeals) {
             throw new Error("Se ha producido un error");
         }
 
@@ -41,7 +42,7 @@ const NewOffers = async () => {
             const resultRegularPrice = (convertRegularPrice).toFixed(2);
 
             newOffers.push({
-                gameImage: result.background_image,
+                gameImage: result.background_image !== null ? result.background_image : NoImageFound.src,
                 title: newDeals[i].title,
                 oldPrice: `${resultRegularPrice}€`,
                 currentPrice: `${resultPrice}€`,

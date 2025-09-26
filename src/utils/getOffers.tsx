@@ -42,6 +42,32 @@ export const searchOffers = async (e: string) => {
     }
 };
 
+/* Search Deal Info */
+
+export const searchDealInfo = async (id: string) => {
+    try {
+
+        const url = `https://www.cheapshark.com/api/1.0/deals?id=${id}`;
+        const request = await fetch(`${url}`, {
+            next : {
+                revalidate: 3600,
+                tags: [`offers-for-game-${id}`]
+            }
+        });
+
+        if (!request.ok) {
+            throw new Error(`Error al intentar obtener la información de la oferta ${request.status}`);
+        }
+
+        const res = await request.json();
+
+        return res;
+
+    } catch (error) {
+        console.error(`Error trying to get deal info ${error}`);
+    }
+};
+
 /* GET MOST POPULAR OFFERS */
 
 export const getMostPopularOffers = async (retries = 3) => {
@@ -373,8 +399,6 @@ export const historicalLows = async () => {
         }
 
         const AAAGamesData = await requestAAAGames.json();
-
-        console.log(AAAGamesData);
 
         // Si no hay más resultados, salir del loop
         if (!AAAGamesData || AAAGamesData.length === 0) {

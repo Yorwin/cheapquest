@@ -86,27 +86,34 @@ const Search = async () => {
 
                     {/* Rango de precio */}
                     <div className="row mb-5">
-                        <div className={`col-12 ${styles["number-limits-container"]}`}>
-                            <label htmlFor="starting-price">Entre</label>
-                            <input
-                                type="number"
-                                id="starting-price"
-                                name="starting-price-value"
-                                defaultValue={0}
-                                min={0}
-                                max={120}
-                                step={1}
-                            />
-                            <label htmlFor="finishing-price">y</label>
-                            <input
-                                type="number"
-                                id="finishing-price"
-                                name="finishing-price-value"
-                                defaultValue={200}
-                                min={0}
-                                max={120}
-                                step={1}
-                            />
+                        <div className="col-12 d-flex justify-content-center gap-4">
+                            <div className={styles["number-limits-container"]}>
+                                <label htmlFor="starting-price">Entre</label>
+                                <input
+                                    type="number"
+                                    id="starting-price"
+                                    name="starting-price-value"
+                                    defaultValue={0}
+                                    min={0}
+                                    max={120}
+                                    step={1}
+                                />
+                                <label htmlFor="finishing-price">y</label>
+                                <input
+                                    type="number"
+                                    id="finishing-price"
+                                    name="finishing-price-value"
+                                    defaultValue={200}
+                                    min={0}
+                                    max={120}
+                                    step={1}
+                                />
+                            </div>
+                            <div className={styles["button-search"]}>
+                                <button>
+                                    Buscar
+                                </button>
+                            </div>
                         </div>
                     </div>
 

@@ -1,38 +1,35 @@
 import React from "react";
-import styles from "@/styles/components/store-card.module.scss"
+import styles from "@/styles/components/store-card.module.scss";
 import Image from "next/image";
 import { comparisonOfferType } from "@/types/types";
+import Link from "next/link";
 
 const StoreCard = ({ offersData }: { offersData: comparisonOfferType }) => {
-
-    const storeOfferImage = offersData.store.image ? offersData.store.image : null;
-
     return (
         <div className={styles["store-card-container"]}>
-
             <div className={styles["image-container"]}>
-                {storeOfferImage && (
+                {offersData.store?.image && (
                     <Image
                         className={styles["image"]}
-                        src={storeOfferImage}
-                        alt="Store"
+                        src={offersData.store.image}
+                        alt={offersData.store.name ?? "Store"}
                         sizes="35vw"
                     />
                 )}
             </div>
+
             <div className={styles["offer-data"]}>
-
                 {/* Offer Info */}
-
                 <div className={styles["offer-info-container"]}>
                     <h3>{offersData.gameTitle}</h3>
-                    <div className={styles["offer-specs"]}>
-                        <span>{offersData.store.name}</span>
-                    </div>
+                    {offersData.store?.name && (
+                        <div className={styles["offer-specs"]}>
+                            <span>{offersData.store.name}</span>
+                        </div>
+                    )}
                 </div>
 
                 {/* Prices Container */}
-
                 <div className={styles["price-and-cta-container"]}>
                     <div className={styles["prices-container"]}>
                         <span className={styles["discount"]}>
@@ -45,13 +42,18 @@ const StoreCard = ({ offersData }: { offersData: comparisonOfferType }) => {
                     </div>
 
                     {/* Go to the Offer Button */}
-                    <button className={styles["action-button"]}>
+                    <Link
+                        href={`${offersData.url}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles["action-button"]}
+                    >
                         Ir a la oferta
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>
-    )
+    );
 };
 
 export default StoreCard;

@@ -1,0 +1,58 @@
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+    z-index: 9999;
+    pointer-events: all;
+}
+
+.image-loading-icon {
+    width: 250px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Opcional: animación de barras */
+
+.brand-bars {
+    display: flex;
+    gap: 5px;
+    margin: 1rem 0;
+}
+
+.brand-bar {
+    width: 10px;
+    height: 30px;
+    background-color: #494A7F;
+    animation: bounce 0.6s infinite alternate;
+}
+
+.brand-bar:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.brand-bar:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.brand-bar:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+@keyframes bounce {
+    from {
+        transform: scaleY(0.3);
+    }
+
+    to {
+        transform: scaleY(1);
+    }
+}

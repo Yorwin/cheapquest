@@ -217,7 +217,7 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export const fetchGamesInfoCheapShark = async (gamesData: GameDealWithoutScore[]) => {
     const gamesPrices = [];
     const chunkSize = 5;       // nº de requests paralelas por batch
-    const delayBetweenChunks = 4000; // ms entre batches
+    const delayBetweenChunks = 2000; // ms entre batches
     const delayBetweenCalls = 100;   // ms entre llamadas dentro del batch (opcional)
 
     for (let i = 0; i < gamesData.length; i += chunkSize) {
@@ -229,7 +229,7 @@ export const fetchGamesInfoCheapShark = async (gamesData: GameDealWithoutScore[]
             try {
                 const res = await fetch(`https://www.cheapshark.com/api/1.0/games?id=${gameID}`, {
                     next: {
-                        revalidate: 3600,
+                        revalidate: 21600,
                         tags: [`offers-for-gameID=${gameID}`, `historical-low-offers`]
                     }
                 });

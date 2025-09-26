@@ -99,6 +99,8 @@ $current-price-shadow: 1px 0 #000,
 .offer-button {
     width: 50%;
     padding: 0.4rem;
+    text-decoration: none;
+    text-align: center;
     background-color: $background-color-button;
     color: $font-color;
     font-weight: 600;

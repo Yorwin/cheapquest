@@ -126,12 +126,16 @@ $main-font-color: map.get($colores, font-dark-background-color);
 }
 
 .action-button {
+    display: flex;
+    align-items: center;
+    text-align: center;
     height: 100%;
     padding: 0rem 1rem;
     font-family: $primary-font-style;
     font-weight: 600;
     font-size: clamp(.7rem, .4rem + 1vw, 1.2rem);
     background-color: map.get($colores, complementary-color);
+    text-decoration: none;
     color: $main-font-color;
     border: none;
     border-radius: 2rem;

@@ -2,7 +2,7 @@ import "server-only";
 
 import { getThreeYearsDateRange, calculatePopularityScore, slugToGameName, formatDateES, createGameSlug } from "@/functions/functions";
 import { searchOffers } from "./getOffers";
-import { bestOfferType, GameDealWithoutScore, GameDeal, dealStoreData, StoreLogo, publishersAndDevelopersType, tag, developerAndPublisherType, Genre, getGameDataProps, gameData, GameStandardContainerType } from "@/types/types";
+import { bestOfferType, GameDealWithoutScore, GameDeal, dealStoreData, StoreLogo, publishersAndDevelopersType, tag, developerAndPublisherType, Genre, getGameDataProps, gameData, GameStandardContainerType, VerticalCardContainerType, VerticalCardWrapperType, comparisonOfferType } from "@/types/types";
 import searchForStore from "./seachForStore";
 import { storeLogos, storeBanner } from "@/resources/stores_icons"
 import { translateAndStoreGameAction } from "@/actions/translationActions";
@@ -152,7 +152,16 @@ export const getGameOffers = async (e: string) => {
     const gameOffers = await searchOffers(e);
     const listOfStores = await searchForStore();
 
-    const filteredOffers = gameOffers.filter((offer: GameDeal) => {
+    const completeInfoOffer = await Promise.all(gameOffers.map(async (e: any) => {
+        const dealURL = `https://www.cheapshark.com/redirect?dealID=${e.dealID}`;
+
+        return {
+            ...e,
+            url: dealURL
+        };
+    }));
+
+    const filteredOffers = completeInfoOffer.filter((offer: GameDeal) => {
         return offer.internalName === titleForComparison;
     })
 
@@ -176,9 +185,10 @@ export const getGameOffers = async (e: string) => {
         currentPrice: `${bestDeal.salePrice}€`,
         offerImage: bestDeal.thumb.replace('capsule_sm_120', 'capsule_616x353'),
         store: bestDealstoreImage,
+        url: bestDeal.url,
     }
 
-    const restOfTheOffersData = restOfTheOffers.map((offer: GameDeal) => {
+    const restOfTheOffersData: comparisonOfferType[] = restOfTheOffers.map((offer: GameDeal) => {
 
         const store = listOfStores.find((e: dealStoreData) => e.storeID === offer.storeID);
         const storeImage = storeBanner.find((e: StoreLogo) => e.name === store.storeName);
@@ -189,6 +199,7 @@ export const getGameOffers = async (e: string) => {
             normalPrice: `${offer.normalPrice}€`,
             currentPrice: `${offer.salePrice}€`,
             store: storeImage,
+            url: offer.url,
         }
     })
 
@@ -335,7 +346,7 @@ export const getSameGenre = async (e: number, gameID: number) => {
 
     const data = await response.json();
     const maxOffersNumber = 10;
-    const resultGames: GameStandardContainerType[] = [];
+    const resultGames: VerticalCardWrapperType[] = [];
 
     const listOfStores = await searchForStore();
 
