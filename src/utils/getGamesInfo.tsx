@@ -287,18 +287,21 @@ export const getFranchiseGames = async (e: string) => {
 
     const data = await response.json();
 
-    const filteredGameInfo = data.results.map((e: any) => {
-        return {
-            title: e.name,
-            released_date: e.released,
-            header_image: e.background_image,
-            link: createGameSlug(e.name),
-        }
-    })
+    const franchises = [];
+
+    const filteredGameInfo = data.results.map((e: any) => ({
+        title: e.name,
+        released_date: e.released,
+        header_image: e.background_image,
+        link: createGameSlug(e.name),
+    }));
+
+    franchises.push(...filteredGameInfo.slice(0, 5));
+
+    console.log(franchises);
 
     const getGameOffer = await Promise.all(
-        filteredGameInfo.map(async (e: any) => {
-
+        franchises.map(async (e: any) => {
             const gameOffers = await searchOffers(e.title);
             let bestOffer;
 
