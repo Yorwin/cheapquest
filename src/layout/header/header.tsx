@@ -5,8 +5,27 @@ import Link from "next/link";
 import LogoImg from "@/resources/logo/darkbackground-logo.webp";
 import OffersButton from "./component/button-offers";
 import HeaderMainContainer from "./component/header-main-container";
+import LinksContainer from "./component/links-container";
+
+interface NavItem {
+    label: string;
+    id: string;
+}
+
+const navItems: NavItem[] = [
+    { label: "Populares", id: "most-popular-offers" },
+    { label: "Nuevas Ofertas", id: "new-offers" },
+    { label: "Vintage", id: "aged-like-wine" },
+    { label: "% de Descuento", id: "historical" },
+    { label: "Bajos históricos", id: "historical-and-percentage-offers" },
+];
+
+const categories: NavItem[] = [
+    { label: "Categorias", id: "Categories" },
+];
 
 const Header = () => {
+
     return (
         <>
             {/* Header Section */}
@@ -28,51 +47,14 @@ const Header = () => {
                         </div>
                     </li>
 
-                    {/* Links */}
-
-                    {/* 
-                    <li>
-                        <OffersButton>
-                            Ofertas
-                            <i className="bi bi-caret-down"></i>
-                        </OffersButton>
-                    </li>
-                    */}
-
-                    {/* Más Populares */}
-
-                    <li className={styles["next-releases-item"]}>
-                        <Link href="/next-releases">Más populares</Link>
-                    </li>
-
-                    {/* Nuevas Ofertas */}
-
-                    <li className={styles["next-releases-item"]}>
-                        <Link href="/next-releases">Nuevas Ofertas</Link>
-                    </li>
-
-                    {/* Vintage */}
-
-                    <li className={styles["next-releases-item"]}>
-                        <Link href="/next-releases">Vintage</Link>
-                    </li>
-
-                    {/* % de Descuento */}
-
-                    <li className={styles["next-releases-item"]}>
-                        <Link href="/next-releases">% de Descuento</Link>
-                    </li>
-
-                    {/* Bajos historicos */}
-
-                    <li className={styles["next-releases-item"]}>
-                        <Link href="/next-releases">Bajos historicos</Link>
-                    </li>
+                    <OffersButton>
+                        <LinksContainer item={navItems} />
+                    </OffersButton>
 
                     {/* Categorias*/}
 
                     <li className={styles["next-releases-item"]}>
-                        <Link href="/next-releases">Categorías</Link>
+                        <a href="#categories">Categorías</a>
                     </li>
 
                     {/* Search */}

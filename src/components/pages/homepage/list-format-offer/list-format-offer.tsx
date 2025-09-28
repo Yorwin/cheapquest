@@ -57,7 +57,7 @@ const ListFormatOffers = async () => {
         });
 
         return <>
-            <section className={styles["list-format-offers-container"]}>
+            <section id="historical-and-percentage-offers" className={styles["list-format-offers-container"]}>
                 <ContentDistributionManager offersByPercentage={bestOffersByPercentage} historicLowsOffers={historicalLowsOffers}></ContentDistributionManager>
             </section>
         </>

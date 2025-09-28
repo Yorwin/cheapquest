@@ -50,7 +50,7 @@ const MostPopularOffer = async () => {
         }
 
         return <>
-            <section className={styles["most-popular-offer-container"]}>
+            <section id="most-popular-offers" className={styles["most-popular-offer-container"]}>
                 <h1 className={styles["title"]}>OFERTAS MÁS POPULARES</h1>
 
                 {/* Ofertas */}

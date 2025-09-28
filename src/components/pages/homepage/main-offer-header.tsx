@@ -30,9 +30,9 @@ const MainOffer = async () => {
 
         return (
             <>
-                <article className={styles["main-offer-container"]}>
+                <article id="main-offer" className={styles["main-offer-container"]}>
                     <Link href={`/game-page/${offerInfo.link}`} className={styles["click-overlay"]} aria-label={`Ver ${getGame.name}`} />
-                    <MainOfferImage gameImage={offerInfo.gameImage}/>
+                    <MainOfferImage gameImage={offerInfo.gameImage} />
                     <div className={styles["overlay"]}></div>
                     <section className={styles["offer"]}>
                         <h1 className={styles["offer-title"]}>{offerInfo.gameName}</h1>

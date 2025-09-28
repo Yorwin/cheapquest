@@ -54,7 +54,7 @@ const NewOffers = async () => {
         }
 
         return <>
-            <section className={styles["new-offers-main-container"]}>
+            <section id="new-offers" className={styles["new-offers-main-container"]}>
                 <h1 className={styles["title"]}>NUEVAS OFERTAS</h1>
                 <ContentDistributionManager gameInfo={newOffers} />
             </section>

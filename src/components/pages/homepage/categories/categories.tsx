@@ -12,7 +12,7 @@ interface Categories {
 
 const Categories = () => {
     return <>
-        <section className={styles["categories-container"]}>
+        <section id="categories" className={styles["categories-container"]}>
             <div className="container-fluid">
                 <div className="row">
                     {/* Titulo */}

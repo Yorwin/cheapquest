@@ -73,7 +73,7 @@ const Reviews = () => {
     });
 
     try {
-        return <section className={styles["reviews-container"]}>
+        return <section id="reviews" className={styles["reviews-container"]}>
             <article className="container-fluid">
                 <div className={`row ${styles["container-reviews"]}`}>
                     {reviews}

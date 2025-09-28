@@ -1,8 +1,8 @@
 import "server-only";
+
 import { fetchGamesInfoCheapShark, getTop11Deals, removeDuplicatesByBestPrice } from "@/functions/functions";
 import { GameDeal, GameDealWithoutScore, gameOfferInfo, dealsInfoOffer } from "@/types/types";
 import { getGameInfo } from "./getGamesInfo";
-import GamePage from "@/app/game-page/[...game]/page";
 
 const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
 
@@ -18,7 +18,7 @@ export const searchOffers = async (e: string) => {
 
         const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?title=${e}&exact=1`, {
             next: {
-                revalidate: 1800, // 30 minutos (más frecuente que el juego principal)
+                revalidate: 1800,
                 tags: ['game-deals',
                     `deal-${cleanGameNameForTag}`,
                     'cheapshark-api'],
@@ -49,7 +49,7 @@ export const searchDealInfo = async (id: string) => {
 
         const url = `https://www.cheapshark.com/api/1.0/deals?id=${id}`;
         const request = await fetch(`${url}`, {
-            next : {
+            next: {
                 revalidate: 3600,
                 tags: [`offers-for-game-${id}`]
             }
@@ -345,7 +345,10 @@ export const getAgedLikeWineGames = async (retries = 3) => {
 
 export const offersByPercentage = async () => {
     const request = await fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=Savings", {
-        cache: "force-cache"
+        next: {
+            revalidate: 21600,
+            tags: ["best-offers-by-percentage"],
+        }
     })
 
     if (!request.ok) {
@@ -356,7 +359,7 @@ export const offersByPercentage = async () => {
 
     const filteredOffers = res.filter((offer: GameDeal) => !offer.title.includes("Bundle"));
 
-    const bestOffers = filteredOffers.slice(0, 8);
+    const bestOffers = filteredOffers.slice(0, 5);
 
     const completeDataPromises = bestOffers.map(async (offer: GameDeal) => {
         const title = offer.title;
@@ -380,7 +383,7 @@ export const offersByPercentage = async () => {
 export const historicalLows = async () => {
     const historicalLows: any[] = [];
     let pageNumber = 0;
-    const targetElements = 8; // Número mínimo de elementos que queremos
+    const targetElements = 5; // Número mínimo de elementos que queremos
 
     while (historicalLows.length < targetElements) {
         const requestAAAGames = await fetch(

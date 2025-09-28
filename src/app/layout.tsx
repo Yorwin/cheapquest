@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 
 /* Global Styles */
 import "@/app/globals.scss";
