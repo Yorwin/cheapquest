@@ -122,7 +122,7 @@
 
 .options {
     position: absolute;
-    bottom: -165px;
+    bottom: -155px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -142,6 +142,11 @@
     }
 }
 
+.item {
+    display: flex;
+    flex-direction: column;
+}
+
 .show {
     opacity: 1;
     pointer-events: auto;
@@ -150,6 +155,21 @@
 .hide {
     opacity: 0;
     pointer-events: none;
+}
+
+.separator {
+    width: 100%;
+    height: 2px;
+    background-color: map.get($colores, font-dark-background-color);
+    border-radius: 1rem
+}
+
+.hide-separator {
+    opacity: 0;
+}
+
+.show-separator {
+    opacity: 1;
 }
 
 .button {
@@ -175,7 +195,7 @@
     @include responsive-header(1.2rem, 170px, 40px);
 
     .options {
-        bottom: -180px
+        bottom: -160px
     }
 }
 
@@ -197,7 +217,7 @@
     }
 
     .options {
-        bottom: -250px
+        bottom: -230px
     }
 
     @include responsive-header(1.1rem, 120px, 30px, 0.1rem, normal); // li puede romper línea
@@ -214,7 +234,7 @@
     }
 
     .options {
-        bottom: -235px
+        bottom: -215px
     }
 
     @include responsive-header(1rem, 110px, 27px, 0.1rem, normal);
@@ -235,7 +255,7 @@
     }
 
     .options {
-        bottom: -210px
+        bottom: -200px
     }
 
     .search-container {
@@ -251,7 +271,7 @@
     }
 
     .options {
-        bottom: -170px
+        bottom: -165px
     }
 
     .search {
@@ -271,7 +291,7 @@
 
 @media screen and (max-width: 350px) {
     .options {
-        bottom: -160px
+        bottom: -150px
     }
 
     .search {

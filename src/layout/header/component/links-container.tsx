@@ -4,6 +4,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import styles from "@/styles/layout/header.module.scss";
 import LinkItem from "./link-item";
+import useWindowWidth from "@/functions/hooks/useWindowWidth";
 
 interface NavItem {
     label: string;
@@ -15,18 +16,23 @@ interface NavItemContainer {
 }
 
 export default function LinksContainer({ item }: NavItemContainer) {
+    const width = useWindowWidth();
     const pathname = usePathname();
     const isHome = pathname === "/";
 
     return (
-        item.map(item => (
-            <li key={item.id} className={styles["item"]}>
+        item.map((e: NavItem, index: number) => (
+            <li key={e.id} className={styles["item"]}>
                 {isHome ? (
-                    <LinkItem itemLabel={item.label} itemId={item.id} typeOfLink="same-page" />
+                    <LinkItem itemLabel={e.label} itemId={e.id} typeOfLink="same-page" />
                 ) : (
-                    <LinkItem itemLabel={item.label} itemId={item.id} typeOfLink="different-page" />
+                    <LinkItem itemLabel={e.label} itemId={e.id} typeOfLink="different-page" />
                 )}
-            </li>
+
+                {index < item.length - 1 && (
+                    <div className={`${styles["separator"]} ${styles[width < 1400 ? "show-separator" : "hide-separator"]}`}></div>
+                )}
+            </li >
         ))
     );
 }

@@ -50,18 +50,18 @@ const IsDesktop = ({ offersByPercentage, historicLowsOffers }: ContentDistributi
     return (
         <div className="container-fluid">
             <div className="row">
-                <div className="col-md-6 col-sm-12">
-                    <h1 className={styles["title"]}>MEJORES OFERTAS POR %</h1>
+                <section className="col-md-6 col-sm-12">
+                    <h1 className={styles["title"]}>MEJORES PROMOS</h1>
                     <article className={styles["list-offer-format-container"]}>
                         {listOffersByPercentage}
                     </article>
-                </div>
-                <div className="col-md-6 col-sm-12">
+                </section>
+                <section className="col-md-6 col-sm-12">
                     <h1 className={styles["title"]}>BAJOS HISTORICOS</h1>
                     <article className={styles["list-offer-format-container"]}>
                         {listHistoricLows}
                     </article>
-                </div>
+                </section>
             </div>
         </div>
     )

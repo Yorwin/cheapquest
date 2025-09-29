@@ -23,9 +23,6 @@ const GameStandardWrapper = ({ gameImage, title, platform, discount, oldPrice, c
     const [imageIsLoaded, setIsImageLoaded] = useState(false);
 
     useEffect(() => {
-
-        console.log(typeof gameImage);
-
         const img = new window.Image();
         img.src = `${gameImage}`;
         img.onload = () => setIsImageLoaded(true);

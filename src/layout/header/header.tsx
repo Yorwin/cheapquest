@@ -16,12 +16,11 @@ const navItems: NavItem[] = [
     { label: "Populares", id: "most-popular-offers" },
     { label: "Nuevas Ofertas", id: "new-offers" },
     { label: "Vintage", id: "aged-like-wine" },
-    { label: "% de Descuento", id: "historical" },
-    { label: "Bajos históricos", id: "historical-and-percentage-offers" },
+    { label: "Promos y Bajos Históricos", id: "historical-and-percentage-offers" },
 ];
 
 const categories: NavItem[] = [
-    { label: "Categorias", id: "Categories" },
+    { label: "Categorias", id: "categories" },
 ];
 
 const Header = () => {
@@ -53,9 +52,7 @@ const Header = () => {
 
                     {/* Categorias*/}
 
-                    <li className={styles["next-releases-item"]}>
-                        <a href="#categories">Categorías</a>
-                    </li>
+                    <LinksContainer item={categories} />
 
                     {/* Search */}
 
