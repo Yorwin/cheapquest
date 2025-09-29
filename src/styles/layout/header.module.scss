@@ -122,7 +122,9 @@
 
 .options {
     position: absolute;
-    bottom: -155px;
+    width: auto;
+    height: auto;
+    top: 100%;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -134,17 +136,13 @@
     z-index: 9999;
     transition: opacity 0.3s ease-in;
 
-    a {
+    .item {
         display: flex;
         align-items: center;
-        gap: 6px;
-        margin-right: .5rem;
+        flex-direction: column;
+        gap: 8px;
+        font-size: .8rem;
     }
-}
-
-.item {
-    display: flex;
-    flex-direction: column;
 }
 
 .show {
@@ -192,11 +190,14 @@
 /* ✅ Media queries optimizadas */
 
 @media screen and (max-width: 1200px) {
-    @include responsive-header(1.2rem, 170px, 40px);
 
     .options {
-        bottom: -160px
+        .item {
+            font-size: 0.8rem
+        }
     }
+
+    @include responsive-header(1.2rem, 170px, 40px);
 }
 
 @media screen and (max-width: 992px) {
@@ -216,10 +217,6 @@
         width: 70%;
     }
 
-    .options {
-        bottom: -230px
-    }
-
     @include responsive-header(1.1rem, 120px, 30px, 0.1rem, normal); // li puede romper línea
 }
 
@@ -231,10 +228,6 @@
     .headers-list {
         width: 70%;
         gap: 0.7rem;
-    }
-
-    .options {
-        bottom: -215px
     }
 
     @include responsive-header(1rem, 110px, 27px, 0.1rem, normal);
@@ -254,10 +247,6 @@
         }
     }
 
-    .options {
-        bottom: -200px
-    }
-
     .search-container {
         margin-left: .4rem;
     }
@@ -268,10 +257,6 @@
 @media screen and (max-width: 400px) {
     .header-main-container {
         height: 40px;
-    }
-
-    .options {
-        bottom: -165px
     }
 
     .search {
@@ -290,10 +275,6 @@
 }
 
 @media screen and (max-width: 350px) {
-    .options {
-        bottom: -150px
-    }
-
     .search {
         i {
             &:hover {
