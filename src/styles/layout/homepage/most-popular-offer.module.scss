@@ -11,6 +11,8 @@ $platform-bg: map.get($colores, platform-color);
 $font-dark: map.get($colores, font-dark-background-color);
 
 .most-popular-offer-container {
+    width: 100%;
+    min-height: 900px;
     background-color: $complementary-bg;
     padding: $homepage-offers-padding;
 }
@@ -285,17 +287,20 @@ $font-dark: map.get($colores, font-dark-background-color);
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 0rem;
+    height: 92px; 
+    padding: 0;
 
     button {
+        min-width: 220px; 
+        min-height: 70px; 
         border: none;
         background-color: $primary-bg;
         color: $font-dark;
+        padding: 1rem;
         font-weight: 700;
         font-family: var(--font-gontSerrat);
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         text-transform: uppercase;
-        padding: 1rem 2.5rem;
         @include button-shadow-homepage;
 
         &:hover {
@@ -303,6 +308,7 @@ $font-dark: map.get($colores, font-dark-background-color);
         }
     }
 }
+
 
 /* Responsive Styles */
 @media screen and (max-width: 1200px) {

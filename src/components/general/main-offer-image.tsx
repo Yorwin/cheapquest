@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "@/styles/layout/homepage/main-offer-header.module.scss";
+import NoImageFound from "@/resources/no-image-found/no-image-found.webp"
 
 interface MainOfferImageProps {
     gameImage: string;
@@ -29,18 +30,15 @@ const MainOfferImage = ({ gameImage }: MainOfferImageProps) => {
     }, []);
 
     return (
-        <div className={styles["main-header-image-wrapper"]}>
-            <Image
-                ref={imgRef}
-                src={gameImage}
-                alt="Mejor oferta y más popular del momento"
-                className={styles["main-header-image"]}
-                width={1920}
-                height={1080}
-                sizes="100vw"
-                priority
-            />
-        </div>
+        <Image
+            ref={imgRef}
+            src={gameImage}
+            alt="Mejor oferta y más popular del momento"
+            className={styles["main-header-image"]}
+            fill
+            sizes="50vw"
+            priority
+        />
     );
 };
 

@@ -4,6 +4,7 @@
 
 .list-format-offers-container {
     width: 100%;
+    min-height: 600px;
     background-color: map.get($colores, dark-background-color);
     padding: $homepage-offers-padding;
     overflow: hidden;

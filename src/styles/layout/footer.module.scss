@@ -21,11 +21,12 @@
     width: 100%;
     height: 225px;
     background-color: map.get($colores, primary-color);
-    overflow: hidden;
+    overflow: clip;
 }
 
 .content-container {
     @include flex-center-elements-XY;
+    width: 100%;
     height: 100%;
     padding: 2rem;
     color: map.get($colores, font-dark-background-color);
@@ -100,12 +101,13 @@
 
 .copyright-container {
     width: 100%;
-    height: 5vh;
+    min-height: 40px;
     color: map.get($colores, font-light-background-color);
     font-weight: 700;
     font-family: var(--font-gontSerrat);
     @include flex-center-elements-XY;
     background-color: map.get($colores, secondary-color);
+    font-size: .9rem;
 }
 
 /* 🔹 Media queries */
@@ -225,6 +227,6 @@
 
     .copyright-container {
         font-size: .8rem;
-        height: 30px;
+        min-height: 30px; // ✅ altura estable también en móvil
     }
 }

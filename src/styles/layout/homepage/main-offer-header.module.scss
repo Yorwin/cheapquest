@@ -32,7 +32,10 @@ $box-shadow-discount: 17px 0px 72px -11px rgba(0, 0, 0, 1);
 }
 
 .main-offer-container {
-    height: 540px;
+    width: 100%;
+    min-height: 220px;
+    max-height: 580px;
+    aspect-ratio: 16/9;
     overflow: hidden;
     position: relative;
 }
@@ -42,6 +45,7 @@ $box-shadow-discount: 17px 0px 72px -11px rgba(0, 0, 0, 1);
     height: auto;
     transform: translateY(0);
     z-index: 1;
+    object-fit: cover;
 }
 
 .overlay {

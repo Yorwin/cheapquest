@@ -11,15 +11,15 @@ $character-scale-factor: 1.06;
 
 // Mapa de categorías para generar estilos dinámicamente
 $categories: (
-    'action': '../../../resources/categories/Action/background.png',
-    'arcade': '../../../resources/categories/Arcade/background.png',
-    'adventure': '../../../resources/categories/Aventura/background.jpg',
-    'strategy': '../../../resources/categories/Estrategia/background.jpg',
-    'fps': '../../../resources/categories/FPS/background.jpg',
-    'fight': '../../../resources/categories/Lucha/background.jpg',
+    'action': '../../../resources/categories/Action/background.webp',
+    'arcade': '../../../resources/categories/Arcade/background.webp',
+    'adventure': '../../../resources/categories/Aventura/background.webp',
+    'strategy': '../../../resources/categories/Estrategia/background.webp',
+    'fps': '../../../resources/categories/FPS/background.webp',
+    'fight': '../../../resources/categories/Lucha/background.webp',
     'rpg': '../../../resources/categories/RPG/background.webp',
-    'single-player': '../../../resources/categories/Un_solo_jugador/background.jpg',
-    'vr': '../../../resources/categories/VR/background.png'
+    'single-player': '../../../resources/categories/Un_solo_jugador/background.webp',
+    'vr': '../../../resources/categories/VR/background.webp'
 );
 
 // Mixins locales
@@ -40,8 +40,10 @@ $categories: (
 // Estilos principales
 .categories-container {
     width: 100%;
+    min-height: 600px;
     @include responsive-padding($homepage-offers-padding);
     background-color: map.get($colores, dark-background-color);
+    contain: layout style;
 }
 
 .title {
@@ -50,6 +52,7 @@ $categories: (
     color: map.get($colores, font-dark-background-color);
     @include offers-title-typography($title-font-size-default, nowrap);
     z-index: 2;
+    font-display: swap;
 }
 
 .category-container {
@@ -61,8 +64,8 @@ $categories: (
     z-index: 0;
     @include offer-shadow;
     overflow: hidden;
+    min-height: $category-height;
 
-    // Pseudo-elemento para background con overlay
     &::before {
         content: "";
         position: absolute;
@@ -74,9 +77,15 @@ $categories: (
         z-index: -1;
     }
 
-    // Efecto hover optimizado
-    &:hover .image-character {
-        transform: scale($character-scale-factor);
+    // Efecto hover optimizado - solo GPU
+    &:hover {
+        .image-character {
+            transform: scale($character-scale-factor);
+        }
+
+        &::before {
+            will-change: filter;
+        }
     }
 
     // Título de categoría
@@ -91,6 +100,7 @@ $categories: (
         text-align: left;
         z-index: 2;
         transform: translateY(-50%);
+        font-display: swap;
     }
 }
 
@@ -104,6 +114,7 @@ $categories: (
 .enlace-categoria {
     position: absolute;
     inset: 0;
+    z-index: 3;
 }
 
 .image-character-container {
@@ -112,15 +123,17 @@ $categories: (
     bottom: 0;
     width: auto;
     height: 95%;
+    max-width: 250px;
 }
 
 .image-character {
-    width: 100%;
+    width: auto;
     height: 100%;
     object-fit: cover;
     transition: transform $character-transition-duration;
     transform-origin: bottom left;
     z-index: 1;
+    display: block;
 }
 
 @media screen and (max-width: 1200px) {
@@ -145,10 +158,13 @@ $categories: (
 @media screen and (max-width: 992px) {
     .categories-container {
         @include responsive-padding($homepage-lg-offers-padding);
+        min-height: auto;
     }
 
     .category-container {
         width: 100%;
+        margin-left: auto;
+        margin-right: auto;
 
         h2 {
             font-size: 2rem;

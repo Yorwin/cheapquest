@@ -18,7 +18,7 @@ const HeaderMainContainer = ({ children }: { children: React.ReactNode }) => {
 
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [pathname]);
 
     return (
         <div className={`${styles["header-main-container"]} ${scrolled ? styles["scrolled"] : ""}`}>

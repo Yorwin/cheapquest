@@ -217,8 +217,8 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export const fetchGamesInfoCheapShark = async (gamesData: GameDealWithoutScore[]) => {
     const gamesPrices = [];
     const chunkSize = 5;       // nº de requests paralelas por batch
-    const delayBetweenChunks = 2000; // ms entre batches
-    const delayBetweenCalls = 100;   // ms entre llamadas dentro del batch (opcional)
+    const delayBetweenChunks = 0; // ms entre batches
+    const delayBetweenCalls = 0;   // ms entre llamadas dentro del batch (opcional)
 
     for (let i = 0; i < gamesData.length; i += chunkSize) {
         const chunk = gamesData.slice(i, i + chunkSize);

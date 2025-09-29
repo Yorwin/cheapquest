@@ -37,7 +37,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px;
+    min-height: 60px;
     @include flex-center-elements-XY;
     background-color: transparent;
     backdrop-filter: none;
@@ -118,6 +118,14 @@
     position: relative;
     @include flex-center-elements-XY;
     height: 100%;
+
+    // solo escritorio
+    @media (hover: hover) {
+        &:hover .options {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
 }
 
 .options {
@@ -135,6 +143,7 @@
     padding: .8rem;
     z-index: 9999;
     transition: opacity 0.3s ease-in;
+    opacity: 0;
 
     .item {
         display: flex;
