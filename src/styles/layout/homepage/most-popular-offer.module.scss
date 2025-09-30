@@ -64,14 +64,6 @@ $font-dark: map.get($colores, font-dark-background-color);
     z-index: 1;
 }
 
-/* .pairs-container {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    gap: .7rem;
-    height: 100%;
-} */
-
 .gameimage-container {
     width: 100%;
     height: 65%;
@@ -141,8 +133,8 @@ $font-dark: map.get($colores, font-dark-background-color);
 
 .prices {
     @extend %prices-base;
-    margin-left: 1rem;
-    line-height: 2rem;
+    margin-left: .6rem;
+    line-height: 1.6rem;
 }
 
 .secondary-prices {
@@ -154,16 +146,16 @@ $font-dark: map.get($colores, font-dark-background-color);
 // Estilos de precios principales
 
 .discount {
-    @include discount-style(.7rem, 500, 1.8rem, var(--font-gontSerrat));
+    @include discount-style(.4rem, 500, 1.4rem, var(--font-gontSerrat));
     margin-bottom: 0rem;
 }
 
 .current-price {
-    @include current-price-style(2rem, 400, 3px, 0rem, var(--font-gontSerrat));
+    @include current-price-style(1.5rem, 400, 3px, 0rem, var(--font-gontSerrat));
 }
 
 .last-price {
-    @include cancelled-price(1.4rem, 500);
+    @include cancelled-price(1.1rem, 500);
 }
 
 // Estilos de precios secundarios
@@ -217,7 +209,7 @@ $font-dark: map.get($colores, font-dark-background-color);
 
 .web-offer {
     @extend %web-offer-base;
-    min-width: 80px; 
+    min-width: 80px;
     min-height: 50px;
 
     img {
@@ -228,23 +220,13 @@ $font-dark: map.get($colores, font-dark-background-color);
 
 .secondary-web-offer {
     @extend %web-offer-base;
-    min-width: 60px; 
+    min-width: 60px;
     min-height: 40px;
 
     img {
         width: auto;
         height: 60%;
     }
-}
-
-.pair {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-bottom: 0px;
-    width: 100%;
-    height: 100%;
-    gap: 1rem;
 }
 
 .button-container {
@@ -327,8 +309,28 @@ $font-dark: map.get($colores, font-dark-background-color);
         @include offers-title-typography($title-font-size-md, nowrap);
     }
 
-    .main-gamecard-offer {
-        width: calc(50% - 10px);
+    .secondary-container {
+        height: 725px;
+    }
+
+    .secondary-gamecard-offer {
+        height: 350px;
+    }
+
+    .secondary-prices {
+        line-height: 1.2rem;
+    }
+
+    .secondary-current-price {
+        @include current-price-style(1.1rem, 400, 3px, 0rem, var(--font-gontSerrat));
+    }
+
+    .secondary-last-price {
+        @include cancelled-price(.8rem, 500);
+    }
+
+    .secondary-discount {
+        @include discount-style(.5rem, 600, 1.2rem, var(--font-gontSerrat));
     }
 }
 
@@ -345,6 +347,10 @@ $font-dark: map.get($colores, font-dark-background-color);
     .button-container button {
         font-size: 1.3rem;
         padding: 0.7rem 2rem;
+    }
+
+    .secondary-container {
+        height: 1500px;
     }
 }
 
@@ -387,41 +393,35 @@ $font-dark: map.get($colores, font-dark-background-color);
         @include cancelled-price(1rem, 500);
     }
 
-    .list-info-container-title {
-        font-size: .6rem;
-    }
-
     .secondary-price-offerorigin-container {
         padding: 0.5rem;
     }
 
     .secondary-prices {
-        line-height: .7rem;
+        line-height: 1.3rem;
     }
 
     .secondary-current-price {
-        @include current-price-style(.9rem, 500, 3px, 0rem, var(--font-gontSerrat));
+        @include current-price-style(1.4rem, 400, 3px, 0rem, var(--font-gontSerrat));
     }
 
     .secondary-last-price {
-        @include cancelled-price(.5rem, 600);
+        @include cancelled-price(1rem, 500);
     }
 
     .secondary-discount {
-        @include discount-style(.2rem, 600, .9rem, var(--font-gontSerrat));
+        @include discount-style(.5rem, 500, 1.4rem, var(--font-gontSerrat));
     }
 
     .secondary-web-offer {
-        width: 50px;
+        img {
+            height: 80%;
+        }
     }
 
     .web-offer {
-        @extend %web-offer-base;
-        width: 50px;
-
         img {
-            width: 60%;
-            height: 100%;
+            height: 80%;
         }
     }
 
@@ -438,7 +438,6 @@ $font-dark: map.get($colores, font-dark-background-color);
 
     .secondary-prices {
         margin-left: .3rem;
-        line-height: .8rem;
     }
 }
 
@@ -449,19 +448,6 @@ $font-dark: map.get($colores, font-dark-background-color);
 
     .secondary-prices {
         margin-left: .3rem;
-        line-height: .6rem;
-    }
-
-    .secondary-current-price {
-        @include current-price-style(.7rem, 500, 3px, 0rem, var(--font-gontSerrat));
-    }
-
-    .secondary-last-price {
-        @include cancelled-price(.4rem, 600);
-    }
-
-    .secondary-discount {
-        @include discount-style(.1rem, 600, .7rem, var(--font-gontSerrat));
     }
 
     .secondary-web-offer {
@@ -476,7 +462,6 @@ $font-dark: map.get($colores, font-dark-background-color);
 
     .prices {
         margin-left: .3rem;
-        line-height: 1.2rem;
     }
 
     .discount {
@@ -491,20 +476,16 @@ $font-dark: map.get($colores, font-dark-background-color);
         @include cancelled-price(.8rem, 500);
     }
 
-    .secondary-prices {
-        line-height: .6rem;
-    }
-
     .secondary-current-price {
-        @include current-price-style(.5rem, 600, 3px, 0rem, var(--font-gontSerrat));
+        @include current-price-style(1.1rem, 400, 3px, 0rem, var(--font-gontSerrat));
     }
 
     .secondary-last-price {
-        @include cancelled-price(.3rem, 600);
+        @include cancelled-price(.8rem, 500);
     }
 
     .secondary-discount {
-        @include discount-style(.1rem, 600, .7rem, var(--font-gontSerrat));
+        @include discount-style(.5rem, 500, 1.2rem, var(--font-gontSerrat));
     }
 
     .secondary-web-offer {

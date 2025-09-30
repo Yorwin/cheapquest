@@ -8,7 +8,6 @@ import { getGameInfo } from "@/utils/getGamesInfo";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
-import ContentDistributionManager from "./content-distribution-manager";
 import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
 import GameStandardWrapper from "@/components/general/game-card/game-card-wrapper";
 import { mainClasses, secondaryClasses } from "@/functions/classes";
@@ -32,12 +31,8 @@ const MostPopularOffer = async () => {
 
             const getGame = await getGameInfo(Offers[i].title);
 
-            const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(Offers[i].salePrice));
-            const resultSalePrice = (convertSalePrice).toFixed(2);
-
-            const convertRegularPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(Offers[i].normalPrice));
-            const resultRegularPrice = (convertRegularPrice).toFixed(2);
-
+            const resultSalePrice = (Number(Offers[i].salePrice)).toFixed(2);
+            const resultRegularPrice = (Number(Offers[i].normalPrice)).toFixed(2);
             const gameImage = getGame.results[0].background_image !== null ? getGame.results[0].background_image : NoImageFound.src;
 
             listInfo.push({
@@ -56,8 +51,8 @@ const MostPopularOffer = async () => {
                 <h1 className={styles["title"]}>OFERTAS MÁS POPULARES</h1>
 
                 <div className="container-fluid p-0 mb-4">
-                    <div className="row mb-4">
-                        <div className="col-lg-6 col-sm-12 col-sm-12">
+                    <div className="row mb-lg-4">
+                        <div className="col-lg-6 col-sm-12 col-sm-12 mb-4 mb-lg-0">
                             <GameStandardWrapper
                                 gameImage={listInfo[0].gameImage}
                                 title={listInfo[0].title}
@@ -69,8 +64,8 @@ const MostPopularOffer = async () => {
                             />
                         </div>
                         <div className="col-lg-6 col-sm-12 col-sm-12">
-                            <div className={`row ${styles["secondary-container"]}`}>
-                                <div className="col-lg-6 col-md-6 col-sm-12 pb-lg-2">
+                            <div className={`row mb-md-4 mb-lg-0 ${styles["secondary-container"]}`}>
+                                <div className="col-lg-6 col-md-6 col-sm-12 pb-lg-2 mb-4 mb-lg-0">
                                     <GameStandardWrapper
                                         gameImage={listInfo[1].gameImage}
                                         title={listInfo[1].title}
@@ -81,7 +76,7 @@ const MostPopularOffer = async () => {
                                         classes={secondaryClasses}
                                     />
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 pb-lg-2">
+                                <div className="col-lg-6 col-md-6 col-sm-12 pb-lg-2 mb-4 mb-lg-0">
                                     <GameStandardWrapper
                                         gameImage={listInfo[2].gameImage}
                                         title={listInfo[2].title}
@@ -92,7 +87,7 @@ const MostPopularOffer = async () => {
                                         classes={secondaryClasses}
                                     />
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 pt-lg-2">
+                                <div className="col-lg-6 col-md-6 col-sm-12 pt-lg-2 mb-4 mb-lg-0">
                                     <GameStandardWrapper
                                         gameImage={listInfo[3].gameImage}
                                         title={listInfo[3].title}
@@ -103,7 +98,7 @@ const MostPopularOffer = async () => {
                                         classes={secondaryClasses}
                                     />
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 pt-lg-2">
+                                <div className="col-lg-6 col-md-6 col-sm-12 pt-lg-2 mb-4 mb-lg-0">
                                     <GameStandardWrapper
                                         gameImage={listInfo[4].gameImage}
                                         title={listInfo[4].title}
@@ -187,9 +182,6 @@ const MostPopularOffer = async () => {
                         </div>
                     </div>
                 </div>
-
-                {/* Ofertas */}
-                {/* <ContentDistributionManager gameInfo={listInfo} /> */}
 
                 {/* Ver más ofertas Botón */}
                 <div className={styles["button-container"]}>

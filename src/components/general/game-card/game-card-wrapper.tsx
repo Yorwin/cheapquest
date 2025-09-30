@@ -5,19 +5,7 @@ import GameStandardContainer from "./game-card-server";
 import { GameStandardControllerType } from "@/types/types";
 import Image from "next/image";
 import GameCardLoading from "./game-card-loading";
-
-const defaultClasses = {
-    mainGameCard: "default-main-game-card",
-    iconContainer: "default-icon-container",
-    priceOfferOriginContainer: "default-price-offerorigin-container",
-    offerContainer: "default-offer-container",
-    discount: "default-discount",
-    prices: "default-prices",
-    lastPrice: "default-last-price",
-    currentPrice: "default-current-price",
-    webOffer: "default-web-offer",
-    gameTitle: "default-game-title",
-};
+import { defaultClasses } from "@/functions/classes";
 
 const GameStandardWrapper = ({ gameImage, title, discount, oldPrice, currentPrice, webOffer, classes = defaultClasses }: GameStandardControllerType) => {
     const [imageIsLoaded, setIsImageLoaded] = useState(false);

@@ -23,3 +23,16 @@ export const secondaryClasses = {
     webOffer: "secondary-web-offer",
     gameTitle: "secondary-game-title",
 };
+
+export const defaultClasses = {
+    mainGameCard: "default-main-game-card",
+    iconContainer: "default-icon-container",
+    priceOfferOriginContainer: "default-price-offerorigin-container",
+    offerContainer: "default-offer-container",
+    discount: "default-discount",
+    prices: "default-prices",
+    lastPrice: "default-last-price",
+    currentPrice: "default-current-price",
+    webOffer: "default-web-offer",
+    gameTitle: "default-game-title",
+};

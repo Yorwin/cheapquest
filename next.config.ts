@@ -28,6 +28,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.gog-statics.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.greenmangaming.com',
+      },
     ],
   },
 };
