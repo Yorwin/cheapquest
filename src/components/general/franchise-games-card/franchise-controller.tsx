@@ -12,18 +12,19 @@ interface FranchiseController {
 const FranchiseController = ({ franchiseData }: FranchiseController) => {
     const [isExtended, setIsExtended] = useState(false)
 
+    // Ahora mostramos TODOS los juegos, tengan o no oferta
     const allFranchiseElements = franchiseData
-        .filter((e: any) => e.offer !== null)
         .map((e: any, index: number) => (
             <FranchiseCard
                 key={index}
                 gameTitle={e.title}
                 releaseDate={e.released_date}
-                currentPrice={`${e.offer.salePrice}€`}
-                discount={`${Number(e.offer.savings).toFixed(0)}%`}
+                currentPrice={e.offer ? `${e.offer.salePrice}€` : null}
+                discount={e.offer ? `${Number(e.offer.savings).toFixed(0)}%` : null}
                 link={e.link}
                 headerImage={e.header_image}
-                webOffer={e.offer.storeImage.image}
+                webOffer={e.offer?.storeImage.image || null}
+                hasOffer={e.offer !== null}
             />
         ));
 
@@ -59,4 +60,4 @@ const FranchiseController = ({ franchiseData }: FranchiseController) => {
     )
 }
 
-export default FranchiseController
+export default FranchiseController;

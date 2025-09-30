@@ -222,7 +222,6 @@ export interface gameOfferInfo {
 export interface GameStandardContainerType {
     gameImage: StaticImageData | string,
     title: string,
-    platform: StaticImageData | string,
     discount: string,
     oldPrice: string,
     currentPrice: string,
@@ -233,7 +232,6 @@ export interface GameStandardContainerType {
 export interface GameStandardWrapperType {
     gameImage: StaticImageData,
     title: string,
-    platform: StaticImageData,
     discount: string,
     oldPrice: string,
     currentPrice: string,
@@ -248,7 +246,6 @@ export interface Classes {
 export interface GameStandardControllerType {
     gameImage: StaticImageData,
     title: string,
-    platform: StaticImageData,
     discount: string,
     oldPrice: string,
     currentPrice: string,
@@ -374,8 +371,8 @@ export type getGameDataProps = (gameId: string) => Promise<gameData>;
 export interface Franchise {
     gameTitle: string,
     releaseDate: string,
-    currentPrice: string,
-    discount: string,
+    currentPrice: string | null,
+    discount: string | null,
     link: string,
     headerImage: string,
     webOffer: StaticImageData,

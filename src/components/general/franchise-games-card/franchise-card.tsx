@@ -1,33 +1,58 @@
 import React from "react";
 import styles from "@/styles/components/franchise-card.module.scss"
 import Image from "next/image";
-import { Franchise } from "@/types/types"
+import { StaticImageData } from "next/image";
 
-/* Image */
-import Image1 from "@/resources/offer-img/image.jpg"
-import store from "@/resources/stores/fanatical.png"
+interface FranchiseCardProps {
+    gameTitle: string;
+    releaseDate: string;
+    currentPrice: string | null;
+    discount: string | null;
+    link: string;
+    headerImage: string;
+    webOffer: StaticImageData | string;
+    hasOffer: boolean;
+}
 
-const FranchiseCard = ({ gameTitle, releaseDate, currentPrice, discount, link, headerImage, webOffer }: Franchise) => {
+const FranchiseCard = ({
+    gameTitle,
+    releaseDate,
+    currentPrice,
+    discount,
+    link,
+    headerImage,
+    webOffer,
+    hasOffer
+}: FranchiseCardProps) => {
     return (
         <div className={`${styles["franchise-card-container"]} col-lg-4 col-md-6 col-sm-12 mb-lg-3 mb-md-2 mb-sm-3`}>
             <div className={styles["franchise-card"]}>
                 <div className={styles["image-container"]}>
                     <Image
-                        className={styles["game-image"]}
+                        className={`${styles["game-image"]} ${!hasOffer ? styles['no-offer-image'] : ''}`}
                         src={headerImage}
                         alt="Franchise Game Image"
                         sizes="40vw"
                         fill
                     />
                 </div>
-                <div className={styles["discount-and-store-container"]}>
-                    <span className={styles["discount"]}>{discount}</span>
-                    <Image
-                        className={styles["store"]}
-                        src={webOffer}
-                        alt="Franchise Game Image"
-                        sizes="30vw"
-                    />
+                <div className={`${styles["discount-and-store-container"]} ${!hasOffer ? styles['no-offer-badge'] : ''}`}>
+                    {hasOffer ? (
+                        <>
+                            <span className={styles["discount"]}>{discount}</span>
+                            {webOffer && (
+                                <Image
+                                    className={styles["store"]}
+                                    src={webOffer}
+                                    alt="Store Logo"
+                                    width={30}
+                                    height={30}
+                                />
+                            )}
+                        </>
+                    ) : (
+                        <span className={styles['no-offer-text']}>Sin ofertas</span>
+                    )}
                 </div>
             </div>
             <div className={styles["game-info"]}>
@@ -37,9 +62,11 @@ const FranchiseCard = ({ gameTitle, releaseDate, currentPrice, discount, link, h
                         Fecha de lanzamiento: {releaseDate}
                     </time>
                 </div>
-                <div className={styles["price"]}>
-                    <span className={styles["current-price"]}>{currentPrice}</span>
-                </div>
+                {hasOffer && currentPrice && (
+                    <div className={styles["price"]}>
+                        <span className={styles["current-price"]}>{currentPrice}</span>
+                    </div>
+                )}
             </div>
         </div>
     )

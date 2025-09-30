@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import GameStandardContainer from "./game-card-server";
-import { GameStandardContainerType, GameStandardControllerType } from "@/types/types";
+import { GameStandardControllerType } from "@/types/types";
 import Image from "next/image";
 import GameCardLoading from "./game-card-loading";
 
@@ -19,7 +19,7 @@ const defaultClasses = {
     gameTitle: "default-game-title",
 };
 
-const GameStandardWrapper = ({ gameImage, title, platform, discount, oldPrice, currentPrice, webOffer, classes = defaultClasses }: GameStandardControllerType) => {
+const GameStandardWrapper = ({ gameImage, title, discount, oldPrice, currentPrice, webOffer, classes = defaultClasses }: GameStandardControllerType) => {
     const [imageIsLoaded, setIsImageLoaded] = useState(false);
 
     useEffect(() => {
@@ -36,7 +36,6 @@ const GameStandardWrapper = ({ gameImage, title, platform, discount, oldPrice, c
         <GameStandardContainer
             title={title}
             gameImage={gameImage}
-            platform={platform}
             discount={discount}
             oldPrice={oldPrice}
             currentPrice={currentPrice}

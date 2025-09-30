@@ -16,16 +16,30 @@ $main-font-color: map.get($colores, font-dark-background-color);
     margin-bottom: 1.3rem;
 }
 
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
 .game-image {
     width: 100%;
     height: 100%;
     border-radius: 1rem;
     object-fit: cover;
     @include offer-shadow;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+/* Imagen en blanco y negro cuando no hay oferta */
+.no-offer-image {
+    filter: grayscale(100%);
+    opacity: 0.6;
 }
 
 /* Discount */
-
 .discount-and-store-container {
     display: flex;
     align-items: center;
@@ -38,6 +52,15 @@ $main-font-color: map.get($colores, font-dark-background-color);
     bottom: -10px;
     left: -10px;
     z-index: 3;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, width 0.3s ease;
+}
+
+/* Badge cuando no hay oferta */
+.no-offer-badge {
+    background-color: #6c757d;
+    /* Gris neutro */
+    width: 120px;
 }
 
 .discount {
@@ -47,13 +70,24 @@ $main-font-color: map.get($colores, font-dark-background-color);
     font-size: 1.1rem;
 }
 
+/* Texto para juegos sin oferta */
+.no-offer-text {
+    color: $main-font-color;
+    font-weight: 500;
+    font-family: var(--font-gontSerrat);
+    font-size: 0.85rem;
+    margin: 0;
+    text-align: center;
+    white-space: nowrap;
+}
+
 .store {
     width: 30px;
     height: 30px;
+    object-fit: contain;
 }
 
 /* Game Info */
-
 .game-info {
     display: flex;
     flex-direction: row;
@@ -64,12 +98,15 @@ $main-font-color: map.get($colores, font-dark-background-color);
 }
 
 .info {
+    width: 100%;
     line-height: 0.8rem;
 }
 
 .info h3 {
     font-size: clamp(.9rem, 0.8rem + 1vw, 1.3rem);
     margin-bottom: .3rem;
+    width: 90%;
+    @include resume-game-title;
 }
 
 .released-time {
@@ -80,19 +117,59 @@ $main-font-color: map.get($colores, font-dark-background-color);
 }
 
 .price {
+    display: flex;
+    align-items: center;
+}
+
+.current-price {
     font-size: clamp(1rem, .8rem + 1vw, 1.4rem);
     font-weight: 600;
     font-family: $primary-font-style;
 }
 
+/* Responsive */
 @media screen and (max-width: 768px) {
     .info {
         line-height: 0.9rem;
+    }
+
+    .info h3 {
+        width: 95%;
+    }
+
+    .no-offer-text {
+        font-size: 0.75rem;
+    }
+
+    .discount-and-store-container {
+        width: 85px;
+        height: 38px;
+    }
+
+    .no-offer-badge {
+        width: 115px;
     }
 }
 
 @media screen and (max-width: 568px) {
     .info {
         line-height: 0.7rem;
+    }
+
+    .discount-and-store-container {
+        width: 80px;
+        height: 35px;
+    }
+
+    .no-offer-badge {
+        width: 105px;
+    }
+
+    .no-offer-text {
+        font-size: 0.7rem;
+    }
+
+    .discount {
+        font-size: 1rem;
     }
 }

@@ -298,8 +298,6 @@ export const getFranchiseGames = async (e: string) => {
 
     franchises.push(...filteredGameInfo.slice(0, 5));
 
-    console.log(franchises);
-
     const getGameOffer = await Promise.all(
         franchises.map(async (e: any) => {
             const gameOffers = await searchOffers(e.title);
