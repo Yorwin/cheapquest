@@ -6,7 +6,7 @@ interface SafeRenderProps {
 }
 
 const SafeRender = ({ when, children }: SafeRenderProps) => {
-    if (!when) return null;
+    if (!when || when.length === 0) return null;
     return <>{children}</>;
 };
 

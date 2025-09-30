@@ -383,11 +383,11 @@ export const offersByPercentage = async () => {
 export const historicalLows = async () => {
     const historicalLows: any[] = [];
     let pageNumber = 0;
-    const targetElements = 5; // Número mínimo de elementos que queremos
+    const targetElements = 5;
 
     while (historicalLows.length < targetElements) {
         const requestAAAGames = await fetch(
-            `https://www.cheapshark.com/api/1.0/deals?onSale=1&AAA=1&pageNumber=${pageNumber}&pageSize=30`,
+            `https://www.cheapshark.com/api/1.0/deals?onSale=1&AAA=1&pageNumber=${pageNumber}&pageSize=40`,
             {
                 next: {
                     revalidate: 21600,
@@ -397,21 +397,20 @@ export const historicalLows = async () => {
         );
 
         if (!requestAAAGames.ok) {
-            console.error(`Status: ${requestAAAGames.status}`);
+            console.error(`❌ Status: ${requestAAAGames.status}`);
             throw new Error("Error when trying to get AAA Games");
         }
 
         const AAAGamesData = await requestAAAGames.json();
 
-        // Si no hay más resultados, salir del loop
         if (!AAAGamesData || AAAGamesData.length === 0) {
+            console.log('⚠️ No hay más resultados en la API');
             break;
         }
 
         const gamesPrices = await fetchGamesInfoCheapShark(AAAGamesData);
 
         const filteredGames = gamesPrices.filter((game: gameOfferInfo) => {
-            // Si falta cheapestPriceEver o deals, lo descartamos
             if (!game.cheapestPriceEver || !Array.isArray(game.deals) || game.deals.length === 0) {
                 return false;
             }
@@ -424,62 +423,71 @@ export const historicalLows = async () => {
             return currentLowestDeal === lowest;
         });
 
+        // Set con los títulos ya agregados
+        const existingTitles = new Set(historicalLows.map(game => game.title));
+
+        // CRÍTICO: Agrega títulos del lote actual para evitar duplicados dentro de la misma página
+        const currentBatchTitles = new Set<string>();
+
         const completeDataPromises = filteredGames.map(async (game: gameOfferInfo) => {
             const title = game.info.title;
 
-            // Encontrar el mejor deal (precio más bajo)
+            // Saltar si ya existe en historicalLows O en el lote actual
+            if (existingTitles.has(title) || currentBatchTitles.has(title)) {
+                return null;
+            }
+
+            // Marcar este título como "en proceso" inmediatamente
+            currentBatchTitles.add(title);
+
             const bestDeal = game.deals.reduce((cheapest: dealsInfoOffer, current: dealsInfoOffer) => {
                 const cheapestPrice = Number(cheapest.price);
                 const currentPrice = Number(current.price);
                 return currentPrice < cheapestPrice ? current : cheapest;
             });
 
-            return getGameInfo(title)
-                .then((gameInfo) => {
-                    const firstResult = gameInfo.results[0] ?? null;
+            try {
+                const gameInfo = await getGameInfo(title);
+                const firstResult = gameInfo.results[0] ?? null;
 
-                    return {
-                        // Información básica del juego
-                        title: game.info.title,
-                        steamAppID: game.info.steamAppID,
-                        thumb: game.info.thumb,
-
-                        // Precio histórico más bajo
-                        cheapestPriceEver: {
-                            price: game.cheapestPriceEver.price,
-                            date: game.cheapestPriceEver.date
-                        },
-
-                        // Mejor deal actual
-                        bestDeal: {
-                            storeID: bestDeal.storeID,
-                            dealID: bestDeal.dealID,
-                            price: bestDeal.price,
-                            retailPrice: bestDeal.retailPrice,
-                            savings: bestDeal.savings
-                        },
-
-                        // Background image de la API externa
-                        background_image: firstResult?.background_image || game.info.thumb, // Fallback al thumb si no hay background_image
-                    };
-                })
-                .catch((error) => {
-                    console.error(`Error getting game info for ${title}:`, error);
-                });
+                return {
+                    title: game.info.title,
+                    steamAppID: game.info.steamAppID,
+                    thumb: game.info.thumb,
+                    cheapestPriceEver: {
+                        price: game.cheapestPriceEver.price,
+                        date: game.cheapestPriceEver.date
+                    },
+                    bestDeal: {
+                        storeID: bestDeal.storeID,
+                        dealID: bestDeal.dealID,
+                        price: bestDeal.price,
+                        retailPrice: bestDeal.retailPrice,
+                        savings: bestDeal.savings
+                    },
+                    background_image: firstResult?.background_image || game.info.thumb,
+                };
+            } catch (error) {
+                console.error(`❌ Error obteniendo info para ${title}:`, error);
+                return null; // Retornar null en caso de error
+            }
         });
 
         const resolvedGames = await Promise.all(completeDataPromises);
-        historicalLows.push(...resolvedGames);
+
+        // Filtrar nulls y agregar juegos válidos
+        const validGames = resolvedGames.filter(game => game !== null);
+
+        historicalLows.push(...validGames);
 
         pageNumber++;
 
+        // Límite de seguridad
         if (pageNumber > 50) {
-            console.log("Maximum page limit reached");
+            console.log('⚠️ Límite máximo de páginas alcanzado');
             break;
         }
     }
 
-    // Retornar solo los primeros 10 elementos si hay más
     return historicalLows.slice(0, targetElements);
 };
-

@@ -12,24 +12,28 @@ import OfficialStoreList from "@/components/pages/game-page/official-store-list"
 import FranchiseGames from "@/components/pages/game-page/franchise-games";
 import RelatedOffers from "@/components/pages/game-page/related-offers/related-offers";
 import SafeRender from "@/components/general/safe-render";
+import { notFound } from "next/navigation";
 
 import { getGameInfoGamePage } from "@/utils/getGamesInfo";
 import { slugToGameName } from "@/functions/functions";
 import { Metadata } from "next";
 
 interface ParamsGame {
-    params: {
-        game: string[];
-    };
+    params: Promise<{ game: string }>;
 }
 
 // -------------------- METADATA DINÁMICA --------------------
 export async function generateMetadata({ params }: ParamsGame): Promise<Metadata> {
-    const gameSlug = params.game[0];
+
+    const { game } = await params;
+    const gameSlug = game;
     const gameName = slugToGameName(gameSlug);
 
-    // Usamos fetch con revalidate para cache (12 horas)
     const getGameInfo = await getGameInfoGamePage(gameName);
+
+    if (!getGameInfo || Object.keys(getGameInfo).length === 0) {
+        notFound();
+    }
 
     const title = getGameInfo.title;
     const bestOffer = getGameInfo.bestOffer;
@@ -53,10 +57,11 @@ export async function generateMetadata({ params }: ParamsGame): Promise<Metadata
 
 // -------------------- COMPONENTE PRINCIPAL --------------------
 const GamePage = async ({ params }: ParamsGame) => {
-    const gameSlug = params.game[0];
+
+    const { game } = await params;
+    const gameSlug = game;
     const gameName = slugToGameName(gameSlug);
 
-    // ✅ Mismo fetch que en generateMetadata, solo se hace una vez
     const getGameInfo = await getGameInfoGamePage(gameName);
 
     return (
@@ -79,7 +84,9 @@ const GamePage = async ({ params }: ParamsGame) => {
                     <div className="row">
                         <div className="col-md-7 col-sm-12 p-0">
                             <AboutTheGame description={getGameInfo.description} />
-                            <GameTags tags={getGameInfo.about_the_game.tags} />
+                            <SafeRender when={getGameInfo.about_the_game.tags}>
+                                <GameTags tags={getGameInfo.about_the_game.tags} />
+                            </SafeRender>
                         </div>
                         <div className="col-md-5 col-sm-12 p-0">
                             <SafeRender when={getGameInfo.meta_critic}>

@@ -10,10 +10,16 @@ const HeaderMainContainer = ({ children }: { children: React.ReactNode }) => {
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
-        if (pathname === "/search") setScrolled(true);
+        if (pathname !== "/" && !pathname.startsWith("/game-page")) {
+            setScrolled(true);
+        } else {
+            setScrolled(window.scrollY > 0);
+        }
 
         const handleScroll = () => {
-            setScrolled(window.scrollY > 0);
+            if (pathname === "/" || pathname.startsWith("/game-page")) {
+                setScrolled(window.scrollY > 0);
+            }
         };
 
         window.addEventListener("scroll", handleScroll);

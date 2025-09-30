@@ -40,6 +40,7 @@ const MainGameImage = ({
                     sizes="50vw"
                     fill
                     className={styles["game-image"]}
+                    priority
                 />
             </div>
             {children}
