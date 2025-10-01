@@ -23,7 +23,7 @@ const GameStandardContainer = ({ title, discount, oldPrice, currentPrice, webOff
     const link = createGameSlug(title);
 
     return <article className={styles[classes.mainGameCard]}>
-        <Link href={`/game-page/${link}`} className={styles["click-overlay"]} aria-label="Ver Black Ops 6" />
+        <Link href={`/game-page/${link}`} className={styles["click-overlay"]} aria-label={`Ver ${title}`} />
         <div className={styles["gameimage-container"]}>
             {children}
         </div>

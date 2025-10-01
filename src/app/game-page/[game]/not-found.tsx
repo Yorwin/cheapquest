@@ -2,21 +2,22 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/layout/gamepage/page-not-found-gamepage.module.scss";
-import MissingGameInfo from "@/resources/no-data-found/missing-game-info.svg";
+import MissingGameInfo from "@/resources/no-data-found/robot.svg";
+import { Metadata } from "next";
 
-type PageNotFoundProps = {
-    params: Promise<{ game: string }>;
-};
+export async function generateMetadata(): Promise<Metadata> {
+    return {
+        title: 'Juego no encontrado',
+        description: 'El juego solicitado no existe',
+        robots: {
+            index: false,
+            follow: false,
+            nocache: true,
+        }
+    };
+}
 
-const PageNotFound = async ({ params }: PageNotFoundProps) => {
-    const { game } = await params;
-
-    // Opcional: convertir el slug a un nombre más legible
-    const gameName = game.replace(/-/g, ' ')
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-
+const PageNotFound = () => {
     return (
         <article className={styles["no-page-found-container"]}>
             <div className={styles["content-container"]}>
@@ -26,10 +27,11 @@ const PageNotFound = async ({ params }: PageNotFoundProps) => {
                         alt="Imágen decorativa - Robot"
                         className={styles["image-error"]}
                         fill
+                        priority
                     />
                 </div>
                 <h3 className={styles["title"]}>
-                    No encontramos información relacionada con "{gameName}".
+                    No encontramos información relacionada con el juego que has solicitado.
                 </h3>
                 <p className={styles["error-text"]}>
                     Lo siento, no pudimos encontrar la página que estabas buscando.

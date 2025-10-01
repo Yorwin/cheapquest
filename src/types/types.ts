@@ -366,7 +366,7 @@ export interface gameData {
     about_the_game: aboutTheGame;
 };
 
-export type getGameDataProps = (gameId: string) => Promise<gameData>;
+export type getGameDataProps = (gameId: string) => Promise<gameData | null>;
 
 export interface Franchise {
     gameTitle: string,

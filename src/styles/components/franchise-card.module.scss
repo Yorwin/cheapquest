@@ -24,6 +24,13 @@ $main-font-color: map.get($colores, font-dark-background-color);
     overflow: hidden;
 }
 
+.click-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
 .game-image {
     width: 100%;
     height: 100%;
@@ -118,7 +125,8 @@ $main-font-color: map.get($colores, font-dark-background-color);
 
 .price {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: flex-end;
 }
 
 .current-price {

@@ -10,9 +10,8 @@ interface gameInfoProps {
     tags: string[]
 }
 
-const GameInfo = ({ gameData }: { gameData: gameInfoProps }) => {
-
-    return (
+const GameInfo = ({ gameData }: { gameData: gameInfoProps | undefined }) => {
+    if (gameData) return (
         <div className={styles["game-info-container"]}>
             <h2>Información del juego</h2>
             <div className={styles["table-container"]}>

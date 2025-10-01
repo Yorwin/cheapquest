@@ -2,6 +2,8 @@ import React from "react";
 import styles from "@/styles/components/franchise-card.module.scss"
 import Image from "next/image";
 import { StaticImageData } from "next/image";
+import { createGameSlug } from "@/functions/functions";
+import Link from "next/link";
 
 interface FranchiseCardProps {
     gameTitle: string;
@@ -24,10 +26,14 @@ const FranchiseCard = ({
     webOffer,
     hasOffer
 }: FranchiseCardProps) => {
+
+    const linkToBeSet = createGameSlug(link);
+
     return (
         <div className={`${styles["franchise-card-container"]} col-lg-4 col-md-6 col-sm-12 mb-lg-3 mb-md-2 mb-sm-3`}>
             <div className={styles["franchise-card"]}>
                 <div className={styles["image-container"]}>
+                    <Link href={`/game-page/${linkToBeSet}`} className={styles["click-overlay"]} aria-label={`Ver ${gameTitle}`} ></Link>
                     <Image
                         className={`${styles["game-image"]} ${!hasOffer ? styles['no-offer-image'] : ''}`}
                         src={headerImage}

@@ -1,15 +1,12 @@
 import React from "react";
 import styles from "@/styles/layout/gamepage/related-offers.module.scss"
 import ContentDistributionManager from "./content-distribution-manager";
-import { verticalContainerProps } from "@/types/types";
+import { VerticalCardWrapperType } from "@/types/types";
 
 /* Example Values */
 
-import platform from "@/resources/platforms/pc.svg"
-import store from "@/resources/stores/greenman.png"
-
-const RelatedOffers = ({ offersData }: verticalContainerProps) => {
-    return (
+const RelatedOffers = ({ offersData }: { offersData: VerticalCardWrapperType[] | null }) => {
+    if (offersData) return (
         <div className="related-offers-container">
             <h1 className={styles["title"]}>Quizás también te guste</h1>
             <ContentDistributionManager gameInfo={offersData} />

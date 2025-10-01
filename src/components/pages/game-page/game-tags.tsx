@@ -3,15 +3,14 @@ import styles from "@/styles/components/user-tags.module.scss"
 import Tags from "../../general/game-tags/tags-controller";
 
 interface GameTagsProps {
-    tags: string[]
+    tags: string[] | undefined;
 }
 
-const GameTags = ({tags} : GameTagsProps) => {
-
+const GameTags = ({ tags }: GameTagsProps) => {
     return (
         <div className={styles["user-tags-container"]}>
             <h2>Tags:</h2>
-            <Tags tags={tags}/>
+            <Tags tags={tags} />
         </div>
     )
 };

@@ -105,11 +105,11 @@ export const getGameInfo = async (e: string) => {
 export const getGameInfoGamePage = async (e: string) => {
 
     const headerImage = await getHeaderImage(e);
-    const gameTrailer = await getGameTrailer(headerImage.game_id);
+    const gameTrailer = headerImage !== null && await getGameTrailer(headerImage.game_id);
     const gameOffers = await getGameOffers(e);
-    const gameData = await getGameData(headerImage.game_id);
-    const franchise = await getFranchiseGames(headerImage.game_id);
-    const sameGenre = await getSameGenre(gameData.about_the_game.original_lang_genres[0].id, headerImage.game_id);
+    const gameData = headerImage !== null && await getGameData(headerImage.game_id);
+    const franchise = headerImage !== null ? await getFranchiseGames(headerImage.game_id) : [];
+    const sameGenre = gameData ? await getSameGenre(gameData.about_the_game.original_lang_genres[0].id, headerImage.game_id) : null;
 
     const data = {
         gameTrailer: gameTrailer,
@@ -133,6 +133,10 @@ export const getHeaderImage = async (e: string) => {
 
     const data = await response.json();
 
+    if (!data.results || data.results.length === 0) {
+        return null;
+    }
+
     const gameId = data.results[0].id;
     const headerImage = data.results[0].background_image;
     const screenshots = data.results[0].short_screenshots;
@@ -151,6 +155,8 @@ export const getGameOffers = async (e: string) => {
     const titleForComparison = slugToGameName(e).toUpperCase().replace(/\s+/g, '');
     const gameOffers = await searchOffers(e);
     const listOfStores = await searchForStore();
+
+    if (gameOffers.length === 0) return null;
 
     const completeInfoOffer = await Promise.all(gameOffers.map(async (e: any) => {
         const dealURL = `https://www.cheapshark.com/redirect?dealID=${e.dealID}`;
@@ -234,6 +240,10 @@ export const getGameData: getGameDataProps = async (gameId: string) => {
 
     const data = await response.json();
 
+    if (!data) {
+        return null;
+    }
+
     const originalLangGenres = data.genres.map((e: Genre) => {
         return {
             name: e.name,
@@ -272,7 +282,7 @@ export const getGameData: getGameDataProps = async (gameId: string) => {
             developers: data.developers.map((e: publishersAndDevelopersType) => e.name),
             tags: result.data.tags ? result.data.tags : data.tags.map((e: tag) => e.name),
         }
-    }
+    };
 
     return filteredData;
 };
