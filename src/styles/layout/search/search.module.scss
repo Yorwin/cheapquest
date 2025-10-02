@@ -54,6 +54,7 @@
     height: 50px;
     border: 2px #000 solid;
     border-radius: 2rem;
+    overflow: hidden;
     gap: .5rem;
 }
 
@@ -129,7 +130,6 @@
         border: none; // ❌ sin borde
         outline: none; // ❌ sin borde de enfoque
         background: transparent;
-        font-size: 1rem;
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
@@ -186,6 +186,7 @@
 .button-search {
     button {
         // Estilos base
+        width: 30%;
         background: linear-gradient(135deg, #494A7F 0%, #5A5C8A 100%);
         color: white;
         border: none;
@@ -321,5 +322,108 @@
         padding: 16px 32px;
         font-size: 18px;
         border-radius: 16px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .button-search {
+        button {
+            width: 50%;
+            border-radius: 12px;
+            padding: 12px 60px;
+            font-size: 16px;
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .search-page-container {
+        margin: 12rem 2.5rem 4rem 2.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .filter-container {
+        flex-direction: column;
+        height: 60px;
+        gap: 0rem;
+        padding: 1rem;
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .search-page-container {
+        margin: 10rem .5rem 4rem .5rem;
+    }
+
+    .button-search {
+        button {
+            width: 80%;
+            text-align: center;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-size: 16px;
+        }
+    }
+
+    .search-wrapper {
+        width: 100%;
+
+        input {
+            &::placeholder {
+                font-size: .8rem; // tamaño de la letra
+            }
+        }
+
+        i {
+            font-size: 1.2rem;
+        }
+    }
+
+    .filter-container {
+        width: 100%;
+    }
+
+    .label {
+        font-size: .8rem;
+        text-align: center;
+    }
+
+    .number-limits-container {
+        @include flex-center-elements-XY;
+        flex-direction: column;
+        gap: .2rem;
+    }
+
+
+    .select-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: auto;
+        height: 100%;
+
+        select {
+            font-family: var(--font-gontSerrat);
+            font-size: .7rem;
+        }
+
+        i {
+            font-size: 1.3rem;
+        }
+    }
+
+    .checkbox-container {
+        .label {
+            text-align: start;
+            font-size: .8rem;
+            padding-left: 1.5rem;
+        }
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .filter-container {
+        height: 100px;
     }
 }

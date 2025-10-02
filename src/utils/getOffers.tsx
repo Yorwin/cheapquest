@@ -357,7 +357,7 @@ export const offersByPercentage = async () => {
 
     const res = await request.json();
 
-    const filteredOffers = res.filter((offer: GameDeal) => !offer.title.includes("Bundle"));
+    const filteredOffers = res.filter((offer: GameDeal) => !offer.title.includes("Bundle") && !offer.title.includes("WallPaper"));
 
     const bestOffers = filteredOffers.slice(0, 5);
 

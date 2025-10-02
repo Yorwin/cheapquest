@@ -32,11 +32,11 @@ const Search = async () => {
                         </div>
                     </div>
 
-                    <div className="row mb-4">
+                    <div className="row mb-4 g-4 g-xl-0">
 
                         {/* Orden */}
 
-                        <div className="col-3">
+                        <div className="col-xl-3 col-6 d-flex justify-content-center">
                             <div className={styles["filter-container"]}>
                                 <label className={styles["label"]}>Ordenar por:</label>
                                 <div className={styles["select-container"]}>
@@ -51,7 +51,7 @@ const Search = async () => {
 
                         {/* Géneros */}
 
-                        <div className="col-3">
+                        <div className="col-xl-3 col-6 d-flex justify-content-center">
                             <div className={styles["filter-container"]}>
                                 <label className={styles["label"]}>Géneros:</label>
                                 <div className={styles["select-container"]}>
@@ -65,28 +65,28 @@ const Search = async () => {
 
                         {/* Ordenar por ratings */}
 
-                        <div className="col-3">
+                        <div className="col-xl-3 col-6 d-flex justify-content-center">
                             <div className={styles["checkbox-container"]}>
                                 <input type="checkbox" name="steam-rating" id="steam-rating" />
                                 <label htmlFor="steam-rating" className={styles["label"]}>
-                                    Ordenar por Steam Rating
+                                    Steam Rating
                                 </label>
                             </div>
                         </div>
 
-                        <div className="col-3">
+                        <div className="col-xl-3 col-6 d-flex justify-content-center">
                             <div className={styles["checkbox-container"]}>
                                 <input type="checkbox" name="meta-critic" id="meta-critic" />
                                 <label htmlFor="meta-critic" className={styles["label"]} >
-                                    Ordenar por Metacritic
+                                    Metacritic
                                 </label>
                             </div>
                         </div>
                     </div>
 
                     {/* Rango de precio */}
-                    <div className="row mb-5">
-                        <div className="col-12 d-flex justify-content-center gap-4">
+                    <div className="row mb-5 g-4">
+                        <div className="col-lg-12 col-xl-6 d-flex justify-content-xl-end justify-content-center">
                             <div className={styles["number-limits-container"]}>
                                 <label htmlFor="starting-price">Entre</label>
                                 <input
@@ -109,11 +109,11 @@ const Search = async () => {
                                     step={1}
                                 />
                             </div>
-                            <div className={styles["button-search"]}>
-                                <button>
-                                    Buscar
-                                </button>
-                            </div>
+                        </div>
+                        <div className={`col-lg-12 col-xl-6 d-flex justify-content-xl-start justify-content-center ${styles["button-search"]}`}>
+                            <button className={styles["gradient-animate"]}>
+                                Buscar
+                            </button>
                         </div>
                     </div>
 
