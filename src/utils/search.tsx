@@ -29,7 +29,7 @@ export const searchForGenres = async () => {
     orderedGenres.unshift({
         id: null,
         name: "Cualquiera",
-        slug: "cualquiera",
+        slug: "",
     });
 
     return orderedGenres;

@@ -63,7 +63,7 @@ export interface PlatformWrapper {
 }
 
 export interface Genre {
-    id: number;
+    id: number | null;
     name: string;
     slug: string;
 }

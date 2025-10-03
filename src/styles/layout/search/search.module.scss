@@ -3,7 +3,8 @@
 @use 'sass:map';
 
 .search-page-container {
-    margin: 12rem 6rem 4rem 6rem;
+    padding: 12rem 6rem 4rem 6rem;
+    background-color: map.get($colores, complementary-color);
 }
 
 /* Search Bar */
@@ -338,7 +339,7 @@
 
 @media screen and (max-width: 992px) {
     .search-page-container {
-        margin: 12rem 2.5rem 4rem 2.5rem;
+        padding: 12rem 2.5rem 4rem 2.5rem;
     }
 }
 
@@ -353,7 +354,7 @@
 
 @media screen and (max-width: 568px) {
     .search-page-container {
-        margin: 10rem .5rem 4rem .5rem;
+        padding: 10rem .5rem 4rem .5rem;
     }
 
     .button-search {
