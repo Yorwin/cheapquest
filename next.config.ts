@@ -32,6 +32,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.greenmangaming.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.fanatical.com',
+      },
     ],
   },
 };

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import styles from "@/styles/layout/search/search.module.scss";
 import { useRouter } from "next/navigation";
 import { Genre } from "@/types/types";
-import SearchResults from "@/components/general/search-results";
+import SearchResults from "@/components/pages/search/search-results";
 
 // -------------------- COMPONENTE PRINCIPAL --------------------
 const Search = () => {
@@ -21,7 +21,7 @@ const Search = () => {
         steamRating: false,
         metaCritic: false,
         startingPrice: 0,
-        finishingPrice: 200,
+        finishingPrice: 120,
     });
 
     //Ejecutar la busqueda
@@ -99,15 +99,15 @@ const Search = () => {
 
                         <div className="col-xl-3 col-6 d-flex justify-content-center">
                             <div className={styles["filter-container"]}>
-                                <label className={styles["label"]}>Ordenar por:</label>
+                                <label className={styles["label"]}>Ordenar:</label>
                                 <div className={styles["select-container"]}>
                                     <select
                                         id="orden"
                                         name="order"
                                         value={formData.order}
                                         onChange={handleInputChange}>
-                                        <option value="precio-min">Precio más bajo</option>
-                                        <option value="precio-max">Precio más alto</option>
+                                        <option className={styles["options"]} value="precio-min">Precio más bajo</option>
+                                        <option className={styles["options"]} value="precio-max">Precio más alto</option>
                                     </select>
                                     <i className="bi bi-caret-down"></i>
                                 </div>
@@ -128,7 +128,7 @@ const Search = () => {
                                                 value={formData.genres}
                                                 onChange={handleInputChange}>
                                                 {gottenGenres.map((e: Genre, index: number) => (
-                                                    <option value={e.slug} key={index}>
+                                                    <option className={styles["options"]} value={e.slug} key={index}>
                                                         {e.name}
                                                     </option>
                                                 ))}

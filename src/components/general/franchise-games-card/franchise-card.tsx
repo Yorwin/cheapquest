@@ -30,7 +30,7 @@ const FranchiseCard = ({
     const linkToBeSet = createGameSlug(link);
 
     return (
-        <div className={`${styles["franchise-card-container"]} col-lg-4 col-md-6 col-sm-12 mb-lg-3 mb-md-2 mb-sm-3`}>
+        <div className={`${styles["franchise-card-container"]} mb-lg-3 mb-md-2 mb-sm-3`}>
             <div className={styles["franchise-card"]}>
                 <div className={styles["image-container"]}>
                     <Link href={`/game-page/${linkToBeSet}`} className={styles["click-overlay"]} aria-label={`Ver ${gameTitle}`} ></Link>

@@ -2,6 +2,14 @@
 @use '../../_variables/mixins' as *;
 @use 'sass:map';
 
+$main-font-color: map.get($colores, font-dark-background-color);
+$border-select-color: map.get($colores, dark-background-color);
+$number-border-color: map.get($colores, dark-background-color);
+$border-main-color: map.get($colores, primary-color);
+
+$underline-styles: 2px $main-font-color solid underline;
+
+
 .search-page-container {
     padding: 12rem 6rem 4rem 6rem;
     background-color: map.get($colores, complementary-color);
@@ -21,7 +29,8 @@
     input {
         width: 100%;
         height: 100%;
-        border: 2px #000 solid;
+        border: 2px $number-border-color solid;
+        transition: border .1s linear;
         border-radius: 2rem;
         padding: 0 1rem;
 
@@ -29,10 +38,22 @@
         font-weight: 600;
 
         &::placeholder {
-            color: #888; // color de la letra del placeholder
-            font-size: 1rem; // tamaño de la letra
-            font-style: italic; // opcional: cursiva
+            color: #888;
+            font-size: 1rem;
+            font-style: italic;
             font-weight: 400;
+        }
+
+        // Quitar estilos por defecto del foco
+        &:focus {
+            outline: none; // elimina el contorno nativo
+            box-shadow: none; // elimina cualquier glow
+            border: 4px $border-main-color solid; // mantiene tu borde
+        }
+
+        // opcional: usar focus-visible para accesibilidad
+        &:focus-visible {
+            outline: none;
         }
     }
 
@@ -51,12 +72,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 85%;
+    width: 95%;
     height: 50px;
-    border: 2px #000 solid;
+    border: 2px $main-font-color solid;
     border-radius: 2rem;
     overflow: hidden;
     gap: .5rem;
+    color: $main-font-color;
 }
 
 /* CheckBox */
@@ -80,6 +102,7 @@
         cursor: pointer;
         font-size: 0.9rem;
         user-select: none;
+        color: $main-font-color;
 
         &::before {
             content: "";
@@ -89,7 +112,7 @@
             transform: translateY(-50%);
             width: 1.2rem;
             height: 1.2rem;
-            border: 2px solid #000;
+            border: 2px solid $border-select-color;
             border-radius: 0.5rem; // redondeado
             background: #fff;
             transition: all 0.2s ease;
@@ -135,6 +158,7 @@
         -moz-appearance: none;
         appearance: none;
         cursor: pointer;
+        color: $main-font-color;
 
         font-family: var(--font-gontSerrat);
         font-size: .9rem;
@@ -146,7 +170,21 @@
         text-overflow: ellipsis;
 
         &:hover {
-            text-decoration: 2px #000 solid underline;
+            text-decoration: $underline-styles;
+        }
+
+        &:focus {
+            text-decoration: $underline-styles;
+            outline: none;
+            box-shadow: none;
+        }
+
+        &:focus-visible {
+            outline: none;
+        }
+
+        &:active {
+            text-decoration: $underline-styles;
         }
     }
 
@@ -158,6 +196,13 @@
         pointer-events: none;
         font-size: 1.3rem;
     }
+}
+
+.options {
+    font-family: var(--font-timeless);
+    font-weight: 600;
+    color: #000;
+    background-color: $main-font-color;
 }
 
 .label {
@@ -176,19 +221,40 @@
         font-family: var(--font-gontSerrat);
         border-radius: .6rem;
         padding-left: 0.5rem;
+        border: 0.2rem $number-border-color solid;
+        transition: border .1s linear;
+
+        // Quitar estilos por defecto del foco
+        &:focus {
+            outline: none; // elimina el contorno nativo
+            box-shadow: none; // elimina cualquier glow
+            border: 4px $border-main-color solid; // mantiene tu borde
+        }
+
+        // opcional: usar focus-visible para accesibilidad
+        &:focus-visible {
+            outline: none;
+        }
+
+        &:out-of-range {
+            border: 4px #FE392B solid;
+        }
     }
 
     label {
         font-family: var(--font-gontSerrat);
         font-weight: 500;
+        color: $main-font-color;
     }
 }
+
+/* Button */
 
 .button-search {
     button {
         // Estilos base
         width: 30%;
-        background: linear-gradient(135deg, #494A7F 0%, #5A5C8A 100%);
+        background: linear-gradient(135deg, 0%, #5A5C8A 100%);
         color: white;
         border: none;
         border-radius: 12px;
@@ -396,7 +462,6 @@
         gap: .2rem;
     }
 
-
     .select-container {
         position: relative;
         display: flex;
@@ -426,5 +491,32 @@
 @media screen and (max-width: 300px) {
     .filter-container {
         height: 100px;
+    }
+
+    .checkbox-container {
+        flex-direction: column;
+        align-items: start;
+
+        .label {
+            padding-left: 0;
+            padding-top: 1.8rem; // espacio para el checkbox arriba
+
+            &::before {
+                left: 0;
+                top: 0;
+                transform: none;
+            }
+
+            &:hover::before {
+                background: #f0f0f0;
+                border-color: #555;
+            }
+        }
+
+        input[type="checkbox"]:checked+.label::after {
+            left: 0.25rem;
+            top: 0;
+            transform: none;
+        }
     }
 }

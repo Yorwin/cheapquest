@@ -1,0 +1,77 @@
+@use '../_variables/variables' as *;
+@use '../_variables/mixins' as *;
+@use 'sass:map';
+
+.skeleton-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.skeleton-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+.skeleton-content {
+    padding: 1rem;
+}
+
+.skeleton-title {
+    height: 1.2rem;
+    width: 70%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+    margin-bottom: 0.8rem;
+}
+
+.skeleton-date {
+    height: 0.9rem;
+    width: 40%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.skeleton-price-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.skeleton-price {
+    height: 1.5rem;
+    width: 60px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+.skeleton-discount {
+    height: 1.2rem;
+    width: 50px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}

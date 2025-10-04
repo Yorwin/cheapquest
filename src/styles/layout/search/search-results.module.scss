@@ -1,0 +1,11 @@
+@use '../../_variables/variables' as *;
+@use '../../_variables/mixins' as *;
+@use 'sass:map';
+
+$main-color: map.get($colores, font-dark-background-color);
+
+.results-title {
+    font-family: var(--font-gontSerrat);
+    color: $main-color;
+    margin-bottom: 1.5rem;
+}
