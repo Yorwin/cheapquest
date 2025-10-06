@@ -3,19 +3,21 @@
 import { useSearchGameInfo } from "@/functions/hooks/useSearchParams";
 import FranchiseCard from "../../general/franchise-games-card/franchise-card";
 import GameCardSkeleton from "@/components/general/franchise-games-card/gamecard-skeleton-loader";
-import styles from "@/styles/layout/search/search-results.module.scss"
+import ErrorMessage from "./search-error-message";
+import styles from "@/styles/layout/search/search-results.module.scss";
 
 export default function SearchResults() {
     const { data, loading, error } = useSearchGameInfo();
-
-    if (error) return <p>Error: {error}</p>;
 
     return (
         <section className="container-fluid">
             <h4 className={styles["results-title"]}>Resultados de búsqueda</h4>
             <div className="row d-flex justify-content-center">
-                {loading ? (
-                    // Muestra 6 skeletons mientras carga
+                {error ? (
+                    <div className="col-12">
+                        <ErrorMessage error={error} />
+                    </div>
+                ) : loading ? (
                     Array.from({ length: 6 }).map((_, index) => (
                         <div className="col-xl-4 col-md-6 col-sm-12" key={index}>
                             <GameCardSkeleton />
@@ -41,3 +43,4 @@ export default function SearchResults() {
         </section>
     );
 }
+

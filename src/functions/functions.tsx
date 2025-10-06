@@ -169,6 +169,33 @@ export function removeDuplicatesByBestPrice(deals: GameDeal[]): GameDeal[] {
     return Array.from(gameMap.values());
 }
 
+export function removeDuplicatesMostPopularOffers(deals: GameDealWithoutScore[]): GameDealWithoutScore[] {
+    const gameMap = new Map<string, GameDealWithoutScore>();
+
+    for (const deal of deals) {
+        // Usamos los primeros 15 caracteres del título como clave
+        const titlePrefix = deal.title.substring(0, 10).toLowerCase();
+        const existingDeal = gameMap.get(titlePrefix);
+
+        if (!existingDeal) {
+            // Si no existe, lo agregamos
+            gameMap.set(titlePrefix, deal);
+        } else {
+            // Si existe, comparamos precios y nos quedamos con el mejor
+            const currentPrice = parseFloat(deal.salePrice);
+            const existingPrice = parseFloat(existingDeal.salePrice);
+
+            if (currentPrice < existingPrice) {
+                // El precio actual es mejor (menor), reemplazamos
+                gameMap.set(titlePrefix, deal);
+            }
+            // Si el precio existente es mejor o igual, no hacemos nada
+        }
+    }
+
+    return Array.from(gameMap.values());
+}
+
 // Función para crear URLs amigables
 export const createGameSlug = (gameName: string): string => {
     return gameName

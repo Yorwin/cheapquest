@@ -1,9 +1,10 @@
 import React from "react";
 import styles from "@/styles/layout/footer.module.scss";
+import Link from "next/link";
 
 const Footer = () => {
     const aboutUs =
-        "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesqu sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor pulvinar vivamus fringilla.";
+        "CheapQuest compara y muestra las mejores ofertas de videojuegos online, facilitando a gamers encontrar precios bajos rápidamente, descubrir promociones exclusivas y acceder a información de tiendas confiables de forma visual y sencilla..";
     const copyRightDeclaration =
         "Todos los derechos de autor, marcas comerciales y marcas registradas son propiedad de sus respectivos propietarios.";
 
@@ -22,11 +23,9 @@ const Footer = () => {
                     >
                         <h3>CheapQuest</h3>
                         <p title={aboutUs}>
-                            Lorem ipsum dolor sit amet consectetur adipiscing
-                            elit quisque faucibus ex sapien vitae pellentesque
-                            sem placerat in id cursus mi pretium tellus duis
-                            convallis tempus leo eu aenean sed diam urna tempor
-                            pulvinar vivamus fringilla.
+                            CheapQuest compara y muestra las mejores ofertas de videojuegos online, 
+                            facilitando a gamers encontrar precios bajos rápidamente, descubrir promociones exclusivas y 
+                            acceder a información de tiendas confiables de forma visual y sencilla.
                         </p>
                         <p
                             className={styles["legal-remark"]}
@@ -48,13 +47,16 @@ const Footer = () => {
                             <h4>Navegación</h4>
                             <ul>
                                 <li>
-                                    <a href="#">Sobre Nosotros</a>
+                                    <Link href="/aviso-legal">Aviso Legal</Link>
                                 </li>
                                 <li>
-                                    <a href="#">Política de Privacidad</a>
+                                    <Link href="/cookies">Aviso de Cookies</Link>
                                 </li>
                                 <li>
-                                    <a href="#">Términos y Condiciones</a>
+                                    <Link href="/politica-de-privacidad">Política de Privacidad</Link>
+                                </li>
+                                <li>
+                                    <Link href="/terminos">Términos y Condiciones</Link>
                                 </li>
                             </ul>
                         </nav>
@@ -67,13 +69,13 @@ const Footer = () => {
                             <h4>Contáctanos</h4>
                             <ul>
                                 <li>
-                                    <a href="mailto:contactemail@contactemail.com">
-                                        contactemail@contactemail.com
+                                    <a href="mailto:info@cheapquest.com">
+                                        info@cheapquest.com
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="mailto:contactemail@contactemail.com">
-                                        contactemail@contactemail.com
+                                    <a href="mailto:marketing@cheapquest.com">
+                                        marketing@cheapquest.com
                                     </a>
                                 </li>
                             </ul>

@@ -1,6 +1,6 @@
 import "server-only";
 
-import { fetchGamesInfoCheapShark, getTop11Deals, removeDuplicatesByBestPrice } from "@/functions/functions";
+import { fetchGamesInfoCheapShark, getTop11Deals, removeDuplicatesByBestPrice, removeDuplicatesMostPopularOffers } from "@/functions/functions";
 import { GameDeal, GameDealWithoutScore, gameOfferInfo, dealsInfoOffer } from "@/types/types";
 import { getGameInfo } from "./getGamesInfo";
 
@@ -99,7 +99,8 @@ export const getMostPopularOffers = async (retries = 3) => {
             })
 
             const resultArray: GameDealWithoutScore[] = Object.values(deduplicated);
-            const getDeals = getTop11Deals(resultArray);
+            const removeDuplicated: GameDealWithoutScore[] = removeDuplicatesMostPopularOffers(resultArray);
+            const getDeals = getTop11Deals(removeDuplicated);
 
             return getDeals;
         } catch (error) {

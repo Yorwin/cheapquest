@@ -23,6 +23,7 @@ export function useSearchGameInfo() {
                 if (!res.ok) throw new Error("Error fetching search results");
 
                 const json = await res.json();
+
                 setData(json);
             } catch (err) {
                 setError(err instanceof Error ? err.message : "Unknown error");
