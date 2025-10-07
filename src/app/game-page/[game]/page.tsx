@@ -67,6 +67,9 @@ const GamePage = async ({ params }: ParamsGame) => {
     const { game } = await params;
     const gameSlug = game;
     const gameName = slugToGameName(gameSlug);
+
+    /*
+    
     const getGameInfo = await getGameInfoGamePage(gameName);
 
     if (!getGameInfo.bestOffer) {
@@ -84,7 +87,9 @@ const GamePage = async ({ params }: ParamsGame) => {
                 </div>
             </article>
         )
-    }
+    } 
+    
+    */
 
     return (
         <article className="main-article-gamepage">
