@@ -1,17 +1,26 @@
 import React from "react";
 import styles from "@/styles/components/user-tags.module.scss"
 import Tags from "../../general/game-tags/tags-controller";
+import { getGameId, getGameData } from "@/utils/getGamesInfo";
+import SafeRender from "@/components/general/safe-render";
 
-interface GameTagsProps {
-    tags: string[] | undefined;
-}
+const GameTags = async ({ gameName }: { gameName: string }) => {
 
-const GameTags = ({ tags }: GameTagsProps) => {
+    const id = await getGameId(gameName);
+    let tags;
+
+    if (id) {
+        tags = await getGameData(id);
+        tags = tags?.about_the_game.tags;
+    }
+
     return (
-        <div className={styles["user-tags-container"]}>
-            <h2>Tags:</h2>
-            <Tags tags={tags} />
-        </div>
+        <SafeRender when={tags}>
+            <div className={styles["user-tags-container"]}>
+                <h2>Tags:</h2>
+                <Tags tags={tags} />
+            </div>
+        </SafeRender>
     )
 };
 

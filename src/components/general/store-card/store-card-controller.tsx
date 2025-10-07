@@ -5,7 +5,11 @@ import StoreCard from "./store-card"
 import styles from "@/styles/components/store-card.module.scss"
 import { comparisonOfferType } from "@/types/types"
 
-const StoreCardController = ({ offersData }: { offersData: comparisonOfferType[] }) => {
+const StoreCardController = ({ offersData }: { offersData: comparisonOfferType[] | undefined}) => {
+
+    if(!offersData) {
+        return null;
+    }
 
     const [isExtended, setIsExtended] = useState(false)
 

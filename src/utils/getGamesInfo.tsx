@@ -1,5 +1,6 @@
 import "server-only";
 
+import { cache } from "react";
 import { getThreeYearsDateRange, calculatePopularityScore, slugToGameName, formatDateES, createGameSlug } from "@/functions/functions";
 import { searchOffers } from "./getOffers";
 import { bestOfferType, GameDealWithoutScore, GameDeal, dealStoreData, StoreLogo, publishersAndDevelopersType, tag, developerAndPublisherType, Genre, getGameDataProps, gameData, GameStandardContainerType, VerticalCardContainerType, VerticalCardWrapperType, comparisonOfferType } from "@/types/types";
@@ -104,14 +105,16 @@ export const getGameInfo = async (e: string) => {
 
 export const getGameInfoGamePage = async (e: string) => {
 
+    const id = await getGameId(e);
     const headerImage = await getHeaderImage(e);
-    const gameTrailer = headerImage !== null && await getGameTrailer(headerImage.game_id);
+    const gameTrailer = id !== null && await getGameTrailer(id);
     const gameOffers = await getGameOffers(e);
-    const gameData = headerImage !== null && await getGameData(headerImage.game_id);
-    const franchise = headerImage !== null ? await getFranchiseGames(headerImage.game_id) : [];
-    const sameGenre = gameData ? await getSameGenre(gameData.about_the_game.original_lang_genres[0].id, headerImage.game_id) : null;
+    const gameData = id !== null && await getGameData(id);
+    const franchise = id !== null ? await getFranchiseGames(id) : [];
+    const sameGenre = gameData ? await getSameGenre(gameData.about_the_game.original_lang_genres[0].id, Number(id)) : null;
 
     const data = {
+        id: id,
         gameTrailer: gameTrailer,
         ...headerImage,
         ...gameOffers,
@@ -123,8 +126,9 @@ export const getGameInfoGamePage = async (e: string) => {
     return data;
 };
 
-export const getHeaderImage = async (e: string) => {
+/* GET GAME ID */
 
+export const getGameId = cache(async (e: string): Promise<string | null> => {
     const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&search=${e}`)
 
     if (!response.ok) {
@@ -138,19 +142,36 @@ export const getHeaderImage = async (e: string) => {
     }
 
     const gameId = data.results[0].id;
+
+    return gameId;
+});
+
+export const getHeaderImage = cache(async (e: string) => {
+
+    const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&search=${e}`)
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch data");
+    }
+
+    const data = await response.json();
+
+    if (!data.results || data.results.length === 0) {
+        return null;
+    }
+
     const headerImage = data.results[0].background_image;
     const screenshots = data.results[0].short_screenshots;
 
     const images = {
-        game_id: gameId,
         header: headerImage,
         screenshots: screenshots,
     }
 
     return images;
-};
+});
 
-export const getGameOffers = async (e: string) => {
+export const getGameOffers = cache(async (e: string) => {
 
     const titleForComparison = slugToGameName(e).toUpperCase().replace(/\s+/g, '');
     const gameOffers = await searchOffers(e);
@@ -215,7 +236,7 @@ export const getGameOffers = async (e: string) => {
     }
 
     return offers;
-};
+});
 
 export const getGameTrailer = async (e: string) => {
     const response = await fetch(`https://api.rawg.io/api/games/${e}/movies?key=${API_KEY}`)
@@ -231,7 +252,7 @@ export const getGameTrailer = async (e: string) => {
     return trailer;
 }
 
-export const getGameData: getGameDataProps = async (gameId: string) => {
+export const getGameData: getGameDataProps = cache(async (gameId: string) => {
     const response = await fetch(`https://api.rawg.io/api/games/${gameId}?key=${API_KEY}`)
 
     if (!response.ok) {
@@ -285,7 +306,7 @@ export const getGameData: getGameDataProps = async (gameId: string) => {
     };
 
     return filteredData;
-};
+});
 
 export const getFranchiseGames = async (e: string) => {
 

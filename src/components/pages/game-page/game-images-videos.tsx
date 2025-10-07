@@ -2,28 +2,29 @@ import React from "react";
 import styles from "@/styles/layout/gamepage/game-images-videos.module.scss"
 import Image from "next/image";
 import VideoPlayer from "@/components/general/video-player";
+import { getGameId, getGameTrailer, getHeaderImage, getGameData, getGameOffers } from "@/utils/getGamesInfo";
 
-interface imageArrayProps {
-    id: number,
-    image: string
-}
+const GameImagesSection = async ({ gameName }: { gameName: string }) => {
 
-interface GameTrailer {
-    data: {
-        [quality: string]: string;
-    };
-    id: number;
-    name: string;
-    preview: string;
-}
+    const id = await getGameId(gameName);
+    const gameOffers = await getGameOffers(gameName);
+    const imagesData = await getHeaderImage(gameName);
+    let title;
+    let trailer;
+    let screenshots;
 
-interface GameImagesSectionProps {
-    title: string,
-    trailer: GameTrailer,
-    screenshots: imageArrayProps[]
-}
+    if (id) {
+        /* Title */
+        let gameData = await getGameData(id);
+        title = gameData?.title ? gameData.title : gameOffers?.bestOffer.gameTitle;
 
-const GameImagesSection = ({ title, trailer, screenshots }: GameImagesSectionProps) => {
+        /* Screenshots */
+        screenshots = imagesData?.screenshots;
+
+        /* Trailer */
+        trailer = await getGameTrailer(id);
+    }
+
     return (
         <section className={`${styles["game-images-video-container"]}`}>
 
@@ -60,7 +61,7 @@ const GameImagesSection = ({ title, trailer, screenshots }: GameImagesSectionPro
                 </div>
 
                 <div className={`row d-flex justify-content-center ${styles["rest-images-container"]}`}  >
-                    {screenshots.slice(3).map((shot) => (
+                    {screenshots.slice(3).map((shot: any) => (
                         <div className={`col-sm-12 col-md-6 mb-3`} key={shot.id}>
                             <div className={styles["image-container"]} key={shot.id}>
                                 <Image

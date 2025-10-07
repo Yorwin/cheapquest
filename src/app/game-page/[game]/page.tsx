@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "@/styles/layout/gamepage/gamepage-general-styles.module.scss";
+import { Suspense } from "react";
 
 /* Page Sections */
 import Presentation from "@/components/pages/game-page/presentation";
@@ -11,7 +12,6 @@ import GameTags from "@/components/pages/game-page/game-tags";
 import OfficialStoreList from "@/components/pages/game-page/official-store-list";
 import FranchiseGames from "@/components/pages/game-page/franchise-games";
 import RelatedOffers from "@/components/pages/game-page/related-offers/related-offers";
-import SafeRender from "@/components/general/safe-render";
 import ImageCard from "@/components/general/image-card";
 import OfferCard from "@/components/general/offer-card";
 import { notFound } from "next/navigation";
@@ -68,7 +68,6 @@ const GamePage = async ({ params }: ParamsGame) => {
     const gameSlug = game;
     const gameName = slugToGameName(gameSlug);
     const getGameInfo = await getGameInfoGamePage(gameName);
-    const aboutTheGame = getGameInfo.about_the_game;
 
     if (!getGameInfo.bestOffer) {
         notFound();
@@ -97,52 +96,54 @@ const GamePage = async ({ params }: ParamsGame) => {
             />
 
             <div className={styles["game-info-container"]}>
-                <GameImagesVideos
-                    title={getGameInfo.title ? getGameInfo.title : getGameInfo.bestOffer.gameTitle}
-                    screenshots={getGameInfo.screenshots}
-                    trailer={getGameInfo.gameTrailer}
-                />
+
+                {/* Screenshots and Trailer */}
+                <Suspense fallback={<h3>Loading...</h3>}>
+                    <GameImagesVideos gameName={gameName} />
+                </Suspense>
 
                 <div className="container-fluid mb-5">
                     <div className="row">
                         <div className="col-md-7 col-sm-12 p-0">
 
                             {/* About the Game */}
-                            <SafeRender when={getGameInfo.description}>
-                                <AboutTheGame description={getGameInfo.description} />
-                            </SafeRender>
+                            <Suspense fallback={<h3>Loading...</h3>}>
+                                <AboutTheGame gameName={gameName} />
+                            </Suspense>
 
                             {/* Tags */}
-                            <SafeRender when={aboutTheGame?.tags}>
-                                <GameTags tags={aboutTheGame?.tags} />
-                            </SafeRender>
+                            <Suspense fallback={<h3>Loading...</h3>}>
+                                <GameTags gameName={gameName} />
+                            </Suspense>
                         </div>
                         <div className="col-md-5 col-sm-12 p-0">
                             {/* Metacritic */}
-                            <SafeRender when={getGameInfo.meta_critic}>
-                                <MetaCritic metacritic={getGameInfo.meta_critic} />
-                            </SafeRender>
+                            <Suspense fallback={<h3>Loading...</h3>}>
+                                <MetaCritic gameName={gameName} />
+                            </Suspense>
 
                             {/* gameInfo */}
-                            <GameInfo gameData={aboutTheGame} />
+                            <Suspense fallback={<h3>Loading...</h3>}>
+                                <GameInfo gameName={gameName} />
+                            </Suspense>
                         </div>
                     </div>
                 </div>
 
                 {/* Related offers */}
-                <SafeRender when={getGameInfo.restOfTheOffers ? getGameInfo.restOfTheOffers?.length > 0 : []}>
-                    <OfficialStoreList restOfTheOffers={getGameInfo.restOfTheOffers} />
-                </SafeRender>
+                <Suspense fallback={<h3>Loading...</h3>}>
+                    <OfficialStoreList gameName={gameName} />
+                </Suspense>
 
                 {/* Franchise Offers */}
-                <SafeRender when={getGameInfo.franchise?.length > 0}>
-                    <FranchiseGames title={getGameInfo.title ? getGameInfo.title : ""} franchiseData={getGameInfo.franchise} />
-                </SafeRender>
+                <Suspense fallback={<h3>Loading...</h3>}>
+                    <FranchiseGames gameName={gameName} />
+                </Suspense>
 
                 {/* Related Offers */}
-                <SafeRender when={getGameInfo.about_the_game?.original_lang_genres}>
-                    <RelatedOffers offersData={getGameInfo.sameGenre} />
-                </SafeRender>
+                <Suspense fallback={<h3>Loading...</h3>}>
+                    <RelatedOffers gameName={gameName} />
+                </Suspense>
             </div>
         </article>
     );

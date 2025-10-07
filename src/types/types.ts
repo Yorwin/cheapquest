@@ -378,4 +378,16 @@ export interface Franchise {
     webOffer: StaticImageData,
 }
 
+interface imageArrayProps {
+    id: number,
+    image: string
+}
 
+interface GameTrailer {
+    data: {
+        [quality: string]: string;
+    };
+    id: number;
+    name: string;
+    preview: string;
+}

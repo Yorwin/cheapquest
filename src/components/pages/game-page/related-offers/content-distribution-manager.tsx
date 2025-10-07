@@ -11,10 +11,14 @@ import IsMobile from "../../../general/vertical-card/responsive-elements/isMobil
 import IsTablet from "../../../general/vertical-card/responsive-elements/isTablet";
 
 interface ContentDistributionType {
-    gameInfo: VerticalCardWrapperType[];
+    gameInfo: VerticalCardWrapperType[] | undefined;
 }
 
 const ContentDistributionManager = ({ gameInfo }: ContentDistributionType) => {
+
+    if (!gameInfo) {
+        return null;
+    }
 
     const width = useWindowWidth();
 
