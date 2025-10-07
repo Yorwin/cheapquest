@@ -31,8 +31,6 @@ export async function GET() {
             slug: "",
         });
 
-        console.log(orderedGenres);
-
         return new Response(JSON.stringify(orderedGenres), {
             status: 200,
             headers: {

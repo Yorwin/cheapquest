@@ -78,8 +78,8 @@ const GamePage = async ({ params }: ParamsGame) => {
             <article className="main-article-gamepage">
                 <div className={styles["game-info-container"]}>
                     <div className={styles["cards-container"]}>
-                        <ImageCard imageUrl={getGameInfo.bestOffer.offerImage} />
-                        <OfferCard title={getGameInfo.bestOffer.gameTitle} offer={getGameInfo.bestOffer} />
+                        <ImageCard gameName={gameName} />
+                        <OfferCard gameName={gameName} />
                     </div>
                 </div>
             </article>
@@ -88,12 +88,7 @@ const GamePage = async ({ params }: ParamsGame) => {
 
     return (
         <article className="main-article-gamepage">
-            <Presentation
-                title={getGameInfo.title ? getGameInfo.title : getGameInfo.bestOffer.gameTitle}
-                offerImageUrl={getGameInfo.bestOffer.offerImage}
-                mainImage={getGameInfo.header}
-                offer={getGameInfo.bestOffer}
-            />
+            <Presentation gameName={gameName} />
 
             <div className={styles["game-info-container"]}>
 

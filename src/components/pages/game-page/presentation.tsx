@@ -1,23 +1,20 @@
 import React from "react";
+import styles from "@/styles/layout/gamepage/gamepage-cards-container.module.scss"
+import { Suspense } from "react";
+
+/* Components */
 import MainGameImage from "@/components/general/main-game-page";
 import OfferCard from "@/components/general/offer-card";
 import ImageCard from "@/components/general/image-card";
-import styles from "@/styles/layout/gamepage/gamepage-cards-container.module.scss"
-import { bestOffer } from "@/types/types";
 
-interface PresentationProps {
-    title: string,
-    offerImageUrl: string,
-    mainImage: string,
-    offer: bestOffer,
-}
-
-const Presentation = ({ title, offerImageUrl, mainImage, offer }: PresentationProps) => {
+const Presentation = ({ gameName }: { gameName: string }) => {
     return (
-        <MainGameImage imageUrl={mainImage}>
+        <MainGameImage gameName={gameName}>
             <div className={styles["cards-container"]}>
-                <ImageCard imageUrl={offerImageUrl} />
-                <OfferCard title={title} offer={offer} />
+                <ImageCard gameName={gameName} />
+                <Suspense fallback={<div>Cargando...</div>}>
+                    <OfferCard gameName={gameName} />
+                </Suspense>
             </div>
         </MainGameImage>
     )

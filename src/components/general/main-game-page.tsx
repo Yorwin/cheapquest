@@ -1,22 +1,28 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "@/styles/components/main-game-image.module.scss";
 
 const MainGameImage = ({
     children,
-    imageUrl,
+    gameName,
 }: {
     children: React.ReactNode;
-    imageUrl: string;
+    gameName: string;
 }) => {
+    const [isValid, setIsValid] = useState(true);
+    const [imageSrc, setImageSrc] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
     const imgRef = useRef<HTMLImageElement>(null);
+
+    // Si hubo error cargando la imagen, no renderizamos nada
+    if (!isValid) return null;
 
     useEffect(() => {
         const handleScroll = () => {
             if (imgRef.current) {
-                const speed = 0.3; // ajusta la velocidad
+                const speed = 0.3;
                 const wrapper = imgRef.current.parentElement;
                 if (!wrapper) return;
 
@@ -26,26 +32,71 @@ const MainGameImage = ({
             }
         };
 
+        const getHeaderImage = async (name: string) => {
+            try {
+                // 🔹 Llamamos al endpoint con el slug del juego
+                const res = await fetch(`/api/get-game-data/${name}/`);
+
+                if (!res.ok) {
+                    throw new Error(`Error al obtener imagen del header: ${res.statusText}`);
+                }
+
+                const data = await res.json();
+
+                if (!data || !data.header) {
+                    console.warn("No hay imagen de header para este juego");
+                    setImageSrc(null);
+                    setLoading(false);
+                    return;
+                }
+
+                setImageSrc(data.header);
+                setLoading(false);
+            } catch (error) {
+                console.error(`Ha ocurrido un error al intentar mostrar el header - ${error}`);
+                setLoading(false);
+                setIsValid(false);
+            }
+        };
+
+        if (gameName) {
+            getHeaderImage(gameName);
+        }
+
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [gameName]);
 
-    return (
-        <div className={styles["game-image-container"]}>
-            <div className={styles["image-container"]}>
-                <Image
-                    ref={imgRef}
-                    src={imageUrl}
-                    alt="Game Image"
-                    sizes="50vw"
-                    fill
-                    className={styles["game-image"]}
-                    priority
-                />
+    // 🔹 Renderizado condicional
+    if (loading && !imageSrc) {
+        return <div className="spinner">Cargando...</div>;
+    }
+
+    if (!loading && !imageSrc) {
+        return null;
+    }
+
+    if (imageSrc) {
+        return (
+            <div className={styles["game-image-container"]}>
+                <div className={styles["image-container"]}>
+                    <Image
+                        ref={imgRef}
+                        src={imageSrc}
+                        alt={`${gameName} Header`}
+                        sizes="50vw"
+                        fill
+                        className={styles["game-image"]}
+                        onError={() => setIsValid(false)}
+                        priority
+                    />
+                </div>
+                {children}
             </div>
-            {children}
-        </div>
-    );
+        );
+    }
+
+    return null; // fallback final
 };
 
 export default MainGameImage;

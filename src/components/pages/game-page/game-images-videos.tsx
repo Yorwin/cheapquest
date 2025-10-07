@@ -43,39 +43,40 @@ const GameImagesSection = async ({ gameName }: { gameName: string }) => {
             )}
 
             {/* Game Images */}
-            <div className="container-fluid p-0">
-                <div className={`row d-flex justify-content-between ${styles["main-images-container"]}`}>
-                    {screenshots.slice(1, 3).map((shot: any, index: number) => (
-                        <div className={`col-6`} key={shot.id}>
-                            <div className={`${styles["image-container"]}`}>
-                                <Image
-                                    className={styles["image"]}
-                                    src={shot.image}
-                                    alt={`Game Image ${shot.id}`}
-                                    sizes="80vw"
-                                    fill
-                                />
+            {screenshots ?
+                (<div className="container-fluid p-0">
+                    <div className={`row d-flex justify-content-between ${styles["main-images-container"]}`}>
+                        {screenshots.slice(1, 3).map((shot: any) => (
+                            <div className={`col-6`} key={shot.id}>
+                                <div className={`${styles["image-container"]}`}>
+                                    <Image
+                                        className={styles["image"]}
+                                        src={shot.image}
+                                        alt={`Game Image ${shot.id}`}
+                                        sizes="80vw"
+                                        fill
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
 
-                <div className={`row d-flex justify-content-center ${styles["rest-images-container"]}`}  >
-                    {screenshots.slice(3).map((shot: any) => (
-                        <div className={`col-sm-12 col-md-6 mb-3`} key={shot.id}>
-                            <div className={styles["image-container"]} key={shot.id}>
-                                <Image
-                                    className={styles["image"]}
-                                    src={shot.image}
-                                    alt={`Game Image ${shot.id}`}
-                                    sizes="80vw"
-                                    fill
-                                />
+                    <div className={`row d-flex justify-content-center ${styles["rest-images-container"]}`}  >
+                        {screenshots.slice(3).map((shot: any) => (
+                            <div className={`col-sm-12 col-md-6 mb-3`} key={shot.id}>
+                                <div className={styles["image-container"]} key={shot.id}>
+                                    <Image
+                                        className={styles["image"]}
+                                        src={shot.image}
+                                        alt={`Game Image ${shot.id}`}
+                                        sizes="80vw"
+                                        fill
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+                        ))}
+                    </div>
+                </div>) : null}
         </section>
     )
 };

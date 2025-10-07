@@ -146,7 +146,12 @@ export const getGameId = cache(async (e: string): Promise<string | null> => {
     return gameId;
 });
 
-export const getHeaderImage = cache(async (e: string) => {
+interface headerImage {
+    header: string,
+    screenshots: string[],
+}
+
+export const getHeaderImage = cache(async (e: string): Promise<headerImage | null> => {
 
     const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&search=${e}`)
 
@@ -163,7 +168,7 @@ export const getHeaderImage = cache(async (e: string) => {
     const headerImage = data.results[0].background_image;
     const screenshots = data.results[0].short_screenshots;
 
-    const images = {
+    const images: headerImage = {
         header: headerImage,
         screenshots: screenshots,
     }
