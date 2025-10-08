@@ -4,15 +4,18 @@ import { Suspense } from "react";
 
 /* Components */
 import MainGameImage from "@/components/general/main-game-page";
-import OfferCard from "@/components/general/offer-card";
+import OfferCard from "@/components/general/offer-card/offer-card";
 import ImageCard from "@/components/general/image-card";
+
+/* Loading */
+import OfferCardSkeleton from "@/components/general/offer-card/offer-card-skeleton";
 
 const Presentation = ({ gameName }: { gameName: string }) => {
     return (
         <MainGameImage gameName={gameName}>
             <div className={styles["cards-container"]}>
                 <ImageCard gameName={gameName} />
-                <Suspense fallback={<div>Cargando...</div>}>
+                <Suspense fallback={<OfferCardSkeleton />}>
                     <OfferCard gameName={gameName} />
                 </Suspense>
             </div>

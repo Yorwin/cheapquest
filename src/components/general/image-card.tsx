@@ -66,8 +66,8 @@ const ImageCard = ({ gameName }: { gameName: string }) => {
 
     if (loading) {
         return (
-            <div className={styles["image-card"]}>
-                <div className="spinner">Cargando...</div>
+            <div className={styles["image-card-loading"]}>
+                <div className={styles["spinner"]}></div>
             </div>
         );
     }

@@ -114,6 +114,33 @@ $current-price-shadow: 1px 0 #000,
     }
 }
 
+/* No Offer Found */
+
+.no-offer-found {
+    position: relative;
+    width: 100%;
+    height: 120px;
+}
+
+/* Loading */
+
+.offer-card-loading {
+    @extend .offer-card;
+    background-color: #fff;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+   @include spinnerStyles;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 @media screen and (max-width: 1600px) {
     .offer-info {
         width: 30%;

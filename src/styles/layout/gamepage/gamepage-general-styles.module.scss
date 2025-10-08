@@ -11,3 +11,70 @@
     width: 100%;
     height: 100%;
 }
+
+/* Skeleton Loading Styles */
+
+.skeleton {
+    display: inline-block;
+    background: linear-gradient(90deg,
+            #e0e0e0 25%,
+            #f5f5f5 37%,
+            #e0e0e0 63%);
+    background-size: 400% 100%;
+    animation: skeleton-loading 1.4s ease infinite;
+    border-radius: 16px;
+    width: var(--skeleton-width, 200px);
+    height: var(--skeleton-height, 500px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0 50%;
+    }
+}
+
+/* Tags */
+
+.skeleton-tags-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 70%;
+    height: 100px;
+    margin-bottom: 2rem;
+}
+
+.skeleton-tags {
+    @extend .skeleton;
+    width: 100px;
+    height: 50px;
+    margin-bottom: 0rem;
+}
+
+/* Official Offers Container */
+
+.official-offers-container-skeleton {
+    @include flex-center-elements-XY;
+    gap: 16px;
+}
+
+/* Game Images Videos Loader */
+
+.skeleton-game-trailer {
+    @extend .skeleton;
+    width: 100%;
+    height: 400px;
+}
+
+.skeleton-image-container {
+    @extend .skeleton;
+    width: 100%;
+    height: 150px;
+}

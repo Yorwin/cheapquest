@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "@/styles/components/main-game-image.module.scss";
+import Loading from "@/resources/loading-img/loading-offer.webp";
 
 const MainGameImage = ({
     children,
@@ -69,7 +70,23 @@ const MainGameImage = ({
 
     // 🔹 Renderizado condicional
     if (loading && !imageSrc) {
-        return <div className="spinner">Cargando...</div>;
+        return (
+            <div className={styles["game-image-container"]}>
+                <div className={styles["image-container"]}>
+                    <Image
+                        ref={imgRef}
+                        src={Loading}
+                        alt={`${gameName} Header`}
+                        sizes="50vw"
+                        fill
+                        className={styles["game-image"]}
+                        onError={() => setIsValid(false)}
+                        priority
+                    />
+                </div>
+                {children}
+            </div>
+        );
     }
 
     if (!loading && !imageSrc) {
