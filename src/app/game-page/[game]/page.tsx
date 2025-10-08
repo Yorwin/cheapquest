@@ -12,8 +12,6 @@ import GameTags from "@/components/pages/game-page/game-tags/game-tags";
 import OfficialStoreList from "@/components/pages/game-page/official-store/official-store-list";
 import FranchiseGames from "@/components/pages/game-page/franchise-games";
 import RelatedOffers from "@/components/pages/game-page/related-offers/related-offers";
-import ImageCard from "@/components/general/image-card";
-import OfferCard from "@/components/general/offer-card/offer-card";
 import { notFound } from "next/navigation";
 
 import { getGameInfoGamePage } from "@/utils/getGamesInfo";
