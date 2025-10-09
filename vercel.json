@@ -4,6 +4,10 @@
         {
             "path": "/api/cron/fetch-historical-lows-offers",
             "schedule": "0 3 * * *"
+        },
+        {
+            "path": "/api/cron/fetch-aged-like-wine-games",
+            "schedule": "0 10 * * *"
         }
     ]
 }
