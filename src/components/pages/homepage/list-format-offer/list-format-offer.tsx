@@ -5,12 +5,13 @@ import { offersByPercentage, historicalLows } from "@/utils/getOffers";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
 import ContentDistributionManager from "./content-distribution-manager";
 import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
+import { GameDealWithBackgroundImage } from "@/types/types";
 
 const ListFormatOffers = async () => {
     try {
         const offers = await offersByPercentage();
 
-        const bestOffersByPercentage = offers.map(offer => {
+        const bestOffersByPercentage = offers.map((offer: any) => {
             if (offer) {
                 return {
                     offerImage: offer.background_image !== null ? offer.background_image : NoImageFound.src,
@@ -34,7 +35,7 @@ const ListFormatOffers = async () => {
 
         const historical = await historicalLows();
 
-        const historicalLowsOffers = historical.map((offer) => {
+        const historicalLowsOffers = historical.map((offer: any) => {
             if (offer) {
                 return {
                     offerImage: offer.background_image !== null ? offer.background_image : NoImageFound.src,

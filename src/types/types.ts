@@ -123,6 +123,31 @@ export interface GameDeal {
     url?: string;
 }
 
+export interface GameDealWithBackgroundImage {
+    dealID: string;
+    dealRating: string;
+    background_image: string;
+    finalScore: number;
+    gameID: string;
+    internalName: string;
+    isOnSale: string;
+    lastChange: number;
+    metacriticLink: string;
+    metacriticScore: string;
+    normalPrice: string;
+    releaseDate: number;
+    salePrice: string;
+    savings: string;
+    steamAppID: string;
+    steamRatingCount: string;
+    steamRatingPercent: string;
+    steamRatingText: string;
+    storeID: string;
+    thumb: string;
+    title: string;
+    url?: string;
+}
+
 export type Top11Deals = (gameDeal: GameDealWithoutScore[]) => GameDeal[];
 
 export interface GameDealWithoutScore {

@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/firebase-admin";
-import { fetchGamesInfoCheapShark } from "@/functions/functions";
-import { getGameInfo } from "@/utils/getGamesInfo";
-import { gameOfferInfo, dealsInfoOffer, GameDealWithoutScore } from "@/types/types";
+import { GameDealWithoutScore } from "@/types/types";
 
 export const GET = async () => {
     try {
