@@ -314,6 +314,11 @@
 
 /* Extra Small Media */
 @media screen and (max-width: 568px) {
+
+    .list-format-offers-container {
+        min-height: 400px;
+    }
+
     .title {
         @include offers-title-typography($title-font-size-default, normal);
     }
