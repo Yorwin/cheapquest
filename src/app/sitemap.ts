@@ -1,5 +1,22 @@
 import { MetadataRoute } from 'next';
-import { getFiveYearsDateRange, createGameSlug } from '@/functions/functions';
+import { createGameSlug } from '@/functions/functions';
+
+function getSixYearsDateRange() {
+    const today = new Date();
+
+    const endYear = today.getFullYear();
+    const endMonth = today.getMonth() + 1;
+
+    const startYear = endYear - 6;
+    const startMonth = endMonth;
+
+    const pad = (n: number) => n.toString().padStart(2, '0');
+
+    const rangeStart = `${startYear}-${pad(startMonth)}-01`;
+    const rangeEnd = `${endYear}-${pad(endMonth)}-01`;
+
+    return `${rangeStart},${rangeEnd}`;
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://cheapquest.app';
@@ -43,17 +60,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const dynamicUrls: MetadataRoute.Sitemap = [];
     const targetGameCount = 30000; // Aim for at least 5000 games
     const maxPages = 80; // Limit to prevent excessive API calls
-    const pageSize = 100; // RAWG max page_size
+    const pageSize = 40; // RAWG max page_size
 
     if (API_KEY) {
         try {
-            const dateRange = getFiveYearsDateRange(); // e.g., '2019-10-01,2024-10-01'
+            const dateRange = getSixYearsDateRange(); // e.g., '2018-10-01,2024-10-01'
             let page = 1;
             let totalFetched = 0;
 
             while (totalFetched < targetGameCount && page <= maxPages) {
                 const response = await fetch(
-                    `https://api.rawg.io/api/games?key=${API_KEY}&metacritic=70,100&ordering=-metacritic&dates=${dateRange}&page_size=${pageSize}&page=${page}`
+                    `https://api.rawg.io/api/games?key=${API_KEY}&ordering=-rating&dates=${dateRange}&page_size=${pageSize}&page=${page}`
                 );
 
                 if (!response.ok) {
@@ -94,6 +111,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     } else {
         console.warn('RAWG_API_KEY not found, skipping dynamic game URLs in sitemap');
     }
+
+    const totalGamesInSitemap = dynamicUrls.length;
+    console.log(`Total games in sitemap: ${totalGamesInSitemap} (including ${staticUrls.length} static URLs)`);
 
     return [...staticUrls, ...dynamicUrls];
 }
