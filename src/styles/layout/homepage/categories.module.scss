@@ -42,14 +42,14 @@ $categories: (
     width: 100%;
     min-height: 600px;
     @include responsive-padding($homepage-offers-padding);
-    background-color: map.get($colores, dark-background-color);
+    background-color: map.get($colores, complementary-color);
     contain: layout style;
 }
 
 .title {
     margin-bottom: 2rem;
     padding-left: 0;
-    color: map.get($colores, font-dark-background-color);
+    color: map.get($colores, font-light-background-color);
     @include offers-title-typography($title-font-size-default, nowrap);
     z-index: 2;
     font-display: swap;
@@ -74,6 +74,14 @@ $categories: (
         background-position: center;
         background-repeat: no-repeat;
         filter: brightness($category-background-brightness);
+        z-index: -1;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
         z-index: -1;
     }
 

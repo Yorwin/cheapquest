@@ -105,14 +105,14 @@ $main-font-color: map.get($colores, font-dark-background-color);
 }
 
 .info {
-    width: 100%;
+    width: 70%;
     line-height: 0.8rem;
 }
 
 .info h3 {
     font-size: clamp(.9rem, 0.8rem + 1vw, 1.3rem);
     margin-bottom: .3rem;
-    width: 90%;
+    width: 100%;
     @include resume-game-title;
 }
 

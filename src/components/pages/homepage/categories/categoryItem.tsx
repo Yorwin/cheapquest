@@ -8,6 +8,7 @@ interface CategoriesItem {
     className: string,
     character: StaticImageData,
     enlace: string,
+    slug: string,
 }
 
 interface categoryContainer {

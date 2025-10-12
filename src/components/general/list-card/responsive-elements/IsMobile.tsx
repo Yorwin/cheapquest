@@ -27,7 +27,6 @@ const IsMobile = ({ offersByPercentage, historicLowsOffers }: ContentDistributio
             <ListFormatOffersWrapper
                 key={index}
                 index={index}
-                link="#"
                 offerImage={e.offerImage}
                 gameTitle={e.gameTitle}
                 oldPrice={e.oldPrice}
@@ -42,7 +41,6 @@ const IsMobile = ({ offersByPercentage, historicLowsOffers }: ContentDistributio
             <ListFormatOffersWrapper
                 key={index}
                 index={index}
-                link="#"
                 offerImage={e.offerImage}
                 gameTitle={e.gameTitle}
                 oldPrice={e.oldPrice}

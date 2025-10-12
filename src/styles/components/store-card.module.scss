@@ -136,12 +136,12 @@ $main-font-color: map.get($colores, font-dark-background-color);
     font-size: clamp(.7rem, .4rem + 1vw, 1.2rem);
     background-color: map.get($colores, complementary-color);
     text-decoration: none;
-    color: $main-font-color;
+    color: map.get($colores, font-light-background-color);
     border: none;
     border-radius: 2rem;
 
     &:hover {
-        text-decoration: underline 2px $main-font-color;
+        text-decoration: underline 2px map.get($colores, font-light-background-color);
     }
 }
 

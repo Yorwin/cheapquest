@@ -23,13 +23,13 @@ const IsTablet = ({ offersData }: verticalContainerProps) => {
 
     // Avanzar
     const nextSlide = () => {
-        const newIndex = (currentIndex + 1) % Math.max(1, verticalCards.length - 2);
+        const newIndex = (currentIndex + 1) % Math.max(1, verticalCards.length - 1);
         setCurrentIndex(newIndex);
     };
 
     // Retroceder
     const prevSlide = () => {
-        const newIndex = currentIndex === 0 ? Math.max(0, verticalCards.length - 3) : currentIndex - 1;
+        const newIndex = currentIndex === 0 ? Math.max(0, verticalCards.length - 2) : currentIndex - 1;
         setCurrentIndex(newIndex);
     };
 
@@ -62,7 +62,7 @@ const IsTablet = ({ offersData }: verticalContainerProps) => {
                     ref={carouselRef}
                     className={styles["cards-slider"]}
                     style={{
-                        transform: `translateX(-${currentIndex * 33.333}%)`, // 3 tarjetas visibles
+                        transform: `translateX(-${currentIndex * 50}%)`, // 2 tarjetas visibles
                     }}
                 >
                     {verticalCards}
@@ -71,7 +71,7 @@ const IsTablet = ({ offersData }: verticalContainerProps) => {
 
             {/* Indicadores (dots) */}
             <div className={styles["dots-container"]}>
-                {Array.from({ length: verticalCards.length - 2 }).map((_, index) => (
+                {Array.from({ length: verticalCards.length - 1 }).map((_, index) => (
                     <button
                         key={index}
                         onClick={() => goToSlide(index)}

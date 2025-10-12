@@ -5,8 +5,6 @@ import { GameDeal, GameDealWithoutScore } from "@/types/types";
 import { getGameInfo } from "./getGamesInfo";
 import { db } from "@/lib/firebase-admin";
 
-const API_KEY = "0c4571b7e87e4022b529e1b63f824d16"
-
 /* Delay */
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -17,7 +15,7 @@ export const searchOffers = async (e: string) => {
     try {
         const cleanGameNameForTag = e.toLowerCase().replace(/[^a-z0-9]/g, '-');
 
-        const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?title=${e}&exact=1`, {
+        const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?title=${e}&exact=1&onSale=1`, {
             next: {
                 revalidate: 1800,
                 tags: ['game-deals',
@@ -75,7 +73,7 @@ export const getMostPopularOffers = async (retries = 3) => {
 
     for (let attempt = 0; attempt < retries; attempt++) {
         try {
-            const responseOffers = await fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=DealRating", {
+            const responseOffers = await fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=DealRating&onSale=1", {
                 next: {
                     revalidate: 3600,
                     tags: ['most-popular-games-info', 'most-popular-games-search']
@@ -176,7 +174,7 @@ export const getAgedLikeWineGames = async () => {
 /* GET BEST OFFER BY PERCENTAGE */
 
 export const offersByPercentage = async () => {
-    const request = await fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=Savings", {
+    const request = await fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=Savings&onSale=1", {
         next: {
             revalidate: 21600,
             tags: ["best-offers-by-percentage"],
@@ -191,7 +189,7 @@ export const offersByPercentage = async () => {
 
     const filteredOffers = res.filter((offer: GameDeal) => !offer.title.includes("Bundle") && !offer.title.includes("WallPaper"));
 
-    const bestOffers = filteredOffers.slice(0, 5);
+    const bestOffers = filteredOffers.slice(0, 10);
 
     const completeDataPromises = bestOffers.map(async (offer: GameDeal) => {
         const title = offer.title;

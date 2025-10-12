@@ -11,6 +11,7 @@ import ErrorGameStandard from "@/components/general/error-loading-offers-fallbac
 import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
 import GameStandardWrapper from "@/components/general/game-card/game-card-wrapper";
 import { mainClasses, secondaryClasses } from "@/functions/classes";
+import Link from "next/link";
 
 const MostPopularOffer = async () => {
     try {
@@ -185,9 +186,11 @@ const MostPopularOffer = async () => {
 
                 {/* Ver más ofertas Botón */}
                 <div className={styles["button-container"]}>
-                    <button>
-                        Ver más ofertas
-                    </button>
+                    <Link href="/search">
+                        <button>
+                            Ver más ofertas
+                        </button>
+                    </Link>
                 </div>
             </section>
         </>

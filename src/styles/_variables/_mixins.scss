@@ -8,22 +8,22 @@
 }
 
 @mixin offer-shadow {
-    box-shadow: -1px 1px 69px -32px rgba(0, 0, 0, 1);
-    -webkit-box-shadow: -1px 1px 69px -32px rgba(0, 0, 0, 1);
-    -moz-box-shadow: -1px 1px 69px -32px rgba(0, 0, 0, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 @mixin list-format-shadow {
-    box-shadow: 9px 18px 88px -8px rgba(0, 0, 0, 1);
-    -webkit-box-shadow: 9px 18px 88px -8px rgba(0, 0, 0, 1);
-    -moz-box-shadow: 9px 18px 88px -8px rgba(0, 0, 0, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 @mixin offers-title-typography($font-size, $white-space) {
     font-family: var(--font-gontSerrat);
     font-size: $font-size;
-    font-weight: 700;
-    letter-spacing: 2px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     white-space: $white-space;
 }
 
@@ -62,15 +62,15 @@
 }
 
 @mixin button-shadow-homepage {
-    box-shadow: -1px 31px 98px -21px rgba(0, 0, 0, 1);
-    -webkit-box-shadow: -1px 31px 98px -21px rgba(0, 0, 0, 1);
-    -moz-box-shadow: -1px 31px 98px -21px rgba(0, 0, 0, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 @mixin review-box-shadow {
-    box-shadow: 0px 0px 50px -15px rgba(0, 0, 0, 1);
-    -webkit-box-shadow: 0px 0px 50px -15px rgba(0, 0, 0, 1);
-    -moz-box-shadow: 0px 0px 50px -15px rgba(0, 0, 0, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 @mixin resume-game-title {
@@ -173,14 +173,14 @@ $lines-color: map.get($colores, dark-background-color);
 /* Game Image and Videos Section */
 
 @mixin game-content-shadow {
-    box-shadow: 0px 16px 42px -18px rgba(0, 0, 0, 0.60);
-    -webkit-box-shadow: 0px 16px 42px -18px rgba(0, 0, 0, 0.60);
-    -moz-box-shadow: 0px 16px 42px -18px rgba(0, 0, 0, 0.60);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    -webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    -moz-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
 }
 
 /* See more offers style */
 
-$main-font-color: map.get($colores, font-dark-background-color);
+$main-font-color: map.get($colores, font-light-background-color);
 
 @mixin seeAllOffers($button-width) {
     .button-see-offers {
@@ -188,7 +188,7 @@ $main-font-color: map.get($colores, font-dark-background-color);
         background-color: map.get($colores, primary-color);
         border: none;
         border-radius: 2rem;
-        color: $main-font-color;
+        color: map.get($colores, font-dark-background-color);
         font-family: $primary-font-style;
         font-weight: 600;
         font-size: clamp(.7rem, .6rem + 1vw, 1rem);
@@ -196,7 +196,7 @@ $main-font-color: map.get($colores, font-dark-background-color);
         width: $button-width;
 
         &:hover {
-            text-decoration: underline .1rem #fff;
+            text-decoration: underline .1rem map.get($colores, font-dark-background-color);
         }
     }
 }

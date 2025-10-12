@@ -2,14 +2,17 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "@/styles/layout/search/search.module.scss";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Genre } from "@/types/types";
 import SearchResults from "@/components/pages/search/search-results";
+import { Metadata } from "next";
+import Head from "next/head";
 
 // -------------------- COMPONENTE PRINCIPAL --------------------
 const Search = () => {
 
     const router = useRouter();
+    const searchParams = useSearchParams();
 
     const [gottenGenres, setGottenGenres] = useState<Genre[] | null>(null);
 
@@ -17,7 +20,7 @@ const Search = () => {
     const [formData, setFormData] = useState({
         query: '',
         order: 'precio-min',
-        genres: '',
+        genres: searchParams.get('genres') || '',
         steamRating: false,
         metaCritic: false,
         startingPrice: 0,
@@ -56,7 +59,7 @@ const Search = () => {
         }));
     };
 
-    //Obtener generos disponibles. 
+    //Obtener generos disponibles.
     useEffect(() => {
         const fetchGenres = async () => {
             try {
@@ -71,9 +74,34 @@ const Search = () => {
         fetchGenres();
     }, []);
 
+    // Update formData when search params change
+    useEffect(() => {
+        setFormData(prev => ({
+            ...prev,
+            genres: searchParams.get('genres') || '',
+        }));
+    }, [searchParams]);
+
     return (
-        <article className={styles["search-page-container"]}>
-            <section className="container-fluid">
+        <>
+            <Head>
+                <title>Buscar Ofertas de Videojuegos | CheapQuest</title>
+                <meta name="description" content="Encuentra las mejores ofertas de videojuegos. Busca por nombre, género, precio y calificaciones. Compara precios y ahorra en tus juegos favoritos." />
+                <meta name="keywords" content="ofertas videojuegos, juegos baratos, deals gaming, cheap games, buscar ofertas" />
+                <meta name="robots" content="index, follow" />
+                <meta property="og:title" content="Buscar Ofertas de Videojuegos | CheapQuest" />
+                <meta property="og:description" content="Encuentra las mejores ofertas de videojuegos. Busca por nombre, género, precio y calificaciones." />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://cheapquest.com/search" />
+                <meta property="og:image" content="https://cheapquest.com/preview.png" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Buscar Ofertas de Videojuegos | CheapQuest" />
+                <meta name="twitter:description" content="Encuentra las mejores ofertas de videojuegos. Busca por nombre, género, precio y calificaciones." />
+                <meta name="twitter:image" content="https://cheapquest.com/preview.png" />
+                <link rel="canonical" href="https://cheapquest.com/search" />
+            </Head>
+            <article className={styles["search-page-container"]}>
+                <section className="container-fluid">
                 <form onSubmit={handleSubmit}>
                     {/* Search Bar */}
 
@@ -210,6 +238,7 @@ const Search = () => {
             </section>
             <SearchResults />
         </article>
+        </>
     );
 };
 

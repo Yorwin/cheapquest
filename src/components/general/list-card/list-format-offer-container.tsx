@@ -2,11 +2,14 @@ import React from "react";
 import styles from "@/styles/layout/homepage/list-format-offers.module.scss"
 import Link from "next/link";
 import { listOffersWrapperProps } from "@/types/types";
+import { createGameSlug } from "@/functions/functions";
 
-const ListFormatContainer = ({ index, gameTitle, link, oldPrice, currentPrice, discountPercentage, children }: listOffersWrapperProps) => {
+const ListFormatContainer = ({ index, gameTitle, oldPrice, currentPrice, discountPercentage, children }: listOffersWrapperProps) => {
+    const link = createGameSlug(gameTitle);
+
     return <>
         <section className={styles["game-info-container"]}>
-            <Link href={link} className={styles["enlace"]} />
+            <Link href={`/game-page/${link}`} className={styles["click-overlay"]} />
             <div className={styles["offer-number-container"]}>
                 <span className={styles["offer-number"]}>
                     {index + 1}

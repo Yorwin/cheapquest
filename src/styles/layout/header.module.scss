@@ -151,6 +151,11 @@
         flex-direction: column;
         gap: 8px;
         font-size: .8rem;
+        color: map.get($colores, font-light-background-color);
+
+        a {
+            color: map.get($colores, font-light-background-color) !important;
+        }
     }
 }
 
@@ -167,7 +172,7 @@
 .separator {
     width: 100%;
     height: 2px;
-    background-color: map.get($colores, font-dark-background-color);
+    background-color: map.get($colores, font-light-background-color);
     border-radius: 1rem
 }
 

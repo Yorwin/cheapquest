@@ -1,72 +1,94 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import styles from "@/styles/components/offer-card.module.scss"
-import { getGameOffers, getGameData, getGameId } from "@/utils/getGamesInfo";
 import NoOffersFound from "@/resources/error-image/no-offer-found.svg";
 import Image from "next/image";
 import Link from "next/link";
 
-const OfferCard = async ({ gameName }: { gameName: string }) => {
+const OfferCard = ({ gameName }: { gameName: string }) => {
+    const [offers, setOffers] = useState<any>(null);
+    const [gameData, setGameData] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
-    const offers = await getGameOffers(gameName);
-    const id = await getGameId(gameName);
-    const gameData = id && await getGameData(id);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                setError(false);
 
-    let titleOffer;
-    let gameTitle;
-    let normalPrice;
-    let discount;
-    let currentPrice;
-    let url;
+                // Fetch offers
+                const offersRes = await fetch(`/api/get-game-offers/${encodeURIComponent(gameName)}`);
+                if (!offersRes.ok) throw new Error('Failed to fetch offers');
+                const offersData = await offersRes.json();
 
-    let storeImage;
-    let storeName;
+                // Fetch game data
+                const gameRes = await fetch(`/api/get-game-data/${encodeURIComponent(gameName)}`);
+                if (!gameRes.ok) throw new Error('Failed to fetch game data');
+                const gameDataResult = await gameRes.json();
 
-    if (offers) {
-        /* Title */
-        titleOffer = offers.bestOffer.gameTitle;
+                setOffers(offersData);
+                setGameData(gameDataResult);
+            } catch (err) {
+                console.error('Error fetching offer card data:', err);
+                setError(true);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-        /* Prices */
-        discount = offers.bestOffer.discount;
-        normalPrice = offers.bestOffer.normalPrice;
-        currentPrice = offers.bestOffer.currentPrice;
+        if (gameName) {
+            fetchData();
+        }
+    }, [gameName]);
 
-        /* Stores */
-        storeImage = offers.bestOffer.store ? offers.bestOffer.store?.image : null;
-        storeName = offers.bestOffer.store ? offers.bestOffer.store?.name : null;
-
-        /* Url */
-        url = offers.bestOffer.url;
+    if (loading) {
+        return (
+            <section className={styles["offer-card"]}>
+                <div className={styles["loading-placeholder"]}>
+                    <div className={styles["spinner"]}></div>
+                </div>
+            </section>
+        );
     }
 
-    if (gameData) {
-        gameTitle = gameData.title;
+    if (error || !offers?.bestOffer) {
+        return (
+            <section className={styles["offer-card"]}>
+                <h3>{gameData?.title || gameName}</h3>
+                <div className={styles["no-offer-found"]}>
+                    <Image
+                        src={NoOffersFound}
+                        alt={`No offers found for ${gameData?.title || gameName}`}
+                        sizes="20vw"
+                        fill
+                        className={styles["image"]}
+                    />
+                </div>
+                <h3>No tenemos ofertas disponibles</h3>
+            </section>
+        );
     }
 
-    if (!offers?.bestOffer) return (
-        <section className={styles["offer-card"]}>
-            <h3> {gameTitle ? gameTitle : titleOffer}</h3>
-            <div className={styles["no-offer-found"]}>
-                <Image
-                    src={NoOffersFound}
-                    alt={`No offers found for ${gameTitle ? gameTitle : titleOffer}`}
-                    sizes="20vw"
-                    fill
-                    className={styles["image"]}
-                />
-            </div>
-            <h3>No tenemos ofertas disponibles</h3>
-        </section>
-    )
+    const titleOffer = offers.bestOffer.gameTitle;
+    const gameTitle = gameData?.title;
+    const discount = offers.bestOffer.discount;
+    const normalPrice = offers.bestOffer.normalPrice;
+    const currentPrice = offers.bestOffer.currentPrice;
+    const storeImage = offers.bestOffer.store?.image;
+    const storeName = offers.bestOffer.store?.name;
+    const url = offers.bestOffer.url;
 
-    if (offers.bestOffer) return (
+    return (
         <section className={styles["offer-card"]}>
-            <h3>{gameTitle ? gameTitle : titleOffer}</h3>
+            <h3>{gameTitle || titleOffer}</h3>
             <div className={styles["offer-info-container"]}>
-                {(storeImage &&
+                {storeImage && (
                     <div className={styles["offer-info"]}>
                         <Image
                             src={storeImage}
-                            alt={`Best offer for ${gameTitle ? gameTitle : titleOffer} provided by ${storeName}`}
+                            alt={`Best offer for ${gameTitle || titleOffer} provided by ${storeName}`}
                             sizes="20vw"
                             fill
                             className={styles["image"]}
@@ -90,7 +112,7 @@ const OfferCard = async ({ gameName }: { gameName: string }) => {
                 Ir a la oferta
             </Link>
         </section>
-    )
+    );
 };
 
 export default OfferCard;

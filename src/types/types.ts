@@ -283,7 +283,6 @@ export interface listOffersWrapperProps {
     index: number,
     offerImage: StaticImageData,
     gameTitle: string,
-    link: string,
     oldPrice: string,
     currentPrice: string,
     discountPercentage: string,

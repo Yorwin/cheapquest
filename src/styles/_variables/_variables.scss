@@ -1,23 +1,23 @@
 $colores: (
-    primary-color: #494A7F,
-    secondary-color: #B8F7FF,
-    complementary-color: #416397,
-    platform-color: #7F93AA,
-    dark-background-color: #3B424A,
-    star-color: #EEFF04,
+    primary-color: #2D3748,
+    secondary-color: #F7FAFC,
+    complementary-color: #EDF2F7,
+    platform-color: #CBD5E0,
+    dark-background-color: #1A202C,
+    star-color: #ECC94B,
     font-light-background-color: #000,
     font-dark-background-color: #fff,
-    discount-color: #FE392B,
-    color-price: #26F160,
+    discount-color: #E53E3E,
+    color-price: #38A169,
 );
 
 $primary-font-style: var(--font-gontSerrat);
 $seconday-font-style: var(--font-timeless);
 
-$homepage-offers-padding: 80px 180px;
-$homepage-xl-offers-padding: 70px 120px;
-$homepage-lg-offers-padding: 60px 90px;
-$homepage-sm-offers-padding: 50px 20px;
+$homepage-offers-padding: 100px 200px;
+$homepage-xl-offers-padding: 90px 150px;
+$homepage-lg-offers-padding: 80px 120px;
+$homepage-sm-offers-padding: 70px 40px;
 
 $default-text-decoration: underline .1rem #fff solid;
 $title-shadow: 3px 0px 7px rgba(0, 0, 0, 0.58);

@@ -24,6 +24,11 @@ import OfficialStoreListSkeleton from "@/components/pages/game-page/official-sto
 import GameImagesTrailerSkeleton from "@/components/pages/game-page/game-images-videos/game-img-videos-skeleton";
 import GameTagsSkeleton from "@/components/pages/game-page/game-tags/game-tags-skeleton";
 
+/* Fallback Components */
+import ImageCard from "@/components/general/image-card";
+import OfferCard from "@/components/general/offer-card/offer-card";
+import OfferCardSkeleton from "@/components/general/offer-card/offer-card-skeleton";
+
 interface ParamsGame {
     params: Promise<{ game: string }>;
 }
@@ -35,10 +40,21 @@ export async function generateMetadata({ params }: ParamsGame): Promise<Metadata
     const gameSlug = game;
     const gameName = slugToGameName(gameSlug);
 
-    const getGameInfo = await getGameInfoGamePage(gameName);
+    let getGameInfo;
+    try {
+        getGameInfo = await getGameInfoGamePage(gameName);
+    } catch (error) {
+        return {
+            title: 'Juego no encontrado',
+            description: 'El juego solicitado no existe',
+        };
+    }
 
-    if (!getGameInfo || Object.keys(getGameInfo).length === 0) {
-        notFound();
+    if (!getGameInfo.id) {
+        return {
+            title: 'Juego no encontrado',
+            description: 'El juego solicitado no existe',
+        };
     }
 
     const title = getGameInfo.title;
@@ -71,6 +87,17 @@ const GamePage = async ({ params }: ParamsGame) => {
     const { game } = await params;
     const gameSlug = game;
     const gameName = slugToGameName(gameSlug);
+
+    let gameInfo;
+    try {
+        gameInfo = await getGameInfoGamePage(gameName);
+    } catch (error) {
+        return <FallbackPage gameName={gameName} />;
+    }
+
+    if (!gameInfo.id) {
+        return <FallbackPage gameName={gameName} />;
+    }
 
     return (
         <article className="main-article-gamepage">
@@ -125,6 +152,37 @@ const GamePage = async ({ params }: ParamsGame) => {
                 <Suspense fallback={<SkeletonLoader width="100%" height="400px" />}>
                     <RelatedOffers gameName={gameName} />
                 </Suspense>
+            </div>
+        </article>
+    );
+};
+
+// -------------------- FALLBACK PAGE --------------------
+const FallbackPage = ({ gameName }: { gameName: string }) => {
+    return (
+        <article className="main-article-gamepage">
+            <div style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                minHeight: '90vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '4rem 2rem'
+            }}>
+                <div style={{
+                    display: 'flex',
+                    gap: '2rem',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                    alignItems: 'flex-start',
+                    maxWidth: '1200px',
+                    width: '100%'
+                }}>
+                    <ImageCard gameName={gameName} />
+                    <Suspense fallback={<OfferCardSkeleton />}>
+                        <OfferCard gameName={gameName} />
+                    </Suspense>
+                </div>
             </div>
         </article>
     );

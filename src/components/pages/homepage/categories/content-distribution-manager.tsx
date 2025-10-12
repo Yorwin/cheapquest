@@ -20,62 +20,72 @@ interface Categories {
     className: string,
     character: StaticImageData,
     enlace: string,
+    slug: string,
 }
 
 const categoriesItems: Categories[] = [
     {
-        titulo: "Acción",
+        titulo: "Action",
         className: "action",
         character: characterAction,
-        enlace: "#"
+        enlace: "/search?genres=action",
+        slug: "action"
     },
     {
         titulo: "Arcade",
         className: "arcade",
         character: characterArcade,
-        enlace: "#"
+        enlace: "/search?genres=arcade",
+        slug: "arcade"
     },
     {
-        titulo: "Aventura",
+        titulo: "Adventure",
         className: "adventure",
         character: characterAdventure,
-        enlace: "#"
+        enlace: "/search?genres=adventure",
+        slug: "adventure"
     },
     {
-        titulo: "Estrategia",
+        titulo: "Strategy",
         className: "strategy",
         character: characterStrategy,
-        enlace: "#"
+        enlace: "/search?genres=strategy",
+        slug: "strategy"
     },
     {
-        titulo: "FPS",
+        titulo: "Shooter",
         className: "fps",
         character: characterFPS,
-        enlace: "#"
+        enlace: "/search?genres=shooter",
+        slug: "shooter"
     },
     {
-        titulo: "Lucha",
+        titulo: "Fighting",
         className: "fight",
         character: characterFight,
-        enlace: "#"
+        enlace: "/search?genres=fighting",
+        slug: "fighting"
     },
     {
         titulo: "RPG",
         className: "rpg",
         character: characterRPG,
-        enlace: "#"
+        enlace: "/search?genres=rpg",
+        slug: "rpg"
     },
     {
-        titulo: "Un solo jugador",
+        titulo: "Casual",
         className: "single-player",
         character: characterSinglePlayer,
-        enlace: "#"
+        enlace: "/search?genres=casual",
+        slug: "casual"
     },
     {
-        titulo: "VR",
+        titulo: "Platformer",
         className: "vr",
         character: characterVR,
-        enlace: "#"
+        enlace: "/search?genres=platformer",
+        slug: "platformer"
     },
 ];
 

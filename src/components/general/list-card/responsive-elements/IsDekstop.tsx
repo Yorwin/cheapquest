@@ -13,13 +13,10 @@ const IsDesktop = ({ offersByPercentage, historicLowsOffers }: ContentDistributi
 
     const listOffersByPercentage = offersByPercentage.map((e, index) => {
 
-        const link = createGameSlug(e.gameTitle);
-
         return (
             <ListFormatOfferWrapper
                 key={index}
                 index={index}
-                link={`game-page/${link}`}
                 offerImage={e.offerImage}
                 gameTitle={e.gameTitle}
                 oldPrice={e.oldPrice}
@@ -31,13 +28,10 @@ const IsDesktop = ({ offersByPercentage, historicLowsOffers }: ContentDistributi
 
     const listHistoricLows = historicLowsOffers.map((e, index) => {
 
-        const link = createGameSlug(e.gameTitle);
-
         return (
             <ListFormatOfferWrapper
                 key={index}
                 index={index}
-                link={`game-page/${link}`}
                 offerImage={e.offerImage}
                 gameTitle={e.gameTitle}
                 oldPrice={e.oldPrice}

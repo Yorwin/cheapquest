@@ -3,8 +3,8 @@
 @use 'sass:map';
 
 // Variables locales para evitar repetición
-$card-transition: transform 0.3s ease;
-$card-hover-scale: scale(1.03);
+$card-transition: transform 0.2s ease;
+$card-hover-scale: scale(1.005);
 $primary-bg: map.get($colores, primary-color);
 $complementary-bg: map.get($colores, complementary-color);
 $platform-bg: map.get($colores, platform-color);
@@ -19,7 +19,7 @@ $font-dark: map.get($colores, font-dark-background-color);
 
 .title {
     margin-bottom: 2rem;
-    color: $font-dark;
+    color: map.get($colores, font-light-background-color);
     @include offers-title-typography($title-font-size-default, nowrap);
 }
 
@@ -39,10 +39,13 @@ $font-dark: map.get($colores, font-dark-background-color);
     flex-direction: column;
     height: 100%;
     @include offer-shadow;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
     transition: $card-transition;
 
     &:hover {
         transform: $card-hover-scale;
+        border-color: rgba(0, 0, 0, 0.08);
     }
 }
 
@@ -177,7 +180,7 @@ $font-dark: map.get($colores, font-dark-background-color);
 
 // Clase base para títulos de juegos
 %game-title-base {
-    color: $font-dark;
+    color: map.get($colores, dark-background-color);
     margin-bottom: 0rem;
     z-index: 2;
     @include resume-game-title;

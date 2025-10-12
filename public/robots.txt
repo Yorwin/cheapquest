@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /game-page/
+Allow: /search
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /cookies
+Disallow: /aviso-legal
+Disallow: /terminos
+Disallow: /politica-de-privacidad

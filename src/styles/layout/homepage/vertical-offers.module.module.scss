@@ -15,6 +15,10 @@
     overflow: clip;
     @extend .new-offers-main-container;
     background-color: map.get($colores, complementary-color);
+
+    .title {
+        color: map.get($colores, font-light-background-color);
+    }
 }
 
 .title {
