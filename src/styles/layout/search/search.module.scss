@@ -63,6 +63,11 @@ $underline-styles: 2px $main-font-color solid underline;
         right: 1.5rem; // distancia al borde derecho
         top: 50%;
         transform: translateY(-50%);
+        transition: transform 0.3s ease;
+
+        &.loading {
+            animation: spin 1s linear infinite;
+        }
     }
 }
 
@@ -374,6 +379,16 @@ $underline-styles: 2px $main-font-color solid underline;
 
     100% {
         background-position: 0% 50%;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: translateY(-50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(-50%) rotate(360deg);
     }
 }
 

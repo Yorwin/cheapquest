@@ -1,11 +1,13 @@
+'use client'
+
 "use client"
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "@/styles/layout/search/search.module.scss";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Genre } from "@/types/types";
 import SearchResults from "@/components/pages/search/search-results";
-import { Metadata } from "next";
+import { useSearchGameInfo } from "@/functions/hooks/useSearchParams";
 import Head from "next/head";
 
 // -------------------- COMPONENTE PRINCIPAL --------------------
@@ -13,8 +15,11 @@ const Search = () => {
 
     const router = useRouter();
     const searchParams = useSearchParams();
+    const { data, loading, error } = useSearchGameInfo();
+    const searchInputRef = useRef<HTMLInputElement>(null);
 
     const [gottenGenres, setGottenGenres] = useState<Genre[] | null>(null);
+    const [wasLoading, setWasLoading] = useState(false);
 
     //Valores de busqueda por defecto
     const [formData, setFormData] = useState({
@@ -82,6 +87,23 @@ const Search = () => {
         }));
     }, [searchParams]);
 
+    // Handle loading completion: scroll to results and blur input
+    useEffect(() => {
+        if (wasLoading && !loading && data) {
+            // Scroll to search results
+            const resultsAnchor = document.getElementById('search-results-anchor');
+            if (resultsAnchor) {
+                resultsAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // Blur the search input
+            if (searchInputRef.current) {
+                searchInputRef.current.blur();
+            }
+        }
+        setWasLoading(loading);
+    }, [loading, data, wasLoading]);
+
     return (
         <>
             <Head>
@@ -102,142 +124,143 @@ const Search = () => {
             </Head>
             <article className={styles["search-page-container"]}>
                 <section className="container-fluid">
-                <form onSubmit={handleSubmit}>
-                    {/* Search Bar */}
+                    <form onSubmit={handleSubmit}>
+                        {/* Search Bar */}
 
-                    <div className="row mb-4">
-                        <div className={`col-12 ${styles["search-bar-container"]}`}>
-                            <div className={styles["search-wrapper"]}>
-                                <i className="bi bi-search"></i>
-                                <input
-                                    type="search"
-                                    id="game-search"
-                                    name="query"
-                                    placeholder="Escribe el nombre del juego"
-                                    value={formData.query}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row mb-4 g-4 g-xl-0">
-
-                        {/* Orden */}
-
-                        <div className="col-xl-3 col-6 d-flex justify-content-center">
-                            <div className={styles["filter-container"]}>
-                                <label className={styles["label"]}>Ordenar:</label>
-                                <div className={styles["select-container"]}>
-                                    <select
-                                        id="orden"
-                                        name="order"
-                                        value={formData.order}
-                                        onChange={handleInputChange}>
-                                        <option className={styles["options"]} value="precio-min">Precio más bajo</option>
-                                        <option className={styles["options"]} value="precio-max">Precio más alto</option>
-                                    </select>
-                                    <i className="bi bi-caret-down"></i>
+                        <div className="row mb-4">
+                            <div className={`col-12 ${styles["search-bar-container"]}`}>
+                                <div className={styles["search-wrapper"]}>
+                                    <i className={loading ? `${styles["loading"]} bi bi-hourglass-split` : 'bi bi-search'}></i>
+                                    <input
+                                        ref={searchInputRef}
+                                        type="search"
+                                        id="game-search"
+                                        name="query"
+                                        placeholder="Escribe el nombre del juego"
+                                        value={formData.query}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
                             </div>
                         </div>
 
-                        {/* Géneros */}
+                        <div className="row mb-4 g-4 g-xl-0">
 
-                        <div className="col-xl-3 col-6 d-flex justify-content-center">
-                            <div className={styles["filter-container"]}>
-                                {gottenGenres ? (
-                                    <>
-                                        <label className={styles["label"]}>Géneros:</label>
-                                        <div className={styles["select-container"]}>
-                                            <select
-                                                id="generos"
-                                                name="genres"
-                                                value={formData.genres}
-                                                onChange={handleInputChange}>
-                                                {gottenGenres.map((e: Genre, index: number) => (
-                                                    <option className={styles["options"]} value={e.slug} key={index}>
-                                                        {e.name}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            <i className="bi bi-caret-down"></i>
-                                        </div>
-                                    </>
-                                ) : <label className={styles["label"]}>Cargando...</label>
-                                }
+                            {/* Orden */}
+
+                            <div className="col-xl-3 col-6 d-flex justify-content-center">
+                                <div className={styles["filter-container"]}>
+                                    <label className={styles["label"]}>Ordenar:</label>
+                                    <div className={styles["select-container"]}>
+                                        <select
+                                            id="orden"
+                                            name="order"
+                                            value={formData.order}
+                                            onChange={handleInputChange}>
+                                            <option className={styles["options"]} value="precio-min">Precio más bajo</option>
+                                            <option className={styles["options"]} value="precio-max">Precio más alto</option>
+                                        </select>
+                                        <i className="bi bi-caret-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Géneros */}
+
+                            <div className="col-xl-3 col-6 d-flex justify-content-center">
+                                <div className={styles["filter-container"]}>
+                                    {gottenGenres ? (
+                                        <>
+                                            <label className={styles["label"]}>Géneros:</label>
+                                            <div className={styles["select-container"]}>
+                                                <select
+                                                    id="generos"
+                                                    name="genres"
+                                                    value={formData.genres}
+                                                    onChange={handleInputChange}>
+                                                    {gottenGenres.map((e: Genre, index: number) => (
+                                                        <option className={styles["options"]} value={e.slug} key={index}>
+                                                            {e.name}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                                <i className="bi bi-caret-down"></i>
+                                            </div>
+                                        </>
+                                    ) : <label className={styles["label"]}>Cargando...</label>
+                                    }
+                                </div>
+                            </div>
+
+                            {/* Ordenar por ratings */}
+
+                            <div className="col-xl-3 col-6 d-flex justify-content-center">
+                                <div className={styles["checkbox-container"]}>
+                                    <input
+                                        type="checkbox"
+                                        name="steamRating"
+                                        id="steam-rating"
+                                        checked={formData.steamRating}
+                                        onChange={handleInputChange} />
+                                    <label htmlFor="steam-rating" className={styles["label"]}>
+                                        Steam Rating
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div className="col-xl-3 col-6 d-flex justify-content-center">
+                                <div className={styles["checkbox-container"]}>
+                                    <input
+                                        type="checkbox"
+                                        name="metaCritic"
+                                        id="meta-critic"
+                                        checked={formData.metaCritic}
+                                        onChange={handleInputChange} />
+                                    <label htmlFor="meta-critic" className={styles["label"]} >
+                                        Metacritic
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
-                        {/* Ordenar por ratings */}
-
-                        <div className="col-xl-3 col-6 d-flex justify-content-center">
-                            <div className={styles["checkbox-container"]}>
-                                <input
-                                    type="checkbox"
-                                    name="steamRating"
-                                    id="steam-rating"
-                                    checked={formData.steamRating}
-                                    onChange={handleInputChange} />
-                                <label htmlFor="steam-rating" className={styles["label"]}>
-                                    Steam Rating
-                                </label>
+                        {/* Rango de precio */}
+                        <div className="row mb-5 g-4">
+                            <div className="col-lg-12 col-xl-6 d-flex justify-content-xl-end justify-content-center">
+                                <div className={styles["number-limits-container"]}>
+                                    <label htmlFor="starting-price">Entre</label>
+                                    <input
+                                        type="number"
+                                        id="starting-price"
+                                        name="startingPrice"
+                                        value={formData.startingPrice}
+                                        onChange={handleInputChange}
+                                        min={0}
+                                        max={120}
+                                        step={1}
+                                    />
+                                    <label htmlFor="finishing-price">y</label>
+                                    <input
+                                        type="number"
+                                        id="finishing-price"
+                                        name="finishingPrice"
+                                        value={formData.finishingPrice}
+                                        onChange={handleInputChange}
+                                        min={0}
+                                        max={120}
+                                        step={1}
+                                    />
+                                </div>
+                            </div>
+                            <div className={`col-lg-12 col-xl-6 d-flex justify-content-xl-start justify-content-center ${styles["button-search"]}`}>
+                                <button type="submit" className={styles["gradient-animate"]}>
+                                    Buscar
+                                </button>
                             </div>
                         </div>
-
-                        <div className="col-xl-3 col-6 d-flex justify-content-center">
-                            <div className={styles["checkbox-container"]}>
-                                <input
-                                    type="checkbox"
-                                    name="metaCritic"
-                                    id="meta-critic"
-                                    checked={formData.metaCritic}
-                                    onChange={handleInputChange} />
-                                <label htmlFor="meta-critic" className={styles["label"]} >
-                                    Metacritic
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Rango de precio */}
-                    <div className="row mb-5 g-4">
-                        <div className="col-lg-12 col-xl-6 d-flex justify-content-xl-end justify-content-center">
-                            <div className={styles["number-limits-container"]}>
-                                <label htmlFor="starting-price">Entre</label>
-                                <input
-                                    type="number"
-                                    id="starting-price"
-                                    name="startingPrice"
-                                    value={formData.startingPrice}
-                                    onChange={handleInputChange}
-                                    min={0}
-                                    max={120}
-                                    step={1}
-                                />
-                                <label htmlFor="finishing-price">y</label>
-                                <input
-                                    type="number"
-                                    id="finishing-price"
-                                    name="finishingPrice"
-                                    value={formData.finishingPrice}
-                                    onChange={handleInputChange}
-                                    min={0}
-                                    max={120}
-                                    step={1}
-                                />
-                            </div>
-                        </div>
-                        <div className={`col-lg-12 col-xl-6 d-flex justify-content-xl-start justify-content-center ${styles["button-search"]}`}>
-                            <button type="submit" className={styles["gradient-animate"]}>
-                                Buscar
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </section>
-            <SearchResults />
-        </article>
+                    </form>
+                </section>
+                <SearchResults data={data} loading={loading} error={error} />
+            </article>
         </>
     );
 };

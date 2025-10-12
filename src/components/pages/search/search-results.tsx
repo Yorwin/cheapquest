@@ -1,16 +1,21 @@
 "use client";
 
-import { useSearchGameInfo } from "@/functions/hooks/useSearchParams";
 import FranchiseCard from "../../general/franchise-games-card/franchise-card";
 import GameCardSkeleton from "@/components/general/franchise-games-card/gamecard-skeleton-loader";
 import ErrorMessage from "./search-error-message";
 import styles from "@/styles/layout/search/search-results.module.scss";
 
-export default function SearchResults() {
-    const { data, loading, error } = useSearchGameInfo();
+interface SearchResultsProps {
+    data: any;
+    loading: boolean;
+    error: string | null;
+}
+
+export default function SearchResults({ data, loading, error }: SearchResultsProps) {
 
     return (
         <section className="container-fluid">
+            <div id="search-results-anchor" style={{ position: 'relative', top: '-100px' }}></div>
             <h4 className={styles["results-title"]}>Resultados de búsqueda</h4>
             <div className="row d-flex justify-content-center">
                 {error ? (
