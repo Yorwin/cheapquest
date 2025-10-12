@@ -1,7 +1,6 @@
-import { StaticImageData } from "next/image";
 import { RawgGame, GameDeal, GameDealWithoutScore } from "@/types/types";
 
-export function getThreeYearsDateRange() {
+export function getFiveYearsDateRange() {
     const today = new Date();
 
     const endYear = today.getFullYear();

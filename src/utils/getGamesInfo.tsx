@@ -1,7 +1,7 @@
 import "server-only";
 
 import { cache } from "react";
-import { getThreeYearsDateRange, calculatePopularityScore, slugToGameName, formatDateES, createGameSlug } from "@/functions/functions";
+import { getFiveYearsDateRange, calculatePopularityScore, slugToGameName, formatDateES, createGameSlug } from "@/functions/functions";
 import { searchOffers } from "./getOffers";
 import { bestOfferType, GameDealWithoutScore, GameDeal, dealStoreData, StoreLogo, publishersAndDevelopersType, tag, developerAndPublisherType, Genre, getGameDataProps, gameData, GameStandardContainerType, VerticalCardContainerType, VerticalCardWrapperType, comparisonOfferType } from "@/types/types";
 import searchForStore from "./seachForStore";
@@ -15,7 +15,7 @@ const API_KEY = process.env.RAWG_API_KEY;
 
 export const getMostPopularGame = async (retries = 3) => {
     const wantedMetacritic = "80,100"
-    const url = `https://api.rawg.io/api/games?key=${API_KEY}&metacritic=${wantedMetacritic}&ordering=-metacritic&dates=${getThreeYearsDateRange()}&page_size=20`
+    const url = `https://api.rawg.io/api/games?key=${API_KEY}&metacritic=${wantedMetacritic}&ordering=-metacritic&dates=${getFiveYearsDateRange()}&page_size=20`
 
     for (let attempt = 0; attempt < retries; attempt++) {
 

@@ -9,7 +9,6 @@ import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
 const ListFormatOffers = async () => {
     try {
         const offers = await offersByPercentage();
-        console.log(offers);
 
         const bestOffersByPercentage = offers.map((offer: any) => {
             if (offer) {
