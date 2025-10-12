@@ -189,7 +189,7 @@ export const offersByPercentage = async () => {
 
     const filteredOffers = res.filter((offer: GameDeal) => !offer.title.includes("Bundle") && !offer.title.includes("WallPaper"));
 
-    const bestOffers = filteredOffers.slice(0, 10);
+    const bestOffers = filteredOffers.slice(0, 5);
 
     const completeDataPromises = bestOffers.map(async (offer: GameDeal) => {
         const title = offer.title;

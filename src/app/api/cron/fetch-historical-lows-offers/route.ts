@@ -8,7 +8,7 @@ export const GET = async () => {
     try {
         const historicalLows: any[] = [];
         let pageNumber = 0;
-        const targetElements = 10;
+        const targetElements = 5;
 
         while (historicalLows.length < targetElements) {
             const requestAAAGames = await fetch(
