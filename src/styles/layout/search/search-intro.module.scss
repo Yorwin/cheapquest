@@ -1,0 +1,55 @@
+@use '../../_variables/variables' as *;
+@use '../../_variables/mixins' as *;
+@use 'sass:map';
+
+.introduction-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 50%;
+
+    h3 {
+        font-family: var(--font-timeless);
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-align: center;
+        color: map.get($colores, font-dark-background-color);
+    }
+}
+
+.image-container {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+.image {
+    object-fit: contain;
+}
+
+@media screen and (max-width: 1200px) {
+    .introduction-container {
+        width: 80%;
+
+        h3 {
+            font-size: 1.1rem;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .introduction-container {
+        width: 100%;
+        gap: 8px;
+
+        h3 {
+            font-size: 1rem;
+        }
+    }
+
+    .image-container {
+        width: 30px;
+        height: 30px;
+    }
+}

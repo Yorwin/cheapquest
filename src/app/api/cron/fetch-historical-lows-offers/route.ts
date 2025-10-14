@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/firebase-admin";
-import { fetchGamesInfoCheapShark } from "@/functions/functions";
-import { getGameInfo } from "@/utils/getGamesInfo";
+import { fetchGamesInfoCheapShark } from "@/functions/functions-server";
+import { cachedRawgFetch } from "@/lib/api-cache-server";
 import { gameOfferInfo, dealsInfoOffer } from "@/types/types";
 
 export const GET = async () => {
@@ -66,8 +66,8 @@ export const GET = async () => {
                 });
 
                 try {
-                    const gameInfo = await getGameInfo(title);
-                    const firstResult = gameInfo.results[0] ?? null;
+                    const gameInfo = await cachedRawgFetch('/games', { search: title });
+                    const firstResult = gameInfo.results?.[0] ?? null;
 
                     return {
                         title: game.info.title,

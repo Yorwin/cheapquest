@@ -4,6 +4,7 @@ import { getTop11Deals, removeDuplicatesByBestPrice, removeDuplicatesMostPopular
 import { GameDeal, GameDealWithoutScore } from "@/types/types";
 import { getGameInfo } from "./getGamesInfo";
 import { db } from "@/lib/firebase-admin";
+import { cachedCheapSharkFetch } from "@/lib/api-cache-server";
 
 /* Delay */
 
@@ -13,27 +14,11 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const searchOffers = async (e: string) => {
     try {
-        const cleanGameNameForTag = e.toLowerCase().replace(/[^a-z0-9]/g, '-');
-
-        const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?title=${e}&exact=1&onSale=1`, {
-            next: {
-                revalidate: 1800,
-                tags: ['game-deals',
-                    `deal-${cleanGameNameForTag}`,
-                    'cheapshark-api'],
-            }
+        const data = await cachedCheapSharkFetch('/deals', {
+            title: e,
+            exact: 1,
+            onSale: 1
         });
-
-        if (!response.ok) {
-            if (response.status === 429) {
-                throw new Error('Rate limited by CheapShark API');
-            }
-
-            throw new Error(`CheapShark API Error: ${response.status} - ${response.statusText}`);
-        }
-
-        const data = await response.json();
-
         return data;
     } catch (error) {
         console.error(`Error searching deals for "${e}":`, error);
@@ -45,25 +30,11 @@ export const searchOffers = async (e: string) => {
 
 export const searchDealInfo = async (id: string) => {
     try {
-
-        const url = `https://www.cheapshark.com/api/1.0/deals?id=${id}`;
-        const request = await fetch(`${url}`, {
-            next: {
-                revalidate: 3600,
-                tags: [`offers-for-game-${id}`]
-            }
-        });
-
-        if (!request.ok) {
-            throw new Error(`Error al intentar obtener la información de la oferta ${request.status}`);
-        }
-
-        const res = await request.json();
-
-        return res;
-
+        const data = await cachedCheapSharkFetch('/deals', { id });
+        return data;
     } catch (error) {
         console.error(`Error trying to get deal info ${error}`);
+        return null;
     }
 };
 
@@ -73,18 +44,10 @@ export const getMostPopularOffers = async (retries = 3) => {
 
     for (let attempt = 0; attempt < retries; attempt++) {
         try {
-            const responseOffers = await fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=DealRating&onSale=1", {
-                next: {
-                    revalidate: 3600,
-                    tags: ['most-popular-games-info', 'most-popular-games-search']
-                },
+            const response = await cachedCheapSharkFetch('/deals', {
+                sortBy: 'DealRating',
+                onSale: 1
             });
-
-            if (!responseOffers.ok) {
-                throw new Error("Failed to fetch data");
-            }
-
-            const response = await responseOffers.json();
 
             const deduplicated: Record<string, GameDealWithoutScore> = {};
 
@@ -121,18 +84,11 @@ export const getMostPopularOffers = async (retries = 3) => {
 export const getNewDeals = async (retries = 3) => {
     for (let attempt = 0; attempt < retries; attempt++) {
         try {
-            const response = await fetch("https://www.cheapshark.com/api/1.0/deals?maxAge=12&onSale=1&sortBy=DealRating", {
-                next: {
-                    revalidate: 43200,
-                    tags: ["new-deals-info"]
-                }
-            })
-
-            if (!response.ok) {
-                throw new Error("Error when trying to fetch new offers");
-            }
-
-            const data = await response.json();
+            const data = await cachedCheapSharkFetch('/deals', {
+                maxAge: 12,
+                onSale: 1,
+                sortBy: 'DealRating'
+            });
             const removeDuplicates = removeDuplicatesByBestPrice(data);
 
             const newDeals: GameDealWithoutScore[] = removeDuplicates.slice(0, 8);
@@ -174,18 +130,11 @@ export const getAgedLikeWineGames = async () => {
 /* GET BEST OFFER BY PERCENTAGE */
 
 export const offersByPercentage = async () => {
-    const request = await fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=Savings&onSale=1", {
-        next: {
-            revalidate: 21600,
-            tags: ["best-offers-by-percentage"],
-        }
-    })
-
-    if (!request.ok) {
-        throw new Error("Error when trying to fetch offers by percentage")
-    }
-
-    const res = await request.json();
+    try {
+        const res = await cachedCheapSharkFetch('/deals', {
+            sortBy: 'Savings',
+            onSale: 1
+        });
 
     const filteredOffers = res.filter((offer: GameDeal) => !offer.title.includes("Bundle") && !offer.title.includes("WallPaper"));
 
@@ -205,7 +154,11 @@ export const offersByPercentage = async () => {
             });
     });
 
-    return Promise.all(completeDataPromises);;
+        return Promise.all(completeDataPromises);
+    } catch (error) {
+        console.error('Error fetching offers by percentage:', error);
+        return [];
+    }
 };
 
 /* GET HISTORIC LOWS */

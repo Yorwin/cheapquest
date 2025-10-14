@@ -2,11 +2,14 @@ import { NextRequest } from "next/server";
 import { createGameSlug } from "@/functions/functions";
 import { storeLogos } from "@/resources/stores_icons";
 import { dealStoreData, StoreLogo } from "@/types/types";
+import { cachedRawgFetch, cachedCheapSharkFetch } from "@/lib/api-cache-server";
 
 const API_KEY = process.env.RAWG_API_KEY;
 
 // 🔹 Obtener lista de tiendas una sola vez por request
 async function getStoresList() {
+    // For stores, we can keep using direct fetch since they change very rarely
+    // and Next.js cache is sufficient
     const res = await fetch("https://www.cheapshark.com/api/1.0/stores", {
         next: { revalidate: 1209600, tags: ["stores-list"] }, // 14 días
     });
@@ -21,32 +24,15 @@ async function getStoresList() {
 // --- función para consultar CheapShark ---
 async function searchOffers(title: string, lowerPrice: number, upperPrice: number) {
     try {
-        const cleanGameNameForTag = title.toLowerCase().replace(/[^a-z0-9]/g, "-");
+        // Use cached CheapShark fetch
+        const data = await cachedCheapSharkFetch('/deals', {
+            title,
+            exact: 1,
+            lowerPrice,
+            upperPrice
+        });
 
-        const response = await fetch(
-            `https://www.cheapshark.com/api/1.0/deals?title=${title}&exact=1&lowerPrice=${lowerPrice}&upperPrice=${upperPrice}`,
-            {
-                next: {
-                    revalidate: 1800,
-                    tags: [
-                        "game-deals",
-                        `deal-${cleanGameNameForTag}`,
-                        "cheapshark-api",
-                    ],
-                },
-            }
-        );
-
-        if (!response.ok) {
-            if (response.status === 429) {
-                throw new Error("Rate limited by CheapShark API");
-            }
-            throw new Error(
-                `CheapShark API Error: ${response.status} - ${response.statusText}`
-            );
-        }
-
-        return await response.json();
+        return data;
     } catch (error) {
         console.error(`Error searching deals for "${title}":`, error);
         return [];
@@ -64,21 +50,13 @@ export async function GET(req: NextRequest) {
         const startingPrice = parseInt(searchParams.get("starting-price") || "0");
         const finishingPrice = parseInt(searchParams.get("finishing-price") || "200");
 
-        // --- construir query RAWG ---
-        let rawgUrl = `https://api.rawg.io/api/games?key=${API_KEY}&page_size=10`;
-        if (query) rawgUrl += `&search=${query}`;
-        if (genres) rawgUrl += `&genres=${genres}`;
-        if (metaCritic) rawgUrl += "&metacritic=75,100"; // ejemplo
+        // --- construir query RAWG usando cache ---
+        const rawgParams: Record<string, any> = { page_size: 10 };
+        if (query) rawgParams.search = query;
+        if (genres) rawgParams.genres = genres;
+        if (metaCritic) rawgParams.metacritic = "75,100";
 
-        const rawgResponse = await fetch(rawgUrl, {
-            next: { revalidate: 3600 }, // cache 1h
-        });
-
-        if (!rawgResponse.ok) {
-            throw new Error("Error al obtener datos de RAWG");
-        }
-
-        const rawgData = await rawgResponse.json();
+        const rawgData = await cachedRawgFetch('/games', rawgParams);
 
         //Obtener información de tiendas
         const storeMap = await getStoresList();

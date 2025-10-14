@@ -8,6 +8,8 @@ import searchForStore from "./seachForStore";
 import { storeLogos, storeBanner } from "@/resources/stores_icons"
 import { translateAndStoreGameAction } from "@/actions/translationActions";
 import { inCaseOfError } from "@/components/general/error-loading-offers-fallback-container";
+import { cachedRawgFetch, cachedRawgGenreFetch, getCachedGameTrailer } from "@/lib/api-cache-server";
+import { checkGameCache, updateGameWithFranchiseData } from "@/lib/firebase-cache";
 
 const API_KEY = process.env.RAWG_API_KEY;
 
@@ -87,18 +89,13 @@ export const getMostPopularGame = async (retries = 3) => {
 /* GET SPECIFIC GAME */
 
 export const getGameInfo = async (e: string) => {
-
-    const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&search=${e}`, {
-        cache: 'force-cache'
-    });
-
-    if (!response.ok) {
+    try {
+        const data = await cachedRawgFetch('/games', { search: e });
+        return data;
+    } catch (error) {
+        console.error('Error fetching game info:', error);
         throw new Error("Failed to fetch data");
     }
-
-    const data = response.json();
-
-    return data;
 };
 
 /* GET GAME INFO FOR GAMEPAGE */
@@ -129,21 +126,19 @@ export const getGameInfoGamePage = async (e: string) => {
 /* GET GAME ID */
 
 export const getGameId = cache(async (e: string): Promise<string | null> => {
-    const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&search=${e}`)
+    try {
+        const data = await cachedRawgFetch('/games', { search: e });
 
-    if (!response.ok) {
-        throw new Error("Failed to fetch data");
-    }
+        if (!data.results || data.results.length === 0) {
+            return null;
+        }
 
-    const data = await response.json();
-
-    if (!data.results || data.results.length === 0) {
+        const gameId = data.results[0].id;
+        return gameId.toString();
+    } catch (error) {
+        console.error('Error fetching game ID:', error);
         return null;
     }
-
-    const gameId = data.results[0].id;
-
-    return gameId;
 });
 
 interface headerImage {
@@ -152,28 +147,26 @@ interface headerImage {
 }
 
 export const getHeaderImage = cache(async (e: string): Promise<headerImage | null> => {
+    try {
+        const data = await cachedRawgFetch('/games', { search: e });
 
-    const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&search=${e}`)
+        if (!data.results || data.results.length === 0) {
+            return null;
+        }
 
-    if (!response.ok) {
-        throw new Error("Failed to fetch data");
-    }
+        const headerImage = data.results[0].background_image;
+        const screenshots = data.results[0].short_screenshots;
 
-    const data = await response.json();
+        const images: headerImage = {
+            header: headerImage,
+            screenshots: screenshots,
+        }
 
-    if (!data.results || data.results.length === 0) {
+        return images;
+    } catch (error) {
+        console.error('Error fetching header image:', error);
         return null;
     }
-
-    const headerImage = data.results[0].background_image;
-    const screenshots = data.results[0].short_screenshots;
-
-    const images: headerImage = {
-        header: headerImage,
-        screenshots: screenshots,
-    }
-
-    return images;
 });
 
 export const getGameOffers = cache(async (e: string) => {
@@ -244,195 +237,198 @@ export const getGameOffers = cache(async (e: string) => {
 });
 
 export const getGameTrailer = async (e: string) => {
-    const response = await fetch(`https://api.rawg.io/api/games/${e}/movies?key=${API_KEY}`)
-
-    if (!response.ok) {
-        throw new Error("Failed to fetch data");
-    }
-
-    const data = await response.json();
-
-    const trailer = data.results[0];
-
-    return trailer;
+    return await getCachedGameTrailer(e);
 }
 
 export const getGameData: getGameDataProps = cache(async (gameId: string) => {
-    const response = await fetch(`https://api.rawg.io/api/games/${gameId}?key=${API_KEY}`)
+    try {
+        const selectedGame = await cachedRawgFetch(`/games/${gameId}`);
 
-    if (!response.ok) {
-        throw new Error("Failed to fetch data");
-    }
+        if (!selectedGame) {
+            return null;
+        }
 
-    const data = await response.json();
+        const originalLangGenres = selectedGame.genres.map((e: Genre) => {
+            return {
+                name: e.name,
+                id: e.id,
+            }
+        });
 
-    if (!data) {
+        const result = await translateAndStoreGameAction({
+            gameId: `${selectedGame.id}`, description: selectedGame.description_raw, tags: selectedGame.tags, genres: selectedGame.genres
+        });
+
+        let developersAndPublishers: developerAndPublisherType = {};
+
+        if (selectedGame.developers.length > 4) {
+            developersAndPublishers.developers = selectedGame.developers.slice(0, 4);
+        } else {
+            developersAndPublishers.developers = selectedGame.developers ? selectedGame.developers : null;
+        }
+
+        if (selectedGame.publishers.length > 4) {
+            developersAndPublishers.publishers = selectedGame.publishers.slice(0, 4);
+        } else {
+            developersAndPublishers.publishers = selectedGame.publishers ? selectedGame.developers : null;
+        }
+
+        const filteredData: gameData = {
+            title: selectedGame.name,
+            description: result.data.description ? result.data.description : selectedGame.description_raw,
+            meta_critic: selectedGame.metacritic,
+            about_the_game: {
+                esrb: selectedGame.esrb_rating ? selectedGame.esrb_rating.name : "No ESRB rating found",
+                released_data: `${formatDateES(selectedGame.released)}`,
+                publishers: selectedGame.publishers.map((e: publishersAndDevelopersType) => e.name),
+                original_lang_genres: originalLangGenres,
+                genres: result.data.genres,
+                developers: selectedGame.developers.map((e: publishersAndDevelopersType) => e.name),
+                tags: result.data.tags ? result.data.tags : selectedGame.tags.map((e: tag) => e.name),
+            }
+        };
+
+        return filteredData;
+    } catch (error) {
+        console.error('Error fetching game data:', error);
         return null;
     }
-
-    const originalLangGenres = data.genres.map((e: Genre) => {
-        return {
-            name: e.name,
-            id: e.id,
-        }
-    });
-
-    const result = await translateAndStoreGameAction({
-        gameId: `${data.id}`, description: data.description_raw, tags: data.tags, genres: data.genres
-    });
-
-    let developersAndPublishers: developerAndPublisherType = {};
-
-    if (data.developers.length > 4) {
-        developersAndPublishers.developers = data.developers.slice(0, 4);
-    } else {
-        developersAndPublishers.developers = data.developers;
-    }
-
-    if (data.publishers.length > 4) {
-        developersAndPublishers.publishers = data.publishers.slice(0, 4);
-    } else {
-        developersAndPublishers.publishers = data.publishers;
-    }
-
-    const filteredData: gameData = {
-        title: data.name,
-        description: result.data.description ? result.data.description : data.description_raw,
-        meta_critic: data.metacritic,
-        about_the_game: {
-            esrb: data.esrb_rating ? data.esrb_rating.name : "No ESRB rating found",
-            released_data: `${formatDateES(data.released)}`,
-            publishers: data.publishers.map((e: publishersAndDevelopersType) => e.name),
-            original_lang_genres: originalLangGenres,
-            genres: result.data.genres,
-            developers: data.developers.map((e: publishersAndDevelopersType) => e.name),
-            tags: result.data.tags ? result.data.tags : data.tags.map((e: tag) => e.name),
-        }
-    };
-
-    return filteredData;
 });
 
 export const getFranchiseGames = async (e: string) => {
+    try {
+        // Check if we have cached franchise data for this game
+        const cachedGame = await checkGameCache(e);
 
-    const response = await fetch(`https://api.rawg.io/api/games/${e}/game-series?key=${API_KEY}`);
+        if (cachedGame && cachedGame.franchiseData) {
 
-    if (!response.ok) {
-        throw new Error("Franchises could not be fetched, an error has occurred during fetching");
+            // Check if franchise data is fresh (3 days for franchise data)
+            const threeDaysInMs = 3 * 24 * 60 * 60 * 1000;
+            const timeSinceUpdate = new Date().getTime() - cachedGame.lastUpdated.getTime();
+            const isFranchiseDataFresh = timeSinceUpdate < threeDaysInMs;
+
+            if (isFranchiseDataFresh) {
+                console.log(`📋 Franchise cache hit for game ${e}`);
+                return cachedGame.franchiseData;
+            }
+        }
+
+        const data = await cachedRawgFetch(`/games/${e}/game-series`);
+
+        const franchises = [];
+
+        const filteredGameInfo = data.results.map((e: any) => ({
+            title: e.name,
+            released_date: e.released,
+            header_image: e.background_image,
+            link: createGameSlug(e.name),
+        }));
+
+        franchises.push(...filteredGameInfo.slice(0, 5));
+
+        const getGameOffer = await Promise.all(
+            franchises.map(async (e: any) => {
+                const gameOffers = await searchOffers(e.title);
+                let bestOffer;
+
+                if (gameOffers.length > 0) {
+                    bestOffer = gameOffers.reduce((best: GameDealWithoutScore, current: GameDealWithoutScore) =>
+                        parseFloat(current.savings) > parseFloat(best.savings) ? current : best
+                    );
+                } else {
+                    bestOffer = null;
+                }
+
+                if (bestOffer !== null) {
+                    const listOfStores = await searchForStore();
+
+                    const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === bestOffer.storeID);
+                    const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
+                    const inCaseOfErrorImage = listOfStores[Number(inCaseOfError[0].storeID)];
+
+                    bestOffer.storeImage = storeImage ? storeImage : inCaseOfErrorImage;
+                }
+
+                return {
+                    ...e,
+                    offer: bestOffer,
+                };
+            })
+        );
+
+        // Cache the franchise data in the game document
+        await updateGameWithFranchiseData(e, getGameOffer);
+
+        return getGameOffer;
+    } catch (error) {
+        console.error('Error fetching franchise games:', error);
+        return [];
     }
-
-    const data = await response.json();
-
-    const franchises = [];
-
-    const filteredGameInfo = data.results.map((e: any) => ({
-        title: e.name,
-        released_date: e.released,
-        header_image: e.background_image,
-        link: createGameSlug(e.name),
-    }));
-
-    franchises.push(...filteredGameInfo.slice(0, 5));
-
-    const getGameOffer = await Promise.all(
-        franchises.map(async (e: any) => {
-            const gameOffers = await searchOffers(e.title);
-            let bestOffer;
-
-            if (gameOffers.length > 0) {
-                bestOffer = gameOffers.reduce((best: GameDealWithoutScore, current: GameDealWithoutScore) =>
-                    parseFloat(current.savings) > parseFloat(best.savings) ? current : best
-                );
-            } else {
-                bestOffer = null;
-            }
-
-            if (bestOffer !== null) {
-                const listOfStores = await searchForStore();
-
-                const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === bestOffer.storeID);
-                const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
-                const inCaseOfErrorImage = listOfStores[Number(inCaseOfError[0].storeID)];
-
-                bestOffer.storeImage = storeImage ? storeImage : inCaseOfErrorImage;
-            }
-
-            return {
-                ...e,
-                offer: bestOffer,
-            };
-        })
-    );
-
-    return getGameOffer;
 };
 
 /* MAY BE YOU WILL LIKE TOO GAMES */
 
 export const getSameGenre = async (e: number, gameID: number) => {
-    const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&genres=${e}&page_size=${40}`, {
-        next: {
-            revalidate: 86400,
-            tags: [`games-for-genre-${e}`]
-        }
-    });
+    try {
+        const data = await cachedRawgGenreFetch(e, {
+            page_size: 40
+        });
 
-    if (!response.ok) {
-        throw new Error("Ha ocurrido un error al intentar buscar juegos del mismo genero");
+        const maxOffersNumber = 10;
+        const resultGames: VerticalCardWrapperType[] = [];
+
+        const listOfStores = await searchForStore();
+
+        const platforms = {
+            PC: "bi bi-display",
+            Xbox: "bi bi-xbox",
+            PlayStation: "bi bi-playstation",
+        }
+
+        for (const game of data.results) {
+            // Si ya tenemos 10 juegos, cortamos
+            if (resultGames.length >= maxOffersNumber) break;
+            if (game.id === gameID) continue;
+
+            const gameOffers = await searchOffers(game.name);
+
+            // Saltar si no hay ofertas o si el juego es el mismo
+            if (!gameOffers || gameOffers.length === 0) {
+                continue
+            }
+
+            const validOffers = gameOffers.filter((offer: any) => offer.isOnSale === "1" && offer.gameID !== gameID);
+
+            if (validOffers.length > 0) {
+                const bestOffer = validOffers.reduce((best: GameDealWithoutScore, current: GameDealWithoutScore) =>
+                    parseFloat(current.savings) > parseFloat(best.savings) ? current : best
+                );
+
+                const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === bestOffer.storeID);
+                const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
+                const inCaseOfErrorImage = listOfStores[Number(inCaseOfError[0].storeID)];
+
+                resultGames.push({
+                    title: game.name,
+                    gameImage: game.background_image,
+                    discount: `${Number(bestOffer.savings).toFixed(0)}%`,
+                    oldPrice: `${bestOffer.normalPrice}€`,
+                    currentPrice: `${bestOffer.salePrice}€`,
+                    platform: platforms.PC,
+                    webOffer: storeImage?.image ?? inCaseOfErrorImage,
+                });
+            }
+
+            if (validOffers.length === 0) {
+                continue;
+            }
+        }
+
+        return resultGames;
+    } catch (error) {
+        console.error('Error fetching same genre games:', error);
+        return [];
     }
-
-    const data = await response.json();
-    const maxOffersNumber = 10;
-    const resultGames: VerticalCardWrapperType[] = [];
-
-    const listOfStores = await searchForStore();
-
-    const platforms = {
-        PC: "bi bi-display",
-        Xbox: "bi bi-xbox",
-        PlayStation: "bi bi-playstation",
-    }
-
-    for (const game of data.results) {
-        // Si ya tenemos 10 juegos, cortamos
-        if (resultGames.length >= maxOffersNumber) break;
-        if (game.id === gameID) continue;
-
-        const gameOffers = await searchOffers(game.name);
-
-        // Saltar si no hay ofertas o si el juego es el mismo
-        if (!gameOffers || gameOffers.length === 0) {
-            continue
-        }
-
-        const validOffers = gameOffers.filter((offer: any) => offer.isOnSale === "1" && offer.gameID !== gameID);
-
-        if (validOffers.length > 0) {
-            const bestOffer = validOffers.reduce((best: GameDealWithoutScore, current: GameDealWithoutScore) =>
-                parseFloat(current.savings) > parseFloat(best.savings) ? current : best
-            );
-
-            const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === bestOffer.storeID);
-            const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
-            const inCaseOfErrorImage = listOfStores[Number(inCaseOfError[0].storeID)];
-
-            resultGames.push({
-                title: game.name,
-                gameImage: game.background_image,
-                discount: `${Number(bestOffer.savings).toFixed(0)}%`,
-                oldPrice: `${bestOffer.normalPrice}€`,
-                currentPrice: `${bestOffer.salePrice}€`,
-                platform: platforms.PC,
-                webOffer: storeImage?.image ?? inCaseOfErrorImage,
-            });
-        }
-
-        if (validOffers.length === 0) {
-            continue;
-        }
-    }
-
-    return resultGames;
 };
 
 

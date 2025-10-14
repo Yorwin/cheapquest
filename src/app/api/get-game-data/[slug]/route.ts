@@ -1,7 +1,7 @@
 /* Obten Información Videojuego */
 /* app/api/get-game-data/[slug]/route.ts */
 
-const API_KEY = process.env.RAWG_API_KEY;
+import { cachedRawgFetch } from "@/lib/api-cache-server";
 
 export async function GET(
     request: Request,
@@ -17,15 +17,8 @@ export async function GET(
             );
         }
 
-        const response = await fetch(
-            `https://api.rawg.io/api/games?key=${API_KEY}&search=${encodeURIComponent(slug)}`
-        );
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch data from RAWG (${response.status})`);
-        }
-
-        const data = await response.json();
+        // Use cached RAWG fetch
+        const data = await cachedRawgFetch('/games', { search: slug });
 
         if (!data.results || data.results.length === 0) {
             return Response.json(

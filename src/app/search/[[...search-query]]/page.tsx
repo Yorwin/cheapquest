@@ -17,6 +17,8 @@ const Search = () => {
     const searchInputRef = useRef<HTMLInputElement>(null);
 
     const [gottenGenres, setGottenGenres] = useState<Genre[] | null>(null);
+    const [loadingGenres, setLoadingGenres] = useState(true);
+
     const [wasLoading, setWasLoading] = useState(false);
 
     //Valores de busqueda por defecto
@@ -71,6 +73,9 @@ const Search = () => {
                 setGottenGenres(data);
             } catch (error) {
                 console.error('Error fetching genres:', error);
+                setLoadingGenres(false);
+            } finally {
+                setLoadingGenres(false);
             }
         };
 
@@ -128,7 +133,7 @@ const Search = () => {
                         <div className="row mb-4">
                             <div className={`col-12 ${styles["search-bar-container"]}`}>
                                 <div className={styles["search-wrapper"]}>
-                                    <i className={loading ? `${styles["loading"]} bi bi-hourglass-split` : 'bi bi-search'}></i>
+                                    <i className={loading && searchParams.size > 0 ? `${styles["loading"]} bi bi-hourglass-split` : 'bi bi-search'}></i>
                                     <input
                                         ref={searchInputRef}
                                         type="search"
@@ -167,7 +172,9 @@ const Search = () => {
 
                             <div className="col-xl-3 col-6 d-flex justify-content-center">
                                 <div className={styles["filter-container"]}>
-                                    {gottenGenres ? (
+                                    {loadingGenres ? (
+                                        <label className={styles["label"]}>Cargando...</label>
+                                    ) : gottenGenres ? (
                                         <>
                                             <label className={styles["label"]}>Géneros:</label>
                                             <div className={styles["select-container"]}>
@@ -185,8 +192,9 @@ const Search = () => {
                                                 <i className="bi bi-caret-down"></i>
                                             </div>
                                         </>
-                                    ) : <label className={styles["label"]}>Cargando...</label>
-                                    }
+                                    ) : (
+                                        <label className={styles["label"]}>Ha ocurrido un error al intentar obtener los géneros</label>
+                                    )}
                                 </div>
                             </div>
 

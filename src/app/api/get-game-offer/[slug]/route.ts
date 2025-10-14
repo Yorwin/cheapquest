@@ -1,5 +1,7 @@
 /* app/api/get-game-offer/[slug]/route.ts */
 
+import { cachedCheapSharkFetch } from "@/lib/api-cache-server";
+
 export async function GET(
     request: Request,
     { params }: { params: Promise<{ slug: string }> }
@@ -14,35 +16,12 @@ export async function GET(
             );
         }
 
-        const cleanGameNameForTag = slug.toLowerCase().replace(/[^a-z0-9]/g, "-");
+        // Use cached CheapShark fetch
+        const data = await cachedCheapSharkFetch('/deals', {
+            title: slug,
+            exact: 1
+        });
 
-        const response = await fetch(
-            `https://www.cheapshark.com/api/1.0/deals?title=${encodeURIComponent(slug)}&exact=1`,
-            {
-                next: {
-                    revalidate: 1800,
-                    tags: [
-                        'game-deals',
-                        `deal-${cleanGameNameForTag}`,
-                        'cheapshark-api'
-                    ],
-                }
-            }
-        );
-
-        if (!response.ok) {
-            if (response.status === 429) {
-                throw new Error("Rate limited by CheapShark API");
-            }
-            throw new Error(
-                `CheapShark API Error: ${response.status} - ${response.statusText}`
-            );
-        }
-
-        const data = await response.json();
-
-        // CheapShark retorna un array directamente
-        // Lo envolvemos en un objeto para consistencia
         return Response.json({ deals: data }, { status: 200 });
 
     } catch (error) {

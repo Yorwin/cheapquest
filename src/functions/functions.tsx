@@ -1,3 +1,4 @@
+// Client-safe utility functions (no Firebase dependencies)
 import { RawgGame, GameDeal, GameDealWithoutScore } from "@/types/types";
 
 export function getFiveYearsDateRange() {
@@ -239,48 +240,3 @@ export const getTimeSinceRelease = (releaseDate: number) => {
 
 // utilitario para dormir
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-export const fetchGamesInfoCheapShark = async (gamesData: GameDealWithoutScore[]) => {
-    const gamesPrices = [];
-    const chunkSize = 5;       // nº de requests paralelas por batch
-    const delayBetweenChunks = 0; // ms entre batches
-    const delayBetweenCalls = 0;   // ms entre llamadas dentro del batch (opcional)
-
-    for (let i = 0; i < gamesData.length; i += chunkSize) {
-        const chunk = gamesData.slice(i, i + chunkSize);
-
-        const results = [];
-        for (let j = 0; j < chunk.length; j++) {
-            const { gameID } = chunk[j];
-            try {
-                const res = await fetch(`https://www.cheapshark.com/api/1.0/games?id=${gameID}`, {
-                    next: {
-                        revalidate: 21600,
-                        tags: [`offers-for-gameID=${gameID}`, `historical-low-offers`]
-                    }
-                });
-                if (!res.ok) {
-                    console.warn(`No data for gameID ${gameID}, status: ${res.status}`);
-                } else {
-                    results.push(await res.json());
-                }
-            } catch (err) {
-                console.error(`Error fetching gameID ${gameID}:`, err);
-            }
-
-            // delay entre cada request en el mismo chunk
-            if (j < chunk.length - 1) {
-                await sleep(delayBetweenCalls);
-            }
-        }
-
-        gamesPrices.push(...results);
-
-        // delay entre chunks
-        if (i + chunkSize < gamesData.length) {
-            await sleep(delayBetweenChunks);
-        }
-    }
-
-    return gamesPrices;
-};

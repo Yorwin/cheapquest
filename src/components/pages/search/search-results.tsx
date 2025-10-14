@@ -3,6 +3,7 @@
 import FranchiseCard from "../../general/franchise-games-card/franchise-card";
 import GameCardSkeleton from "@/components/general/franchise-games-card/gamecard-skeleton-loader";
 import ErrorMessage from "./search-error-message";
+import SearchIntroductionText from "./search-introduction-text";
 import styles from "@/styles/layout/search/search-results.module.scss";
 
 interface SearchResultsProps {
@@ -16,7 +17,7 @@ export default function SearchResults({ data, loading, error }: SearchResultsPro
     return (
         <section className="container-fluid">
             <div id="search-results-anchor" style={{ position: 'relative', top: '-100px' }}></div>
-            <h4 className={styles["results-title"]}>Resultados de búsqueda</h4>
+            {loading && data !== null ? <h4 className={styles["results-title"]}>Resultados de búsqueda</h4> : null}
             <div className="row d-flex justify-content-center">
                 {error ? (
                     <div className="col-12">
@@ -28,8 +29,8 @@ export default function SearchResults({ data, loading, error }: SearchResultsPro
                             <GameCardSkeleton />
                         </div>
                     ))
-                ) : (
-                    data?.results?.map((game: any) => (
+                ) : data ? (
+                    data.results?.map((game: any) => (
                         <div className="col-xl-4 col-md-6 col-sm-12" key={game.id}>
                             <FranchiseCard
                                 gameTitle={game.title}
@@ -43,7 +44,7 @@ export default function SearchResults({ data, loading, error }: SearchResultsPro
                             />
                         </div>
                     ))
-                )}
+                ) : <SearchIntroductionText />}
             </div>
         </section>
     );

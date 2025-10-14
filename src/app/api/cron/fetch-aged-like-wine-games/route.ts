@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/firebase-admin";
 import { GameDealWithoutScore } from "@/types/types";
+import { cachedRawgFetch, cachedCheapSharkFetch } from "@/lib/api-cache-server";
 
 export const GET = async () => {
     try {
@@ -56,21 +57,14 @@ export const GET = async () => {
             page = currentSavingsLevel === 0 ? 1 : page; // Reset page solo en el primer nivel
 
             while (agedLikeWineGames.length < targetCount && page <= maxPages) {
-                const response = await fetch(
-                    `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&dates=1900-01-01,${fiveYearsAgo}&ordering=-rating&page_size=60&platforms=1&metacritic=80,100&page=${page}`,
-                    {
-                        next: {
-                            revalidate: 3600,
-                            tags: ['aged-like-wine-games', 'aged-like-wine-search']
-                        }
-                    }
-                );
-
-                if (!response.ok) {
-                    throw new Error(`Error when trying to look for the old games on page ${page}`);
-                }
-
-                const data = await response.json();
+                const data = await cachedRawgFetch('/games', {
+                    dates: `1900-01-01,${fiveYearsAgo}`,
+                    ordering: '-rating',
+                    page_size: 60,
+                    platforms: 1,
+                    metacritic: '80,100',
+                    page
+                });
                 const result = data.results;
 
                 if (!result || result.length === 0) {
@@ -89,7 +83,10 @@ export const GET = async () => {
 
                     if (!gameAlreadySearched) {
                         try {
-                            const lookForEachGameOffer = await searchOffers(result[i].name);
+                            const lookForEachGameOffer = await cachedCheapSharkFetch('/deals', {
+                                title: result[i].name,
+                                exact: 1
+                            });
 
                             // Guardar TODAS las ofertas encontradas para uso futuro
                             if (lookForEachGameOffer && lookForEachGameOffer.length > 0) {

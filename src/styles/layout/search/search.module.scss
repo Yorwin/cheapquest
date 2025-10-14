@@ -12,6 +12,7 @@ $underline-styles: 2px $main-font-color solid underline;
 
 .search-page-container {
     padding: 12rem 6rem 4rem 6rem;
+    min-height: 80vh;
     background-color: #416397;
 }
 
@@ -435,7 +436,7 @@ $underline-styles: 2px $main-font-color solid underline;
 
 @media screen and (max-width: 568px) {
     .search-page-container {
-        padding: 10rem .5rem 4rem .5rem;
+        padding: 10rem .5em 4rem .5rem;
     }
 
     .button-search {

@@ -7,10 +7,13 @@ export function useSearchGameInfo() {
     const searchParams = useSearchParams();
 
     const [data, setData] = useState<any>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        if (searchParams.size === 0) setLoading(false);
+        if (searchParams.size === 0) return;
+
         const fetchData = async () => {
             try {
                 setLoading(true);
