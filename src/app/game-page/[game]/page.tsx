@@ -14,7 +14,7 @@ import FranchiseGames from "@/components/pages/game-page/franchise-games";
 import RelatedOffers from "@/components/pages/game-page/related-offers/related-offers";
 import { notFound } from "next/navigation";
 
-import { getGameInfoGamePage } from "@/utils/getGamesInfo";
+import { getGameId, getGameData, getGameOffers } from "@/utils/getGamesInfo";
 import { slugToGameName } from "@/functions/functions";
 import { Metadata } from "next";
 
@@ -40,25 +40,21 @@ export async function generateMetadata({ params }: ParamsGame): Promise<Metadata
     const gameSlug = game;
     const gameName = slugToGameName(gameSlug);
 
-    let getGameInfo;
-    try {
-        getGameInfo = await getGameInfoGamePage(gameName);
-    } catch (error) {
+    const gameId = await getGameId(gameName);
+
+    if (!gameId) {
         return {
             title: 'Juego no encontrado',
             description: 'El juego solicitado no existe',
         };
     }
 
-    if (!getGameInfo.id) {
-        return {
-            title: 'Juego no encontrado',
-            description: 'El juego solicitado no existe',
-        };
-    }
+    // For metadata, we need some game data, so fetch minimally
+    const gameData = await getGameData(gameId);
+    const gameOffers = await getGameOffers(gameName);
 
-    const title = getGameInfo.title;
-    const bestOffer = getGameInfo.bestOffer;
+    const title = gameData?.title || gameOffers?.bestOffer?.gameTitle || 'Juego';
+    const bestOffer = gameOffers?.bestOffer;
 
     return {
         title: `${title} - Mejor oferta: ${bestOffer ? bestOffer.discount : "0%"} de descuento`,
@@ -88,16 +84,14 @@ const GamePage = async ({ params }: ParamsGame) => {
     const gameSlug = game;
     const gameName = slugToGameName(gameSlug);
 
-    let gameInfo;
-    try {
-        gameInfo = await getGameInfoGamePage(gameName);
-    } catch (error) {
+    const gameId = await getGameId(gameName);
+
+    if (!gameId) {
         return <FallbackPage gameName={gameName} />;
     }
 
-    if (!gameInfo.id) {
-        return <FallbackPage gameName={gameName} />;
-    }
+    // Fetch gameData once here to avoid multiple calls
+    const gameData = await getGameData(gameId);
 
     return (
         <article className="main-article-gamepage">
@@ -116,23 +110,23 @@ const GamePage = async ({ params }: ParamsGame) => {
 
                             {/* About the Game */}
                             <Suspense fallback={<SkeletonLoader width="90%" height="150px" />}>
-                                <AboutTheGame gameName={gameName} />
+                                <AboutTheGame gameData={gameData} />
                             </Suspense>
 
                             {/* Tags */}
                             <Suspense fallback={<GameTagsSkeleton />}>
-                                <GameTags gameName={gameName} />
+                                <GameTags gameData={gameData} />
                             </Suspense>
                         </div>
                         <div className="col-md-5 col-sm-12 p-0">
                             {/* Metacritic */}
                             <Suspense fallback={<SkeletonLoader width="100%" height="70px" />}>
-                                <MetaCritic gameName={gameName} />
+                                <MetaCritic gameData={gameData} />
                             </Suspense>
 
                             {/* gameInfo */}
                             <Suspense fallback={<SkeletonLoader width="100%" height="300px" />}>
-                                <GameInfo gameName={gameName} />
+                                <GameInfo gameData={gameData} />
                             </Suspense>
                         </div>
                     </div>
@@ -145,12 +139,12 @@ const GamePage = async ({ params }: ParamsGame) => {
 
                 {/* Franchise Offers */}
                 <Suspense fallback={<SkeletonLoader width="100%" height="200px" />}>
-                    <FranchiseGames gameName={gameName} />
+                    <FranchiseGames gameId={gameId} />
                 </Suspense>
 
                 {/* Related Offers */}
                 <Suspense fallback={<SkeletonLoader width="100%" height="400px" />}>
-                    <RelatedOffers gameName={gameName} />
+                    <RelatedOffers gameId={gameId} />
                 </Suspense>
             </div>
         </article>

@@ -4,15 +4,8 @@ import Tags from "../../../general/game-tags/tags-controller";
 import { getGameId, getGameData } from "@/utils/getGamesInfo";
 import SafeRender from "@/components/general/safe-render";
 
-const GameTags = async ({ gameName }: { gameName: string }) => {
-
-    const id = await getGameId(gameName);
-    let tags;
-
-    if (id) {
-        tags = await getGameData(id);
-        tags = tags?.about_the_game.tags;
-    }
+const GameTags = async ({ gameData }: { gameData: any }) => {
+    const tags = gameData?.about_the_game.tags;
 
     return (
         <SafeRender when={tags}>

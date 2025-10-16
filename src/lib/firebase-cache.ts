@@ -1,7 +1,7 @@
 import 'server-only'
 
 import { db } from './firebase-admin'
-import { GameDealWithoutScore, gameData } from '@/types/types'
+import { GameDealWithoutScore } from '@/types/types'
 
 // Interfaces for cached data
 export interface CachedGame {

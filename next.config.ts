@@ -1,21 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  experimental: {
-    serverComponentsExternalPackages: ['firebase-admin'],
-  },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        net: false,
-        tls: false,
-        fs: false,
-      };
-    }
-    return config;
-  },
   images: {
     remotePatterns: [
       {

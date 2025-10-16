@@ -2,15 +2,8 @@ import React from "react";
 import styles from "@/styles/components/reviews.module.scss"
 import { getGameId, getGameData } from "@/utils/getGamesInfo";
 
-const MetaCritic = async ({ gameName }: { gameName: string }) => {
-
-    const id = await getGameId(gameName);
-    let metacritic;
-
-    if (id) {
-        metacritic = await getGameData(id);
-        metacritic = metacritic?.meta_critic;
-    }
+const MetaCritic = async ({ gameData }: { gameData: any }) => {
+    const metacritic = gameData?.meta_critic;
 
     const statusOfCritic = ["good-critic", "bad-critic", "regular-critic"];
     let critic;

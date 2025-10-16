@@ -6,9 +6,9 @@ import SafeRender from "@/components/general/safe-render";
 
 /* Example Values */
 
-const RelatedOffers = async ({ gameName }: { gameName: string }) => {
+const RelatedOffers = async ({ gameId }: { gameId: string }) => {
 
-    const id = await getGameId(gameName);
+    const id = gameId;
     let mainGenre;
     let offersData;
 

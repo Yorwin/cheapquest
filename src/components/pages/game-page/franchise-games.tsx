@@ -5,9 +5,9 @@ import SafeRender from "@/components/general/safe-render";
 import FranchiseController from "@/components/general/franchise-games-card/franchise-controller";
 import { Franchise } from "@/types/types"
 
-const FranchiseGames = async ({ gameName }: { gameName: string }) => {
+const FranchiseGames = async ({ gameId }: { gameId: string }) => {
 
-    const id = await getGameId(gameName);
+    const id = gameId;
     let title;
     let franchiseData: Franchise[] = [];
 
