@@ -1,5 +1,6 @@
 "use client";
 
+import React, { forwardRef } from "react";
 import FranchiseCard from "../../general/franchise-games-card/franchise-card";
 import GameCardSkeleton from "@/components/general/franchise-games-card/gamecard-skeleton-loader";
 import ErrorMessage from "./search-error-message";
@@ -12,12 +13,12 @@ interface SearchResultsProps {
     error: string | null;
 }
 
-export default function SearchResults({ data, loading, error }: SearchResultsProps) {
+const SearchResults = forwardRef<HTMLDivElement, SearchResultsProps>(({ data, loading, error }, ref) => {
 
     return (
         <section className="container-fluid">
-            <div id="search-results-anchor" style={{ position: 'relative', top: '-100px' }}></div>
-            {loading && data !== null ? <h4 className={styles["results-title"]}>Resultados de búsqueda</h4> : null}
+            <div ref={ref} style={{ position: 'relative', top: '-100px' }}></div>
+            {data && data.results && data.results.length > 0 ? <h4 className={styles["results-title"]}>Resultados de búsqueda</h4> : null}
             <div className="row d-flex justify-content-center">
                 {error ? (
                     <div className="col-12">
@@ -48,5 +49,9 @@ export default function SearchResults({ data, loading, error }: SearchResultsPro
             </div>
         </section>
     );
-}
+});
+
+SearchResults.displayName = 'SearchResults';
+
+export default SearchResults;
 

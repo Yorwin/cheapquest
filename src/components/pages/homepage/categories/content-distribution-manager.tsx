@@ -70,8 +70,8 @@ const categoriesItems: Categories[] = [
         titulo: "RPG",
         className: "rpg",
         character: characterRPG,
-        enlace: "/search?genres=rpg",
-        slug: "rpg"
+        enlace: "/search?genres=role-playing-games-rpg",
+        slug: "role-playing-games-rpg"
     },
     {
         titulo: "Casual",

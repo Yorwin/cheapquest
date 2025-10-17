@@ -35,6 +35,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cdn.fanatical.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'store.ubisoft.com',
+      },
     ],
   },
 };

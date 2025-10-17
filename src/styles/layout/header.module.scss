@@ -76,9 +76,19 @@
     }
 }
 
-.headers-list li a {
+.headers-list li a,
+.link-button {
     color: map.get($colores, font-dark-background-color);
     text-decoration: none;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
+    padding: 0;
 
     &:hover {
         text-decoration: $default-text-decoration;
@@ -153,8 +163,9 @@
         font-size: .8rem;
         color: map.get($colores, font-light-background-color);
 
-        a {
-            color: map.get($colores, font-light-background-color) !important;
+        a,
+        .link-button {
+            color: map.get($colores, font-light-background-color);
         }
     }
 }
@@ -203,8 +214,17 @@
 
 /* ✅ Media queries optimizadas */
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1400px) {
+    .options .item .link-button {
+        color: map.get($colores, font-light-background-color);
 
+        &:hover {
+            text-decoration: underline 2px #000 solid;
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
     .options {
         .item {
             font-size: 0.8rem

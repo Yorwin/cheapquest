@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Genre } from "@/types/types";
 import SearchResults from "@/components/pages/search/search-results";
 import { useSearchGameInfo } from "@/functions/hooks/useSearchParams";
+import useWindowWidth from "@/functions/hooks/useWindowWidth";
 import Head from "next/head";
 
 // -------------------- COMPONENTE PRINCIPAL --------------------
@@ -15,6 +16,8 @@ const Search = () => {
     const searchParams = useSearchParams();
     const { data, loading, error } = useSearchGameInfo();
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const resultsAnchorRef = useRef<HTMLDivElement>(null);
+    const width = useWindowWidth();
 
     const [gottenGenres, setGottenGenres] = useState<Genre[] | null>(null);
     const [loadingGenres, setLoadingGenres] = useState(true);
@@ -93,10 +96,11 @@ const Search = () => {
     // Handle loading completion: scroll to results and blur input
     useEffect(() => {
         if (wasLoading && !loading && data) {
-            // Scroll to search results
-            const resultsAnchor = document.getElementById('search-results-anchor');
-            if (resultsAnchor) {
-                resultsAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Scroll to search results only on mobile (< 768px)
+            if (width < 768) {
+                if (resultsAnchorRef.current) {
+                    resultsAnchorRef.current.scrollIntoView({ behavior: 'smooth' });
+                }
             }
 
             // Blur the search input
@@ -105,7 +109,7 @@ const Search = () => {
             }
         }
         setWasLoading(loading);
-    }, [loading, data, wasLoading]);
+    }, [loading, data, wasLoading, width]);
 
     return (
         <>
@@ -265,7 +269,7 @@ const Search = () => {
                         </div>
                     </form>
                 </section>
-                <SearchResults data={data} loading={loading} error={error} />
+                <SearchResults ref={resultsAnchorRef} data={data} loading={loading} error={error} />
             </article>
         </>
     );
