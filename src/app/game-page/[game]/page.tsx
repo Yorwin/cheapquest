@@ -56,9 +56,14 @@ export async function generateMetadata({ params }: ParamsGame): Promise<Metadata
     const title = gameData?.title || gameOffers?.bestOffer?.gameTitle || 'Juego';
     const bestOffer = gameOffers?.bestOffer;
 
+    const canonicalUrl = `https://cheapquest.app/game-page/${gameSlug}`;
+
     return {
         title: `${title} - Mejor oferta: ${bestOffer ? bestOffer.discount : "0%"} de descuento`,
         description: `Compra ${title} por ${bestOffer ? bestOffer.normalPrice : "Desconocido"} en ${bestOffer ? bestOffer.store : "Desconocido"}. ¡Ahorra ${bestOffer ? bestOffer.discount : "0%"}!`,
+        alternates: {
+            canonical: canonicalUrl,
+        },
         openGraph: {
             title: `${title} - Mejor oferta: ${bestOffer ? bestOffer.discount : "0%"} de descuento`,
             description: `Compra ${title} por ${bestOffer ? bestOffer.normalPrice : "Desconocido"} en ${bestOffer ? bestOffer.store : "Desconocido"}. ¡Ahorra ${bestOffer ? bestOffer.discount : "0%"}!`,
