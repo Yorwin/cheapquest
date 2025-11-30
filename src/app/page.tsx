@@ -9,6 +9,11 @@ import ListFormatOffers from "@/components/pages/homepage/list-format-offer/list
 import Categories from "@/components/pages/homepage/categories/categories";
 import type { Metadata } from "next";
 
+// Enable ISR (Incremental Static Regeneration)
+// This will regenerate the page every hour, serving cached content to bots
+// and reducing the load on CheapShark API
+export const revalidate = 3600; // Revalidate every 1 hour (3600 seconds)
+
 export const metadata: Metadata = {
   title: "CheapQuest - Ofertas y Precios de Videojuegos en Tiendas Oficiales",
   description: "Descubre las mejores ofertas y precios de videojuegos en tiendas oficiales. Compara descuentos, sigue rebajas y consigue tus juegos favoritos al mejor precio.",

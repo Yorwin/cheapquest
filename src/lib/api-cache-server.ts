@@ -119,6 +119,7 @@ export async function cachedCheapSharkFetch(endpoint: string, params: Record<str
   if (endpoint === '/deals' && params.title) {
     const cachedDeals = await checkDealSearchCache(params.title)
     if (cachedDeals) {
+      console.log(`✅ Cache hit for deals: ${params.title}`)
       return cachedDeals
     }
   }
@@ -140,41 +141,71 @@ export async function cachedCheapSharkFetch(endpoint: string, params: Record<str
     }
   })
 
+  try {
+    const response = await fetch(url, {
+      next: { revalidate: 1800 }, // Fallback revalidation
+      headers: {
+        'User-Agent': 'CheapQuest/1.0 (https://cheapquest.app)', // Identify as legitimate app
+      }
+    })
 
-  const response = await fetch(url, {
-    next: { revalidate: 1800 } // Fallback revalidation
-  })
-
-  if (!response.ok) {
-    if (response.status === 429) {
-      throw new Error('Rate limited by CheapShark API')
+    if (!response.ok) {
+      // Handle rate limiting and forbidden errors with stale cache fallback
+      if (response.status === 403 || response.status === 429) {
+        console.warn(`⚠️ CheapShark blocked request (${response.status}), attempting stale cache fallback`)
+        
+        // Try to use stale cache as fallback
+        if (endpoint === '/deals' && params.title) {
+          const staleCache = await checkDealSearchCache(params.title, true) // Ignore freshness
+          if (staleCache) {
+            console.log(`📦 Using stale cache for: ${params.title}`)
+            return staleCache
+          }
+        }
+        
+        throw new Error(`CheapShark API blocked: ${response.status} - No cache available`)
+      }
+      
+      throw new Error(`CheapShark API Error: ${response.status} - ${response.statusText}`)
     }
-    throw new Error(`CheapShark API Error: ${response.status} - ${response.statusText}`)
-  }
 
-  const data = await response.json()
+    const data = await response.json()
 
-  // Cache individual deals
-  if (endpoint === '/deals' && params.id && data.gameID) {
-    await saveOfferToCache(params.id, data)
-  }
-
-  // Cache deal arrays (for search results)
-  if (endpoint === '/deals' && Array.isArray(data)) {
     // Cache individual deals
-    for (const deal of data) {
-      if (deal.dealID) {
-        await saveOfferToCache(deal.dealID, deal)
+    if (endpoint === '/deals' && params.id && data.gameID) {
+      await saveOfferToCache(params.id, data)
+    }
+
+    // Cache deal arrays (for search results)
+    if (endpoint === '/deals' && Array.isArray(data)) {
+      // Cache individual deals
+      for (const deal of data) {
+        if (deal.dealID) {
+          await saveOfferToCache(deal.dealID, deal)
+        }
+      }
+
+      // Cache the search results if it was a title search
+      if (params.title) {
+        await saveDealSearchToCache(params.title, data)
       }
     }
 
-    // Cache the search results if it was a title search
-    if (params.title) {
-      await saveDealSearchToCache(params.title, data)
+    return data
+  } catch (error) {
+    // Final fallback: try stale cache on any error
+    console.error('❌ CheapShark fetch failed:', error)
+    
+    if (endpoint === '/deals' && params.title) {
+      const staleCache = await checkDealSearchCache(params.title, true)
+      if (staleCache) {
+        console.log(`📦 Emergency fallback: using stale cache for ${params.title}`)
+        return staleCache
+      }
     }
+    
+    throw error
   }
-
-  return data
 }
 
 // Specialized function for game info with CheapShark data - SERVER ONLY

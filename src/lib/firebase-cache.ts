@@ -255,7 +255,7 @@ export async function saveGameTrailerToCache(rawgId: string, trailer: any): Prom
 }
 
 // Check if we have cached deal search results for a game title
-export async function checkDealSearchCache(gameTitle: string): Promise<GameDealWithoutScore[] | null> {
+export async function checkDealSearchCache(gameTitle: string, ignoreFreshness: boolean = false): Promise<GameDealWithoutScore[] | null> {
   try {
     const docRef = db.collection('deal_searches').doc(gameTitle.toLowerCase().trim())
     const docSnap = await docRef.get()
@@ -265,8 +265,8 @@ export async function checkDealSearchCache(gameTitle: string): Promise<GameDealW
       if (data) {
         const lastUpdated = data.lastUpdated.toDate()
 
-        // Deal search results are valid for 1 day
-        if (isDataFresh(lastUpdated, 1)) {
+        // Deal search results are valid for 1 day (or ignore freshness if requested)
+        if (ignoreFreshness || isDataFresh(lastUpdated, 1)) {
           return data.deals
         }
       }
