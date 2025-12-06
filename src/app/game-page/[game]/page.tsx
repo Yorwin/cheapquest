@@ -17,6 +17,7 @@ import { notFound } from "next/navigation";
 import { getGameId, getGameData, getGameOffers } from "@/utils/getGamesInfo";
 import { slugToGameName } from "@/functions/functions";
 import { Metadata } from "next";
+import { checkCompletedGameData } from "@/lib/firebase-cache";
 
 /* Loading Components */
 import SkeletonLoader from "@/components/pages/game-page/skeletonloader";
@@ -53,6 +54,11 @@ export async function generateMetadata({ params }: ParamsGame): Promise<Metadata
     const gameData = await getGameData(gameId);
     const gameOffers = await getGameOffers(gameName);
 
+    // Check if game exists in completed_game_data collection by RAWG ID for indexation
+    const isGameCompleted = await checkCompletedGameData(gameId);
+    console.log(`Gamepage ${gameId}`);
+    console.log(isGameCompleted);
+
     const title = gameData?.title || gameOffers?.bestOffer?.gameTitle || 'Juego';
     const bestOffer = gameOffers?.bestOffer;
 
@@ -61,6 +67,17 @@ export async function generateMetadata({ params }: ParamsGame): Promise<Metadata
     return {
         title: `${title} - Mejor oferta: ${bestOffer ? bestOffer.discount : "0%"} de descuento`,
         description: `Compra ${title} por ${bestOffer ? bestOffer.normalPrice : "Desconocido"} en ${bestOffer ? bestOffer.store : "Desconocido"}. ¡Ahorra ${bestOffer ? bestOffer.discount : "0%"}!`,
+        keywords: [title, "ofertas", "juegos", "descuentos", "comprar", "mejor precio"],
+        robots: {
+            index: isGameCompleted,
+            follow: isGameCompleted,
+            googleBot: {
+                index: isGameCompleted,
+                follow: isGameCompleted,
+                'max-image-preview': 'large',
+                'max-snippet': -1,
+            }
+        },
         alternates: {
             canonical: canonicalUrl,
         },

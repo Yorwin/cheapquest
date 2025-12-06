@@ -12,6 +12,7 @@ import type { Metadata } from "next";
 // Enable ISR (Incremental Static Regeneration)
 // This will regenerate the page every hour, serving cached content to bots
 // and reducing the load on CheapShark API
+
 export const revalidate = 3600; // Revalidate every 1 hour (3600 seconds)
 
 export const metadata: Metadata = {

@@ -119,7 +119,6 @@ export async function cachedCheapSharkFetch(endpoint: string, params: Record<str
   if (endpoint === '/deals' && params.title) {
     const cachedDeals = await checkDealSearchCache(params.title)
     if (cachedDeals) {
-      console.log(`✅ Cache hit for deals: ${params.title}`)
       return cachedDeals
     }
   }
@@ -153,7 +152,7 @@ export async function cachedCheapSharkFetch(endpoint: string, params: Record<str
       // Handle rate limiting and forbidden errors with stale cache fallback
       if (response.status === 403 || response.status === 429) {
         console.warn(`⚠️ CheapShark blocked request (${response.status}), attempting stale cache fallback`)
-        
+
         // Try to use stale cache as fallback
         if (endpoint === '/deals' && params.title) {
           const staleCache = await checkDealSearchCache(params.title, true) // Ignore freshness
@@ -162,10 +161,10 @@ export async function cachedCheapSharkFetch(endpoint: string, params: Record<str
             return staleCache
           }
         }
-        
+
         throw new Error(`CheapShark API blocked: ${response.status} - No cache available`)
       }
-      
+
       throw new Error(`CheapShark API Error: ${response.status} - ${response.statusText}`)
     }
 
@@ -195,7 +194,7 @@ export async function cachedCheapSharkFetch(endpoint: string, params: Record<str
   } catch (error) {
     // Final fallback: try stale cache on any error
     console.error('❌ CheapShark fetch failed:', error)
-    
+
     if (endpoint === '/deals' && params.title) {
       const staleCache = await checkDealSearchCache(params.title, true)
       if (staleCache) {
@@ -203,7 +202,7 @@ export async function cachedCheapSharkFetch(endpoint: string, params: Record<str
         return staleCache
       }
     }
-    
+
     throw error
   }
 }
