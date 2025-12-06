@@ -56,8 +56,6 @@ export async function generateMetadata({ params }: ParamsGame): Promise<Metadata
 
     // Check if game exists in completed_game_data collection by RAWG ID for indexation
     const isGameCompleted = await checkCompletedGameData(gameId);
-    console.log(`Gamepage ${gameId}`);
-    console.log(isGameCompleted);
 
     const title = gameData?.title || gameOffers?.bestOffer?.gameTitle || 'Juego';
     const bestOffer = gameOffers?.bestOffer;
