@@ -5,8 +5,6 @@ import { storeLogos } from "@/resources/stores_icons"
 import { getMostPopularOffers } from "@/utils/getOffers";
 import searchForStore from "@/utils/seachForStore";
 import { getGameInfo } from "@/utils/getGamesInfo";
-import currencyRateCalculator from "@/utils/convertCurrency";
-import { Currency } from "@/types/types";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
 import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
 import GameStandardWrapper from "@/components/general/game-card/game-card-wrapper";

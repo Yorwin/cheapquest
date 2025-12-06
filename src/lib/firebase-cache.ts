@@ -331,3 +331,18 @@ export async function saveGenreGamesToCache(genreId: number, games: any[]): Prom
     console.error('Error saving genre games to cache:', error)
   }
 }
+
+// Check if game exists in completed_game_data collection by searching the id field directly
+export async function checkCompletedGameData(rawgId: string): Promise<boolean> {
+  try {
+    const querySnapshot = await db.collection('completed_game_data')
+      .where('id', '==', Number(rawgId))
+      .limit(1)
+      .get()
+
+    return !querySnapshot.empty;
+  } catch (error) {
+    console.error('Error checking completed game data:', error)
+    return false
+  }
+}
