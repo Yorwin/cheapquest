@@ -12,8 +12,9 @@ import GameTags from "@/components/pages/game-page/game-tags/game-tags";
 import OfficialStoreList from "@/components/pages/game-page/official-store/official-store-list";
 import FranchiseGames from "@/components/pages/game-page/franchise-games";
 import RelatedOffers from "@/components/pages/game-page/related-offers/related-offers";
-import { notFound } from "next/navigation";
 
+/* Utils */
+import { notFound } from "next/navigation";
 import { getGameId, getGameData, getGameOffers } from "@/utils/getGamesInfo";
 import { slugToGameName } from "@/functions/functions";
 import { Metadata } from "next";
@@ -112,6 +113,7 @@ const GamePage = async ({ params }: ParamsGame) => {
 
     // Fetch gameData once here to avoid multiple calls
     const gameData = await getGameData(gameId);
+    console.log(gameData);
 
     return (
         <article className="main-article-gamepage">
