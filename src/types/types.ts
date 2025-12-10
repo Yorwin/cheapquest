@@ -389,7 +389,18 @@ export interface gameData {
     meta_critic: number,
     description: string,
     about_the_game: aboutTheGame;
+    media_reviews: mediaReview[] | null;
 };
+
+export interface mediaReview {
+    content: string,
+    id: string,
+    link: string,
+    media: string,
+    score: string | null,
+    storeId: number,
+    logo_img: string | null,
+}
 
 export type getGameDataProps = (gameId: string) => Promise<gameData | null>;
 

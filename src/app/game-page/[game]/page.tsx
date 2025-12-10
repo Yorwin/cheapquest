@@ -12,6 +12,7 @@ import GameTags from "@/components/pages/game-page/game-tags/game-tags";
 import OfficialStoreList from "@/components/pages/game-page/official-store/official-store-list";
 import FranchiseGames from "@/components/pages/game-page/franchise-games";
 import RelatedOffers from "@/components/pages/game-page/related-offers/related-offers";
+import MediaReviews from "@/components/pages/game-page/media-reviews/media-reviews";
 
 /* Utils */
 import { notFound } from "next/navigation";
@@ -113,7 +114,6 @@ const GamePage = async ({ params }: ParamsGame) => {
 
     // Fetch gameData once here to avoid multiple calls
     const gameData = await getGameData(gameId);
-    console.log(gameData);
 
     return (
         <article className="main-article-gamepage">
@@ -153,6 +153,9 @@ const GamePage = async ({ params }: ParamsGame) => {
                         </div>
                     </div>
                 </div>
+
+                {/* Media Reviews */}
+                <MediaReviews reviews={gameData?.media_reviews} />
 
                 {/* Related offers */}
                 <Suspense fallback={<OfficialStoreListSkeleton />}>

@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "@/styles/layout/gamepage/official-store-list.module.scss"
 import { getGameOffers } from "@/utils/getGamesInfo";
 import StoreCardController from "@/components/general/store-card/store-card-controller";
