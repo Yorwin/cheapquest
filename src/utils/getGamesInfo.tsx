@@ -3,13 +3,13 @@ import "server-only";
 import { cache } from "react";
 import { getFiveYearsDateRange, calculatePopularityScore, slugToGameName, formatDateES, createGameSlug } from "@/functions/functions";
 import { searchOffers } from "./getOffers";
-import { bestOfferType, GameDealWithoutScore, GameDeal, dealStoreData, StoreLogo, publishersAndDevelopersType, tag, developerAndPublisherType, Genre, getGameDataProps, gameData, GameStandardContainerType, VerticalCardContainerType, VerticalCardWrapperType, comparisonOfferType } from "@/types/types";
+import { bestOfferType, GameDealWithoutScore, GameDeal, dealStoreData, StoreLogo, publishersAndDevelopersType, tag, developerAndPublisherType, Genre, getGameDataProps, gameData, VerticalCardWrapperType, comparisonOfferType } from "@/types/types";
 import searchForStore from "./seachForStore";
 import { storeLogos, storeBanner } from "@/resources/stores_icons"
 import { translateAndStoreGameAction } from "@/actions/translationActions";
 import { inCaseOfError } from "@/components/general/error-loading-offers-fallback-container";
 import { cachedRawgFetch, cachedRawgGenreFetch, getCachedGameTrailer } from "@/lib/api-cache-server";
-import { checkGameCache, updateGameWithFranchiseData } from "@/lib/firebase-cache";
+import { checkGameCache, updateGameWithFranchiseData, CheckMediaReviews } from "@/lib/firebase-cache";
 
 const API_KEY = process.env.RAWG_API_KEY;
 
@@ -243,6 +243,7 @@ export const getGameTrailer = async (e: string) => {
 export const getGameData: getGameDataProps = cache(async (gameId: string) => {
     try {
         const selectedGame = await cachedRawgFetch(`/games/${gameId}`);
+        const mediaReviews = await CheckMediaReviews(gameId);
 
         if (!selectedGame) {
             return null;
@@ -285,9 +286,10 @@ export const getGameData: getGameDataProps = cache(async (gameId: string) => {
                 genres: result.data.genres,
                 developers: selectedGame.developers.map((e: publishersAndDevelopersType) => e.name),
                 tags: result.data.tags ? result.data.tags : selectedGame.tags.map((e: tag) => e.name),
-            }
+            },
+            media_reviews: mediaReviews,
         };
-
+        
         return filteredData;
     } catch (error) {
         console.error('Error fetching game data:', error);

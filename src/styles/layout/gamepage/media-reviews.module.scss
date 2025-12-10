@@ -1,0 +1,119 @@
+@use '../../_variables/mixins' as *;
+@use '../../_variables/variables' as *;
+@use 'sass:map';
+
+.media-reviews-container {
+    margin-bottom: 32px;
+}
+
+.reviews {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+
+.review {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+}
+
+.title {
+    @include mainTitleGamePage;
+    color: map.get($colores, font-dark-background-color);
+}
+
+.media {
+    font-family: $primary-font-style;
+    text-transform: uppercase;
+    font-size: clamp(.8rem, 2vw, 1.5rem);
+    color: map.get($colores, font-dark-background-color);
+    margin-bottom: 0rem;
+    text-decoration: underline 3px map.get($colores, font-dark-background-color) solid;
+}
+
+.content {
+    text-align: justify;
+    font-family: $seconday-font-style;
+    font-size: clamp(.8rem, .3rem + 1.4vw, 1.1rem);
+    color: map.get($colores, font-dark-background-color);
+    margin-bottom: 0rem;
+}
+
+.image-container {
+    position: relative;
+    width: 100px;
+    height: 30px;
+}
+
+.media-logo {
+    position: absolute;
+    object-fit: contain;
+    padding: 5px;
+}
+
+.link {
+    width: fit-content;
+    font-family: $seconday-font-style;
+    color: map.get($colores, font-dark-background-color);
+
+    &:hover {
+        color: map.get($colores, star-color);
+    }
+}
+
+/* Logos Styles */
+
+.image-container.vidaextra {
+    position: relative;
+    width: 30px;
+    height: 30px;
+}
+
+.image-container.anaitgames {
+    position: relative;
+    width: 85px;
+    height: 30px;
+}
+
+.image-container.vandal {
+    position: relative;
+    width: 100px;
+    height: 30px;
+}
+
+.image-container.eurogamer {
+    background-color: #000;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 576px) {
+
+    .review {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .header {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .content {
+        text-align: center;
+    }
+}

@@ -1,7 +1,7 @@
 import 'server-only'
 
 import { db } from './firebase-admin'
-import { GameDealWithoutScore } from '@/types/types'
+import { GameDealWithoutScore, mediaReview } from '@/types/types'
 
 // Interfaces for cached data
 export interface CachedGame {
@@ -344,5 +344,64 @@ export async function checkCompletedGameData(rawgId: string): Promise<boolean> {
   } catch (error) {
     console.error('Error checking completed game data:', error)
     return false
+  }
+}
+
+// Check Reviews for Completed Games.
+
+export async function CheckMediaReviews(rawgId: string): Promise<mediaReview[]> {
+  try {
+    const querySnapshot = await db.collection('completed_game_data')
+      .where('id', '==', Number(rawgId))
+      .limit(1)
+      .get()
+
+    if (!querySnapshot.empty) {
+      const docRef = querySnapshot.docs[0].ref
+      const mediaReviewsSnapshot = await docRef.collection('media_reviews').get()
+
+      const mediaReviews = mediaReviewsSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+
+      const preparedData = await Promise.all(mediaReviews.map(async (e: any) => {
+        try {
+          const reviewerDocRef = db.collection('media_reviewer_data').doc(e.storeId.toString());
+          const reviewerDoc = await reviewerDocRef.get();
+          const logoImg = reviewerDoc && reviewerDoc.data()?.logo_img;
+
+          return {
+            content: e.content,
+            id: e.id,
+            link: e.link,
+            media: e.media,
+            score: e.score,
+            storeId: e.storeId,
+            logo_img: logoImg
+          }
+        } catch (error) {
+          console.error(`Error fetching logo for storeId ${e.storeId}:`, error)
+          return {
+            content: e.content,
+            id: e.id,
+            link: e.link,
+            media: e.media,
+            score: e.score,
+            storeId: e.storeId,
+            logo_img: null
+          }
+        }
+      }));
+
+      return preparedData;
+    } else {
+      console.log('No document found with the given rawgId')
+      return []
+    }
+
+  } catch (error) {
+    console.error(`Ha ocurrido un error al intentar obtener la review ${error}`)
+    return []
   }
 }
