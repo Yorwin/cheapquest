@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
-import { createGameSlug } from '@/functions/functions';
+// import { createGameSlug } from '@/functions/functions';
 
+/* 
 function getSixYearsDateRange() {
     const today = new Date();
 
@@ -17,6 +18,7 @@ function getSixYearsDateRange() {
 
     return `${rangeStart},${rangeEnd}`;
 }
+*/
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://cheapquest.app';
@@ -55,6 +57,287 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
     ];
 
+    //Game Urls
+    const gameUrls: MetadataRoute.Sitemap = [
+        {
+            url: 'https://cheapquest.app/game-page/red-dead-redemption-2',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/bioshock-infinite',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/the-witcher-3-wild-hunt',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/payday-2',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/payday-3',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/payday-the-heist',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/suicide-squad-kill-the-justice-league',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/shadow-tactics-blades-of-the-shogun',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/mortal-kombat-11',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/bioshock-2',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/assassins-creed-ii',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/watch-dogs-legion',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/batman-arkham-city-game-of-the-year-edition',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/bioshock-the-collection',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/the-witcher-3-wild-hunt-blood-and-wine',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/factorio',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/left-4-dead-2',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/elden-ring',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/portal-2',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/the-last-of-us-part-i',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/the-elder-scrolls-v-skyrim',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/disco-elysium',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/resident-evil-4',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/persona-5-royal',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/hades',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/metal-gear-solid-v-the-phantom-pain',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/monster-hunter-world',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/doom-eternal',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/crusader-kings-iii',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/total-war-warhammer-iii',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/diablo-ii-resurrected',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/forza-horizon-5',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/age-of-empires-ii-definitive-edition',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/undertale',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/gravity-circuit',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/empyreal',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/among-us',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/overcooked',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/goat-simulator',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/alan-wake',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/dishonored',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/detroit-become-human',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/little-nightmares',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/life-is-strange',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/limbo',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: 'https://cheapquest.app/game-page/cities-skylines',
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+    ];
+
+    /* 
     // Fetch dynamic game URLs (popular games from the last 5 years)
     const API_KEY = process.env.RAWG_API_KEY;
     const dynamicUrls: MetadataRoute.Sitemap = [];
@@ -113,7 +396,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     const totalGamesInSitemap = dynamicUrls.length;
-    console.log(`Total games in sitemap: ${totalGamesInSitemap} (including ${staticUrls.length} static URLs)`);
+    console.log(`Total games in sitemap: ${totalGamesInSitemap} (including ${staticUrls.length} static URLs)`); */
 
-    return [...staticUrls, ...dynamicUrls];
+    return [...staticUrls, ...gameUrls];
 }
