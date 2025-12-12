@@ -6,6 +6,12 @@
     padding: 3rem $game-page-padding-x-axis;
 }
 
+.title-info-section {
+    padding-left: 0rem;
+    @include resume-game-title-two-lines;
+    @include mainTitleGamePage;
+}
+
 .cards-container {
     @include flex-center-elements-XY;
     width: 100%;

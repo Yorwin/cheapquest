@@ -6,7 +6,7 @@ const MediaReviews = ({ reviews }: { reviews: mediaReview[] | null | undefined }
     if (reviews && reviews.length > 0) {
         return (
             <section className={styles["media-reviews-container"]}>
-                <h2 className={styles["title"]}>Análisis de medios</h2>
+                <h3 className={styles["title"]}>Análisis de medios</h3>
                 <div className={styles["reviews"]}>
                     {reviews.map((e: mediaReview, index) => <Review review={e} key={index} />)}
                 </div>

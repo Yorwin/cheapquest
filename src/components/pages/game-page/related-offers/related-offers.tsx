@@ -1,7 +1,6 @@
-import React from "react";
 import styles from "@/styles/layout/gamepage/related-offers.module.scss"
 import ContentDistributionManager from "./content-distribution-manager";
-import { getGameId, getSameGenre, getGameData } from "@/utils/getGamesInfo";
+import { getSameGenre, getGameData } from "@/utils/getGamesInfo";
 import SafeRender from "@/components/general/safe-render";
 
 /* Example Values */
@@ -24,7 +23,7 @@ const RelatedOffers = async ({ gameId }: { gameId: string }) => {
     return (
         <SafeRender when={mainGenre}>
             <div className="related-offers-container">
-                <h1 className={styles["title"]}>Quizás también te guste</h1>
+                <h3 className={styles["title"]}>Quizás también te guste</h3>
                 <ContentDistributionManager gameInfo={offersData} />
             </div>
         </SafeRender>

@@ -1,6 +1,4 @@
-import React from "react";
 import styles from "@/styles/components/game-info.module.scss"
-import { getGameId, getGameData } from "@/utils/getGamesInfo";
 import SafeRender from "./safe-render";
 
 const GameInfo = async ({ gameData }: { gameData: any }) => {
@@ -9,7 +7,7 @@ const GameInfo = async ({ gameData }: { gameData: any }) => {
     return (
         <SafeRender when={gameInfoData}>
             <div className={styles["game-info-container"]}>
-                <h2>Información del juego</h2>
+                <h3>Información del juego</h3>
                 <div className={styles["table-container"]}>
                     <table className={styles["table"]}>
                         <tbody>

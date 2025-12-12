@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "@/styles/components/offer-card.module.scss"
 import NoOffersFound from "@/resources/error-image/no-offer-found.svg";
 import Image from "next/image";
@@ -82,13 +82,18 @@ const OfferCard = ({ gameName }: { gameName: string }) => {
 
     return (
         <section className={styles["offer-card"]}>
-            <h3>{gameTitle || titleOffer}</h3>
+            <h1>
+                <span className={styles["title"]}> MEJOR OFERTA </span>
+                <div className={styles["title-spacing"]}></div>
+                <span className={styles["game-title"]}>{gameTitle || titleOffer}</span>
+            </h1>
             <div className={styles["offer-info-container"]}>
                 {storeImage && (
                     <div className={styles["offer-info"]}>
                         <Image
                             src={storeImage}
-                            alt={`Best offer for ${gameTitle || titleOffer} provided by ${storeName}`}
+                            alt={`Mejor oferta para ${gameTitle || titleOffer} dada por ${storeName}`}
+                            title={storeName}
                             sizes="20vw"
                             fill
                             className={styles["image"]}

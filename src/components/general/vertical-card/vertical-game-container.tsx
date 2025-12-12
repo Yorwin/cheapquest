@@ -33,7 +33,8 @@ const VerticalGameCard = ({ platform, oldPrice, discount, title, currentPrice, w
                         <Image
                             src={webOffer}
                             sizes="50vw"
-                            alt="Plataforma de juego"
+                            alt={`Logo de tienda`}
+                            title="Tienda"
                             fill
                             style={{ objectFit: 'contain' }}
                         />

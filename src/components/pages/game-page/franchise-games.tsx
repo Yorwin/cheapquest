@@ -1,6 +1,5 @@
-import React from "react";
 import styles from "@/styles/layout/gamepage/franchise.module.scss"
-import { getGameId, getGameData, getFranchiseGames } from "@/utils/getGamesInfo";
+import { getGameData, getFranchiseGames } from "@/utils/getGamesInfo";
 import SafeRender from "@/components/general/safe-render";
 import FranchiseController from "@/components/general/franchise-games-card/franchise-controller";
 import { Franchise } from "@/types/types"
@@ -20,7 +19,7 @@ const FranchiseGames = async ({ gameId }: { gameId: string }) => {
     return (
         <SafeRender when={franchiseData.length > 0 ? franchiseData.length : franchiseData}>
             <div className={styles["franchise-container"]}>
-                <h1 className={styles["title"]}>La Franquicia de {title}</h1>
+                <h3 className={styles["title"]}>La Franquicia de {title}</h3>
                 <div className={styles["franchise-cards-container"]}>
                     <FranchiseController franchiseData={franchiseData} />
                 </div>

@@ -14,7 +14,7 @@ $button-font-color: map.get($colores, secondary-color);
     width: 85%;
     margin-bottom: 2rem;
 
-    h2 {
+    h3 {
         @include mainTitleGamePage;
     }
 

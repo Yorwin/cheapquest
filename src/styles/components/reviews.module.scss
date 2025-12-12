@@ -13,10 +13,9 @@ $regular-critic: orange;
 $bad-critic: #FE392B;
 
 .metacritic-container {
-
     margin-bottom: 2rem;
 
-    h2 {
+    h3 {
         @include secondaryTitleGamePage;
     }
 }

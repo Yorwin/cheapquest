@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "@/styles/components/image-card.module.scss";
 import Image from "next/image";
 
@@ -78,7 +78,8 @@ const ImageCard = ({ gameName }: { gameName: string }) => {
         <section className={styles["image-card"]}>
             <Image
                 src={offerImage}
-                alt="Game Offer"
+                alt={`Oferta del juego - ${gameName}`}
+                title={`${gameName}`}
                 sizes="35vw"
                 fill
                 className={styles["image-item"]}

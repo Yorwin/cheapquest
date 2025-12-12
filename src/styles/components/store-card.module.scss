@@ -60,7 +60,7 @@ $main-font-color: map.get($colores, font-dark-background-color);
     flex-direction: column;
 }
 
-.offer-info-container h3 {
+.game-title {
     font-size: clamp(.8rem, .5rem + 1vw, 1.4rem);
     font-family: $primary-font-style;
     font-weight: 600;
@@ -70,10 +70,13 @@ $main-font-color: map.get($colores, font-dark-background-color);
 .offer-specs {
     display: flex;
     gap: .7rem;
-    white-space: nowrap;
+}
+
+.store-name {
     font-family: $seconday-font-style;
     font-size: clamp(.7rem, .4rem + 1vw, 1.2rem);
     color: $main-font-color;
+    white-space: nowrap;
 }
 
 .released-time {

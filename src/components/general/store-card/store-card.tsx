@@ -1,8 +1,7 @@
-import React from "react";
 import styles from "@/styles/components/store-card.module.scss";
 import Image from "next/image";
-import { comparisonOfferType } from "@/types/types";
 import Link from "next/link";
+import { comparisonOfferType } from "@/types/types";
 
 const StoreCard = ({ offersData }: { offersData: comparisonOfferType }) => {
     return (
@@ -13,6 +12,7 @@ const StoreCard = ({ offersData }: { offersData: comparisonOfferType }) => {
                         className={styles["image"]}
                         src={offersData.store.image}
                         alt={offersData.store.name ?? "Store"}
+                        title={offersData.store.name ?? "Store"}
                         sizes="35vw"
                     />
                 )}
@@ -21,10 +21,10 @@ const StoreCard = ({ offersData }: { offersData: comparisonOfferType }) => {
             <div className={styles["offer-data"]}>
                 {/* Offer Info */}
                 <div className={styles["offer-info-container"]}>
-                    <h3>{offersData.gameTitle}</h3>
+                    <span className={styles["game-title"]}>{offersData.gameTitle}</span>
                     {offersData.store?.name && (
                         <div className={styles["offer-specs"]}>
-                            <span>{offersData.store.name}</span>
+                            <h4 className={styles["store-name"]}>{offersData.store.name}</h4>
                         </div>
                     )}
                 </div>

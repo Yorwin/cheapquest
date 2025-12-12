@@ -1,13 +1,13 @@
 "use client"
 
-import React, { useState } from "react"
+import { useState } from "react"
 import StoreCard from "./store-card"
 import styles from "@/styles/components/store-card.module.scss"
 import { comparisonOfferType } from "@/types/types"
 
-const StoreCardController = ({ offersData }: { offersData: comparisonOfferType[] | undefined}) => {
+const StoreCardController = ({ offersData }: { offersData: comparisonOfferType[] | undefined }) => {
 
-    if(!offersData) {
+    if (!offersData) {
         return null;
     }
 

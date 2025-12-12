@@ -2,7 +2,7 @@
 @use '../../_variables/variables' as *;
 @use 'sass:map';
 
-.official-stores-container h2 {
+.title {
     @include mainTitleGamePage;
     white-space: nowrap;
 }
