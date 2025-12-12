@@ -76,6 +76,7 @@ const MainGameImage = ({
                     <Image
                         ref={imgRef}
                         src={Loading}
+                        title={`Imagen de presentación ${gameName}`}
                         alt={`${gameName} Header`}
                         sizes="50vw"
                         fill
@@ -100,6 +101,7 @@ const MainGameImage = ({
                     <Image
                         ref={imgRef}
                         src={imageSrc}
+                        title={`Imagen de presentación ${gameName}`}
                         alt={`${gameName} Header`}
                         sizes="50vw"
                         fill

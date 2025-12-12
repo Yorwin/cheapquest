@@ -41,6 +41,7 @@ const Header = () => {
                                 src={LogoImg}
                                 sizes="50vw"
                                 alt="Logo"
+                                title="Homepage"
                                 fill
                                 style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                         </div>

@@ -347,6 +347,27 @@ export async function checkCompletedGameData(rawgId: string): Promise<boolean> {
   }
 }
 
+// Get trailer from completed_game_data collection
+export async function getCompletedGameTrailer(rawgId: string): Promise<string | null> {
+  try {
+    const querySnapshot = await db.collection('completed_game_data')
+      .where('id', '==', Number(rawgId))
+      .limit(1)
+      .get()
+
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0]
+      const data = doc.data()
+      return data.trailer || null
+    }
+
+    return null
+  } catch (error) {
+    console.error('Error getting completed game trailer:', error)
+    return null
+  }
+}
+
 // Check Reviews for Completed Games.
 
 export async function CheckMediaReviews(rawgId: string): Promise<mediaReview[]> {

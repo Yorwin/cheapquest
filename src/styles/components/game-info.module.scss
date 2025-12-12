@@ -9,7 +9,7 @@ $main-font: var(--font-gontSerrat);
 $secondary-font: var(--font-timeless);
 
 .game-info-container {
-    h2 {
+    h3 {
         @include secondaryTitleGamePage;
     }
 }

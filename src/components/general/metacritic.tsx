@@ -1,6 +1,4 @@
-import React from "react";
 import styles from "@/styles/components/reviews.module.scss"
-import { getGameId, getGameData } from "@/utils/getGamesInfo";
 
 const MetaCritic = async ({ gameData }: { gameData: any }) => {
     const metacritic = gameData?.meta_critic;
@@ -20,7 +18,7 @@ const MetaCritic = async ({ gameData }: { gameData: any }) => {
 
         return (
             <div className={styles["metacritic-container"]}>
-                <h2>Reviews</h2>
+                <h3>Reviews</h3>
                 <div className={styles["rating"]}>
                     <span className={`${styles["points"]} ${styles[critic]}`}>{metacritic}</span>
                     <div className={styles["text-container"]}>

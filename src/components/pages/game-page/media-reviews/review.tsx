@@ -13,11 +13,12 @@ const Review = ({ review }: { review: mediaReview }) => {
                             className={styles["media-logo"]}
                             src={review.logo_img}
                             alt={`Análisis del juego por ${review.media}`}
+                            title={review.media}
                             fill
                         />
                     </div>
                 ) : null}
-                <h3 className={styles["media"]}>{review.media}</h3>
+                <h4 className={styles["media"]}>{review.media}</h4>
             </div>
             <p className={styles["content"]}>
                 {review.content}

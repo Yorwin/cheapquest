@@ -13,10 +13,11 @@ interface GameTrailer {
 }
 
 interface VideoPlayerProps {
+    gameName: string,
     trailer: GameTrailer;
 }
 
-const videoPlayer = ({ trailer }: VideoPlayerProps) => {
+const videoPlayer = ({ trailer, gameName }: VideoPlayerProps) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -197,6 +198,8 @@ const videoPlayer = ({ trailer }: VideoPlayerProps) => {
                     onLoadedMetadata={handleLoadedMetadata}
                     onLoadStart={() => setIsLoading(true)}
                     onCanPlay={() => setIsLoading(false)}
+                    aria-label={`Tráiler oficial del videojuego - ${gameName}`}
+                    title={`Tráiler oficial del videojuego - ${gameName}`}
                 >
                     <source src={trailer.data[currentQuality]} type="video/mp4" />
                     Tu navegador no soporta el elemento video.

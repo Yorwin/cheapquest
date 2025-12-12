@@ -1,7 +1,5 @@
-import React from "react";
 import styles from "@/styles/components/user-tags.module.scss"
 import Tags from "../../../general/game-tags/tags-controller";
-import { getGameId, getGameData } from "@/utils/getGamesInfo";
 import SafeRender from "@/components/general/safe-render";
 
 const GameTags = async ({ gameData }: { gameData: any }) => {
@@ -10,7 +8,7 @@ const GameTags = async ({ gameData }: { gameData: any }) => {
     return (
         <SafeRender when={tags}>
             <div className={styles["user-tags-container"]}>
-                <h2>Tags:</h2>
+                <h3>Tags:</h3>
                 <Tags tags={tags} />
             </div>
         </SafeRender>

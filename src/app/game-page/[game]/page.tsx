@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "@/styles/layout/gamepage/gamepage-general-styles.module.scss";
 import { Suspense } from "react";
 
@@ -120,6 +119,10 @@ const GamePage = async ({ params }: ParamsGame) => {
             <Presentation gameName={gameName} />
 
             <div className={styles["game-info-container"]}>
+
+                {/* Title */}
+
+                <h2 className={styles["title-info-section"]}>Obten un vistazo a fondo de {gameData?.title}</h2>
 
                 {/* Screenshots and Trailer */}
                 <Suspense fallback={<GameImagesTrailerSkeleton />}>
