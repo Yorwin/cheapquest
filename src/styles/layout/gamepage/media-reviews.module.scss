@@ -32,12 +32,7 @@
 }
 
 .media {
-    font-family: $primary-font-style;
-    text-transform: uppercase;
-    font-size: clamp(.8rem, 2vw, 1.5rem);
-    color: map.get($colores, font-dark-background-color);
-    margin-bottom: 0rem;
-    text-decoration: underline 3px map.get($colores, font-dark-background-color) solid;
+    @include contentTitleGamePage;
 }
 
 .content {
