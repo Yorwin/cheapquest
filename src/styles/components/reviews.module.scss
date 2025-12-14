@@ -8,9 +8,9 @@ $lines-color: map.get($colores, dark-background-color);
 $main-font: var(--font-gontSerrat);
 $secondary-font: var(--font-timeless);
 
-$good-critic: #26F160;
-$regular-critic: orange;
-$bad-critic: #FE392B;
+$good-critic: #1EA94A;
+$regular-critic: #C77700;
+$bad-critic: #C6281E;
 
 .metacritic-container {
     margin-bottom: 2rem;
@@ -23,18 +23,20 @@ $bad-critic: #FE392B;
 .review-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 12px;
 }
 
 .type-of-review {
-    @include contentTitleGamePage;
+    text-align: center;
+    @include contentTitleGamePage(16px);
 }
 
 .rating {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: .6rem;
+    justify-content: center;
+    gap: .5rem;
     color: $font-main-color;
 
     .points {
@@ -119,6 +121,51 @@ $bad-critic: #FE392B;
 .any {
     background-color: #4A4A4A;
     /* gris oscuro */
+}
+
+/* RAWG */
+
+.type-of-review.rawg-title {
+    text-align: center;
+}
+
+.rating.rawg-rating {
+    flex-direction: column-reverse;
+    gap: 1rem;
+}
+
+.divided-reviews {
+    width: 100%;
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 32px;
+        padding-left: 0px;
+        list-style-type: none;
+    }
+}
+
+.list-element {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: $font-main-color;
+
+    i {
+        font-size: 30px;
+    }
+
+    p {
+        display: flex;
+        flex-direction: column;
+        font-family: $seconday-font-style;
+        margin-bottom: 0rem;
+    }
 }
 
 @media screen and (max-width: 1200px) {
