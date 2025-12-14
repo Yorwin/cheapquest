@@ -16,7 +16,7 @@ const OfferCard = async ({ gameName }: { gameName: string }) => {
     if (!bestOffer) {
         return (
             <section className={styles["offer-card"]}>
-                <h3>{gameName}</h3>
+                <h1>{gameName}</h1>
                 <div className={styles["no-offer-found"]}>
                     <Image
                         src={NoOffersFound}
@@ -26,7 +26,7 @@ const OfferCard = async ({ gameName }: { gameName: string }) => {
                         className={styles["image"]}
                     />
                 </div>
-                <h3>No tenemos ofertas disponibles</h3>
+                <span className={styles["discount"]}>No tenemos ofertas disponibles</span>
             </section>
         );
     }

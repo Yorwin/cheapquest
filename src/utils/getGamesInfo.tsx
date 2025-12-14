@@ -250,11 +250,11 @@ export const getGameData: getGameDataProps = cache(async (gameId: string) => {
         }
 
         let steamRating;
-
         const getOffersInfo = await cachedCheapSharkFetch('/deals', { title: selectedGame.name });
-        console.log(getOffersInfo);
 
-        if (getOffersInfo) {
+        if (!getOffersInfo || getOffersInfo.length === 0) {
+            steamRating = null;
+        } else {
             const offer = getOffersInfo[0];
             steamRating = {
                 steamRatingCount: offer.steamRatingCount,
@@ -289,6 +289,7 @@ export const getGameData: getGameDataProps = cache(async (gameId: string) => {
         }
 
         const filteredData: gameData = {
+            id: selectedGame.id,
             title: selectedGame.name,
             description: result.data.description ? result.data.description : selectedGame.description_raw,
             reviews: {

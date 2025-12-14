@@ -385,6 +385,7 @@ interface aboutTheGame {
 }
 
 export interface gameData {
+    id: number,
     title: string,
     reviews: any,
     description: string,

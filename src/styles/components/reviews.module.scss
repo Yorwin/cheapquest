@@ -35,6 +35,7 @@ $bad-critic: #FE392B;
     flex-direction: row;
     align-items: center;
     gap: .6rem;
+    color: $font-main-color;
 
     .points {
         font-size: clamp(1rem, .5rem + 1vw, 1.5rem);
@@ -42,7 +43,17 @@ $bad-critic: #FE392B;
         font-weight: 500;
         padding: .6rem;
         border-radius: 1.6rem;
-        color: $font-main-color;
+    }
+}
+
+.metacritic-link {
+    @extend .points;
+    color: $font-main-color;
+    text-decoration: 2px underline solid $font-main-color;
+
+    &:hover {
+        color: #1E4E8C;
+        text-decoration-color: #1E4E8C;
     }
 }
 
