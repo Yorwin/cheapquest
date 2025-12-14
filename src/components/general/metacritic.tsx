@@ -16,22 +16,24 @@ interface rawgRatingIcons {
 const MetaCritic = async ({ gameData }: { gameData: any }) => {
 
     /* Metacritic */
-    let metacritic = gameData?.reviews.meta_critic;
+    let metacritic_score = gameData?.reviews.meta_critic.metascore;
+    let metacritic_link = gameData?.reviews.meta_critic.link;
     let backupMetacritic = null;
 
-    if (!metacritic) {
+    if (!metacritic_score) {
         backupMetacritic = await getBackupMetacritic(gameData.id);
         if (backupMetacritic) {
-            metacritic = backupMetacritic.metascore;
+            metacritic_score = backupMetacritic.metascore;
+            metacritic_link = backupMetacritic.link;
         }
     }
 
     const statusOfCritic = ["good-critic", "bad-critic", "regular-critic"];
     let critic;
 
-    if (metacritic >= 75) {
+    if (metacritic_score >= 75) {
         critic = statusOfCritic[0];
-    } else if (metacritic <= 74 && metacritic > 49) {
+    } else if (metacritic_score <= 74 && metacritic_score > 49) {
         critic = statusOfCritic[1];
     } else {
         critic = statusOfCritic[2];
@@ -41,7 +43,7 @@ const MetaCritic = async ({ gameData }: { gameData: any }) => {
     const steamRating = gameData?.reviews.steamRating;
 
     /* Responsive columns */
-    const hasMetacritic = !!metacritic;
+    const hasMetacritic = !!metacritic_score;
     const hasSteam = !!steamRating;
     const colClass = hasMetacritic && hasSteam ? 'col-md-6 col-sm-12' : 'col-md-12 col-sm-12';
 
@@ -69,24 +71,23 @@ const MetaCritic = async ({ gameData }: { gameData: any }) => {
             <h3>Reviews</h3>
 
             <div className="container-fluid p-0">
-                <div className="row g-5">
+                <div className="row g-4">
 
                     {/* Metacritic */}
-                    {metacritic && (
+                    {metacritic_score && (
                         <section className={`${colClass} ${styles["review-container"]}`}>
                             <h4 className={styles["type-of-review"]}>Metacritic</h4>
                             <div className={styles["rating"]}>
-                                {backupMetacritic ? (
-                                    <Link href={backupMetacritic.link} target="_blank" rel="noopener noreferrer" className={`${styles["points"]} ${styles[critic]} ${styles["metacritic-link"]}`}>
-                                        {metacritic}
+                                <div className={styles["text-container"]}>
+                                    <span className={styles["text"]}>Puntuación en Metacritic</span>
+                                </div>
+                                {metacritic_link ? (
+                                    <Link href={metacritic_link} target="_blank" rel="noopener noreferrer" className={`${styles["points"]} ${styles[critic]} ${styles["metacritic-link"]}`}>
+                                        {metacritic_score}
                                     </Link>
                                 ) : (
-                                    <span className={`${styles["points"]} ${styles[critic]}`}>{metacritic}</span>
+                                    <span className={`${styles["points"]} ${styles[critic]}`}>{metacritic_score}</span>
                                 )}
-                                <div className={styles["text-container"]}>
-                                    <span className={styles["text"]}>Puntuación</span>
-                                    <span className={styles["text"]}>en Metacritic</span>
-                                </div>
                             </div>
                         </section>
                     )}
@@ -117,9 +118,9 @@ const MetaCritic = async ({ gameData }: { gameData: any }) => {
 
                                 return (
                                     <div className={styles["rating"]}>
-                                        <span className={`${styles["points"]} ${styles[steamRatingCritic]}`}>{steamRating.steamRatingPercent}</span>
-                                        <div className={styles["text-container"]}>
-                                            <span className={styles["text"]}>Puntuación en Steam:</span>
+                                        <span className={styles["text"]}>Puntuación en Steam</span>
+                                        <div className={styles["steam-punctuation"]}>
+                                            <span className={`${styles["points"]} ${styles[steamRatingCritic]}`}>{steamRating.steamRatingPercent}</span>
                                             <span className={styles["text"]}>{steamRating.steamRatingText}</span>
                                         </div>
                                     </div>
@@ -129,10 +130,10 @@ const MetaCritic = async ({ gameData }: { gameData: any }) => {
                             {/* SteamRating Count */}
                             {steamRating.steamRatingCount && (
                                 <div className={styles["rating"]}>
-                                    <span className={`${styles["reviews-amount"]}`}>{steamRating.steamRatingCount}</span>
                                     <div className={styles["text-container"]}>
                                         <span className={styles["text"]}>Cantidad de Reviews</span>
                                     </div>
+                                    <span className={`${styles["reviews-amount"]}`}>{steamRating.steamRatingCount}</span>
                                 </div>
                             )}
                         </section>
@@ -178,9 +179,9 @@ const MetaCritic = async ({ gameData }: { gameData: any }) => {
                             </div>
                         </section>
                     )}
-                </div >
-            </div >
-        </section >
+                </div>
+            </div>
+        </section>
     )
 };
 

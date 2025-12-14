@@ -293,7 +293,10 @@ export const getGameData: getGameDataProps = cache(async (gameId: string) => {
             title: selectedGame.name,
             description: result.data.description ? result.data.description : selectedGame.description_raw,
             reviews: {
-                meta_critic: selectedGame.metacritic ?? null,
+                meta_critic: {
+                    metascore: selectedGame.metacritic ?? null,
+                    link: selectedGame.metacritic_url ?? null,
+                },
                 rawGRating: {
                     ratingTop: selectedGame.rating_top ?? null,
                     rating_average: selectedGame.rating ?? null,

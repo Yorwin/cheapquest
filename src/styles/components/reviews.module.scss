@@ -33,14 +33,15 @@ $bad-critic: #C6281E;
 
 .rating {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: .5rem;
+    gap: 12px;
     color: $font-main-color;
+    margin-bottom: 10px;
 
     .points {
-        font-size: clamp(1rem, .5rem + 1vw, 1.5rem);
+        font-size: clamp(1rem, .4rem + 1vw, 1.25rem);
         font-family: $main-font;
         font-weight: 500;
         padding: .6rem;
@@ -75,13 +76,13 @@ $bad-critic: #C6281E;
     display: flex;
     flex-direction: column;
     line-height: 1.5rem;
+}
 
-    .text {
-        font-family: var(--font-timeless);
-        font-size: clamp(1rem, .5rem + 1vw, 1.3rem);
-        font-weight: 600;
-        color: $font-main-color;
-    }
+.text {
+    font-family: var(--font-timeless);
+    font-size: clamp(1rem, .5rem + 1vw, 1.3rem);
+    font-weight: 600;
+    color: $font-main-color;
 }
 
 /* Amount of Reviews */
@@ -89,6 +90,15 @@ $bad-critic: #C6281E;
 .reviews-amount {
     border: 3px #000 solid;
     @extend .points;
+}
+
+/* Steam */
+
+.steam-punctuation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
 /* Steam Percent Colors */
@@ -123,6 +133,10 @@ $bad-critic: #C6281E;
     /* gris oscuro */
 }
 
+.steam-rating {
+    @extend .rating;
+}
+
 /* RAWG */
 
 .type-of-review.rawg-title {
@@ -140,7 +154,7 @@ $bad-critic: #C6281E;
     ul {
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
         flex-wrap: wrap;
         width: 100%;
@@ -157,7 +171,8 @@ $bad-critic: #C6281E;
     color: $font-main-color;
 
     i {
-        font-size: 30px;
+        font-size: clamp(30px, 20px + 3vw, 70px);
+        margin-bottom: 6px;
     }
 
     p {
