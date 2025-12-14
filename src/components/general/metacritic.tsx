@@ -34,7 +34,7 @@ const MetaCritic = async ({ gameData }: { gameData: any }) => {
         steamRatingCritic = statusOfSteamRating[5]
     }
 
-    /* RAWG */
+    /* RAWG Cambio */
 
 
     return (

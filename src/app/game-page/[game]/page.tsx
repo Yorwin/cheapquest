@@ -113,7 +113,6 @@ const GamePage = async ({ params }: ParamsGame) => {
 
     // Fetch gameData once here to avoid multiple calls
     const gameData = await getGameData(gameId);
-    console.log(gameData);
 
     return (
         <article className="main-article-gamepage">
@@ -144,7 +143,7 @@ const GamePage = async ({ params }: ParamsGame) => {
                                 <GameTags gameData={gameData} />
                             </Suspense>
                         </div>
-
+                        
                         <div className="col-md-5 col-sm-12 p-0">
                             {/* gameInfo */}
                             <Suspense fallback={<SkeletonLoader width="100%" height="300px" />}>
