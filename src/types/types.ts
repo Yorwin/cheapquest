@@ -385,8 +385,9 @@ interface aboutTheGame {
 }
 
 export interface gameData {
+    id: number,
     title: string,
-    meta_critic: number,
+    reviews: any,
     description: string,
     about_the_game: aboutTheGame;
     media_reviews: mediaReview[] | null;

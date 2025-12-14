@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: ParamsGame): Promise<Metadata
 
     return {
         title: `${title} - Mejor oferta: ${bestOffer ? bestOffer.discount : "0%"} de descuento`,
-        description: `Compra ${title} por ${bestOffer ? bestOffer.normalPrice : "Desconocido"} en ${bestOffer ? bestOffer.store : "Desconocido"}. ¡Ahorra ${bestOffer ? bestOffer.discount : "0%"}!`,
+        description: `Compra ${title} por ${bestOffer ? bestOffer.currentPrice : "Desconocido"} en ${bestOffer ? bestOffer.store?.name : "Desconocido"}. ¡Ahorra ${bestOffer ? bestOffer.discount : "0%"}!`,
         keywords: [title, "ofertas", "juegos", "descuentos", "comprar", "mejor precio"],
         robots: {
             index: isGameCompleted,
@@ -82,13 +82,13 @@ export async function generateMetadata({ params }: ParamsGame): Promise<Metadata
         },
         openGraph: {
             title: `${title} - Mejor oferta: ${bestOffer ? bestOffer.discount : "0%"} de descuento`,
-            description: `Compra ${title} por ${bestOffer ? bestOffer.normalPrice : "Desconocido"} en ${bestOffer ? bestOffer.store : "Desconocido"}. ¡Ahorra ${bestOffer ? bestOffer.discount : "0%"}!`,
+            description: `Compra ${title} por ${bestOffer ? bestOffer.currentPrice : "Desconocido"} en ${bestOffer ? bestOffer.store?.name : "Desconocido"}. ¡Ahorra ${bestOffer ? bestOffer.discount : "0%"}!`,
             images: [bestOffer ? bestOffer.offerImage : "/default-image.jpg"],
         },
         twitter: {
             card: "summary_large_image",
             title: `${title} - Mejor oferta: ${bestOffer ? bestOffer.discount : "0%"} de descuento`,
-            description: `Compra ${title} por ${bestOffer ? bestOffer.normalPrice : "Desconocido"} en ${bestOffer ? bestOffer.store : "Desconocido"}. ¡Ahorra ${bestOffer ? bestOffer.discount : "0%"}!`,
+            description: `Compra ${title} por ${bestOffer ? bestOffer.currentPrice : "Desconocido"} en ${bestOffer ? bestOffer.store?.name : "Desconocido"}. ¡Ahorra ${bestOffer ? bestOffer.discount : "0%"}!`,
             images: [bestOffer ? bestOffer.offerImage : "/default-image.jpg"],
         },
     };
@@ -131,8 +131,8 @@ const GamePage = async ({ params }: ParamsGame) => {
 
                 <div className="container-fluid mb-5">
                     <div className="row">
-                        <div className="col-md-7 col-sm-12 p-0 mb-3">
 
+                        <div className="col-md-7 col-sm-12 p-0 mb-3">
                             {/* About the Game */}
                             <Suspense fallback={<SkeletonLoader width="90%" height="150px" />}>
                                 <AboutTheGame gameData={gameData} />
@@ -143,12 +143,8 @@ const GamePage = async ({ params }: ParamsGame) => {
                                 <GameTags gameData={gameData} />
                             </Suspense>
                         </div>
+                        
                         <div className="col-md-5 col-sm-12 p-0">
-                            {/* Metacritic */}
-                            <Suspense fallback={<SkeletonLoader width="100%" height="70px" />}>
-                                <MetaCritic gameData={gameData} />
-                            </Suspense>
-
                             {/* gameInfo */}
                             <Suspense fallback={<SkeletonLoader width="100%" height="300px" />}>
                                 <GameInfo gameData={gameData} />
@@ -156,6 +152,10 @@ const GamePage = async ({ params }: ParamsGame) => {
                         </div>
                     </div>
                 </div>
+
+                <Suspense fallback={<SkeletonLoader width="100%" height="70px" />}>
+                    <MetaCritic gameData={gameData} />
+                </Suspense>
 
                 {/* Media Reviews */}
                 <MediaReviews reviews={gameData?.media_reviews} />

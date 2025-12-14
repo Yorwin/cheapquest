@@ -8,7 +8,7 @@ import searchForStore from "./seachForStore";
 import { storeLogos, storeBanner } from "@/resources/stores_icons"
 import { translateAndStoreGameAction } from "@/actions/translationActions";
 import { inCaseOfError } from "@/components/general/error-loading-offers-fallback-container";
-import { cachedRawgFetch, cachedRawgGenreFetch, getCachedGameTrailer } from "@/lib/api-cache-server";
+import { cachedRawgFetch, cachedRawgGenreFetch, getCachedGameTrailer, cachedCheapSharkFetch } from "@/lib/api-cache-server";
 import { checkGameCache, updateGameWithFranchiseData, CheckMediaReviews } from "@/lib/firebase-cache";
 
 const API_KEY = process.env.RAWG_API_KEY;
@@ -249,6 +249,20 @@ export const getGameData: getGameDataProps = cache(async (gameId: string) => {
             return null;
         }
 
+        let steamRating;
+        const getOffersInfo = await cachedCheapSharkFetch('/deals', { title: selectedGame.name });
+
+        if (!getOffersInfo || getOffersInfo.length === 0) {
+            steamRating = null;
+        } else {
+            const offer = getOffersInfo[0];
+            steamRating = {
+                steamRatingCount: offer.steamRatingCount,
+                steamRatingPercent: offer.steamRatingPercent,
+                steamRatingText: offer.steamRatingText,
+            }
+        }
+
         const originalLangGenres = selectedGame.genres.map((e: Genre) => {
             return {
                 name: e.name,
@@ -275,9 +289,22 @@ export const getGameData: getGameDataProps = cache(async (gameId: string) => {
         }
 
         const filteredData: gameData = {
+            id: selectedGame.id,
             title: selectedGame.name,
             description: result.data.description ? result.data.description : selectedGame.description_raw,
-            meta_critic: selectedGame.metacritic,
+            reviews: {
+                meta_critic: {
+                    metascore: selectedGame.metacritic ?? null,
+                    link: selectedGame.metacritic_url ?? null,
+                },
+                rawGRating: {
+                    ratingTop: selectedGame.rating_top ?? null,
+                    rating_average: selectedGame.rating ?? null,
+                    rating_count: selectedGame.ratings_count ?? null,
+                    ratings_percentage: selectedGame.ratings ?? null,
+                },
+                steamRating: steamRating ? { ...steamRating } : null,
+            },
             about_the_game: {
                 esrb: selectedGame.esrb_rating ? selectedGame.esrb_rating.name : "No ESRB rating found",
                 released_data: `${formatDateES(selectedGame.released)}`,
@@ -289,7 +316,7 @@ export const getGameData: getGameDataProps = cache(async (gameId: string) => {
             },
             media_reviews: mediaReviews,
         };
-        
+
         return filteredData;
     } catch (error) {
         console.error('Error fetching game data:', error);

@@ -170,6 +170,15 @@ $lines-color: map.get($colores, dark-background-color);
     margin-bottom: clamp(.7rem, .5rem + 1vw, 1.7rem);
 }
 
+@mixin contentTitleGamePage($margin-bottom: 0px) {
+    font-family: $primary-font-style;
+    text-transform: uppercase;
+    font-size: clamp(.7rem, 2vw, 1.2rem);
+    color: map.get($colores, font-dark-background-color);
+    margin-bottom: $margin-bottom;
+    text-decoration: underline 3px map.get($colores, font-dark-background-color) solid;
+}
+
 /* Game Image and Videos Section */
 
 @mixin game-content-shadow {

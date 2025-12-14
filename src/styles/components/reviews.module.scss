@@ -8,31 +8,55 @@ $lines-color: map.get($colores, dark-background-color);
 $main-font: var(--font-gontSerrat);
 $secondary-font: var(--font-timeless);
 
-$good-critic: #26F160;
-$regular-critic: orange;
-$bad-critic: #FE392B;
+$good-critic: #1EA94A;
+$regular-critic: #C77700;
+$bad-critic: #C6281E;
 
 .metacritic-container {
     margin-bottom: 2rem;
 
     h3 {
-        @include secondaryTitleGamePage;
+        @include mainTitleGamePage;
     }
+}
+
+.review-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.type-of-review {
+    text-align: center;
+    @include contentTitleGamePage(16px);
 }
 
 .rating {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    gap: .6rem;
+    justify-content: center;
+    gap: 12px;
+    color: $font-main-color;
+    margin-bottom: 10px;
 
     .points {
-        font-size: clamp(1rem, .5rem + 1vw, 1.5rem);
+        font-size: clamp(1rem, .4rem + 1vw, 1.25rem);
         font-family: $main-font;
         font-weight: 500;
         padding: .6rem;
         border-radius: 1.6rem;
-        color: $font-main-color;
+    }
+}
+
+.metacritic-link {
+    @extend .points;
+    color: $font-main-color;
+    text-decoration: 2px underline solid $font-main-color;
+
+    &:hover {
+        color: #1E4E8C;
+        text-decoration-color: #1E4E8C;
     }
 }
 
@@ -52,12 +76,110 @@ $bad-critic: #FE392B;
     display: flex;
     flex-direction: column;
     line-height: 1.5rem;
+}
 
-    .text {
-        font-family: var(--font-timeless);
-        font-size: clamp(1rem, .5rem + 1vw, 1.3rem);
-        font-weight: 600;
-        color: $font-main-color;
+.text {
+    font-family: var(--font-timeless);
+    font-size: clamp(1rem, .5rem + 1vw, 1.3rem);
+    font-weight: 600;
+    color: $font-main-color;
+}
+
+/* Amount of Reviews */
+
+.reviews-amount {
+    border: 3px #000 solid;
+    @extend .points;
+}
+
+/* Steam */
+
+.steam-punctuation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+/* Steam Percent Colors */
+
+.bad-steampercentage {
+    background-color: #8B1E2D;
+    /* rojo oscuro */
+}
+
+.regular-steampercentage {
+    background-color: #B35C00;
+    /* naranja oscuro */
+}
+
+.good-steampercentage {
+    background-color: #B89B00;
+    /* amarillo oscuro */
+}
+
+.verygood-steampercentage {
+    background-color: #1F7A4D;
+    /* verde oscuro */
+}
+
+.excellent-steampercentage {
+    background-color: #1E4E8C;
+    /* azul oscuro */
+}
+
+.any {
+    background-color: #4A4A4A;
+    /* gris oscuro */
+}
+
+.steam-rating {
+    @extend .rating;
+}
+
+/* RAWG */
+
+.type-of-review.rawg-title {
+    text-align: center;
+}
+
+.rating.rawg-rating {
+    flex-direction: column-reverse;
+    gap: 1rem;
+}
+
+.divided-reviews {
+    width: 100%;
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 32px;
+        padding-left: 0px;
+        list-style-type: none;
+    }
+}
+
+.list-element {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: $font-main-color;
+
+    i {
+        font-size: clamp(30px, 20px + 3vw, 70px);
+        margin-bottom: 6px;
+    }
+
+    p {
+        display: flex;
+        flex-direction: column;
+        font-family: $seconday-font-style;
+        margin-bottom: 0rem;
     }
 }
 

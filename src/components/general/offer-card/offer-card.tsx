@@ -1,12 +1,85 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import styles from "@/styles/components/offer-card.module.scss"
-import NoOffersFound from "@/resources/error-image/no-offer-found.svg";
 import Image from "next/image";
 import Link from "next/link";
 
-const OfferCard = ({ gameName }: { gameName: string }) => {
+/* Utils */
+import { getGameOffers } from "@/utils/getGamesInfo";
+
+/* SVG */
+import NoOffersFound from "@/resources/error-image/no-offer-found.svg";
+
+const OfferCard = async ({ gameName }: { gameName: string }) => {
+
+    const getOffers = await getGameOffers(gameName);
+    const bestOffer = getOffers?.bestOffer;
+
+    if (!bestOffer) {
+        return (
+            <section className={styles["offer-card"]}>
+                <h1>{gameName}</h1>
+                <div className={styles["no-offer-found"]}>
+                    <Image
+                        src={NoOffersFound}
+                        alt={`No offers found for ${gameName}`}
+                        sizes="20vw"
+                        fill
+                        className={styles["image"]}
+                    />
+                </div>
+                <span className={styles["discount"]}>No tenemos ofertas disponibles</span>
+            </section>
+        );
+    }
+
+    const titleOffer = bestOffer.gameTitle;
+    const discount = bestOffer.discount;
+    const normalPrice = bestOffer.normalPrice;
+    const currentPrice = bestOffer.currentPrice;
+    const storeImage = bestOffer.store?.image;
+    const storeName = bestOffer.store?.name;
+    const url = bestOffer.url;
+
+    return (
+        <section className={styles["offer-card"]}>
+            <h1>
+                <span className={styles["title"]}> MEJOR OFERTA </span>
+                <div className={styles["title-spacing"]}></div>
+                <span className={styles["game-title"]}>{titleOffer}</span>
+            </h1>
+            <div className={styles["offer-info-container"]}>
+                {storeImage && (
+                    <div className={styles["offer-info"]}>
+                        <Image
+                            src={storeImage}
+                            alt={`Mejor oferta para ${bestOffer.gameTitle} dada por ${storeName}`}
+                            title={`${bestOffer.store}`}
+                            sizes="20vw"
+                            fill
+                            className={styles["image"]}
+                        />
+                    </div>
+                )}
+            </div>
+            <div className={styles["prices"]}>
+                <div className={styles["old-discount-container"]}>
+                    <span className={styles["old-price"]}>{normalPrice}</span>
+                    <span className={styles["discount"]}>{discount}</span>
+                </div>
+                <span className={styles["current-price"]}>{currentPrice}</span>
+            </div>
+            <Link
+                href={`${url}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles["offer-button"]}
+            >
+                Ir a la oferta
+            </Link>
+        </section>
+    )
+};
+
+/* const OfferCard = ({ gameName }: { gameName: string }) => {
     const [offers, setOffers] = useState<any>(null);
     const [gameData, setGameData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
@@ -118,6 +191,6 @@ const OfferCard = ({ gameName }: { gameName: string }) => {
             </Link>
         </section>
     );
-};
+}; */
 
 export default OfferCard;

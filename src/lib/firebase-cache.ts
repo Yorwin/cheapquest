@@ -426,3 +426,34 @@ export async function CheckMediaReviews(rawgId: string): Promise<mediaReview[]> 
     return []
   }
 }
+
+// Get backup metacritic data from completed_game_data collection
+export async function getBackupMetacritic(rawgId: string): Promise<{link: string, metascore: number} | null> {
+  try {
+    const querySnapshot = await db.collection('completed_game_data')
+      .where('id', '==', Number(rawgId))
+      .limit(1)
+      .get()
+
+    if (!querySnapshot.empty) {
+      const docRef = querySnapshot.docs[0].ref
+      const metacriticDoc = await docRef.collection('reviews').doc('metacritic').get()
+
+      if (metacriticDoc.exists) {
+        const data = metacriticDoc.data()
+
+        if (data && data.link && data.metascore !== undefined) {
+          return {
+            link: data.link,
+            metascore: data.metascore
+          }
+        }
+      }
+    }
+
+    return null
+  } catch (error) {
+    console.error('Error getting backup metacritic:', error)
+    return null
+  }
+}
