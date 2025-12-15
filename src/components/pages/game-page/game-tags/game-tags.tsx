@@ -7,7 +7,7 @@ const GameTags = async ({ gameData }: { gameData: any }) => {
 
     return (
         <SafeRender when={tags}>
-            <div className={styles["user-tags-container"]}>
+            <div id="tags" className={styles["user-tags-container"]}>
                 <h3>Tags:</h3>
                 <Tags tags={tags} />
             </div>

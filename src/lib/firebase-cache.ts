@@ -1,4 +1,5 @@
 import 'server-only'
+import { cache } from 'react'
 
 import { db } from './firebase-admin'
 import { GameDealWithoutScore, mediaReview } from '@/types/types'
@@ -348,7 +349,7 @@ export async function checkCompletedGameData(rawgId: string): Promise<boolean> {
 }
 
 // Get trailer from completed_game_data collection
-export async function getCompletedGameTrailer(rawgId: string): Promise<string | null> {
+export const getCompletedGameTrailer = cache(async (rawgId: string): Promise<string | null> => {
   try {
     const querySnapshot = await db.collection('completed_game_data')
       .where('id', '==', Number(rawgId))
@@ -366,7 +367,7 @@ export async function getCompletedGameTrailer(rawgId: string): Promise<string | 
     console.error('Error getting completed game trailer:', error)
     return null
   }
-}
+})
 
 // Check Reviews for Completed Games.
 

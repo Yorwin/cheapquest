@@ -5,13 +5,14 @@ import { Suspense } from "react";
 import Presentation from "@/components/pages/game-page/presentation";
 import GameImagesVideos from "@/components/pages/game-page/game-images-videos/game-images-videos";
 import AboutTheGame from "@/components/general/about-this-game/about-this-game";
-import MetaCritic from "@/components/general/metacritic";
+import Reviews from "@/components/pages/game-page/reviews";
 import GameInfo from "@/components/general/game-info";
 import GameTags from "@/components/pages/game-page/game-tags/game-tags";
 import OfficialStoreList from "@/components/pages/game-page/official-store/official-store-list";
 import FranchiseGames from "@/components/pages/game-page/franchise-games";
 import RelatedOffers from "@/components/pages/game-page/related-offers/related-offers";
 import MediaReviews from "@/components/pages/game-page/media-reviews/media-reviews";
+import NavigationMenu from "@/components/pages/game-page/navigation-menu";
 
 /* Utils */
 import { notFound } from "next/navigation";
@@ -112,7 +113,8 @@ const GamePage = async ({ params }: ParamsGame) => {
     }
 
     // Fetch gameData once here to avoid multiple calls
-    const gameData = await getGameData(gameId);
+    const gameDataPromise = getGameData(gameId);
+    const gameData = await gameDataPromise;
 
     return (
         <article className="main-article-gamepage">
@@ -123,6 +125,9 @@ const GamePage = async ({ params }: ParamsGame) => {
                 {/* Title */}
 
                 <h2 className={styles["title-info-section"]}>Obten un vistazo a fondo de {gameData?.title}</h2>
+
+                {/* Navigation Menu */}
+                <NavigationMenu gameName={gameName} />
 
                 {/* Screenshots and Trailer */}
                 <Suspense fallback={<GameImagesTrailerSkeleton />}>
@@ -143,7 +148,7 @@ const GamePage = async ({ params }: ParamsGame) => {
                                 <GameTags gameData={gameData} />
                             </Suspense>
                         </div>
-                        
+
                         <div className="col-md-5 col-sm-12 p-0">
                             {/* gameInfo */}
                             <Suspense fallback={<SkeletonLoader width="100%" height="300px" />}>
@@ -154,7 +159,7 @@ const GamePage = async ({ params }: ParamsGame) => {
                 </div>
 
                 <Suspense fallback={<SkeletonLoader width="100%" height="70px" />}>
-                    <MetaCritic gameData={gameData} />
+                    <Reviews gameData={gameData} />
                 </Suspense>
 
                 {/* Media Reviews */}

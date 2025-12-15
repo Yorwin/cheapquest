@@ -14,6 +14,7 @@ $bad-critic: #C6281E;
 
 .metacritic-container {
     margin-bottom: 2rem;
+    scroll-margin-top: 70px;
 
     h3 {
         @include mainTitleGamePage;

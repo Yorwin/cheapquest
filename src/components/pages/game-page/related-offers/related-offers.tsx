@@ -22,7 +22,7 @@ const RelatedOffers = async ({ gameId }: { gameId: string }) => {
 
     return (
         <SafeRender when={mainGenre}>
-            <div className="related-offers-container">
+            <div id="juegos-relacionados-en-oferta" className={styles["related-offers-container"]}>
                 <h3 className={styles["title"]}>Quizás también te guste</h3>
                 <ContentDistributionManager gameInfo={offersData} />
             </div>

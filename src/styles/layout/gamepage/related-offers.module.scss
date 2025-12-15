@@ -2,6 +2,10 @@
 @use '../../_variables/variables' as *;
 @use 'sass:map';
 
+.related-offers-container {
+    scroll-margin-top: 70px;
+}
+
 .title {
     @include mainTitleGamePage;
 }

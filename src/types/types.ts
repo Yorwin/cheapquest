@@ -382,6 +382,9 @@ interface aboutTheGame {
     publishers: string[],
     released_data: string,
     tags: string[]
+    playtime?: number,
+    website?: string,
+    reddit?: string,
 }
 
 export interface gameData {

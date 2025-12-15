@@ -103,7 +103,7 @@ const GameImagesSection = async ({ gameName }: { gameName: string }) => {
                 {/* Game Trailer */}
 
                 {trailerData && (
-                    <div className={styles["game-trailer-container"]}>
+                    <div id="tráiler" className={styles["game-trailer-container"]}>
                         {trailerData.type === 'rawg' ? (
                             <VideoPlayer
                                 gameName={gameName}
@@ -126,7 +126,7 @@ const GameImagesSection = async ({ gameName }: { gameName: string }) => {
 
                 {/* Game Images */}
                 {screenshots ?
-                    (<div className="container-fluid p-0">
+                    (<div id="capturas" className={`container-fluid p-0 ${styles["screenshots-container"]}`}>
                         <div className={`row d-flex justify-content-between ${styles["main-images-container"]}`}>
                             {screenshots.slice(1, 3).map((shot: any) => (
                                 <div className={`col-6`} key={shot.id}>

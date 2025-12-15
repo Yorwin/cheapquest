@@ -10,7 +10,7 @@ const OfficialStoreList = async ({ gameName }: { gameName: string }) => {
 
     return (
         <SafeRender when={restOfTheOffers ? restOfTheOffers?.length > 0 : []}>
-            <div className={styles["official-stores-container"]}>
+            <div id="precios-de-comparación" className={styles["official-stores-container"]}>
                 <h3 className={styles["title"]}>COMPARA PRECIOS EN TIENDAS OFICIALES</h3>
                 <div className={styles["offers-container"]}>
                     <StoreCardController offersData={restOfTheOffers} />
@@ -19,5 +19,5 @@ const OfficialStoreList = async ({ gameName }: { gameName: string }) => {
         </SafeRender>
     )
 };
-
+    
 export default OfficialStoreList;

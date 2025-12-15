@@ -13,7 +13,7 @@ interface rawgRatingIcons {
     [name: string]: string;
 }
 
-const MetaCritic = async ({ gameData }: { gameData: any }) => {
+const Reviews = async ({ gameData }: { gameData: any }) => {
 
     /* Metacritic */
     let metacritic_score = gameData?.reviews.meta_critic.metascore;
@@ -44,7 +44,7 @@ const MetaCritic = async ({ gameData }: { gameData: any }) => {
 
     /* Responsive columns */
     const hasMetacritic = !!metacritic_score;
-    const hasSteam = !!steamRating;
+    const hasSteam = !!steamRating && steamRating.steamRatingCount > 0;
     const colClass = hasMetacritic && hasSteam ? 'col-md-6 col-sm-12' : 'col-md-12 col-sm-12';
 
     /* RAWG */
@@ -67,7 +67,7 @@ const MetaCritic = async ({ gameData }: { gameData: any }) => {
     }
 
     return (
-        <section className={styles["metacritic-container"]}>
+        <section id="reviews" className={styles["metacritic-container"]}>
             <h3>Reviews</h3>
 
             <div className="container-fluid p-0">
@@ -93,7 +93,7 @@ const MetaCritic = async ({ gameData }: { gameData: any }) => {
                     )}
 
                     {/* Steam Rating */}
-                    {steamRating && (
+                    {steamRating && steamRating.steamRatingCount > 0 && (
                         <section className={`${colClass} ${styles["review-container"]}`}>
                             <h4 className={styles["type-of-review"]}>steamRating</h4>
 
@@ -185,4 +185,4 @@ const MetaCritic = async ({ gameData }: { gameData: any }) => {
     )
 };
 
-export default MetaCritic;
+export default Reviews;

@@ -5,7 +5,7 @@ const AboutTheGame = async ({ gameData }: { gameData: any }) => {
     const description = gameData?.description;
 
     return (
-        <div className={styles["about-the-game-container"]}>
+        <div id="descripción" className={styles["about-the-game-container"]}>
             <h3>Acerca de este juego</h3>
             <Parragraph>
                 {description ? description : "Este juego no tiene ninguna descripción disponible"}
