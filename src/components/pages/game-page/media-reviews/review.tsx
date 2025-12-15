@@ -23,6 +23,7 @@ const Review = ({ review }: { review: mediaReview }) => {
             <p className={styles["content"]}>
                 {review.content}
             </p>
+            <span className={styles["score"]}>Puntuación: {review.score}</span>
             <Link className={styles["link"]} href={`${review.link}`} target="_blank">
                 Ir al análisis completo
             </Link>

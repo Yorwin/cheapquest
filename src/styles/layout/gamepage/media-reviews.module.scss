@@ -90,6 +90,14 @@
     border-radius: 5px;
 }
 
+/* Score */
+
+.score {
+    font-family: $primary-font-style;
+    font-weight: 700;
+    color: map.get($colores, font-dark-background-color);
+}
+
 @media screen and (max-width: 576px) {
 
     .review {
