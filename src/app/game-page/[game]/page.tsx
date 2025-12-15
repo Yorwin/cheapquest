@@ -127,7 +127,9 @@ const GamePage = async ({ params }: ParamsGame) => {
                 <h2 className={styles["title-info-section"]}>Obten un vistazo a fondo de {gameData?.title}</h2>
 
                 {/* Navigation Menu */}
-                <NavigationMenu gameName={gameName} />
+                <Suspense fallback={<SkeletonLoader width="100%" height="30px" />}>
+                    <NavigationMenu gameName={gameName} />
+                </Suspense>
 
                 {/* Screenshots and Trailer */}
                 <Suspense fallback={<GameImagesTrailerSkeleton />}>
