@@ -244,7 +244,8 @@ export async function getCachedGameInfo(gameName: string): Promise<any> {
 // Specialized function for game trailer caching with null handling
 export async function getCachedGameTrailer(gameId: string): Promise<any> {
   // Check if we have cached trailer data
-  const cachedTrailer = await checkGameTrailerCache(gameId)
+  const cachedTrailer = await checkGameTrailerCache(gameId);
+  
   if (cachedTrailer !== null) {
     // Return cached trailer (could be actual trailer data or null)
     return cachedTrailer

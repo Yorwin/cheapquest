@@ -9,9 +9,16 @@ $main-font: var(--font-gontSerrat);
 $secondary-font: var(--font-timeless);
 
 .game-info-container {
+    scroll-margin-top: 70px;
+
     h3 {
         @include secondaryTitleGamePage;
     }
+}
+
+.link {
+    color: map.get($colores, font-dark-background-color);
+    font-family: $secondary-font;
 }
 
 .table {

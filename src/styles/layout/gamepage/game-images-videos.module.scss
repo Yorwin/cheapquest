@@ -19,6 +19,7 @@ $font-main-color: map.get($colores, font-dark-background-color);
     height: 600px;
     width: 100%;
     margin-bottom: 1rem;
+    scroll-margin-top: 70px;
 }
 
 .video-wrapper {
@@ -41,6 +42,10 @@ $font-main-color: map.get($colores, font-dark-background-color);
         height: 250px;
         width: 100%;
     }
+}
+
+.screenshots-container {
+    scroll-margin-top: 70px;
 }
 
 .rest-images-container {

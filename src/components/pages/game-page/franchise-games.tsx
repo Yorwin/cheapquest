@@ -18,7 +18,7 @@ const FranchiseGames = async ({ gameId }: { gameId: string }) => {
 
     return (
         <SafeRender when={franchiseData.length > 0 ? franchiseData.length : franchiseData}>
-            <div className={styles["franchise-container"]}>
+            <div id="franquicia" className={styles["franchise-container"]}>
                 <h3 className={styles["title"]}>La Franquicia de {title}</h3>
                 <div className={styles["franchise-cards-container"]}>
                     <FranchiseController franchiseData={franchiseData} />

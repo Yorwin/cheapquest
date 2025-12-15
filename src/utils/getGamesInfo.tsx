@@ -9,7 +9,7 @@ import { storeLogos, storeBanner } from "@/resources/stores_icons"
 import { translateAndStoreGameAction } from "@/actions/translationActions";
 import { inCaseOfError } from "@/components/general/error-loading-offers-fallback-container";
 import { cachedRawgFetch, cachedRawgGenreFetch, getCachedGameTrailer, cachedCheapSharkFetch } from "@/lib/api-cache-server";
-import { checkGameCache, updateGameWithFranchiseData, CheckMediaReviews } from "@/lib/firebase-cache";
+import { checkGameCache, updateGameWithFranchiseData, CheckMediaReviews, getCompletedGameTrailer } from "@/lib/firebase-cache";
 
 const API_KEY = process.env.RAWG_API_KEY;
 
@@ -103,8 +103,8 @@ export const getGameInfo = async (e: string) => {
 export const getGameInfoGamePage = async (e: string) => {
 
     const id = await getGameId(e);
-    const headerImage = await getHeaderImage(e);
-    const gameTrailer = id !== null && await getGameTrailer(id);
+    const images = await getHeaderImage(e);
+    const gameTrailer = id && await checkTrailer(id);
     const gameOffers = await getGameOffers(e);
     const gameData = id !== null && await getGameData(id);
     const franchise = id !== null ? await getFranchiseGames(id) : [];
@@ -112,8 +112,11 @@ export const getGameInfoGamePage = async (e: string) => {
 
     const data = {
         id: id,
+        image: {
+            header: images?.header,
+            screenshots: images?.screenshots,
+        },
         gameTrailer: gameTrailer,
-        ...headerImage,
         ...gameOffers,
         ...gameData,
         franchise: franchise,
@@ -122,6 +125,17 @@ export const getGameInfoGamePage = async (e: string) => {
 
     return data;
 };
+
+/* GET GAME TRAILER IN RAWG OR YOUTUBE */
+const checkTrailer = async (id: string) => {
+
+    const rawgTrailer = await getGameTrailer(id);
+    const youtubeTrailer = await getCompletedGameTrailer(id);
+
+    const trailer = rawgTrailer ? rawgTrailer : youtubeTrailer;
+
+    return trailer;
+}
 
 /* GET GAME ID */
 
@@ -236,19 +250,22 @@ export const getGameOffers = cache(async (e: string) => {
     return offers;
 });
 
-export const getGameTrailer = async (e: string) => {
+export const getGameTrailer = cache(async (e: string) => {
     return await getCachedGameTrailer(e);
-}
+});
 
 export const getGameData: getGameDataProps = cache(async (gameId: string) => {
     try {
         const selectedGame = await cachedRawgFetch(`/games/${gameId}`);
-        const mediaReviews = await CheckMediaReviews(gameId);
 
         if (!selectedGame) {
             return null;
         }
 
+        /* Media Reviews */
+        const mediaReviews = await CheckMediaReviews(gameId);
+
+        /* Steam Rating */
         let steamRating;
         const getOffersInfo = await cachedCheapSharkFetch('/deals', { title: selectedGame.name });
 
@@ -263,6 +280,7 @@ export const getGameData: getGameDataProps = cache(async (gameId: string) => {
             }
         }
 
+        /* Translated and Original Content*/
         const originalLangGenres = selectedGame.genres.map((e: Genre) => {
             return {
                 name: e.name,
@@ -313,6 +331,9 @@ export const getGameData: getGameDataProps = cache(async (gameId: string) => {
                 genres: result.data.genres,
                 developers: selectedGame.developers.map((e: publishersAndDevelopersType) => e.name),
                 tags: result.data.tags ? result.data.tags : selectedGame.tags.map((e: tag) => e.name),
+                playtime: selectedGame.playtime > 0 ? selectedGame.playtime : null,
+                website: selectedGame.website ? selectedGame.website : null,
+                reddit: selectedGame.reddit_url ? selectedGame.reddit_url : null,
             },
             media_reviews: mediaReviews,
         };

@@ -1,0 +1,40 @@
+@use '../../_variables/mixins' as *;
+@use '../../_variables/variables' as *;
+@use 'sass:map';
+
+.navigation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 8px;
+
+    ul {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding-left: 0px;
+        gap: clamp(6px, 1.4vw, 16px);
+        list-style-type: none;
+    }
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border-radius: 24px;
+    background-color: map.get($colores, dark-background-color);
+    padding: clamp(8px, 1.2vw, 12px);
+
+    a {
+        font-family: $primary-font-style;
+        font-size: clamp(.6rem, 1.3vw, 1rem);
+        color: map.get($colores, font-dark-background-color);
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: 1px underline map.get($colores, font-dark-background-color) solid;
+        }
+    }
+}
