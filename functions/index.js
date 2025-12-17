@@ -33,7 +33,6 @@ const parser = new Parser({
 });
 // ----------------------------------------------------------------------
 
-
 // --- CONFIGURACIÓN DE RUTAS Y REFERIDO (Sin cambios) ---
 const BASE_RSS_URL = 'https://www.indiegala.com/store_games_rss';
 const REFERRAL_SUFFIX = '/?ref=yja4zgj';
