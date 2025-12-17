@@ -14,6 +14,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 /* Layout */
 import Header from "@/layout/header/header"
 import Footer from "@/layout/footer/footer"
+import AdSenseScript from "@/components/general/AdSenseScript"
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -70,6 +71,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
           `}
         </Script>
+        <AdSenseScript />
+        <meta name="google-adsense-account" content="ca-pub-4757220441000409" />
       </head>
       <body className={`${gontSerrat.variable} ${timeLess.variable}`}>
         <header className="header">
