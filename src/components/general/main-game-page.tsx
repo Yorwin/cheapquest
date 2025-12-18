@@ -107,6 +107,7 @@ const MainGameImage = ({
                         className={styles["game-image"]}
                         onError={() => setIsValid(false)}
                         deliveryType="fetch"
+                        priority={true}
                     />
                 </div>
                 {children}

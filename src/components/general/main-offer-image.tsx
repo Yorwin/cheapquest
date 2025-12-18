@@ -36,7 +36,7 @@ const MainOfferImage = ({ gameImage }: MainOfferImageProps) => {
             className={styles["main-header-image"]}
             fill
             sizes="50vw"
-            priority
+            priority={true}
             crop="fill"
             gravity="auto"
             deliveryType="fetch"
