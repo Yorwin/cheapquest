@@ -17,10 +17,18 @@ const EURO_ZONE = ['AT', 'BE', 'HR', 'CY', 'EE', 'FI', 'FR', 'DE', 'GR', 'IE', '
 
 export function middleware(request: NextRequestWithGeo) {
     // 1. Obtenemos el país (Vercel detecta esto por IP)
-    const country = request.geo?.country || 'US';
+    const country = request.geo?.country;
 
-    // 2. Definimos la moneda basada en el país
-    const currency = EURO_ZONE.includes(country) ? 'EUR' : 'USD';
+    // 2. Fallback al Accept-Language si no hay geo data
+    const acceptLanguage = request.headers.get('accept-language') || '';
+    let currency = 'USD'; // Default
+
+    if (country && EURO_ZONE.includes(country)) {
+        currency = 'EUR';
+    } else if (acceptLanguage.includes('es')) {
+        // Fallback: si el idioma preferido es español, asumimos EUR
+        currency = 'EUR';
+    }
 
     // 3. Creamos la respuesta y seteamos una cookie
     const response = NextResponse.next();
@@ -32,9 +40,6 @@ export function middleware(request: NextRequestWithGeo) {
             maxAge: 60 * 60 * 24 * 7, // 1 semana
         });
     }
-
-    console.log('Geo data:', request.geo);
-    console.log('Country:', request.geo?.country);
 
     return response;
 }
