@@ -4,6 +4,8 @@ import { mediaReview } from "@/types/types";
 
 const MediaReviews = ({ reviews }: { reviews: mediaReview[] | null | undefined }) => {
     if (reviews && reviews.length > 0) {
+        console.log(reviews);
+
         return (
             <section id="análisis-de-medios" className={styles["media-reviews-container"]}>
                 <h3 className={styles["title"]}>Análisis de medios</h3>

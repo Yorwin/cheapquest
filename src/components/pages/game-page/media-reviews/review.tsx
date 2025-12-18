@@ -8,7 +8,7 @@ const Review = ({ review }: { review: mediaReview }) => {
         <div className={styles["review"]}>
             <div className={styles["header"]}>
                 {review.logo_img ? (
-                    <div className={`${styles["image-container"]}  ${styles[`${review.media.toLowerCase()}`]}`}>
+                    <div className={`${styles["image-container"]}  ${styles[`${review.media.toLowerCase().replaceAll(' ', '_')}`]}`}>
                         <Image
                             className={styles["media-logo"]}
                             src={review.logo_img}

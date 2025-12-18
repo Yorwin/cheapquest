@@ -19,7 +19,7 @@ const FranchiseController = ({ franchiseData }: FranchiseController) => {
                 key={index}
                 gameTitle={e.title}
                 releaseDate={e.released_date}
-                currentPrice={e.offer ? `${e.offer.salePrice}€` : null}
+                currentPrice={e.offer ? e.offer.salePrice : null}
                 discount={e.offer ? `${Number(e.offer.savings).toFixed(0)}%` : null}
                 link={e.link}
                 headerImage={e.header_image}

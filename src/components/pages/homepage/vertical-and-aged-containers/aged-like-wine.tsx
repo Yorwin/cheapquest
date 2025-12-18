@@ -1,21 +1,28 @@
-import React from "react";
 import styles from "@/styles/layout/homepage/vertical-offers.module.module.scss"
-import { getAgedLikeWineGames } from "@/utils/getOffers";
-import searchForStore from "@/utils/seachForStore";
-import { storeLogos } from "@/resources/stores_icons";
-import { GameDealWithoutScore, StoreLogo, VerticalCardWrapperType } from "@/types/types";
-import currencyRateCalculator from "@/utils/convertCurrency";
-import { Currency } from "@/types/types";
-import { getGameInfo } from "@/utils/getGamesInfo";
-import ErrorGameStandard, { inCaseOfError } from "@/components/general/error-loading-offers-fallback-container";
-import ContentDistributionManager from "./content-distribution-manager";
 import { StaticImageData } from "next/image";
+import { GameDealWithoutScore, StoreLogo, VerticalCardWrapperType } from "@/types/types";
+import { getCurrency, formatPrice } from "@/lib/currencies";
+
+/* Resources */
+import { storeLogos } from "@/resources/stores_icons";
+
+/* Components */
+import ContentDistributionManager from "./content-distribution-manager";
+
+/* Utilis */
+import searchForStore from "@/utils/seachForStore";
+import { getGameInfo } from "@/utils/getGamesInfo";
+import { getAgedLikeWineGames } from "@/utils/getOffers";
+
+/* Fallback */
 import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
+import ErrorGameStandard, { inCaseOfError } from "@/components/general/error-loading-offers-fallback-container";
 
 const AgedLikeWine = async () => {
     try {
         const listOfStores = await searchForStore();
         const AgedLikeWineGames = await getAgedLikeWineGames();
+        const currency = await getCurrency();
 
         if (!AgedLikeWineGames) {
             throw new Error("Error al intentar obtener ofertas de juegos antiguos");
@@ -40,13 +47,7 @@ const AgedLikeWine = async () => {
             const gameImage = getInfo.results[0].background_image !== null ? getInfo.results[0].background_image : NoImageFound.src;
             const discount = AgedLikeWineGames[i].savings;
             const price: number = Number(AgedLikeWineGames[i].salePrice);
-            const regularPrice: number = AgedLikeWineGames[i].normalPrice;
-
-            const convertRegularPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, regularPrice);
-            const resultRegularPrice = (convertRegularPrice).toFixed(2);
-
-            const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, price);
-            const resultPrice = (convertSalePrice).toFixed(2);
+            const regularPrice: number = Number(AgedLikeWineGames[i].normalPrice);
 
             const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === AgedLikeWineGames[i].storeID);
             const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
@@ -55,8 +56,8 @@ const AgedLikeWine = async () => {
             agedLikeWine.push({
                 gameImage: gameImage,
                 title: gameTitle,
-                oldPrice: `${resultRegularPrice}€`,
-                currentPrice: `${resultPrice}€`,
+                oldPrice: `${formatPrice(regularPrice, currency)}`,
+                currentPrice: `${formatPrice(price, currency)}`,
                 discount: `${Number(discount).toFixed(0)}%`,
                 platform: platforms.PC,
                 webOffer: storeImage?.image ?? inCaseOfErrorImage,

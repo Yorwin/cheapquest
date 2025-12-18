@@ -10,6 +10,7 @@ import { translateAndStoreGameAction } from "@/actions/translationActions";
 import { inCaseOfError } from "@/components/general/error-loading-offers-fallback-container";
 import { cachedRawgFetch, cachedRawgGenreFetch, getCachedGameTrailer, cachedCheapSharkFetch } from "@/lib/api-cache-server";
 import { checkGameCache, updateGameWithFranchiseData, CheckMediaReviews, getCompletedGameTrailer } from "@/lib/firebase-cache";
+import { getCurrency, formatPrice } from "@/lib/currencies";
 
 const API_KEY = process.env.RAWG_API_KEY;
 
@@ -188,6 +189,7 @@ export const getGameOffers = cache(async (e: string) => {
     const titleForComparison = slugToGameName(e).toUpperCase().replace(/\s+/g, '');
     const gameOffers = await searchOffers(e);
     const listOfStores = await searchForStore();
+    const currency = await getCurrency();
 
     if (gameOffers.length === 0) return null;
 
@@ -220,8 +222,8 @@ export const getGameOffers = cache(async (e: string) => {
     const bestOfferData = {
         gameTitle: bestDeal.title,
         discount: `${Number(bestDeal.savings).toFixed(0)}%`,
-        normalPrice: `${bestDeal.normalPrice}€`,
-        currentPrice: `${bestDeal.salePrice}€`,
+        normalPrice: formatPrice(Number(bestDeal.normalPrice), currency),
+        currentPrice: formatPrice(Number(bestDeal.salePrice), currency),
         offerImage: bestDeal.thumb.replace('capsule_sm_120', 'capsule_616x353'),
         store: bestDealstoreImage,
         url: bestDeal.url,
@@ -235,8 +237,8 @@ export const getGameOffers = cache(async (e: string) => {
         return {
             gameTitle: offer.title,
             discount: `${Number(offer.savings).toFixed(0)}%`,
-            normalPrice: `${offer.normalPrice}€`,
-            currentPrice: `${offer.salePrice}€`,
+            normalPrice: formatPrice(Number(offer.normalPrice), currency),
+            currentPrice: formatPrice(Number(offer.salePrice), currency),
             store: storeImage,
             url: offer.url,
         }
@@ -364,6 +366,7 @@ export const getFranchiseGames = async (e: string) => {
         }
 
         const data = await cachedRawgFetch(`/games/${e}/game-series`);
+        const currency = await getCurrency();
 
         const franchises = [];
 
@@ -379,24 +382,25 @@ export const getFranchiseGames = async (e: string) => {
         const getGameOffer = await Promise.all(
             franchises.map(async (e: any) => {
                 const gameOffers = await searchOffers(e.title);
-                let bestOffer;
+                let bestOffer: GameDealWithoutScore | null = null;
 
                 if (gameOffers.length > 0) {
                     bestOffer = gameOffers.reduce((best: GameDealWithoutScore, current: GameDealWithoutScore) =>
                         parseFloat(current.savings) > parseFloat(best.savings) ? current : best
                     );
-                } else {
-                    bestOffer = null;
                 }
 
                 if (bestOffer !== null) {
                     const listOfStores = await searchForStore();
 
-                    const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === bestOffer.storeID);
-                    const storeImage = storeLogos.find((e: StoreLogo) => e.name === store.storeName);
+                    const store = listOfStores.find((e: GameDealWithoutScore) => e.storeID === bestOffer!.storeID);
+                    const storeImage = storeLogos.find((e: StoreLogo) => e.name === store!.storeName);
                     const inCaseOfErrorImage = listOfStores[Number(inCaseOfError[0].storeID)];
 
-                    bestOffer.storeImage = storeImage ? storeImage : inCaseOfErrorImage;
+                    // Format prices
+                    (bestOffer as any).salePrice = formatPrice(Number(bestOffer.salePrice), currency);
+                    (bestOffer as any).normalPrice = formatPrice(Number(bestOffer.normalPrice), currency);
+                    (bestOffer as any).storeImage = storeImage ? storeImage : inCaseOfErrorImage;
                 }
 
                 return {
@@ -428,6 +432,7 @@ export const getSameGenre = async (e: number, gameID: number) => {
         const resultGames: VerticalCardWrapperType[] = [];
 
         const listOfStores = await searchForStore();
+        const currency = await getCurrency();
 
         const platforms = {
             PC: "bi bi-display",
@@ -462,8 +467,8 @@ export const getSameGenre = async (e: number, gameID: number) => {
                     title: game.name,
                     gameImage: game.background_image,
                     discount: `${Number(bestOffer.savings).toFixed(0)}%`,
-                    oldPrice: `${bestOffer.normalPrice}€`,
-                    currentPrice: `${bestOffer.salePrice}€`,
+                    oldPrice: `${formatPrice(Number(bestOffer.normalPrice), currency)}`,
+                    currentPrice: `${formatPrice(Number(bestOffer.salePrice), currency)}`,
                     platform: platforms.PC,
                     webOffer: storeImage?.image ?? inCaseOfErrorImage,
                 });

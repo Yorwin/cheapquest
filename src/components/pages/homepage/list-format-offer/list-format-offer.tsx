@@ -1,7 +1,7 @@
-import React from "react";
 import styles from "@/styles/layout/homepage/list-format-offers.module.scss"
 import Image from "@/resources/offer-img/image.jpg"
 import { offersByPercentage, historicalLows } from "@/utils/getOffers";
+import { getCurrency, formatPrice } from "@/lib/currencies";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
 import ContentDistributionManager from "./content-distribution-manager";
 import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
@@ -9,6 +9,7 @@ import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
 const ListFormatOffers = async () => {
     try {
         const offers = await offersByPercentage();
+        const currency = await getCurrency();
 
         const bestOffersByPercentage = offers.map((offer: any) => {
             if (offer) {
@@ -16,8 +17,8 @@ const ListFormatOffers = async () => {
                     offerImage: offer.background_image !== null ? offer.background_image : NoImageFound.src,
                     gameTitle: offer.title,
                     gameDescription: "Example Game",
-                    oldPrice: `${offer.normalPrice}€`,
-                    currentPrice: `${offer.salePrice}€`,
+                    oldPrice: `${formatPrice(Number(offer.normalPrice), currency)}`,
+                    currentPrice: `${formatPrice(Number(offer.salePrice), currency)}`,
                     discountPercentage: `${Number(offer.savings).toFixed(0)}%`
                 };
             } else {
@@ -25,8 +26,8 @@ const ListFormatOffers = async () => {
                     offerImage: Image,
                     gameTitle: "Example Game",
                     gameDescription: "Example Game",
-                    oldPrice: `10,99€`,
-                    currentPrice: `10,99€`,
+                    oldPrice: `${formatPrice(10.99, currency)}`,
+                    currentPrice: `${formatPrice(10.99, currency)}`,
                     discountPercentage: `45%`
                 };
             }
@@ -40,8 +41,8 @@ const ListFormatOffers = async () => {
                     offerImage: offer.background_image !== null ? offer.background_image : NoImageFound.src,
                     gameTitle: offer.title,
                     gameDescription: "Example Game",
-                    oldPrice: `${offer.bestDeal.retailPrice}€`,
-                    currentPrice: `${offer.bestDeal.price}€`,
+                    oldPrice: `${formatPrice(Number(offer.bestDeal.retailPrice), currency)}`,
+                    currentPrice: `${formatPrice(Number(offer.bestDeal.price), currency)}`,
                     discountPercentage: `${Number(offer.bestDeal.savings).toFixed(0)}%`
                 }
             } else {
@@ -49,8 +50,8 @@ const ListFormatOffers = async () => {
                     offerImage: Image,
                     gameTitle: "Example Game",
                     gameDescription: "Example Game",
-                    oldPrice: `10,99€`,
-                    currentPrice: `10,99€`,
+                    oldPrice: `${formatPrice(10.99, currency)}`,
+                    currentPrice: `${formatPrice(10.99, currency)}`,
                     discountPercentage: `45%`
                 }
             }

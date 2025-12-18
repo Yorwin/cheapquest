@@ -1,20 +1,31 @@
-import React from "react";
 import styles from "@/styles/layout/homepage/most-popular-offer.module.scss"
+import Link from "next/link";
+
+/* Functions */
+import { mainClasses, secondaryClasses } from "@/functions/classes";
+import { getCurrency, formatPrice } from "@/lib/currencies";
+
+/* Resources */
 import Monitor from "@/resources/platforms/pc.svg"
 import { storeLogos } from "@/resources/stores_icons"
+
+/* Utils */
 import { getMostPopularOffers } from "@/utils/getOffers";
 import searchForStore from "@/utils/seachForStore";
 import { getGameInfo } from "@/utils/getGamesInfo";
+
+/* Components */
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
-import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
 import GameStandardWrapper from "@/components/general/game-card/game-card-wrapper";
-import { mainClasses, secondaryClasses } from "@/functions/classes";
-import Link from "next/link";
+
+/* Fallback */
+import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
 
 const MostPopularOffer = async () => {
     try {
         const Offers = await getMostPopularOffers();
         const listOfStores = await searchForStore();
+        const currency = await getCurrency();
         let maxIndex: number = 10;
 
         if (!Offers) {
@@ -30,16 +41,16 @@ const MostPopularOffer = async () => {
 
             const getGame = await getGameInfo(Offers[i].title);
 
-            const resultSalePrice = (Number(Offers[i].salePrice)).toFixed(2);
-            const resultRegularPrice = (Number(Offers[i].normalPrice)).toFixed(2);
+            const resultSalePrice: number = (Number(Offers[i].salePrice));
+            const resultRegularPrice: number = (Number(Offers[i].normalPrice));
             const gameImage = getGame.results[0].background_image !== null ? getGame.results[0].background_image : NoImageFound.src;
 
             listInfo.push({
                 title: Offers[i].title,
                 gameImage: gameImage,
                 discount: `${Math.floor(Number(Offers[i].savings))}%`,
-                oldPrice: `${resultRegularPrice}€`,
-                currentPrice: `${resultSalePrice}€`,
+                oldPrice: `${formatPrice(resultRegularPrice, currency)}`,
+                currentPrice: `${formatPrice(resultSalePrice, currency)}`,
                 webOffer: storeImage ? storeImage.image : store.images.icon,
                 platform: Monitor,
             })

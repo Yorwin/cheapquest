@@ -6,6 +6,7 @@ import { getGameInfo } from "@/utils/getGamesInfo";
 import searchForStore from "@/utils/seachForStore";
 import currencyRateCalculator from "@/utils/convertCurrency";
 import { Currency } from "@/types/types";
+import { getCurrency, formatPrice } from "@/lib/currencies";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
 import ContentDistributionManager from "./content-distribution-manager";
 import NoImageFound from "@/resources/no-image-found/no-image-found.webp";
@@ -14,6 +15,7 @@ const NewOffers = async () => {
     try {
         const newDeals = await getNewDeals();
         const listOfStores = await searchForStore();
+        const currency = await getCurrency();
 
         if (!newDeals) {
             throw new Error("Se ha producido un error");
@@ -35,17 +37,14 @@ const NewOffers = async () => {
             const gameInfo = await getGameInfo(newDeals[i].title);
             const result = gameInfo.results[0];
 
-            const convertSalePrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(newDeals[i].salePrice));
-            const resultPrice = (convertSalePrice).toFixed(2);
-
-            const convertRegularPrice = await currencyRateCalculator(Currency.Dollars, Currency.Euros, Number(newDeals[i].normalPrice));
-            const resultRegularPrice = (convertRegularPrice).toFixed(2);
+            const resultPrice: number = Number(newDeals[i].salePrice);
+            const resultRegularPrice: number = Number(newDeals[i].normalPrice);
 
             newOffers.push({
                 gameImage: result.background_image !== null ? result.background_image : NoImageFound.src,
                 title: newDeals[i].title,
-                oldPrice: `${resultRegularPrice}€`,
-                currentPrice: `${resultPrice}€`,
+                oldPrice: `${formatPrice(resultRegularPrice, currency)}`,
+                currentPrice: `${formatPrice(resultPrice, currency)}`,
                 discount: `${Number(newDeals[i].savings).toFixed(0)}%`,
                 platform: platforms.PC,
                 webOffer: storeImage ? storeImage.image : store.images.icon,
