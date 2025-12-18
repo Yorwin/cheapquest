@@ -7,6 +7,20 @@ export async function getCurrency() {
 }
 
 export function formatPrice(amount: number, currency: string) {
+    if (currency === 'USD') {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }).format(amount);
+    } else if (currency === 'EUR') {
+        const formatted = new Intl.NumberFormat('es-ES', {
+            style: 'currency',
+            currency: 'EUR',
+        }).format(amount);
+        return formatted.replace(/\s+€$/, '€');
+    }
+
+    // Fallback
     return new Intl.NumberFormat('es-ES', {
         style: 'currency',
         currency: currency,

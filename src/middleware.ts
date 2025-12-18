@@ -33,6 +33,9 @@ export function middleware(request: NextRequestWithGeo) {
         });
     }
 
+    console.log('Geo data:', request.geo);
+    console.log('Country:', request.geo?.country);
+
     return response;
 }
 
