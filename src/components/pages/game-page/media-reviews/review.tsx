@@ -1,20 +1,27 @@
 import styles from "@/styles/layout/gamepage/media-reviews.module.scss";
-import Image from "next/image";
 import Link from "next/link";
 import { mediaReview } from "@/types/types";
+import { getCldImageUrl } from "next-cloudinary";
 
 const Review = ({ review }: { review: mediaReview }) => {
+
+    const optimizedLogo = getCldImageUrl({
+        src: `${review.logo_img}`,
+        deliveryType: 'fetch',
+        crop: 'fill',       // Llena el espacio 800x600
+        gravity: 'auto',    // Centra el contenido importante (IA)
+    })
+
     return (
         <div className={styles["review"]}>
             <div className={styles["header"]}>
                 {review.logo_img ? (
                     <div className={`${styles["image-container"]}  ${styles[`${review.media.toLowerCase().replaceAll(' ', '_')}`]}`}>
-                        <Image
+                        <img
                             className={styles["media-logo"]}
-                            src={review.logo_img}
+                            src={`${optimizedLogo}`}
                             alt={`Análisis del juego por ${review.media}`}
                             title={review.media}
-                            fill
                         />
                     </div>
                 ) : null}

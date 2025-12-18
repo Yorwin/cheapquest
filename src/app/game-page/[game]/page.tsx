@@ -171,7 +171,7 @@ const GamePage = async ({ params }: ParamsGame) => {
                 <Suspense fallback={<OfficialStoreListSkeleton />}>
                     <OfficialStoreList gameName={gameName} />
                 </Suspense>
-
+            
                 {/* Franchise Offers */}
                 <Suspense fallback={<SkeletonLoader width="100%" height="200px" />}>
                     <FranchiseGames gameId={gameId} />

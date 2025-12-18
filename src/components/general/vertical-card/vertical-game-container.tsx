@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/layout/homepage/vertical-offers.module.module.scss"
@@ -31,10 +30,9 @@ const VerticalGameCard = ({ platform, oldPrice, discount, title, currentPrice, w
                     </div>
                     <div className={styles["web-offer"]}>
                         <Image
-                            src={webOffer}
+                            src={`${webOffer.src}`}
                             sizes="50vw"
                             alt={`Logo de tienda`}
-                            title="Tienda"
                             fill
                             style={{ objectFit: 'contain' }}
                         />

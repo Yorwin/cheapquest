@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import styles from "@/styles/components/image-card.module.scss";
 import Image from "next/image";
+import { CldImage } from "next-cloudinary";
 
 const ImageCard = ({ gameName }: { gameName: string }) => {
     const [isValid, setIsValid] = useState(true);
@@ -32,7 +33,7 @@ const ImageCard = ({ gameName }: { gameName: string }) => {
 
                 // Tomamos la primera oferta con imagen
                 const bestOffer = data.deals[0];
-                const imageUrl = bestOffer.thumb.replace('capsule_sm_120', 'capsule_616x353') || null; 
+                const imageUrl = bestOffer.thumb.replace('capsule_sm_120', 'capsule_616x353') || null;
 
                 if (!imageUrl) {
                     console.warn("La oferta no tiene imagen disponible.");
@@ -76,15 +77,15 @@ const ImageCard = ({ gameName }: { gameName: string }) => {
 
     return (
         <section className={styles["image-card"]}>
-            <Image
-                src={offerImage}
+            <CldImage
+                src={`${offerImage}`}
                 alt={`Oferta del juego - ${gameName}`}
                 title={`${gameName}`}
                 sizes="35vw"
                 fill
                 className={styles["image-item"]}
+                deliveryType="fetch"
                 onError={() => setIsValid(false)}
-                priority={false}
             />
         </section>
     );

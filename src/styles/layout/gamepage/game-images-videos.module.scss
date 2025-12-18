@@ -64,6 +64,9 @@ $font-main-color: map.get($colores, font-dark-background-color);
 
 .image {
     @include game-content-shadow;
+    position: absolute;
+    width: 100%;
+    height: 100%;
     border-radius: $border-radius-gamecontent;
     object-fit: cover;
 }

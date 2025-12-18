@@ -29,6 +29,7 @@ $main-font-color: map.get($colores, font-dark-background-color);
 }
 
 .image-container {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,8 +40,8 @@ $main-font-color: map.get($colores, font-dark-background-color);
 }
 
 .image {
-    width: 50%;
-    height: 60px;
+    position: absolute;
+    padding: 1.2rem;
     object-fit: contain;
 }
 

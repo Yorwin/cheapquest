@@ -1,6 +1,5 @@
-import React from "react";
-import SearchIcon from "@/resources/search-icon.svg";
 import styles from "@/styles/layout/search/search-intro.module.scss";
+import SearchIcon from "@/resources/search-icon.svg";
 import Image from "next/image";
 
 const SearchIntroductionText = () => {
@@ -11,6 +10,7 @@ const SearchIntroductionText = () => {
                 src={SearchIcon}
                 alt="Simbolo Explicación Sección"
                 className={styles["image"]}
+                sizes="30vw"
                 fill
             />
         </div>

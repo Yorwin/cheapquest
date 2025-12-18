@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
+import { CldImage } from 'next-cloudinary';
 import styles from "@/styles/layout/homepage/main-offer-header.module.scss";
-import NoImageFound from "@/resources/no-image-found/no-image-found.webp"
 
 interface MainOfferImageProps {
     gameImage: string;
@@ -30,14 +29,17 @@ const MainOfferImage = ({ gameImage }: MainOfferImageProps) => {
     }, []);
 
     return (
-        <Image
+        <CldImage
             ref={imgRef}
-            src={gameImage}
+            src={gameImage as string}
             alt="Mejor oferta y más popular del momento"
             className={styles["main-header-image"]}
             fill
             sizes="50vw"
             priority
+            crop="fill"
+            gravity="auto"
+            deliveryType="fetch"
         />
     );
 };

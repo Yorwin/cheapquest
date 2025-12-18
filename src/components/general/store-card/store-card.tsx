@@ -14,6 +14,7 @@ const StoreCard = ({ offersData }: { offersData: comparisonOfferType }) => {
                         alt={offersData.store.name ?? "Store"}
                         title={offersData.store.name ?? "Store"}
                         sizes="35vw"
+                        fill
                     />
                 )}
             </div>

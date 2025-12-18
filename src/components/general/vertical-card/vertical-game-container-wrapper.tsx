@@ -1,10 +1,10 @@
 'use client'
 
 import { VerticalCardWrapperType } from "@/types/types";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "@/components/general/vertical-card/vertical-game-card-loading"
 import VerticalGameCard from "@/components/general/vertical-card/vertical-game-container";
-import Image from "next/image";
+import { CldImage } from 'next-cloudinary';
 
 const VerticalCardClasses = {
     mainGameCard: "vertical-card-container",
@@ -39,12 +39,14 @@ const VerticalGameCardWrapper = ({ gameImage, platform, oldPrice, discount, titl
             title={title}
             currentPrice={currentPrice}
             webOffer={webOffer}>
-            <Image
-                src={gameImage}
+            <CldImage
+                src={gameImage as string}
                 sizes="50vw"
                 alt={`Imágen de ${title}`}
-                title={title}
                 fill
+                crop="fill"
+                gravity="auto"
+                deliveryType="fetch"
                 style={{ objectFit: 'cover' }}
             />
         </VerticalGameCard>

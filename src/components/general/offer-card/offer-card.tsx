@@ -52,7 +52,6 @@ const OfferCard = async ({ gameName }: { gameName: string }) => {
                         <Image
                             src={storeImage}
                             alt={`Mejor oferta para ${bestOffer.gameTitle} dada por ${storeName}`}
-                            title={`${bestOffer.store}`}
                             sizes="20vw"
                             fill
                             className={styles["image"]}

@@ -1,5 +1,5 @@
-import React from "react";
 import styles from "@/styles/components/franchise-card.module.scss"
+import { getCldImageUrl } from "next-cloudinary";
 import Image from "next/image";
 import { StaticImageData } from "next/image";
 import { createGameSlug } from "@/functions/functions";
@@ -28,18 +28,25 @@ const FranchiseCard = ({
 }: FranchiseCardProps) => {
 
     const linkToBeSet = createGameSlug(link);
+    const optimizedImage = getCldImageUrl({
+        width: 800,   // Un ancho máximo razonable
+        height: 600,  // Una altura fija para mantener la proporción
+        src: headerImage,
+        deliveryType: 'fetch',
+        crop: 'fill',       // Llena el espacio 800x600
+        gravity: 'auto',    // Centra el contenido importante (IA)
+    });
 
     return (
         <div className={`${styles["franchise-card-container"]} mb-lg-3 mb-md-2 mb-sm-3`}>
             <div className={styles["franchise-card"]}>
                 <div className={styles["image-container"]}>
                     <Link href={`/game-page/${linkToBeSet}`} className={styles["click-overlay"]} aria-label={`Ver ${gameTitle}`} ></Link>
-                    <Image
+                    <img
                         className={`${styles["game-image"]} ${!hasOffer ? styles['no-offer-image'] : ''}`}
-                        src={headerImage}
+                        src={optimizedImage}
                         alt="Franchise Game Image"
                         sizes="40vw"
-                        fill
                     />
                 </div>
                 <div className={`${styles["discount-and-store-container"]} ${!hasOffer ? styles['no-offer-badge'] : ''}`}>

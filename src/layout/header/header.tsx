@@ -1,8 +1,9 @@
-import React from "react";
+"use client";
+
 import styles from "@/styles/layout/header.module.scss"
-import Image from "next/image";
 import Link from "next/link";
-import LogoImg from "@/resources/logo/darkbackground-logo.webp";
+import Image from "next/image";
+import LogoImg from "@/resources/logo/darkbackground-logo.webp"
 import OffersButton from "./component/button-offers";
 import HeaderMainContainer from "./component/header-main-container";
 import LinksContainer from "./component/links-container";
@@ -41,7 +42,6 @@ const Header = () => {
                                 src={LogoImg}
                                 sizes="50vw"
                                 alt="Logo"
-                                title="Homepage"
                                 fill
                                 style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                         </div>

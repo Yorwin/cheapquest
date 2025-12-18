@@ -1,6 +1,7 @@
 import styles from "@/styles/layout/gamepage/game-images-videos.module.scss"
 import Image from "next/image";
 import Script from "next/script";
+import { getCldImageUrl } from 'next-cloudinary';
 import VideoPlayer from "@/components/general/video-player";
 import { getGameId, getGameTrailer, getHeaderImage, getGameData, getGameOffers } from "@/utils/getGamesInfo";
 import { getCompletedGameTrailer } from "@/lib/firebase-cache";
@@ -35,6 +36,16 @@ const GameImagesSection = async ({ gameName }: { gameName: string }) => {
 
         /* Screenshots */
         screenshots = imagesData?.screenshots;
+        screenshots = screenshots?.map((e: any) => {
+            return getCldImageUrl({
+                width: 600,
+                height: 400,
+                src: `${e.image}`,
+                deliveryType: 'fetch',
+                crop: 'fill',
+                gravity: 'auto',
+            })
+        })
 
         /* Trailer */
         const rawgTrailer = await getGameTrailer(id);
@@ -128,16 +139,14 @@ const GameImagesSection = async ({ gameName }: { gameName: string }) => {
                 {screenshots ?
                     (<div id="capturas" className={`container-fluid p-0 ${styles["screenshots-container"]}`}>
                         <div className={`row d-flex justify-content-between ${styles["main-images-container"]}`}>
-                            {screenshots.slice(1, 3).map((shot: any) => (
-                                <div className={`col-6`} key={shot.id}>
+                            {screenshots.slice(1, 3).map((shot: string, index: number) => (
+                                <div className={`col-6`} key={index}>
                                     <div className={`${styles["image-container"]}`}>
-                                        <Image
+                                        <img
                                             className={styles["image"]}
-                                            src={shot.image}
-                                            alt={`Imágen del juego - ${gameName} - id de la imágen: ${shot.id}`}
-                                            title={`Imágen ${gameName} - ${shot.id}`}
+                                            src={`${shot}`}
+                                            alt={`Imágen del juego - ${gameName}`}
                                             sizes="80vw"
-                                            fill
                                         />
                                     </div>
                                 </div>
@@ -145,16 +154,14 @@ const GameImagesSection = async ({ gameName }: { gameName: string }) => {
                         </div>
 
                         <div className={`row d-flex justify-content-center ${styles["rest-images-container"]}`}  >
-                            {screenshots.slice(3).map((shot: any) => (
-                                <div className={`col-sm-12 col-md-6 mb-3`} key={shot.id}>
-                                    <div className={styles["image-container"]} key={shot.id}>
-                                        <Image
+                            {screenshots.slice(3).map((shot: string, index: number) => (
+                                <div className={`col-sm-12 col-md-6 mb-3`} key={index}>
+                                    <div className={styles["image-container"]} key={index}>
+                                        <img
                                             className={styles["image"]}
-                                            src={shot.image}
-                                            alt={`Imágen del juego - ${gameName} - id de la imágen: ${shot.id}`}
-                                            title={`Imágen ${gameName} - ${shot.id}`}
+                                            src={`${shot}`}
+                                            alt={`Imágen del juego - ${gameName}`}
                                             sizes="80vw"
-                                            fill
                                         />
                                     </div>
                                 </div>

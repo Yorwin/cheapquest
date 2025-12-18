@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { CldImage } from "next-cloudinary";
 import styles from "@/styles/components/main-game-image.module.scss";
 import Loading from "@/resources/loading-img/loading-offer.webp";
 
@@ -76,7 +77,6 @@ const MainGameImage = ({
                     <Image
                         ref={imgRef}
                         src={Loading}
-                        title={`Imagen de presentación ${gameName}`}
                         alt={`${gameName} Header`}
                         sizes="50vw"
                         fill
@@ -98,16 +98,15 @@ const MainGameImage = ({
         return (
             <div className={styles["game-image-container"]}>
                 <div className={styles["image-container"]}>
-                    <Image
+                    <CldImage
                         ref={imgRef}
                         src={imageSrc}
-                        title={`Imagen de presentación ${gameName}`}
                         alt={`${gameName} Header`}
                         sizes="50vw"
                         fill
                         className={styles["game-image"]}
                         onError={() => setIsValid(false)}
-                        priority
+                        deliveryType="fetch"
                     />
                 </div>
                 {children}
