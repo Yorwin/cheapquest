@@ -1,7 +1,7 @@
-import React from "react";
 import styles from "@/styles/layout/homepage/main-offer-header.module.scss"
 import Link from "next/link";
 import { getMostPopularGame } from "@/utils/getGamesInfo";
+import { getCurrency, formatPrice } from "@/lib/currencies";
 import ErrorGameStandard from "@/components/general/error-loading-offers-fallback-container";
 import { createGameSlug } from "@/functions/functions";
 import MainOfferImage from "@/components/general/main-offer-image";
@@ -9,6 +9,7 @@ import MainOfferImage from "@/components/general/main-offer-image";
 const MainOffer = async () => {
     try {
         const getGame = await getMostPopularGame();
+        const currency = await getCurrency();
 
         if (!getGame || Array.isArray(getGame) || !getGame.name || !getGame.deal) {
             throw new Error("Datos del juego inválidos o incompletos");
@@ -18,7 +19,7 @@ const MainOffer = async () => {
             gameName: getGame.name,
             gameImage: getGame.backgroundImage,
             discount: Math.floor(parseFloat(getGame.deal.savings)) + '%',
-            currentPrice: getGame.deal.salePrice + "€",
+            currentPrice: formatPrice(Number(getGame.deal.salePrice), currency),
             link: createGameSlug(getGame.name),
         }
 
