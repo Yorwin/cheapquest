@@ -43,6 +43,7 @@ const VerticalGameCardWrapper = ({ gameImage, platform, oldPrice, discount, titl
                 src={gameImage as string}
                 sizes="50vw"
                 alt={`Imágen de ${title}`}
+                quality={20}
                 fill
                 crop="fill"
                 gravity="auto"

@@ -36,6 +36,7 @@ const GameStandardWrapper = ({ gameImage, title, discount, oldPrice, currentPric
                 src={`${gameImage}`}
                 alt={title}
                 fill
+                quality={20}
                 sizes="30vw"
                 crop="fill"
                 gravity="auto"

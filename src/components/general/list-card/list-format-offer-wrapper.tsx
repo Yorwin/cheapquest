@@ -36,6 +36,7 @@ const ListFormatOffersWrapper = ({ index, gameTitle, offerImage, link, oldPrice,
                 sizes="10vw"
                 alt="Plataforma de juego"
                 fill
+                quality={10}
                 crop="fill"
                 gravity="auto"
                 style={{ objectFit: 'cover' }}

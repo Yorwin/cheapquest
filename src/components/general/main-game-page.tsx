@@ -103,6 +103,7 @@ const MainGameImage = ({
                         src={imageSrc}
                         alt={`${gameName} Header`}
                         sizes="50vw"
+                        quality={25}
                         fill
                         className={styles["game-image"]}
                         onError={() => setIsValid(false)}
