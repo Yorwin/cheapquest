@@ -1,6 +1,5 @@
 'use client';
 
-import React from "react";
 import characterImage from "@/resources/error-image/homepage-error.png"
 import Image from "next/image";
 import errorHomePage from "@/resources/error-image/background-error-homepage.svg"

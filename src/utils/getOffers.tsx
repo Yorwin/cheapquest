@@ -48,7 +48,7 @@ export const getMostPopularOffers = async (retries = 3) => {
                 sortBy: 'DealRating',
                 onSale: 1
             });
-
+            
             const deduplicated: Record<string, GameDealWithoutScore> = {};
 
             response.forEach((e: GameDealWithoutScore) => {

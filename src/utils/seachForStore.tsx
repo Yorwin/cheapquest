@@ -8,6 +8,8 @@ const searchForStore = async () => {
         }
     })
 
+    console.log(search.body);
+
     if (!search.ok) {
         throw new Error("Error when trying to fetch stores");
     }
