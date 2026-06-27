@@ -10,8 +10,6 @@ import { defaultClasses } from "@/functions/classes";
 const GameStandardWrapper = ({ gameImage, title, discount, oldPrice, currentPrice, webOffer, classes = defaultClasses }: GameStandardControllerType) => {
     const [imageIsLoaded, setIsImageLoaded] = useState(false);
 
-    console.log(gameImage);
-
     useEffect(() => {
         const img = new window.Image();
         img.src = `${gameImage}`;
